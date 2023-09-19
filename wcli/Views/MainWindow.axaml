@@ -1,0 +1,47 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:wcli.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600"
+        x:Class="wcli.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        WindowStartupLocation="CenterScreen"
+        Width="400"
+        Height="600"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="wcli">
+
+    <Design.DataContext>
+      <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+  <StackPanel Margin="12" 
+              Spacing="4"
+              VerticalAlignment="Center">
+
+    <Label Content="RPC server prefix:"
+           Target="WalletNameTextBox"/>
+    <TextBox Name="RpcServerTextBox"
+             Text="{Binding RpcServerPrefix, Mode=TwoWay}" />
+
+    <Button Name="GetStatusButton" 
+            Content="GetStatus" 
+            Command="{Binding GetStatusCommand}"
+            HorizontalAlignment="Stretch"
+            Padding="12" />
+
+    <Label Content="Wallet name:"
+           Target="WalletNameTextBox"/>
+    <TextBox Name="WalletNameTextBox"
+             Text="{Binding WalletName, Mode=TwoWay}" />
+
+    <Button Name="GetWalletInfoButton" 
+            Content="GetWalletInfo" 
+            Command="{Binding GetWalletInfoCommand}"
+            HorizontalAlignment="Stretch"
+            Padding="12" />
+
+  </StackPanel>
+
+</Window>
