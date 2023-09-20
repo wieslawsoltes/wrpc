@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -19,55 +20,44 @@ public partial class MainWindowViewModel : ViewModelBase
         WalletName = "Wallet 1";
     }
 
+    private async Task<T?> SendRpcMethod<T>(RpcMethod requestBody, string rpcServerUri, JsonTypeInfo<T> jsonTypeInfo)
+    {
+        var requestBodyJson = JsonSerializer.Serialize(requestBody, RpcJsonContext.Default.RpcMethod);
+        var cts = new CancellationTokenSource();
+        var rpcService = new RpcService();
+        var responseBodyJson = await rpcService.GetResponseDataAsync(rpcServerUri, requestBodyJson, true, cts.Token);
+        return responseBodyJson is not null ? JsonSerializer.Deserialize(responseBodyJson, jsonTypeInfo) : default;
+    }
+
     [RelayCommand]
     private async Task GetStatus()
     {
-        var rpcServerUri = $"{RpcServerPrefix}";
-
         // {"jsonrpc":"2.0","id":"1","method":"getstatus"}
         var requestBody = new RpcMethod()
         {
             Method = "getstatus"
         };
-
-        var requestBodyJson = JsonSerializer.Serialize(requestBody, RpcJsonContext.Default.RpcMethod);
-        var cts = new CancellationTokenSource();
-        var rpcService = new RpcService();
-
-        var responseBodyJson = await rpcService.GetResponseDataAsync(rpcServerUri, requestBodyJson, true, cts.Token);
-        if (responseBodyJson is not null)
+        var rpcServerUri = $"{RpcServerPrefix}";
+        var rpcResult = await SendRpcMethod<RpcGetStatusResult>(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetStatusResult);
+        if (rpcResult?.Result != null)
         {
-            var rpcResult = JsonSerializer.Deserialize(responseBodyJson, RpcJsonContext.Default.RpcGetStatusResult);
-            if (rpcResult?.Result != null)
-            {
-                // ...
-            }
+            // TODO:
         }
     }
 
     [RelayCommand]
     private async Task GetWalletInfo()
     {
-        var rpcServerUri = $"{RpcServerPrefix}/{WalletName}";
-
         // {"jsonrpc":"2.0","id":"1","method":"getwalletinfo"}
         var requestBody = new RpcMethod()
         {
             Method = "getwalletinfo"
         };
-
-        var requestBodyJson = JsonSerializer.Serialize(requestBody, RpcJsonContext.Default.RpcMethod);
-        var cts = new CancellationTokenSource();
-        var rpcService = new RpcService();
-
-        var responseBodyJson = await rpcService.GetResponseDataAsync(rpcServerUri, requestBodyJson, true, cts.Token);
-        if (responseBodyJson is not null)
+        var rpcServerUri = $"{RpcServerPrefix}/{WalletName}";
+        var rpcResult = await SendRpcMethod<RpcGetWalletInfoResult>(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetWalletInfoResult);
+        if (rpcResult?.Result != null)
         {
-            var rpcResult = JsonSerializer.Deserialize(responseBodyJson, RpcJsonContext.Default.RpcGetWalletInfoResult);
-            if (rpcResult?.Result != null)
-            {
-                // ...
-            }
+            // TODO:
         }
     }
 }
