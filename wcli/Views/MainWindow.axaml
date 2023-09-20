@@ -81,7 +81,6 @@
               <!-- Header -->
               <Label Content="Error"
                      FontWeight="SemiBold" />
-              <!-- IsConnected -->
               <!-- Code -->
               <Label Content="Code" />
               <TextBox Text="{Binding Code}"
@@ -190,7 +189,6 @@
               <!-- Header -->
               <Label Content="New Wallet"
                      FontWeight="SemiBold" />
-              <!-- IsConnected -->
               <!-- Mnemonic -->
               <Label Content="Mnemonic" />
               <TextBox Text="{Binding Mnemonic}"
@@ -212,7 +210,6 @@
               <!-- Header -->
               <Label Content="Account"
                      FontWeight="SemiBold" />
-              <!-- IsConnected -->
               <!-- Name -->
               <Label Content="Name" />
               <TextBox Text="{Binding Name}"
