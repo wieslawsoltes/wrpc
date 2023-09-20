@@ -18,6 +18,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty] private string? _rpcServerPrefix;
     [ObservableProperty] private string? _walletName;
     [ObservableProperty] private string? _walletPassword;
+    [ObservableProperty] private string? _label;
     [ObservableProperty] private Stack<object>? _dialogs;
     [ObservableProperty] private object? _currentDialog;
     [ObservableProperty] private ObservableCollection<RpcMethodViewModel>? _rpcMethods;
@@ -27,6 +28,7 @@ public partial class MainWindowViewModel : ViewModelBase
         RpcServerPrefix = "http://127.0.0.1:37128";
         WalletName = "Wallet 1";
         WalletPassword = "";
+        Label = "Label 1, Label 2";
         Dialogs = new Stack<object>();
         CurrentDialog = null;
         RpcMethods = new ObservableCollection<RpcMethodViewModel>()
@@ -239,7 +241,28 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private async Task GetNewAddress()
     {
-        throw new NotImplementedException();
+        // {"jsonrpc":"2.0","id":"1","method":"getnewaddress","params":["Daniel, Alice"]}
+        var requestBody = new RpcMethod()
+        {
+            Method = "getnewaddress",
+            // TODO:
+            Params = new []
+            {
+                Label
+            }
+        };
+        var rpcServerUri = $"{RpcServerPrefix}/{WalletName}";
+        var rpcResult = await SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetNewAddressResult);
+        if (rpcResult is RpcGetNewAddressResult { Result: not null } rpcGetNewAddressResult)
+        {
+            // TODO:
+            Navigate(rpcGetNewAddressResult.Result);
+        }
+        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            // TODO:
+            Navigate(rpcErrorResult.Error);
+        }
     }
 
     [RelayCommand]

@@ -26,6 +26,9 @@ namespace WasabiCli.Models.RpcJson;
 // listunspentcoins
 [JsonSerializable(typeof(ListUnspentCoinsInfo))]
 [JsonSerializable(typeof(RpcListUnspentCoinsResult))]
+// getnewaddress
+[JsonSerializable(typeof(AddressInfo))]
+[JsonSerializable(typeof(RpcGetNewAddressResult))]
 // getwalletinfo
 [JsonSerializable(typeof(WalletInfo))]
 [JsonSerializable(typeof(RpcGetWalletInfoResult))]

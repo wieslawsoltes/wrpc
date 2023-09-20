@@ -42,6 +42,11 @@
         <TextBox Name="WalletPasswordTextBox"
                  Text="{Binding WalletPassword, Mode=TwoWay}"
                  PasswordChar="*" />
+        <!-- Label -->
+        <Label Content="Label:"
+               Target="LabelTextBox" />
+        <TextBox Name="LabelTextBox"
+                 Text="{Binding Label, Mode=TwoWay}" />
 
         <ItemsControl ItemsSource="{Binding RpcMethods}"
                       Margin="0,4,0,0">
@@ -376,6 +381,43 @@
               <TextBox Text="{Binding Accounts.Count, FallbackValue=0}"
                        IsReadOnly="True" />
               <!-- TODO: Navigate to Accounts list view -->
+            </StackPanel>
+          </ScrollViewer>
+        </DataTemplate>
+        <DataTemplate DataType="mww:AddressInfo">
+          <!-- TODO: -->
+          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="12"
+                        Spacing="4">
+              <!-- Back Button -->
+              <Button Content="Back"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).BackCommand, FallbackValue={x:Null}}"
+                      CommandParameter="{x:Null}"
+                      HorizontalAlignment="Left"
+                      Padding="12" />
+              <!-- Header -->
+              <Label Content="Address"
+                     FontWeight="SemiBold" />
+              <!-- Address -->
+              <Label Content="Address" />
+              <TextBox Text="{Binding Address}"
+                       IsReadOnly="True" />
+              <!-- KeyPath -->
+              <Label Content="KeyPath" />
+              <TextBox Text="{Binding KeyPath}"
+                       IsReadOnly="True" />
+              <!-- Label -->
+              <Label Content="Label" />
+              <TextBox Text="{Binding Label}"
+                       IsReadOnly="True" />
+              <!-- PublicKey -->
+              <Label Content="PublicKey" />
+              <TextBox Text="{Binding PublicKey}"
+                       IsReadOnly="True" />
+              <!-- ScriptPubKey -->
+              <Label Content="ScriptPubKey" />
+              <TextBox Text="{Binding ScriptPubKey}"
+                       IsReadOnly="True" />
             </StackPanel>
           </ScrollViewer>
         </DataTemplate>
