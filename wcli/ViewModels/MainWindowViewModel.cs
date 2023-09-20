@@ -22,8 +22,7 @@ public partial class MainWindowViewModel : ViewModelBase
         WalletName = "Wallet 1";
     }
 
-    private async Task<Rpc?> SendRpcMethod<T>(RpcMethod requestBody, string rpcServerUri, JsonTypeInfo<T> jsonTypeInfo)
-        where T: Rpc
+    private async Task<Rpc?> SendRpcMethod<T>(RpcMethod requestBody, string rpcServerUri, JsonTypeInfo<T> jsonTypeInfo) where T: Rpc
     {
         var requestBodyJson = JsonSerializer.Serialize(requestBody, RpcJsonContext.Default.RpcMethod);
         var cts = new CancellationTokenSource();
