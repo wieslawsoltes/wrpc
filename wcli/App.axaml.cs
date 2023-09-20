@@ -1,10 +1,10 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using wcli.ViewModels;
-using wcli.Views;
+using WasabiCli.ViewModels;
+using WasabiCli.Views;
 
-namespace wcli;
+namespace WasabiCli;
 
 public partial class App : Application
 {

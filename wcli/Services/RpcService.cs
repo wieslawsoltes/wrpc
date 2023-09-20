@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace wcli.Services;
+namespace WasabiCli.Services;
 
 public class RpcService
 {
@@ -25,8 +25,6 @@ public class RpcService
         }
 
         var response = await s_httpClient.PostAsync(requestUri, content, token);
-
-        // Deserialize the response
         var responseBody = await response.Content.ReadAsStringAsync(token);
         if (debug)
         {
@@ -34,24 +32,10 @@ public class RpcService
             Console.WriteLine($"Response body:{Environment.NewLine}{responseBody}");
         }
 
-        switch (response.StatusCode)
+        return response.StatusCode switch
         {
-            case HttpStatusCode.Unauthorized:
-            case HttpStatusCode.TooManyRequests:
-            case HttpStatusCode.InternalServerError:
-            case HttpStatusCode.NotFound:
-            case HttpStatusCode.BadRequest:
-            {
-                return responseBody;
-            }
-            case HttpStatusCode.OK:
-            {
-                return responseBody;
-            }
-            default:
-            {
-                return "null";
-            }
-        }
+            HttpStatusCode.OK => responseBody,
+            _ => null
+        };
     }
 }

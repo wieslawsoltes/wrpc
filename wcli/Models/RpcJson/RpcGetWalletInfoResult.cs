@@ -1,9 +1,10 @@
 using System.Text.Json.Serialization;
+using WasabiCli.Models.WalletWasabi;
 
-namespace wcli.Models;
+namespace WasabiCli.Models.RpcJson;
 
 public class RpcGetWalletInfoResult : Rpc
 {
     [JsonPropertyName("result")]
-    public GetWalletInfoResult? Result { get; set; }
+    public WalletInfo? Result { get; set; }
 }

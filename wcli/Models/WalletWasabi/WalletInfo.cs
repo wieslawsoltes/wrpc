@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace wcli.Models;
+namespace WasabiCli.Models.WalletWasabi;
 
-public class GetWalletInfoResult
+public class WalletInfo
 {
     [JsonPropertyName("walletName")]
     public string? WalletName { get; set; }

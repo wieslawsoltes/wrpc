@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace wcli.Views;
+namespace WasabiCli.Views;
 
 public partial class MainWindow : Window
 {

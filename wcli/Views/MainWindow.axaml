@@ -1,47 +1,224 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:wcli.ViewModels"
+        xmlns:mww="using:WasabiCli.Models.WalletWasabi"
+        xmlns:vm="using:WasabiCli.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600"
-        x:Class="wcli.Views.MainWindow"
+        x:Class="WasabiCli.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         WindowStartupLocation="CenterScreen"
         Width="400"
         Height="600"
         Icon="/Assets/avalonia-logo.ico"
-        Title="wcli">
+        Title="Wasabi.Wallet RPC">
 
-    <Design.DataContext>
-      <vm:MainWindowViewModel/>
-    </Design.DataContext>
+  <Design.DataContext>
+    <vm:MainWindowViewModel />
+  </Design.DataContext>
 
-  <StackPanel Margin="12" 
-              Spacing="4"
-              VerticalAlignment="Center">
+  <Panel>
 
-    <Label Content="RPC server prefix:"
-           Target="WalletNameTextBox"/>
-    <TextBox Name="RpcServerTextBox"
-             Text="{Binding RpcServerPrefix, Mode=TwoWay}" />
+    <StackPanel Margin="12"
+                Spacing="4"
+                VerticalAlignment="Top"
+                IsVisible="{Binding CurrentInfo, Converter={x:Static ObjectConverters.IsNull}}">
 
-    <Button Name="GetStatusButton" 
-            Content="GetStatus" 
-            Command="{Binding GetStatusCommand}"
-            HorizontalAlignment="Stretch"
-            Padding="12" />
+      <Label Content="Wasabi.Wallet RPC"
+             FontWeight="SemiBold" />
 
-    <Label Content="Wallet name:"
-           Target="WalletNameTextBox"/>
-    <TextBox Name="WalletNameTextBox"
-             Text="{Binding WalletName, Mode=TwoWay}" />
+      <!-- RpcServerPrefix -->
+      <Label Content="RPC server prefix:"
+             Target="RpcServerTextBox" />
+      <TextBox Name="RpcServerTextBox"
+               Text="{Binding RpcServerPrefix, Mode=TwoWay}" />
 
-    <Button Name="GetWalletInfoButton" 
-            Content="GetWalletInfo" 
-            Command="{Binding GetWalletInfoCommand}"
-            HorizontalAlignment="Stretch"
-            Padding="12" />
+      <!-- WalletName -->
+      <Label Content="Wallet name:"
+             Target="WalletNameTextBox" />
+      <TextBox Name="WalletNameTextBox"
+               Text="{Binding WalletName, Mode=TwoWay}" />
 
-  </StackPanel>
+      <Button Name="GetStatusButton"
+              Content="GetStatus"
+              Command="{Binding GetStatusCommand}"
+              HorizontalAlignment="Stretch"
+              HorizontalContentAlignment="Center"
+              Padding="12" />
+
+      <Button Name="GetWalletInfoButton"
+              Content="GetWalletInfo"
+              Command="{Binding GetWalletInfoCommand}"
+              HorizontalAlignment="Stretch"
+              HorizontalContentAlignment="Center"
+              Padding="12" />
+
+    </StackPanel>
+    
+    <ContentControl Content="{Binding CurrentInfo}">
+      <ContentControl.DataTemplates>
+        <DataTemplate DataType="mww:AccountInfo">
+          <!-- TODO: -->
+          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="12"
+                        Spacing="4">
+              <!-- Back Button -->
+              <Button Content="Back"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentInfoCommand, FallbackValue={x:Null}}"
+                      CommandParameter="{x:Null}"
+                      HorizontalAlignment="Left"
+                      Padding="12" />
+              <!-- Header -->
+              <Label Content="Account"
+                     FontWeight="SemiBold" />
+              <!-- IsConnected -->
+              <!-- Name -->
+              <Label Content="Name" />
+              <TextBox Text="{Binding Name}"
+                       IsReadOnly="True" />
+              <!-- PublicKey -->
+              <Label Content="PublicKey" />
+              <TextBox Text="{Binding PublicKey}"
+                       IsReadOnly="True" />
+              <!-- KeyPath -->
+              <Label Content="KeyPath" />
+              <TextBox Text="{Binding KeyPath}"
+                       IsReadOnly="True" />
+            </StackPanel>
+          </ScrollViewer>
+        </DataTemplate>
+        <DataTemplate DataType="mww:PeerInfo">
+          <!-- TODO: -->
+          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="12"
+                        Spacing="4">
+              <!-- Back Button -->
+              <Button Content="Back"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentInfoCommand, FallbackValue={x:Null}}"
+                      CommandParameter="{x:Null}"
+                      HorizontalAlignment="Left"
+                      Padding="12" />
+              <!-- Header -->
+              <Label Content="Peer"
+                     FontWeight="SemiBold" />
+              <!-- IsConnected -->
+              <Label Content="IsConnected" />
+              <CheckBox IsChecked="{Binding IsConnected}"
+                        IsEnabled="False" />
+              <!-- LastSeen -->
+              <Label Content="LastSeen" />
+              <TextBox Text="{Binding LastSeen}"
+                       IsReadOnly="True" />
+              <!-- Endpoint -->
+              <Label Content="Endpoint" />
+              <TextBox Text="{Binding Endpoint}"
+                       IsReadOnly="True" />
+              <!-- UserAgent -->
+              <Label Content="UserAgent" />
+              <TextBox Text="{Binding UserAgent}"
+                       IsReadOnly="True" />
+            </StackPanel>
+          </ScrollViewer>
+        </DataTemplate>
+        <DataTemplate DataType="mww:StatusInfo">
+          <!-- TODO: -->
+          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="12"
+                        Spacing="4">
+              <!-- Back Button -->
+              <Button Content="Back"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentInfoCommand, FallbackValue={x:Null}}"
+                      CommandParameter="{x:Null}"
+                      HorizontalAlignment="Left"
+                      Padding="12" />
+              <!-- Header -->
+              <Label Content="Status"
+                     FontWeight="SemiBold" />
+              <!-- TorStatus -->
+              <Label Content="TorStatus" />
+              <TextBox Text="{Binding TorStatus}"
+                       IsReadOnly="True" />
+              <!-- BackendStatus -->
+              <Label Content="BackendStatus" />
+              <TextBox Text="{Binding BackendStatus}"
+                       IsReadOnly="True" />
+              <!-- BestBlockchainHeight -->
+              <Label Content="BestBlockchainHeight" />
+              <TextBox Text="{Binding BestBlockchainHeight}"
+                       IsReadOnly="True" />
+              <!-- FiltersCount -->
+              <Label Content="FiltersCount" />
+              <TextBox Text="{Binding FiltersCount}"
+                       IsReadOnly="True" />
+              <!-- FiltersLeft -->
+              <Label Content="FiltersLeft" />
+              <TextBox Text="{Binding FiltersLeft}"
+                       IsReadOnly="True" />
+              <!-- Network -->
+              <Label Content="Network" />
+              <TextBox Text="{Binding Network}"
+                       IsReadOnly="True" />
+              <!-- ExchangeRate -->
+              <Label Content="ExchangeRate" />
+              <TextBox Text="{Binding ExchangeRate}"
+                       IsReadOnly="True" />
+              <!-- Peers -->
+              <Label Content="Peers" />
+              <TextBox Text="{Binding Peers.Count, FallbackValue=0}"
+                       IsReadOnly="True" />
+              <!-- TODO: Navigate to Peers list view -->
+            </StackPanel>
+          </ScrollViewer>
+        </DataTemplate>
+        <DataTemplate DataType="mww:WalletInfo">
+          <!-- TODO: -->
+          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="12"
+                        Spacing="4">
+              <!-- Back Button -->
+              <Button Content="Back"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentInfoCommand, FallbackValue={x:Null}}"
+                      CommandParameter="{x:Null}"
+                      HorizontalAlignment="Left"
+                      Padding="12" />
+              <!-- Header -->
+              <Label Content="Wallet"
+                     FontWeight="SemiBold" />
+              <!-- WalletName -->
+              <Label Content="WalletName" />
+              <TextBox Text="{Binding WalletName}"
+                       IsReadOnly="True" />
+              <!-- WalletFile -->
+              <Label Content="WalletFile" />
+              <TextBox Text="{Binding WalletFile}"
+                       IsReadOnly="True" />
+              <!-- State -->
+              <Label Content="State" />
+              <TextBox Text="{Binding State}"
+                       IsReadOnly="True" />
+              <!-- MasterKeyFingerprint -->
+              <Label Content="MasterKeyFingerprint" />
+              <TextBox Text="{Binding MasterKeyFingerprint}"
+                       IsReadOnly="True" />
+              <!-- Balance -->
+              <Label Content="Balance" />
+              <TextBox Text="{Binding Balance}"
+                       IsReadOnly="True" />
+              <!-- AnonScoreTarget -->
+              <Label Content="AnonScoreTarget" />
+              <TextBox Text="{Binding AnonScoreTarget}"
+                       IsReadOnly="True" />
+              <!-- Accounts -->
+              <Label Content="Accounts" />
+              <TextBox Text="{Binding Accounts.Count, FallbackValue=0}"
+                       IsReadOnly="True" />
+              <!-- TODO: Navigate to Accounts list view -->
+            </StackPanel>
+          </ScrollViewer>
+        </DataTemplate>
+      </ContentControl.DataTemplates>
+    </ContentControl>
+
+  </Panel>
 
 </Window>

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace wcli.Models;
+namespace WasabiCli.Models.RpcJson;
 
 public class RpcMethod : Rpc
 {

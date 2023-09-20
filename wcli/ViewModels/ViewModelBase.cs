@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace wcli.ViewModels;
+namespace WasabiCli.ViewModels;
 
 public class ViewModelBase : ObservableObject
 {

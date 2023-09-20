@@ -4,15 +4,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using wcli.Models;
-using wcli.Services;
+using WasabiCli.Models.RpcJson;
+using WasabiCli.Services;
 
-namespace wcli.ViewModels;
+namespace WasabiCli.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
     [ObservableProperty] private string? _rpcServerPrefix;
     [ObservableProperty] private string? _walletName;
+    [ObservableProperty] private object? _currentInfo;
 
     public MainWindowViewModel()
     {
@@ -30,6 +31,12 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
+    private void SetCurrentInfo(object? currentInfo)
+    {
+        CurrentInfo = currentInfo;
+    }
+
+    [RelayCommand]
     private async Task GetStatus()
     {
         // {"jsonrpc":"2.0","id":"1","method":"getstatus"}
@@ -42,6 +49,11 @@ public partial class MainWindowViewModel : ViewModelBase
         if (rpcResult?.Result != null)
         {
             // TODO:
+            CurrentInfo = rpcResult.Result;
+        }
+        else
+        {
+            // TODO: Show error if any.
         }
     }
 
@@ -58,6 +70,11 @@ public partial class MainWindowViewModel : ViewModelBase
         if (rpcResult?.Result != null)
         {
             // TODO:
+            CurrentInfo = rpcResult.Result;
+        }
+        else
+        {
+            // TODO: Show error if any.
         }
     }
 }

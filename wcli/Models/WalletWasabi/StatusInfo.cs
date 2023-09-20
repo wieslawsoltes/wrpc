@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace wcli.Models;
+namespace WasabiCli.Models.WalletWasabi;
 
-public class GetStatusResult
+public class StatusInfo
 {
     [JsonPropertyName("torStatus")]
     public string? TorStatus { get; set; }

@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using WasabiCli.Models.WalletWasabi;
 
-namespace wcli.Models;
+namespace WasabiCli.Models.RpcJson;
 
 // getwalletinfo
-[JsonSerializable(typeof(GetWalletInfoResult))]
+[JsonSerializable(typeof(WalletInfo))]
 [JsonSerializable(typeof(RpcGetWalletInfoResult))]
 // getstatus
 [JsonSerializable(typeof(PeerInfo))]
 [JsonSerializable(typeof(List<PeerInfo>))]
-[JsonSerializable(typeof(GetStatusResult))]
+[JsonSerializable(typeof(StatusInfo))]
 [JsonSerializable(typeof(RpcGetStatusResult))]
 // rpc
 [JsonSerializable(typeof(RpcMethod))]

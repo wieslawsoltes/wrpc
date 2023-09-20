@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace wcli.Models;
+namespace WasabiCli.Models.WalletWasabi;
 
 public class PeerInfo
 {
