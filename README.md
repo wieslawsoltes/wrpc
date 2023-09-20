@@ -1,5 +1,22 @@
 # wcli
 
+### RPC
+
+- [x] getstatus
+- [x] createwallet
+- [ ] listcoins
+- [ ] listunspentcoins
+- [x] getwalletinfo
+- [ ] getnewaddress
+- [ ] send
+- [ ] build
+- [ ] broadcast
+- [ ] gethistory
+- [ ] listkeys
+- [ ] startcoinjoin
+- [ ] stopcoinjoin
+- [ ] stop
+
 ### Resources
 
 - https://docs.wasabiwallet.io/using-wasabi/RPC.html
