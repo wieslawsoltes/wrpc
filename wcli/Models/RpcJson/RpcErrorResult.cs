@@ -3,9 +3,9 @@ using WasabiCli.Models.WalletWasabi;
 
 namespace WasabiCli.Models.RpcJson;
 
-public class RpcGetWalletInfoResult : Rpc
+public class RpcErrorResult : Rpc
 {
-    [JsonPropertyName("result")]
+    [JsonPropertyName("error")]
     [JsonRequired]
-    public WalletInfo? Result { get; set; }
+    public ErrorInfo? Error { get; set; }
 }

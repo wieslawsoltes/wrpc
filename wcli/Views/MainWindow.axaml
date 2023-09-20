@@ -22,7 +22,7 @@
     <StackPanel Margin="12"
                 Spacing="4"
                 VerticalAlignment="Top"
-                IsVisible="{Binding CurrentInfo, Converter={x:Static ObjectConverters.IsNull}}">
+                IsVisible="{Binding CurrentDialog, Converter={x:Static ObjectConverters.IsNull}}">
 
       <Label Content="Wasabi.Wallet RPC"
              FontWeight="SemiBold" />
@@ -55,8 +55,34 @@
 
     </StackPanel>
     
-    <ContentControl Content="{Binding CurrentInfo}">
+    <ContentControl Content="{Binding CurrentDialog}">
       <ContentControl.DataTemplates>
+        <DataTemplate DataType="mww:ErrorInfo">
+          <!-- TODO: -->
+          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="12"
+                        Spacing="4">
+              <!-- Back Button -->
+              <Button Content="Back"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
+                      CommandParameter="{x:Null}"
+                      HorizontalAlignment="Left"
+                      Padding="12" />
+              <!-- Header -->
+              <Label Content="Error"
+                     FontWeight="SemiBold" />
+              <!-- IsConnected -->
+              <!-- Code -->
+              <Label Content="Code" />
+              <TextBox Text="{Binding Code}"
+                       IsReadOnly="True" />
+              <!-- Message -->
+              <Label Content="Message" />
+              <TextBox Text="{Binding Message}"
+                       IsReadOnly="True" />
+            </StackPanel>
+          </ScrollViewer>
+        </DataTemplate>
         <DataTemplate DataType="mww:AccountInfo">
           <!-- TODO: -->
           <ScrollViewer HorizontalScrollBarVisibility="Disabled">
@@ -64,7 +90,7 @@
                         Spacing="4">
               <!-- Back Button -->
               <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentInfoCommand, FallbackValue={x:Null}}"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
                       CommandParameter="{x:Null}"
                       HorizontalAlignment="Left"
                       Padding="12" />
@@ -94,7 +120,7 @@
                         Spacing="4">
               <!-- Back Button -->
               <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentInfoCommand, FallbackValue={x:Null}}"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
                       CommandParameter="{x:Null}"
                       HorizontalAlignment="Left"
                       Padding="12" />
@@ -127,7 +153,7 @@
                         Spacing="4">
               <!-- Back Button -->
               <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentInfoCommand, FallbackValue={x:Null}}"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
                       CommandParameter="{x:Null}"
                       HorizontalAlignment="Left"
                       Padding="12" />
@@ -177,7 +203,7 @@
                         Spacing="4">
               <!-- Back Button -->
               <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentInfoCommand, FallbackValue={x:Null}}"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
                       CommandParameter="{x:Null}"
                       HorizontalAlignment="Left"
                       Padding="12" />

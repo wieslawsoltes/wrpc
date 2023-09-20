@@ -4,6 +4,9 @@ using WasabiCli.Models.WalletWasabi;
 
 namespace WasabiCli.Models.RpcJson;
 
+// error
+[JsonSerializable(typeof(ErrorInfo))]
+[JsonSerializable(typeof(RpcErrorResult))]
 // getwalletinfo
 [JsonSerializable(typeof(WalletInfo))]
 [JsonSerializable(typeof(RpcGetWalletInfoResult))]

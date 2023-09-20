@@ -6,5 +6,6 @@ namespace WasabiCli.Models.RpcJson;
 public class RpcGetStatusResult : Rpc
 {
     [JsonPropertyName("result")]
+    [JsonRequired]
     public StatusInfo? Result { get; set; }
 }

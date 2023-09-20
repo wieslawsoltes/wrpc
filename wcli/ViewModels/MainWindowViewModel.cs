@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ public partial class MainWindowViewModel : ViewModelBase
 {
     [ObservableProperty] private string? _rpcServerPrefix;
     [ObservableProperty] private string? _walletName;
-    [ObservableProperty] private object? _currentInfo;
+    [ObservableProperty] private object? _currentDialog;
 
     public MainWindowViewModel()
     {
@@ -21,19 +22,45 @@ public partial class MainWindowViewModel : ViewModelBase
         WalletName = "Wallet 1";
     }
 
-    private async Task<T?> SendRpcMethod<T>(RpcMethod requestBody, string rpcServerUri, JsonTypeInfo<T> jsonTypeInfo)
+    private async Task<Rpc?> SendRpcMethod<T>(RpcMethod requestBody, string rpcServerUri, JsonTypeInfo<T> jsonTypeInfo)
+        where T: Rpc
     {
         var requestBodyJson = JsonSerializer.Serialize(requestBody, RpcJsonContext.Default.RpcMethod);
         var cts = new CancellationTokenSource();
         var rpcService = new RpcService();
         var responseBodyJson = await rpcService.GetResponseDataAsync(rpcServerUri, requestBodyJson, true, cts.Token);
-        return responseBodyJson is not null ? JsonSerializer.Deserialize(responseBodyJson, jsonTypeInfo) : default;
+        if (responseBodyJson is not null)
+        {
+            try
+            {
+                var okResult = JsonSerializer.Deserialize(responseBodyJson, jsonTypeInfo);
+                if (okResult is not null)
+                {
+                    return okResult;
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+
+            try
+            {
+                return JsonSerializer.Deserialize(responseBodyJson, RpcJsonContext.Default.RpcErrorResult);
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+        }
+
+        return default;
     }
 
     [RelayCommand]
-    private void SetCurrentInfo(object? currentInfo)
+    private void SetCurrentDialog(object? currentDialog)
     {
-        CurrentInfo = currentInfo;
+        CurrentDialog = currentDialog;
     }
 
     [RelayCommand]
@@ -45,15 +72,16 @@ public partial class MainWindowViewModel : ViewModelBase
             Method = "getstatus"
         };
         var rpcServerUri = $"{RpcServerPrefix}";
-        var rpcResult = await SendRpcMethod<RpcGetStatusResult>(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetStatusResult);
-        if (rpcResult?.Result != null)
+        var rpcResult = await SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetStatusResult);
+        if (rpcResult is RpcGetStatusResult { Result: not null } rpcGetStatusResult)
         {
             // TODO:
-            CurrentInfo = rpcResult.Result;
+            CurrentDialog = rpcGetStatusResult.Result;
         }
-        else
+        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            // TODO: Show error if any.
+            // TODO:
+            CurrentDialog = rpcErrorResult.Error;
         }
     }
 
@@ -66,15 +94,16 @@ public partial class MainWindowViewModel : ViewModelBase
             Method = "getwalletinfo"
         };
         var rpcServerUri = $"{RpcServerPrefix}/{WalletName}";
-        var rpcResult = await SendRpcMethod<RpcGetWalletInfoResult>(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetWalletInfoResult);
-        if (rpcResult?.Result != null)
+        var rpcResult = await SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetWalletInfoResult);
+        if (rpcResult is RpcGetWalletInfoResult { Result: not null } rpcGetWalletInfoResult)
         {
             // TODO:
-            CurrentInfo = rpcResult.Result;
+            CurrentDialog = rpcGetWalletInfoResult.Result;
         }
-        else
+        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            // TODO: Show error if any.
+            // TODO:
+            CurrentDialog = rpcErrorResult.Error;
         }
     }
 }
