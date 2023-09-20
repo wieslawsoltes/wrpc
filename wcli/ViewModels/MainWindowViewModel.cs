@@ -139,13 +139,45 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private async Task ListCoins()
     {
-        throw new NotImplementedException();
+        // {"jsonrpc":"2.0","id":"1","method":"listcoins"}
+        var requestBody = new RpcMethod()
+        {
+            Method = "listcoins"
+        };
+        var rpcServerUri = $"{RpcServerPrefix}/{WalletName}";
+        var rpcResult = await SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcListCoinsResult);
+        if (rpcResult is RpcListCoinsResult { Result: not null } rpcListCoinsResult)
+        {
+            // TODO:
+            CurrentDialog = new ListCoinsInfo { Coins = rpcListCoinsResult.Result };
+        }
+        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            // TODO:
+            CurrentDialog = rpcErrorResult.Error;
+        }
     }
 
     [RelayCommand]
     private async Task ListUnspentCoins()
     {
-        throw new NotImplementedException();
+        // {"jsonrpc":"2.0","id":"1","method":"listunspentcoins"}
+        var requestBody = new RpcMethod()
+        {
+            Method = "listunspentcoins"
+        };
+        var rpcServerUri = $"{RpcServerPrefix}/{WalletName}";
+        var rpcResult = await SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcListUnspentCoinsResult);
+        if (rpcResult is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
+        {
+            // TODO:
+            CurrentDialog = new ListUnspentCoinsInfo { Coins = rpcListUnspentCoinsResult.Result };
+        }
+        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            // TODO:
+            CurrentDialog = rpcErrorResult.Error;
+        }
     }
 
     [RelayCommand]

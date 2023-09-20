@@ -4,8 +4,8 @@
 
 - [x] getstatus
 - [x] createwallet
-- [ ] listcoins
-- [ ] listunspentcoins
+- [x] listcoins
+- [x] listunspentcoins
 - [x] getwalletinfo
 - [ ] getnewaddress
 - [ ] send

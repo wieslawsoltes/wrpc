@@ -196,6 +196,113 @@
             </StackPanel>
           </ScrollViewer>
         </DataTemplate>
+        <DataTemplate DataType="mww:CoinInfo">
+          <!-- TODO: -->
+          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="12"
+                        Spacing="4">
+              <!-- Back Button -->
+              <Button Content="Back"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
+                      CommandParameter="{x:Null}"
+                      HorizontalAlignment="Left"
+                      Padding="12" />
+              <!-- Header -->
+              <Label Content="Coin"
+                     FontWeight="SemiBold" />
+              <!-- TxId -->
+              <Label Content="TxId" />
+              <TextBox Text="{Binding TxId}"
+                       IsReadOnly="True" />
+              <!-- Index -->
+              <Label Content="Index" />
+              <TextBox Text="{Binding Index}"
+                       IsReadOnly="True" />
+              <!-- Amount -->
+              <Label Content="Amount" />
+              <TextBox Text="{Binding Amount}"
+                       IsReadOnly="True" />
+              <!-- AnonymityScore -->
+              <Label Content="AnonymityScore" />
+              <TextBox Text="{Binding AnonymityScore}"
+                       IsReadOnly="True" />
+              <!-- Confirmed -->
+              <Label Content="Confirmed" />
+              <CheckBox IsChecked="{Binding Confirmed}"
+                        IsEnabled="False" />
+              <!-- Confirmations -->
+              <Label Content="Confirmations" />
+              <TextBox Text="{Binding Confirmations}"
+                       IsReadOnly="True" />
+              <!-- KeyPath -->
+              <Label Content="KeyPath" />
+              <TextBox Text="{Binding KeyPath}"
+                       IsReadOnly="True" />
+              <!-- Address -->
+              <Label Content="Address" />
+              <TextBox Text="{Binding Address}"
+                       IsReadOnly="True" />
+              <!-- SpentBy -->
+              <Label Content="SpentBy" />
+              <TextBox Text="{Binding SpentBy}"
+                       IsReadOnly="True" />
+            </StackPanel>
+          </ScrollViewer>
+        </DataTemplate>
+        <DataTemplate DataType="mww:ListCoinsInfo">
+          <DockPanel Margin="12">
+            <!-- Back Button -->
+            <Button Content="Back"
+                    Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
+                    CommandParameter="{x:Null}"
+                    HorizontalAlignment="Left"
+                    Padding="12"
+                    DockPanel.Dock="Top"/>
+            <!-- Coins -->
+            <ListBox ItemsSource="{Binding Coins}">
+              <ListBox.ItemTemplate>
+                <DataTemplate>
+                  <DockPanel>
+                    <Button Content="Details"
+                            Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
+                            CommandParameter="{Binding .}"
+                            Margin="4"
+                            DockPanel.Dock="Right"/>
+                    <TextBlock Text="{Binding Amount}"
+                               VerticalAlignment="Center" />
+                  </DockPanel>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+          </DockPanel>
+        </DataTemplate>
+        <DataTemplate DataType="mww:ListUnspentCoinsInfo">
+          <DockPanel Margin="12">
+            <!-- Back Button -->
+            <Button Content="Back"
+                    Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
+                    CommandParameter="{x:Null}"
+                    HorizontalAlignment="Left"
+                    Padding="12"
+                    DockPanel.Dock="Top"/>
+            <!-- Coins -->
+            <ListBox ItemsSource="{Binding Coins}">
+              <ListBox.ItemTemplate>
+                <DataTemplate>
+                  <DockPanel>
+                    <Button Content="Details"
+                            Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
+                            CommandParameter="{Binding .}"
+                            Margin="4"
+                            DockPanel.Dock="Right"/>
+                    <TextBlock Text="{Binding Amount}"
+                               VerticalAlignment="Center" />
+                  </DockPanel>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+          </DockPanel>
+        </DataTemplate>
         <DataTemplate DataType="mww:AccountInfo">
           <!-- TODO: -->
           <ScrollViewer HorizontalScrollBarVisibility="Disabled">
