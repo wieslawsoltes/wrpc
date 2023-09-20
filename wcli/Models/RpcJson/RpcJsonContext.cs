@@ -4,12 +4,12 @@ using WasabiCli.Models.WalletWasabi;
 
 namespace WasabiCli.Models.RpcJson;
 
+// rpc
+[JsonSerializable(typeof(RpcMethod))]
+[JsonSerializable(typeof(Rpc))]
 // error
 [JsonSerializable(typeof(ErrorInfo))]
 [JsonSerializable(typeof(RpcErrorResult))]
-// getwalletinfo
-[JsonSerializable(typeof(WalletInfo))]
-[JsonSerializable(typeof(RpcGetWalletInfoResult))]
 // getstatus
 [JsonSerializable(typeof(PeerInfo))]
 [JsonSerializable(typeof(List<PeerInfo>))]
@@ -18,9 +18,9 @@ namespace WasabiCli.Models.RpcJson;
 // createwallet
 [JsonSerializable(typeof(CreateWalletInfo))]
 [JsonSerializable(typeof(RpcCreateWalletResult))]
-// rpc
-[JsonSerializable(typeof(RpcMethod))]
-[JsonSerializable(typeof(Rpc))]
+// getwalletinfo
+[JsonSerializable(typeof(WalletInfo))]
+[JsonSerializable(typeof(RpcGetWalletInfoResult))]
 public partial class RpcJsonContext : JsonSerializerContext
 {
 }
