@@ -55,6 +55,7 @@
               <Button Name="GetStatusButton"
                       Content="{Binding Name}"
                       Command="{Binding Command}"
+                      CommandParameter="{x:Null}"
                       HorizontalAlignment="Stretch"
                       HorizontalContentAlignment="Center"
                       Padding="6,4,6,4" />
@@ -74,7 +75,7 @@
                         Spacing="4">
               <!-- Back Button -->
               <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).BackCommand, FallbackValue={x:Null}}"
                       CommandParameter="{x:Null}"
                       HorizontalAlignment="Left"
                       Padding="12" />
@@ -99,7 +100,7 @@
                         Spacing="4">
               <!-- Back Button -->
               <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).BackCommand, FallbackValue={x:Null}}"
                       CommandParameter="{x:Null}"
                       HorizontalAlignment="Left"
                       Padding="12" />
@@ -132,7 +133,7 @@
                         Spacing="4">
               <!-- Back Button -->
               <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).NavigateCommand, FallbackValue={x:Null}}"
                       CommandParameter="{x:Null}"
                       HorizontalAlignment="Left"
                       Padding="12" />
@@ -182,7 +183,7 @@
                         Spacing="4">
               <!-- Back Button -->
               <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).NavigateCommand, FallbackValue={x:Null}}"
                       CommandParameter="{x:Null}"
                       HorizontalAlignment="Left"
                       Padding="12" />
@@ -203,7 +204,7 @@
                         Spacing="4">
               <!-- Back Button -->
               <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).BackCommand, FallbackValue={x:Null}}"
                       CommandParameter="{x:Null}"
                       HorizontalAlignment="Left"
                       Padding="12" />
@@ -253,7 +254,7 @@
           <DockPanel Margin="12">
             <!-- Back Button -->
             <Button Content="Back"
-                    Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
+                    Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).BackCommand, FallbackValue={x:Null}}"
                     CommandParameter="{x:Null}"
                     HorizontalAlignment="Left"
                     Padding="12"
@@ -264,7 +265,7 @@
                 <DataTemplate>
                   <DockPanel>
                     <Button Content="Details"
-                            Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
+                            Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).NavigateCommand, FallbackValue={x:Null}}"
                             CommandParameter="{Binding .}"
                             Margin="4"
                             DockPanel.Dock="Right"/>
@@ -280,7 +281,7 @@
           <DockPanel Margin="12">
             <!-- Back Button -->
             <Button Content="Back"
-                    Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
+                    Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).BackCommand, FallbackValue={x:Null}}"
                     CommandParameter="{x:Null}"
                     HorizontalAlignment="Left"
                     Padding="12"
@@ -291,7 +292,7 @@
                 <DataTemplate>
                   <DockPanel>
                     <Button Content="Details"
-                            Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
+                            Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).NavigateCommand, FallbackValue={x:Null}}"
                             CommandParameter="{Binding .}"
                             Margin="4"
                             DockPanel.Dock="Right"/>
@@ -310,7 +311,7 @@
                         Spacing="4">
               <!-- Back Button -->
               <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).BackCommand, FallbackValue={x:Null}}"
                       CommandParameter="{x:Null}"
                       HorizontalAlignment="Left"
                       Padding="12" />
@@ -339,7 +340,7 @@
                         Spacing="4">
               <!-- Back Button -->
               <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).BackCommand, FallbackValue={x:Null}}"
                       CommandParameter="{x:Null}"
                       HorizontalAlignment="Left"
                       Padding="12" />

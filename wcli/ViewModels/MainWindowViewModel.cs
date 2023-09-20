@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
@@ -17,6 +18,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty] private string? _rpcServerPrefix;
     [ObservableProperty] private string? _walletName;
     [ObservableProperty] private string? _walletPassword;
+    [ObservableProperty] private Stack<object>? _dialogs;
     [ObservableProperty] private object? _currentDialog;
     [ObservableProperty] private ObservableCollection<RpcMethodViewModel>? _rpcMethods;
 
@@ -25,6 +27,8 @@ public partial class MainWindowViewModel : ViewModelBase
         RpcServerPrefix = "http://127.0.0.1:37128";
         WalletName = "Wallet 1";
         WalletPassword = "";
+        Dialogs = new Stack<object>();
+        CurrentDialog = null;
         RpcMethods = new ObservableCollection<RpcMethodViewModel>()
         {
             new ("GetStatus", GetStatusCommand),
@@ -82,9 +86,39 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void SetCurrentDialog(object? currentDialog)
+    private void Back()
     {
-        CurrentDialog = currentDialog;
+        if (Dialogs is not null)
+        {
+            if (Dialogs.Count > 0)
+            {
+                Dialogs.Pop();
+            }
+
+            if (Dialogs.TryPeek(out var dialog))
+            {
+                CurrentDialog = dialog;
+            }
+            else
+            {
+                CurrentDialog = null;
+            }
+        }
+    }
+
+    [RelayCommand]
+    private void Navigate(object? dialog)
+    {
+        if (dialog is null)
+        {
+            Dialogs?.Clear();
+        }
+        else
+        {
+            Dialogs?.Push(dialog);
+        }
+
+        CurrentDialog = dialog;
     }
 
     [RelayCommand]
@@ -100,12 +134,12 @@ public partial class MainWindowViewModel : ViewModelBase
         if (rpcResult is RpcGetStatusResult { Result: not null } rpcGetStatusResult)
         {
             // TODO:
-            CurrentDialog = rpcGetStatusResult.Result;
+            Navigate(rpcGetStatusResult.Result);
         }
         else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
-            CurrentDialog = rpcErrorResult.Error;
+            Navigate(rpcErrorResult.Error);
         }
     }
 
@@ -127,12 +161,12 @@ public partial class MainWindowViewModel : ViewModelBase
         if (rpcResult is RpcCreateWalletResult { Result: not null } rpcCreateWalletResult)
         {
             // TODO:
-            CurrentDialog = new CreateWalletInfo { Mnemonic = rpcCreateWalletResult.Result };
+            Navigate(new CreateWalletInfo { Mnemonic = rpcCreateWalletResult.Result });
         }
         else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
-            CurrentDialog = rpcErrorResult.Error;
+            Navigate(rpcErrorResult.Error);
         }
     }
 
@@ -149,12 +183,12 @@ public partial class MainWindowViewModel : ViewModelBase
         if (rpcResult is RpcListCoinsResult { Result: not null } rpcListCoinsResult)
         {
             // TODO:
-            CurrentDialog = new ListCoinsInfo { Coins = rpcListCoinsResult.Result };
+            Navigate(new ListCoinsInfo { Coins = rpcListCoinsResult.Result });
         }
         else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
-            CurrentDialog = rpcErrorResult.Error;
+            Navigate(rpcErrorResult.Error);
         }
     }
 
@@ -171,12 +205,12 @@ public partial class MainWindowViewModel : ViewModelBase
         if (rpcResult is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
         {
             // TODO:
-            CurrentDialog = new ListUnspentCoinsInfo { Coins = rpcListUnspentCoinsResult.Result };
+            Navigate(new ListUnspentCoinsInfo { Coins = rpcListUnspentCoinsResult.Result });
         }
         else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
-            CurrentDialog = rpcErrorResult.Error;
+            Navigate(rpcErrorResult.Error);
         }
     }
 
@@ -193,12 +227,12 @@ public partial class MainWindowViewModel : ViewModelBase
         if (rpcResult is RpcGetWalletInfoResult { Result: not null } rpcGetWalletInfoResult)
         {
             // TODO:
-            CurrentDialog = rpcGetWalletInfoResult.Result;
+            Navigate(rpcGetWalletInfoResult.Result);
         }
         else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
-            CurrentDialog = rpcErrorResult.Error;
+            Navigate(rpcErrorResult.Error);
         }
     }
 
