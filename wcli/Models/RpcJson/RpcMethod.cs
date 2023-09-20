@@ -9,5 +9,5 @@ public class RpcMethod : Rpc
     public string? Method { get; set; }
 
     [JsonPropertyName("params")]
-    public string? Params { get; set; }
+    public string?[]? Params { get; set; }
 }
