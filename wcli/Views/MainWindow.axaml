@@ -4,12 +4,12 @@
         xmlns:vm="using:WasabiCli.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="680"
         x:Class="WasabiCli.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         WindowStartupLocation="CenterScreen"
         Width="400"
-        Height="600"
+        Height="680"
         Icon="/Assets/avalonia-logo.ico"
         Title="Wasabi.Wallet RPC">
 
@@ -18,60 +18,53 @@
   </Design.DataContext>
 
   <Panel>
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+      <StackPanel Margin="12"
+                  Spacing="4"
+                  VerticalAlignment="Top"
+                  IsVisible="{Binding CurrentDialog, Converter={x:Static ObjectConverters.IsNull}}">
+        <!-- Header -->
+        <Label Content="Wasabi.Wallet RPC"
+               FontWeight="SemiBold" />
+        <!-- RpcServerPrefix -->
+        <Label Content="RPC server prefix:"
+               Target="RpcServerTextBox" />
+        <TextBox Name="RpcServerTextBox"
+                 Text="{Binding RpcServerPrefix, Mode=TwoWay}" />
+        <!-- WalletName -->
+        <Label Content="Wallet name:"
+               Target="WalletNameTextBox" />
+        <TextBox Name="WalletNameTextBox"
+                 Text="{Binding WalletName, Mode=TwoWay}" />
+        <!-- WalletPassword -->
+        <Label Content="Wallet password:"
+               Target="WalletPasswordTextBox" />
+        <TextBox Name="WalletPasswordTextBox"
+                 Text="{Binding WalletPassword, Mode=TwoWay}"
+                 PasswordChar="*" />
 
-    <StackPanel Margin="12"
-                Spacing="4"
-                VerticalAlignment="Top"
-                IsVisible="{Binding CurrentDialog, Converter={x:Static ObjectConverters.IsNull}}">
+        <ItemsControl ItemsSource="{Binding RpcMethods}"
+                      Margin="0,4,0,0">
+          <ItemsControl.Styles>
+            <Style Selector="ItemsControl StackPanel">
+              <Setter Property="Spacing" Value="4" />
+            </Style>
+          </ItemsControl.Styles>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <Button Name="GetStatusButton"
+                      Content="{Binding Name}"
+                      Command="{Binding Command}"
+                      HorizontalAlignment="Stretch"
+                      HorizontalContentAlignment="Center"
+                      Padding="6,4,6,4" />
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
-      <Label Content="Wasabi.Wallet RPC"
-             FontWeight="SemiBold" />
+      </StackPanel>
+    </ScrollViewer>
 
-      <!-- RpcServerPrefix -->
-      <Label Content="RPC server prefix:"
-             Target="RpcServerTextBox" />
-      <TextBox Name="RpcServerTextBox"
-               Text="{Binding RpcServerPrefix, Mode=TwoWay}" />
-
-      <!-- WalletName -->
-      <Label Content="Wallet name:"
-             Target="WalletNameTextBox" />
-      <TextBox Name="WalletNameTextBox"
-               Text="{Binding WalletName, Mode=TwoWay}" />
-
-      <!-- WalletPassword -->
-      <Label Content="Wallet password:"
-             Target="WalletPasswordTextBox" />
-      <TextBox Name="WalletPasswordTextBox"
-               Text="{Binding WalletPassword, Mode=TwoWay}"
-               PasswordChar="*" />
-
-      <!-- GetStatus -->
-      <Button Name="GetStatusButton"
-              Content="GetStatus"
-              Command="{Binding GetStatusCommand}"
-              HorizontalAlignment="Stretch"
-              HorizontalContentAlignment="Center"
-              Padding="12" />
-
-      <!-- GetWalletInfo -->
-      <Button Name="GetWalletInfoButton"
-              Content="GetWalletInfo"
-              Command="{Binding GetWalletInfoCommand}"
-              HorizontalAlignment="Stretch"
-              HorizontalContentAlignment="Center"
-              Padding="12" />
-
-      <!-- GetWalletInfo -->
-      <Button Name="CreateWalletButton"
-              Content="CreateWallet"
-              Command="{Binding CreateWalletCommand}"
-              HorizontalAlignment="Stretch"
-              HorizontalContentAlignment="Center"
-              Padding="12" />
-
-    </StackPanel>
-    
     <ContentControl Content="{Binding CurrentDialog}">
       <ContentControl.DataTemplates>
         <DataTemplate DataType="mww:ErrorInfo">
@@ -96,58 +89,6 @@
               <!-- Message -->
               <Label Content="Message" />
               <TextBox Text="{Binding Message}"
-                       IsReadOnly="True" />
-            </StackPanel>
-          </ScrollViewer>
-        </DataTemplate>
-        <DataTemplate DataType="mww:CreateWalletInfo">
-          <!-- TODO: -->
-          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-            <StackPanel Margin="12"
-                        Spacing="4">
-              <!-- Back Button -->
-              <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
-                      CommandParameter="{x:Null}"
-                      HorizontalAlignment="Left"
-                      Padding="12" />
-              <!-- Header -->
-              <Label Content="New Wallet"
-                     FontWeight="SemiBold" />
-              <!-- IsConnected -->
-              <!-- Mnemonic -->
-              <Label Content="Mnemonic" />
-              <TextBox Text="{Binding Mnemonic}"
-                       IsReadOnly="True" />
-            </StackPanel>
-          </ScrollViewer>
-        </DataTemplate>
-        <DataTemplate DataType="mww:AccountInfo">
-          <!-- TODO: -->
-          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-            <StackPanel Margin="12"
-                        Spacing="4">
-              <!-- Back Button -->
-              <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
-                      CommandParameter="{x:Null}"
-                      HorizontalAlignment="Left"
-                      Padding="12" />
-              <!-- Header -->
-              <Label Content="Account"
-                     FontWeight="SemiBold" />
-              <!-- IsConnected -->
-              <!-- Name -->
-              <Label Content="Name" />
-              <TextBox Text="{Binding Name}"
-                       IsReadOnly="True" />
-              <!-- PublicKey -->
-              <Label Content="PublicKey" />
-              <TextBox Text="{Binding PublicKey}"
-                       IsReadOnly="True" />
-              <!-- KeyPath -->
-              <Label Content="KeyPath" />
-              <TextBox Text="{Binding KeyPath}"
                        IsReadOnly="True" />
             </StackPanel>
           </ScrollViewer>
@@ -232,6 +173,58 @@
               <TextBox Text="{Binding Peers.Count, FallbackValue=0}"
                        IsReadOnly="True" />
               <!-- TODO: Navigate to Peers list view -->
+            </StackPanel>
+          </ScrollViewer>
+        </DataTemplate>
+        <DataTemplate DataType="mww:CreateWalletInfo">
+          <!-- TODO: -->
+          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="12"
+                        Spacing="4">
+              <!-- Back Button -->
+              <Button Content="Back"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
+                      CommandParameter="{x:Null}"
+                      HorizontalAlignment="Left"
+                      Padding="12" />
+              <!-- Header -->
+              <Label Content="New Wallet"
+                     FontWeight="SemiBold" />
+              <!-- IsConnected -->
+              <!-- Mnemonic -->
+              <Label Content="Mnemonic" />
+              <TextBox Text="{Binding Mnemonic}"
+                       IsReadOnly="True" />
+            </StackPanel>
+          </ScrollViewer>
+        </DataTemplate>
+        <DataTemplate DataType="mww:AccountInfo">
+          <!-- TODO: -->
+          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="12"
+                        Spacing="4">
+              <!-- Back Button -->
+              <Button Content="Back"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SetCurrentDialogCommand, FallbackValue={x:Null}}"
+                      CommandParameter="{x:Null}"
+                      HorizontalAlignment="Left"
+                      Padding="12" />
+              <!-- Header -->
+              <Label Content="Account"
+                     FontWeight="SemiBold" />
+              <!-- IsConnected -->
+              <!-- Name -->
+              <Label Content="Name" />
+              <TextBox Text="{Binding Name}"
+                       IsReadOnly="True" />
+              <!-- PublicKey -->
+              <Label Content="PublicKey" />
+              <TextBox Text="{Binding PublicKey}"
+                       IsReadOnly="True" />
+              <!-- KeyPath -->
+              <Label Content="KeyPath" />
+              <TextBox Text="{Binding KeyPath}"
+                       IsReadOnly="True" />
             </StackPanel>
           </ScrollViewer>
         </DataTemplate>
