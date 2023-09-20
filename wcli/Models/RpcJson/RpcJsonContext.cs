@@ -15,6 +15,9 @@ namespace WasabiCli.Models.RpcJson;
 [JsonSerializable(typeof(List<PeerInfo>))]
 [JsonSerializable(typeof(StatusInfo))]
 [JsonSerializable(typeof(RpcGetStatusResult))]
+// createwallet
+[JsonSerializable(typeof(CreateWalletInfo))]
+[JsonSerializable(typeof(RpcCreateWalletResult))]
 // rpc
 [JsonSerializable(typeof(RpcMethod))]
 [JsonSerializable(typeof(Rpc))]

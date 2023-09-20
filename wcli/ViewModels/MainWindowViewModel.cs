@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiCli.Models.RpcJson;
+using WasabiCli.Models.WalletWasabi;
 using WasabiCli.Services;
 
 namespace WasabiCli.ViewModels;
@@ -14,12 +15,14 @@ public partial class MainWindowViewModel : ViewModelBase
 {
     [ObservableProperty] private string? _rpcServerPrefix;
     [ObservableProperty] private string? _walletName;
+    [ObservableProperty] private string? _walletPassword;
     [ObservableProperty] private object? _currentDialog;
 
     public MainWindowViewModel()
     {
         RpcServerPrefix = "http://127.0.0.1:37128";
         WalletName = "Wallet 1";
+        WalletPassword = "";
     }
 
     private async Task<Rpc?> SendRpcMethod<T>(RpcMethod requestBody, string rpcServerUri, JsonTypeInfo<T> jsonTypeInfo) where T: Rpc
@@ -98,6 +101,33 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             // TODO:
             CurrentDialog = rpcGetWalletInfoResult.Result;
+        }
+        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            // TODO:
+            CurrentDialog = rpcErrorResult.Error;
+        }
+    }
+
+    [RelayCommand]
+    private async Task CreateWallet()
+    {
+        // {"jsonrpc":"2.0","id":"1","method":"createwallet","params":["WalletName", "UserPassword"]}'
+        var requestBody = new RpcMethod()
+        {
+            Method = "createwallet",
+            Params = new []
+            {
+                WalletName,
+                WalletPassword
+            }
+        };
+        var rpcServerUri = $"{RpcServerPrefix}";
+        var rpcResult = await SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcCreateWalletResult);
+        if (rpcResult is RpcCreateWalletResult { Result: not null } rpcCreateWalletResult)
+        {
+            // TODO:
+            CurrentDialog = new CreateWalletInfo { Mnemonic = rpcCreateWalletResult.Result };
         }
         else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
         {
