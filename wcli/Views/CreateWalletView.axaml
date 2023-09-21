@@ -21,7 +21,7 @@
                Text="{Binding WalletPassword, Mode=TwoWay}"
                PasswordChar="*" />
       <!-- CreateWallet -->
-      <Button Content="Create Wallet"
+      <Button Content="CreateWallet"
               Command="{Binding CreateWalletCommand}"
               CommandParameter="{x:Null}"
               HorizontalAlignment="Stretch"
