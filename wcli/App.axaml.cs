@@ -17,9 +17,13 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            var navigationService = new NavigationServiceViewModel();
+            
+            Navigation.NavigationService = navigationService;
+
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel(),
+                DataContext = new MainWindowViewModel(navigationService)
             };
         }
 

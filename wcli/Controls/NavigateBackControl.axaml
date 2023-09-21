@@ -1,9 +1,9 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="using:WasabiCli.Controls"
-        xmlns:vm="using:WasabiCli.ViewModels">
+        xmlns:local="using:WasabiCli">
   <Design.PreviewWith>
-    <controls:NavigateBackControl Header="Header xdg dfg dfh dfh df hjfdhj dfh "
+    <controls:NavigateBackControl Header="Header"
                                   Width="400"
                                   EnableBack="True">
       <StackPanel Spacing="12">
@@ -22,7 +22,7 @@
                 DockPanel.Dock="Top">
             <Button Name="PART_BackButton"
                     Content="&lt; Back"
-                    Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).NavigationService.BackCommand, FallbackValue={x:Null}}"
+                    Command="{x:Static local:Navigation.BackCommand}"
                     CommandParameter="{x:Null}"
                     IsVisible="{TemplateBinding EnableBack}"
                     Grid.Column="0" />

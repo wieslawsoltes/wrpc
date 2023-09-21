@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiCli.Models;
+using WasabiCli.Models.Navigation;
 using WasabiCli.Models.RpcJson;
 using WasabiCli.Models.WalletWasabi;
 
@@ -12,7 +13,6 @@ namespace WasabiCli.ViewModels;
 public partial class MainWindowViewModel : ViewModelBase
 {
     [ObservableProperty] private RpcServiceViewModel _rpcService;
-    [ObservableProperty] private NavigationServiceViewModel _navigationService;
     [ObservableProperty] private ObservableCollection<WalletViewModel>? _wallets;
 
     [NotifyCanExecuteChangedFor(nameof(GetNewAddressCommand))]
@@ -21,10 +21,10 @@ public partial class MainWindowViewModel : ViewModelBase
 
     [ObservableProperty] private ObservableCollection<RpcMethodViewModel>? _rpcMethods;
 
-    public MainWindowViewModel()
+    public MainWindowViewModel(INavigationService navigationService)
     {
         RpcService = new RpcServiceViewModel("http://127.0.0.1:37128");
-        NavigationService = new NavigationServiceViewModel();
+        NavigationService = navigationService;
 
         Wallets = new ObservableCollection<WalletViewModel>
         {
@@ -53,6 +53,8 @@ public partial class MainWindowViewModel : ViewModelBase
             new ("Stop", StopCommand)
         };
     }
+
+    public INavigationService NavigationService { get; }
 
     [RelayCommand]
     private async Task GetStatus()

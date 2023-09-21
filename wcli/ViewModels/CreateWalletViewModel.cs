@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiCli.Models;
+using WasabiCli.Models.Navigation;
 using WasabiCli.Models.RpcJson;
 using WasabiCli.Models.WalletWasabi;
 
@@ -15,7 +16,7 @@ public partial class CreateWalletViewModel : ViewModelBase
 
     [ObservableProperty] private string? _walletPassword;
 
-    public CreateWalletViewModel(RpcServiceViewModel rpcService, NavigationServiceViewModel navigationService)
+    public CreateWalletViewModel(RpcServiceViewModel rpcService, INavigationService navigationService)
     {
         RpcService = rpcService;
         NavigationService = navigationService;
@@ -25,7 +26,7 @@ public partial class CreateWalletViewModel : ViewModelBase
 
     public RpcServiceViewModel RpcService { get; }
 
-    private NavigationServiceViewModel NavigationService { get; }
+    private INavigationService NavigationService { get; }
 
     private bool CanCreateWallet()
     {

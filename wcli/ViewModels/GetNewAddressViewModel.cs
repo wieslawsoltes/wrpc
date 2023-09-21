@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiCli.Models;
+using WasabiCli.Models.Navigation;
 using WasabiCli.Models.RpcJson;
 
 namespace WasabiCli.ViewModels;
@@ -14,7 +15,7 @@ public partial class GetNewAddressViewModel : ViewModelBase
     [ObservableProperty] 
     private string? _label;
 
-    public GetNewAddressViewModel(RpcServiceViewModel rpcService, NavigationServiceViewModel navigationService, string walletName)
+    public GetNewAddressViewModel(RpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
     {
         RpcService = rpcService;
         NavigationService = navigationService;
@@ -24,7 +25,7 @@ public partial class GetNewAddressViewModel : ViewModelBase
 
     public RpcServiceViewModel RpcService { get; }
 
-    private NavigationServiceViewModel NavigationService { get; }
+    private INavigationService NavigationService { get; }
 
     private bool CanGetNewAddress()
     {

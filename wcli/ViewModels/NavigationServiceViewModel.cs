@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using WasabiCli.Models.Navigation;
 
 namespace WasabiCli.ViewModels;
 
-public partial class NavigationServiceViewModel : ViewModelBase
+public partial class NavigationServiceViewModel : ViewModelBase, INavigationService
 {
     [ObservableProperty] private Stack<object>? _dialogs;
     [ObservableProperty] private object? _currentDialog;
@@ -16,9 +17,18 @@ public partial class NavigationServiceViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    public void Clear()
+    public void Navigate(object? dialog)
     {
-        Dialogs?.Clear();
+        if (dialog is null)
+        {
+            Dialogs?.Clear();
+        }
+        else
+        {
+            Dialogs?.Push(dialog);
+        }
+
+        CurrentDialog = dialog;
     }
 
     [RelayCommand]
@@ -43,17 +53,8 @@ public partial class NavigationServiceViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    public void Navigate(object? dialog)
+    public void Clear()
     {
-        if (dialog is null)
-        {
-            Dialogs?.Clear();
-        }
-        else
-        {
-            Dialogs?.Push(dialog);
-        }
-
-        CurrentDialog = dialog;
+        Dialogs?.Clear();
     }
 }
