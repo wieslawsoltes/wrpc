@@ -38,6 +38,8 @@ namespace WasabiCli.Models.RpcJson;
 [JsonSerializable(typeof(List<TransactionInfo>))]
 [JsonSerializable(typeof(GetHistoryInfo))]
 [JsonSerializable(typeof(RpcGetHistoryResult))]
+// stop
+[JsonSerializable(typeof(RpcStopResult))]
 public partial class RpcJsonContext : JsonSerializerContext
 {
 }

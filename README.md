@@ -15,7 +15,7 @@
 - [ ] listkeys
 - [ ] startcoinjoin
 - [ ] stopcoinjoin
-- [ ] stop
+- [x] stop
 
 ### Resources
 

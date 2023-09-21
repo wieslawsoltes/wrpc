@@ -221,5 +221,21 @@ public partial class MainWindowViewModel : ViewModelBase
     private async Task Stop()
     {
         // {"jsonrpc":"2.0", "method":"stop"}
+        var requestBody = new RpcMethod()
+        {
+            Method = "stop"
+        };
+        var rpcServerUri = $"{RpcService.RpcServerPrefix}";
+        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcStopResult);
+        if (rpcResult is RpcStopResult { Result: not null } rpcStopResult)
+        {
+            // TODO:
+            NavigationService.Navigate(rpcStopResult.Result);
+        }
+        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            // TODO:
+            NavigationService.Navigate(rpcErrorResult.Error);
+        }
     }
 }
