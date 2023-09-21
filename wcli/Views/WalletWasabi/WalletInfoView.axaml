@@ -36,7 +36,8 @@
       <!-- Accounts -->
       <Label Content="Accounts" />
       <TextBox Text="{Binding Accounts.Count, FallbackValue=0}"
-               IsReadOnly="True" />
+               IsReadOnly="True"
+               IsEnabled="False" />
       <ListBox ItemsSource="{Binding Accounts}">
         <ListBox.ItemTemplate>
           <DataTemplate>
