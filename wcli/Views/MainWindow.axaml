@@ -14,7 +14,11 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="Wasabi.Wallet RPC">
   <Design.DataContext>
-    <vm:MainWindowViewModel />
+    <vm:MainWindowViewModel>
+      <x:Arguments>
+        <vm:NavigationServiceViewModel />
+      </x:Arguments>
+    </vm:MainWindowViewModel>
   </Design.DataContext>
   <Panel>
     <controls:NavigateBackControl Header="Wasabi.Wallet RPC"
