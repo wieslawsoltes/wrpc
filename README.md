@@ -7,11 +7,11 @@
 - [x] listcoins
 - [x] listunspentcoins
 - [x] getwalletinfo
-- [ ] getnewaddress
+- [x] getnewaddress
 - [ ] send
 - [ ] build
 - [ ] broadcast
-- [ ] gethistory
+- [x] gethistory
 - [ ] listkeys
 - [ ] startcoinjoin
 - [ ] stopcoinjoin
