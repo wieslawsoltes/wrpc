@@ -138,29 +138,11 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task GetNewAddress()
+    private void GetNewAddress()
     {
-        // {"jsonrpc":"2.0","id":"1","method":"getnewaddress","params":["Daniel, Alice"]}
-        var requestBody = new RpcMethod()
+        if (WalletName is not null && WalletName.Length > 0)
         {
-            Method = "getnewaddress",
-            // TODO:
-            Params = new []
-            {
-                Label
-            }
-        };
-        var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
-        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetNewAddressResult);
-        if (rpcResult is RpcGetNewAddressResult { Result: not null } rpcGetNewAddressResult)
-        {
-            // TODO:
-            NavigationService.Navigate(rpcGetNewAddressResult.Result);
-        }
-        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            // TODO:
-            NavigationService.Navigate(rpcErrorResult.Error);
+            NavigationService.Navigate(new GetNewAddressViewModel(RpcService, NavigationService, WalletName));
         }
     }
 

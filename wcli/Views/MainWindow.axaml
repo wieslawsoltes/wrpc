@@ -36,6 +36,12 @@
             <views:CreateWalletView />
           </controls:NavigateBackControl>
         </DataTemplate>
+        <!-- ViewModels: GetNewAddress -->
+        <DataTemplate DataType="vm:GetNewAddressViewModel">
+          <controls:NavigateBackControl Header="New Address">
+            <views:GetNewAddressView />
+          </controls:NavigateBackControl>
+        </DataTemplate>
         <!-- Models: WalletWasabi -->
         <DataTemplate DataType="mww:ErrorInfo">
           <controls:NavigateBackControl Header="Error">
