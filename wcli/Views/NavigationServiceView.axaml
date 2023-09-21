@@ -74,6 +74,16 @@
           <viewsWalletWasabi:AddressInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
+      <DataTemplate DataType="mww:TransactionInfo">
+        <controls:NavigateBackControl Header="Transaction">
+          <viewsWalletWasabi:TransactionInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:GetHistoryInfo">
+        <controls:NavigateBackControl Header="History">
+          <viewsWalletWasabi:GetHistoryInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
     </ContentControl.DataTemplates>
   </ContentControl>
 </UserControl>

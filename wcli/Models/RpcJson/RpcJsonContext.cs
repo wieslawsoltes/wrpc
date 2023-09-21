@@ -20,18 +20,24 @@ namespace WasabiCli.Models.RpcJson;
 [JsonSerializable(typeof(RpcCreateWalletResult))]
 // listcoins
 [JsonSerializable(typeof(CoinInfo))]
-[JsonSerializable(typeof(ListCoinsInfo))]
 [JsonSerializable(typeof(List<CoinInfo>))]
+[JsonSerializable(typeof(ListCoinsInfo))]
 [JsonSerializable(typeof(RpcListCoinsResult))]
 // listunspentcoins
 [JsonSerializable(typeof(ListUnspentCoinsInfo))]
 [JsonSerializable(typeof(RpcListUnspentCoinsResult))]
 // getnewaddress
 [JsonSerializable(typeof(AddressInfo))]
+[JsonSerializable(typeof(List<AddressInfo>))]
 [JsonSerializable(typeof(RpcGetNewAddressResult))]
 // getwalletinfo
 [JsonSerializable(typeof(WalletInfo))]
 [JsonSerializable(typeof(RpcGetWalletInfoResult))]
+// getwalletinfo
+[JsonSerializable(typeof(TransactionInfo))]
+[JsonSerializable(typeof(List<TransactionInfo>))]
+[JsonSerializable(typeof(GetHistoryInfo))]
+[JsonSerializable(typeof(RpcGetHistoryResult))]
 public partial class RpcJsonContext : JsonSerializerContext
 {
 }

@@ -174,7 +174,23 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private async Task GetHistory()
     {
-        throw new NotImplementedException();
+        // {"jsonrpc":"2.0","id":"1","method":"gethistory"}
+        var requestBody = new RpcMethod()
+        {
+            Method = "gethistory"
+        };
+        var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
+        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetHistoryResult);
+        if (rpcResult is RpcGetHistoryResult { Result: not null } rpcGetHistoryResult)
+        {
+            // TODO:
+            NavigationService.Navigate(new GetHistoryInfo() { Transactions = rpcGetHistoryResult.Result });
+        }
+        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            // TODO:
+            NavigationService.Navigate(rpcErrorResult.Error);
+        }
     }
 
     [RelayCommand]
