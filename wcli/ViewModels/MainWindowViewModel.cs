@@ -12,7 +12,11 @@ public partial class MainWindowViewModel : ViewModelBase
 {
     [ObservableProperty] private RpcServiceViewModel _rpcService;
     [ObservableProperty] private NavigationServiceViewModel _navigationService;
-    [ObservableProperty] private string? _walletName;
+
+    [NotifyCanExecuteChangedFor(nameof(GetNewAddressCommand))]
+    [ObservableProperty] 
+    private string? _walletName;
+
     [ObservableProperty] private string? _walletPassword;
     [ObservableProperty] private string? _label;
     [ObservableProperty] private ObservableCollection<RpcMethodViewModel>? _rpcMethods;
@@ -137,10 +141,15 @@ public partial class MainWindowViewModel : ViewModelBase
         }
     }
 
-    [RelayCommand]
+    private bool CanGetNewAddress()
+    {
+        return WalletName is not null && WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanGetNewAddress))]
     private void GetNewAddress()
     {
-        if (WalletName is not null && WalletName.Length > 0)
+        if (WalletName is not null)
         {
             NavigationService.Navigate(new GetNewAddressViewModel(RpcService, NavigationService, WalletName));
         }
