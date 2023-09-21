@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using WasabiCli.Models.RpcJson;
 using WasabiCli.Models.WalletWasabi;
 
-namespace WasabiCli.Models.RpcJson;
+namespace WasabiCli.Models;
 
 // rpc
 [JsonSerializable(typeof(RpcMethod))]
@@ -38,6 +39,11 @@ namespace WasabiCli.Models.RpcJson;
 [JsonSerializable(typeof(List<TransactionInfo>))]
 [JsonSerializable(typeof(GetHistoryInfo))]
 [JsonSerializable(typeof(RpcGetHistoryResult))]
+// listkeys
+[JsonSerializable(typeof(KeyInfo))]
+[JsonSerializable(typeof(List<KeyInfo>))]
+[JsonSerializable(typeof(ListKeysInfo))]
+[JsonSerializable(typeof(RpcListKeysResult))]
 // stop
 [JsonSerializable(typeof(RpcStopResult))]
 public partial class RpcJsonContext : JsonSerializerContext

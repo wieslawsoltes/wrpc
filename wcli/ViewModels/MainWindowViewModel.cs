@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using WasabiCli.Models;
 using WasabiCli.Models.RpcJson;
 using WasabiCli.Models.WalletWasabi;
 
