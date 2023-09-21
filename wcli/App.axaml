@@ -9,5 +9,6 @@
   </Application.DataTemplates>
   <Application.Styles>
     <FluentTheme />
+    <StyleInclude Source="/Controls/NavigateBackControl.axaml"></StyleInclude>
   </Application.Styles>
 </Application>

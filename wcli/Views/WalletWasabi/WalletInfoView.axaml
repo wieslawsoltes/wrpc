@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mww="using:WasabiCli.Models.WalletWasabi"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="WasabiCli.Views.WalletWasabi.WalletInfoView"
+             x:CompileBindings="True" x:DataType="mww:WalletInfo">
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Spacing="4">
+      <!-- WalletName -->
+      <Label Content="WalletName" />
+      <TextBox Text="{Binding WalletName}"
+               IsReadOnly="True" />
+      <!-- WalletFile -->
+      <Label Content="WalletFile" />
+      <TextBox Text="{Binding WalletFile}"
+               IsReadOnly="True" />
+      <!-- State -->
+      <Label Content="State" />
+      <TextBox Text="{Binding State}"
+               IsReadOnly="True" />
+      <!-- MasterKeyFingerprint -->
+      <Label Content="MasterKeyFingerprint" />
+      <TextBox Text="{Binding MasterKeyFingerprint}"
+               IsReadOnly="True" />
+      <!-- Balance -->
+      <Label Content="Balance" />
+      <TextBox Text="{Binding Balance}"
+               IsReadOnly="True" />
+      <!-- AnonScoreTarget -->
+      <Label Content="AnonScoreTarget" />
+      <TextBox Text="{Binding AnonScoreTarget}"
+               IsReadOnly="True" />
+      <!-- Accounts -->
+      <Label Content="Accounts" />
+      <TextBox Text="{Binding Accounts.Count, FallbackValue=0}"
+               IsReadOnly="True" />
+      <!-- TODO: Navigate to Accounts list view -->
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>
+

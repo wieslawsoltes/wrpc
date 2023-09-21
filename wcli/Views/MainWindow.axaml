@@ -2,11 +2,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mww="using:WasabiCli.Models.WalletWasabi"
         xmlns:vm="using:WasabiCli.ViewModels"
+        xmlns:controls="using:WasabiCli.Controls"
+        xmlns:views="using:WasabiCli.Views"
+        xmlns:viewsWalletWasabi="using:WasabiCli.Views.WalletWasabi"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="680"
         x:Class="WasabiCli.Views.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
+        x:CompileBindings="True" x:DataType="vm:MainWindowViewModel"
         WindowStartupLocation="CenterScreen"
         Width="400"
         Height="680"
@@ -18,408 +21,64 @@
   </Design.DataContext>
 
   <Panel>
-    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-      <StackPanel Margin="12"
-                  Spacing="4"
-                  VerticalAlignment="Top"
-                  IsVisible="{Binding CurrentDialog, Converter={x:Static ObjectConverters.IsNull}}">
-        <!-- Header -->
-        <Label Content="Wasabi.Wallet RPC"
-               FontWeight="SemiBold" />
-        <!-- RpcServerPrefix -->
-        <Label Content="RPC server prefix:"
-               Target="RpcServerTextBox" />
-        <TextBox Name="RpcServerTextBox"
-                 Text="{Binding RpcServerPrefix, Mode=TwoWay}" />
-        <!-- WalletName -->
-        <Label Content="Wallet name:"
-               Target="WalletNameTextBox" />
-        <TextBox Name="WalletNameTextBox"
-                 Text="{Binding WalletName, Mode=TwoWay}" />
-        <!-- WalletPassword -->
-        <Label Content="Wallet password:"
-               Target="WalletPasswordTextBox" />
-        <TextBox Name="WalletPasswordTextBox"
-                 Text="{Binding WalletPassword, Mode=TwoWay}"
-                 PasswordChar="*" />
-        <!-- Label -->
-        <Label Content="Label:"
-               Target="LabelTextBox" />
-        <TextBox Name="LabelTextBox"
-                 Text="{Binding Label, Mode=TwoWay}" />
 
-        <ItemsControl ItemsSource="{Binding RpcMethods}"
-                      Margin="0,4,0,0">
-          <ItemsControl.Styles>
-            <Style Selector="ItemsControl StackPanel">
-              <Setter Property="Spacing" Value="4" />
-            </Style>
-          </ItemsControl.Styles>
-          <ItemsControl.ItemTemplate>
-            <DataTemplate>
-              <Button Name="GetStatusButton"
-                      Content="{Binding Name}"
-                      Command="{Binding Command}"
-                      CommandParameter="{x:Null}"
-                      HorizontalAlignment="Stretch"
-                      HorizontalContentAlignment="Center"
-                      Padding="6,4,6,4" />
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
-        </ItemsControl>
-
-      </StackPanel>
-    </ScrollViewer>
-
+    <controls:NavigateBackControl Header="Wasabi.Wallet RPC"
+                                  EnableBack="False"
+                                  IsVisible="{Binding CurrentDialog, Converter={x:Static ObjectConverters.IsNull}}">
+      <views:HomeView />
+    </controls:NavigateBackControl>
+    
     <ContentControl Content="{Binding CurrentDialog}">
       <ContentControl.DataTemplates>
         <DataTemplate DataType="mww:ErrorInfo">
-          <!-- TODO: -->
-          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-            <StackPanel Margin="12"
-                        Spacing="4">
-              <!-- Back Button -->
-              <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).BackCommand, FallbackValue={x:Null}}"
-                      CommandParameter="{x:Null}"
-                      HorizontalAlignment="Left"
-                      Padding="12" />
-              <!-- Header -->
-              <Label Content="Error"
-                     FontWeight="SemiBold" />
-              <!-- Code -->
-              <Label Content="Code" />
-              <TextBox Text="{Binding Code}"
-                       IsReadOnly="True" />
-              <!-- Message -->
-              <Label Content="Message" />
-              <TextBox Text="{Binding Message}"
-                       IsReadOnly="True" />
-            </StackPanel>
-          </ScrollViewer>
+          <controls:NavigateBackControl Header="Error">
+            <viewsWalletWasabi:ErrorInfoView />
+          </controls:NavigateBackControl>
         </DataTemplate>
         <DataTemplate DataType="mww:PeerInfo">
-          <!-- TODO: -->
-          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-            <StackPanel Margin="12"
-                        Spacing="4">
-              <!-- Back Button -->
-              <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).BackCommand, FallbackValue={x:Null}}"
-                      CommandParameter="{x:Null}"
-                      HorizontalAlignment="Left"
-                      Padding="12" />
-              <!-- Header -->
-              <Label Content="Peer"
-                     FontWeight="SemiBold" />
-              <!-- IsConnected -->
-              <Label Content="IsConnected" />
-              <CheckBox IsChecked="{Binding IsConnected}"
-                        IsEnabled="False" />
-              <!-- LastSeen -->
-              <Label Content="LastSeen" />
-              <TextBox Text="{Binding LastSeen}"
-                       IsReadOnly="True" />
-              <!-- Endpoint -->
-              <Label Content="Endpoint" />
-              <TextBox Text="{Binding Endpoint}"
-                       IsReadOnly="True" />
-              <!-- UserAgent -->
-              <Label Content="UserAgent" />
-              <TextBox Text="{Binding UserAgent}"
-                       IsReadOnly="True" />
-            </StackPanel>
-          </ScrollViewer>
+          <controls:NavigateBackControl Header="Peer">
+            <viewsWalletWasabi:PeerInfoView />
+          </controls:NavigateBackControl>
         </DataTemplate>
         <DataTemplate DataType="mww:StatusInfo">
-          <!-- TODO: -->
-          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-            <StackPanel Margin="12"
-                        Spacing="4">
-              <!-- Back Button -->
-              <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).NavigateCommand, FallbackValue={x:Null}}"
-                      CommandParameter="{x:Null}"
-                      HorizontalAlignment="Left"
-                      Padding="12" />
-              <!-- Header -->
-              <Label Content="Status"
-                     FontWeight="SemiBold" />
-              <!-- TorStatus -->
-              <Label Content="TorStatus" />
-              <TextBox Text="{Binding TorStatus}"
-                       IsReadOnly="True" />
-              <!-- BackendStatus -->
-              <Label Content="BackendStatus" />
-              <TextBox Text="{Binding BackendStatus}"
-                       IsReadOnly="True" />
-              <!-- BestBlockchainHeight -->
-              <Label Content="BestBlockchainHeight" />
-              <TextBox Text="{Binding BestBlockchainHeight}"
-                       IsReadOnly="True" />
-              <!-- FiltersCount -->
-              <Label Content="FiltersCount" />
-              <TextBox Text="{Binding FiltersCount}"
-                       IsReadOnly="True" />
-              <!-- FiltersLeft -->
-              <Label Content="FiltersLeft" />
-              <TextBox Text="{Binding FiltersLeft}"
-                       IsReadOnly="True" />
-              <!-- Network -->
-              <Label Content="Network" />
-              <TextBox Text="{Binding Network}"
-                       IsReadOnly="True" />
-              <!-- ExchangeRate -->
-              <Label Content="ExchangeRate" />
-              <TextBox Text="{Binding ExchangeRate}"
-                       IsReadOnly="True" />
-              <!-- Peers -->
-              <Label Content="Peers" />
-              <TextBox Text="{Binding Peers.Count, FallbackValue=0}"
-                       IsReadOnly="True" />
-              <!-- TODO: Navigate to Peers list view -->
-            </StackPanel>
-          </ScrollViewer>
+          <controls:NavigateBackControl Header="Status">
+            <viewsWalletWasabi:StatusInfoView />
+          </controls:NavigateBackControl>
         </DataTemplate>
         <DataTemplate DataType="mww:CreateWalletInfo">
-          <!-- TODO: -->
-          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-            <StackPanel Margin="12"
-                        Spacing="4">
-              <!-- Back Button -->
-              <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).NavigateCommand, FallbackValue={x:Null}}"
-                      CommandParameter="{x:Null}"
-                      HorizontalAlignment="Left"
-                      Padding="12" />
-              <!-- Header -->
-              <Label Content="New Wallet"
-                     FontWeight="SemiBold" />
-              <!-- Mnemonic -->
-              <Label Content="Mnemonic" />
-              <TextBox Text="{Binding Mnemonic}"
-                       IsReadOnly="True" />
-            </StackPanel>
-          </ScrollViewer>
+          <controls:NavigateBackControl Header="Create Wallet">
+            <viewsWalletWasabi:CreateWalletInfoView />
+          </controls:NavigateBackControl>
         </DataTemplate>
         <DataTemplate DataType="mww:CoinInfo">
-          <!-- TODO: -->
-          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-            <StackPanel Margin="12"
-                        Spacing="4">
-              <!-- Back Button -->
-              <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).BackCommand, FallbackValue={x:Null}}"
-                      CommandParameter="{x:Null}"
-                      HorizontalAlignment="Left"
-                      Padding="12" />
-              <!-- Header -->
-              <Label Content="Coin"
-                     FontWeight="SemiBold" />
-              <!-- TxId -->
-              <Label Content="TxId" />
-              <TextBox Text="{Binding TxId}"
-                       IsReadOnly="True" />
-              <!-- Index -->
-              <Label Content="Index" />
-              <TextBox Text="{Binding Index}"
-                       IsReadOnly="True" />
-              <!-- Amount -->
-              <Label Content="Amount" />
-              <TextBox Text="{Binding Amount}"
-                       IsReadOnly="True" />
-              <!-- AnonymityScore -->
-              <Label Content="AnonymityScore" />
-              <TextBox Text="{Binding AnonymityScore}"
-                       IsReadOnly="True" />
-              <!-- Confirmed -->
-              <Label Content="Confirmed" />
-              <CheckBox IsChecked="{Binding Confirmed}"
-                        IsEnabled="False" />
-              <!-- Confirmations -->
-              <Label Content="Confirmations" />
-              <TextBox Text="{Binding Confirmations}"
-                       IsReadOnly="True" />
-              <!-- KeyPath -->
-              <Label Content="KeyPath" />
-              <TextBox Text="{Binding KeyPath}"
-                       IsReadOnly="True" />
-              <!-- Address -->
-              <Label Content="Address" />
-              <TextBox Text="{Binding Address}"
-                       IsReadOnly="True" />
-              <!-- SpentBy -->
-              <Label Content="SpentBy" />
-              <TextBox Text="{Binding SpentBy}"
-                       IsReadOnly="True" />
-            </StackPanel>
-          </ScrollViewer>
+          <controls:NavigateBackControl Header="Coin">
+            <viewsWalletWasabi:CoinInfoView />
+          </controls:NavigateBackControl>
         </DataTemplate>
         <DataTemplate DataType="mww:ListCoinsInfo">
-          <DockPanel Margin="12">
-            <!-- Back Button -->
-            <Button Content="Back"
-                    Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).BackCommand, FallbackValue={x:Null}}"
-                    CommandParameter="{x:Null}"
-                    HorizontalAlignment="Left"
-                    Padding="12"
-                    DockPanel.Dock="Top"/>
-            <!-- Coins -->
-            <ListBox ItemsSource="{Binding Coins}">
-              <ListBox.ItemTemplate>
-                <DataTemplate>
-                  <DockPanel>
-                    <Button Content="Details"
-                            Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).NavigateCommand, FallbackValue={x:Null}}"
-                            CommandParameter="{Binding .}"
-                            Margin="4"
-                            DockPanel.Dock="Right"/>
-                    <TextBlock Text="{Binding Amount}"
-                               VerticalAlignment="Center" />
-                  </DockPanel>
-                </DataTemplate>
-              </ListBox.ItemTemplate>
-            </ListBox>
-          </DockPanel>
+          <controls:NavigateBackControl Header="Coins">
+            <viewsWalletWasabi:ListCoinsInfoView />
+          </controls:NavigateBackControl>
         </DataTemplate>
         <DataTemplate DataType="mww:ListUnspentCoinsInfo">
-          <DockPanel Margin="12">
-            <!-- Back Button -->
-            <Button Content="Back"
-                    Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).BackCommand, FallbackValue={x:Null}}"
-                    CommandParameter="{x:Null}"
-                    HorizontalAlignment="Left"
-                    Padding="12"
-                    DockPanel.Dock="Top"/>
-            <!-- Coins -->
-            <ListBox ItemsSource="{Binding Coins}">
-              <ListBox.ItemTemplate>
-                <DataTemplate>
-                  <DockPanel>
-                    <Button Content="Details"
-                            Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).NavigateCommand, FallbackValue={x:Null}}"
-                            CommandParameter="{Binding .}"
-                            Margin="4"
-                            DockPanel.Dock="Right"/>
-                    <TextBlock Text="{Binding Amount}"
-                               VerticalAlignment="Center" />
-                  </DockPanel>
-                </DataTemplate>
-              </ListBox.ItemTemplate>
-            </ListBox>
-          </DockPanel>
+          <controls:NavigateBackControl Header="Unspent Coins">
+            <viewsWalletWasabi:ListUnspentCoinsInfoView />
+          </controls:NavigateBackControl>
         </DataTemplate>
         <DataTemplate DataType="mww:AccountInfo">
-          <!-- TODO: -->
-          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-            <StackPanel Margin="12"
-                        Spacing="4">
-              <!-- Back Button -->
-              <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).BackCommand, FallbackValue={x:Null}}"
-                      CommandParameter="{x:Null}"
-                      HorizontalAlignment="Left"
-                      Padding="12" />
-              <!-- Header -->
-              <Label Content="Account"
-                     FontWeight="SemiBold" />
-              <!-- Name -->
-              <Label Content="Name" />
-              <TextBox Text="{Binding Name}"
-                       IsReadOnly="True" />
-              <!-- PublicKey -->
-              <Label Content="PublicKey" />
-              <TextBox Text="{Binding PublicKey}"
-                       IsReadOnly="True" />
-              <!-- KeyPath -->
-              <Label Content="KeyPath" />
-              <TextBox Text="{Binding KeyPath}"
-                       IsReadOnly="True" />
-            </StackPanel>
-          </ScrollViewer>
+          <controls:NavigateBackControl Header="Account">
+            <viewsWalletWasabi:AccountInfoView />
+          </controls:NavigateBackControl>
         </DataTemplate>
         <DataTemplate DataType="mww:WalletInfo">
-          <!-- TODO: -->
-          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-            <StackPanel Margin="12"
-                        Spacing="4">
-              <!-- Back Button -->
-              <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).BackCommand, FallbackValue={x:Null}}"
-                      CommandParameter="{x:Null}"
-                      HorizontalAlignment="Left"
-                      Padding="12" />
-              <!-- Header -->
-              <Label Content="Wallet"
-                     FontWeight="SemiBold" />
-              <!-- WalletName -->
-              <Label Content="WalletName" />
-              <TextBox Text="{Binding WalletName}"
-                       IsReadOnly="True" />
-              <!-- WalletFile -->
-              <Label Content="WalletFile" />
-              <TextBox Text="{Binding WalletFile}"
-                       IsReadOnly="True" />
-              <!-- State -->
-              <Label Content="State" />
-              <TextBox Text="{Binding State}"
-                       IsReadOnly="True" />
-              <!-- MasterKeyFingerprint -->
-              <Label Content="MasterKeyFingerprint" />
-              <TextBox Text="{Binding MasterKeyFingerprint}"
-                       IsReadOnly="True" />
-              <!-- Balance -->
-              <Label Content="Balance" />
-              <TextBox Text="{Binding Balance}"
-                       IsReadOnly="True" />
-              <!-- AnonScoreTarget -->
-              <Label Content="AnonScoreTarget" />
-              <TextBox Text="{Binding AnonScoreTarget}"
-                       IsReadOnly="True" />
-              <!-- Accounts -->
-              <Label Content="Accounts" />
-              <TextBox Text="{Binding Accounts.Count, FallbackValue=0}"
-                       IsReadOnly="True" />
-              <!-- TODO: Navigate to Accounts list view -->
-            </StackPanel>
-          </ScrollViewer>
+          <controls:NavigateBackControl Header="Wallet">
+            <viewsWalletWasabi:WalletInfoView />
+          </controls:NavigateBackControl>
         </DataTemplate>
         <DataTemplate DataType="mww:AddressInfo">
-          <!-- TODO: -->
-          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-            <StackPanel Margin="12"
-                        Spacing="4">
-              <!-- Back Button -->
-              <Button Content="Back"
-                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).BackCommand, FallbackValue={x:Null}}"
-                      CommandParameter="{x:Null}"
-                      HorizontalAlignment="Left"
-                      Padding="12" />
-              <!-- Header -->
-              <Label Content="Address"
-                     FontWeight="SemiBold" />
-              <!-- Address -->
-              <Label Content="Address" />
-              <TextBox Text="{Binding Address}"
-                       IsReadOnly="True" />
-              <!-- KeyPath -->
-              <Label Content="KeyPath" />
-              <TextBox Text="{Binding KeyPath}"
-                       IsReadOnly="True" />
-              <!-- Label -->
-              <Label Content="Label" />
-              <TextBox Text="{Binding Label}"
-                       IsReadOnly="True" />
-              <!-- PublicKey -->
-              <Label Content="PublicKey" />
-              <TextBox Text="{Binding PublicKey}"
-                       IsReadOnly="True" />
-              <!-- ScriptPubKey -->
-              <Label Content="ScriptPubKey" />
-              <TextBox Text="{Binding ScriptPubKey}"
-                       IsReadOnly="True" />
-            </StackPanel>
-          </ScrollViewer>
+          <controls:NavigateBackControl Header="Address">
+            <viewsWalletWasabi:AddressInfoView />
+          </controls:NavigateBackControl>
         </DataTemplate>
       </ContentControl.DataTemplates>
     </ContentControl>
