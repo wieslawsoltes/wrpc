@@ -11,11 +11,11 @@
         <!-- Code -->
         <Label Content="Code" />
         <TextBox Text="{Binding Code}"
-                 IsReadOnly="True" />
+                 Classes="readonly" />
         <!-- Message -->
         <Label Content="Message" />
         <TextBox Text="{Binding Message}"
-                 IsReadOnly="True" />
+                 Classes="readonly" />
       </StackPanel>
     </ScrollViewer>
 </UserControl>

@@ -10,5 +10,11 @@
   <Application.Styles>
     <FluentTheme />
     <StyleInclude Source="/Controls/NavigateBackControl.axaml" />
+    <Style Selector="TextBox.readonly">
+      <Setter Property="IsReadOnly" Value="True" />
+    </Style>
+    <Style Selector="TextBox:pointerover.readonly">
+      <Setter Property="IsReadOnly" Value="True" />
+    </Style>
   </Application.Styles>
 </Application>

@@ -13,7 +13,7 @@
       <Label Content="Wallet name:"
              Target="WalletNameTextBox" />
       <TextBox Name="WalletNameTextBox"
-               IsReadOnly="True"
+               Classes="readonly"
                IsEnabled="False"
                Text="{Binding WalletName, Mode=TwoWay}" />
       <!-- Label -->

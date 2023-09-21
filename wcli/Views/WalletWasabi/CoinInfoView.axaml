@@ -11,19 +11,19 @@
       <!-- TxId -->
       <Label Content="TxId" />
       <TextBox Text="{Binding TxId}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- Index -->
       <Label Content="Index" />
       <TextBox Text="{Binding Index}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- Amount -->
       <Label Content="Amount" />
       <TextBox Text="{Binding Amount}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- AnonymityScore -->
       <Label Content="AnonymityScore" />
       <TextBox Text="{Binding AnonymityScore}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- Confirmed -->
       <Label Content="Confirmed" />
       <CheckBox IsChecked="{Binding Confirmed}"
@@ -31,19 +31,19 @@
       <!-- Confirmations -->
       <Label Content="Confirmations" />
       <TextBox Text="{Binding Confirmations}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- KeyPath -->
       <Label Content="KeyPath" />
       <TextBox Text="{Binding KeyPath}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- Address -->
       <Label Content="Address" />
       <TextBox Text="{Binding Address}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- SpentBy -->
       <Label Content="SpentBy" />
       <TextBox Text="{Binding SpentBy}"
-               IsReadOnly="True" />
+               Classes="readonly" />
     </StackPanel>
   </ScrollViewer>
 </UserControl>

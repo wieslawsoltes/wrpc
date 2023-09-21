@@ -12,35 +12,35 @@
       <!-- TorStatus -->
       <Label Content="TorStatus" />
       <TextBox Text="{Binding TorStatus}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- BackendStatus -->
       <Label Content="BackendStatus" />
       <TextBox Text="{Binding BackendStatus}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- BestBlockchainHeight -->
       <Label Content="BestBlockchainHeight" />
       <TextBox Text="{Binding BestBlockchainHeight}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- FiltersCount -->
       <Label Content="FiltersCount" />
       <TextBox Text="{Binding FiltersCount}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- FiltersLeft -->
       <Label Content="FiltersLeft" />
       <TextBox Text="{Binding FiltersLeft}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- Network -->
       <Label Content="Network" />
       <TextBox Text="{Binding Network}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- ExchangeRate -->
       <Label Content="ExchangeRate" />
       <TextBox Text="{Binding ExchangeRate}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- Peers -->
       <Label Content="Peers" />
       <TextBox Text="{Binding Peers.Count, FallbackValue=0}"
-               IsReadOnly="True"
+               Classes="readonly"
                IsEnabled="False" />
       <ListBox ItemsSource="{Binding Peers}">
         <ListBox.ItemTemplate>

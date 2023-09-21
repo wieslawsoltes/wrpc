@@ -11,23 +11,23 @@
       <!-- Address -->
       <Label Content="Address" />
       <TextBox Text="{Binding Address}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- KeyPath -->
       <Label Content="KeyPath" />
       <TextBox Text="{Binding KeyPath}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- Label -->
       <Label Content="Label" />
       <TextBox Text="{Binding Label}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- PublicKey -->
       <Label Content="PublicKey" />
       <TextBox Text="{Binding PublicKey}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- ScriptPubKey -->
       <Label Content="ScriptPubKey" />
       <TextBox Text="{Binding ScriptPubKey}"
-               IsReadOnly="True" />
+               Classes="readonly" />
     </StackPanel>
   </ScrollViewer>
 </UserControl>

@@ -11,7 +11,7 @@
       <!-- Mnemonic -->
       <Label Content="Mnemonic" />
       <TextBox Text="{Binding Mnemonic}"
-               IsReadOnly="True" />
+               Classes="readonly" />
     </StackPanel>
   </ScrollViewer>
 </UserControl>

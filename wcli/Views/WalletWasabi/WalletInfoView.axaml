@@ -12,31 +12,31 @@
       <!-- WalletName -->
       <Label Content="WalletName" />
       <TextBox Text="{Binding WalletName}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- WalletFile -->
       <Label Content="WalletFile" />
       <TextBox Text="{Binding WalletFile}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- State -->
       <Label Content="State" />
       <TextBox Text="{Binding State}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- MasterKeyFingerprint -->
       <Label Content="MasterKeyFingerprint" />
       <TextBox Text="{Binding MasterKeyFingerprint}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- Balance -->
       <Label Content="Balance" />
       <TextBox Text="{Binding Balance}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- AnonScoreTarget -->
       <Label Content="AnonScoreTarget" />
       <TextBox Text="{Binding AnonScoreTarget}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- Accounts -->
       <Label Content="Accounts" />
       <TextBox Text="{Binding Accounts.Count, FallbackValue=0}"
-               IsReadOnly="True"
+               Classes="readonly"
                IsEnabled="False" />
       <ListBox ItemsSource="{Binding Accounts}">
         <ListBox.ItemTemplate>

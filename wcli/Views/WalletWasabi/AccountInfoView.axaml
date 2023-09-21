@@ -11,15 +11,15 @@
       <!-- Name -->
       <Label Content="Name" />
       <TextBox Text="{Binding Name}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- PublicKey -->
       <Label Content="PublicKey" />
       <TextBox Text="{Binding PublicKey}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- KeyPath -->
       <Label Content="KeyPath" />
       <TextBox Text="{Binding KeyPath}"
-               IsReadOnly="True" />
+               Classes="readonly" />
     </StackPanel>
   </ScrollViewer>
 </UserControl>

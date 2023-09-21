@@ -15,15 +15,15 @@
       <!-- LastSeen -->
       <Label Content="LastSeen" />
       <TextBox Text="{Binding LastSeen}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- Endpoint -->
       <Label Content="Endpoint" />
       <TextBox Text="{Binding Endpoint}"
-               IsReadOnly="True" />
+               Classes="readonly" />
       <!-- UserAgent -->
       <Label Content="UserAgent" />
       <TextBox Text="{Binding UserAgent}"
-               IsReadOnly="True" />
+               Classes="readonly" />
     </StackPanel>
   </ScrollViewer>
 </UserControl>
