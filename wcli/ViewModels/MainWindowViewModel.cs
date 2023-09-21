@@ -18,7 +18,6 @@ public partial class MainWindowViewModel : ViewModelBase
     private string? _walletName;
 
     [ObservableProperty] private string? _walletPassword;
-    [ObservableProperty] private string? _label;
     [ObservableProperty] private ObservableCollection<RpcMethodViewModel>? _rpcMethods;
 
     public MainWindowViewModel()
@@ -27,7 +26,6 @@ public partial class MainWindowViewModel : ViewModelBase
         NavigationService = new NavigationServiceViewModel();
         WalletName = "Wallet 1";
         WalletPassword = "";
-        Label = "Label 1, Label 2";
         RpcMethods = new ObservableCollection<RpcMethodViewModel>()
         {
             new ("GetStatus", GetStatusCommand),
