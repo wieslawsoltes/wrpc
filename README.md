@@ -28,6 +28,9 @@
 - https://github.com/jinek/Consolonia
 - https://github.com/AvaloniaInside/Shell
 
+- https://bitcoin.design/
+- https://www.bitcoinuikit.com/
+
 ### Testing
 
 ```
