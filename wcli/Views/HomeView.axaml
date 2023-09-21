@@ -19,12 +19,6 @@
              Target="WalletNameTextBox" />
       <TextBox Name="WalletNameTextBox"
                Text="{Binding WalletName, Mode=TwoWay}" />
-      <!-- WalletPassword -->
-      <Label Content="Wallet password:"
-             Target="WalletPasswordTextBox" />
-      <TextBox Name="WalletPasswordTextBox"
-               Text="{Binding WalletPassword, Mode=TwoWay}"
-               PasswordChar="*" />
       <!-- RpcMethods -->
       <ItemsControl ItemsSource="{Binding RpcMethods}"
                     Margin="0,4,0,0">
