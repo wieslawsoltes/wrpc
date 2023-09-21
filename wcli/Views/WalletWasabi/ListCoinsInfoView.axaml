@@ -13,7 +13,7 @@
       <ListBox.ItemTemplate>
         <DataTemplate>
           <DockPanel>
-            <Button Content="Details"
+            <Button Content="Details >"
                     Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).NavigateCommand, FallbackValue={x:Null}}"
                     CommandParameter="{Binding .}"
                     Margin="4"

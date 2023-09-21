@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:mww="using:WasabiCli.Models.WalletWasabi"
+             xmlns:vm="using:WasabiCli.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="WasabiCli.Views.WalletWasabi.WalletInfoView"
              x:CompileBindings="True" x:DataType="mww:WalletInfo">
@@ -36,7 +37,21 @@
       <Label Content="Accounts" />
       <TextBox Text="{Binding Accounts.Count, FallbackValue=0}"
                IsReadOnly="True" />
-      <!-- TODO: Navigate to Accounts list view -->
+      <ListBox ItemsSource="{Binding Accounts}">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <DockPanel>
+              <Button Content="Details >"
+                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).NavigateCommand, FallbackValue={x:Null}}"
+                      CommandParameter="{Binding .}"
+                      Margin="4"
+                      DockPanel.Dock="Right"/>
+              <TextBlock Text="{Binding Name}"
+                         VerticalAlignment="Center" />
+            </DockPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
     </StackPanel>
   </ScrollViewer>
 </UserControl>
