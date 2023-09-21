@@ -8,7 +8,10 @@ namespace WasabiCli.ViewModels;
 
 public partial class CreateWalletViewModel : ViewModelBase
 {
-    [ObservableProperty] private string? _walletName;
+    [NotifyCanExecuteChangedFor(nameof(CreateWalletCommand))]
+    [ObservableProperty] 
+    private string? _walletName;
+
     [ObservableProperty] private string? _walletPassword;
 
     public CreateWalletViewModel(RpcServiceViewModel rpcService, NavigationServiceViewModel navigationService)
@@ -23,7 +26,13 @@ public partial class CreateWalletViewModel : ViewModelBase
 
     private NavigationServiceViewModel NavigationService { get; }
 
-    [RelayCommand]
+    private bool CanCreateWallet()
+    {
+        return WalletName is not null 
+               && WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanCreateWallet))]
     private async Task CreateWallet()
     {
         // {"jsonrpc":"2.0","id":"1","method":"createwallet","params":["WalletName", "UserPassword"]}'

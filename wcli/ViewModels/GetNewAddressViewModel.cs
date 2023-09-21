@@ -8,20 +8,30 @@ namespace WasabiCli.ViewModels;
 public partial class GetNewAddressViewModel : ViewModelBase
 {
     [ObservableProperty] private string? _walletName;
-    [ObservableProperty] private string? _label;
+
+    [NotifyCanExecuteChangedFor(nameof(GetNewAddressCommand))]
+    [ObservableProperty] 
+    private string? _label;
 
     public GetNewAddressViewModel(RpcServiceViewModel rpcService, NavigationServiceViewModel navigationService, string walletName)
     {
         RpcService = rpcService;
         NavigationService = navigationService;
-        WalletName = walletName; 
+        WalletName = walletName;
+        Label = "Label";
     }
 
     public RpcServiceViewModel RpcService { get; }
 
     private NavigationServiceViewModel NavigationService { get; }
 
-    [RelayCommand]
+    private bool CanGetNewAddress()
+    {
+        return Label is not null 
+               && Label.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanGetNewAddress))]
     private async Task GetNewAddress()
     {
         // {"jsonrpc":"2.0","id":"1","method":"getnewaddress","params":["Daniel, Alice"]}
