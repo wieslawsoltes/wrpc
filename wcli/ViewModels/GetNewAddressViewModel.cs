@@ -35,7 +35,7 @@ public partial class GetNewAddressViewModel : ViewModelBase
     private async Task GetNewAddress()
     {
         // {"jsonrpc":"2.0","id":"1","method":"getnewaddress","params":["Daniel, Alice"]}
-        var requestBody = new RpcMethod()
+        var requestBody = new RpcMethod
         {
             Method = "getnewaddress",
             // TODO:
