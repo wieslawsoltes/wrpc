@@ -1,36 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text.Json;
-using System.Text.Json.Serialization.Metadata;
-using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiCli.Models.RpcJson;
 using WasabiCli.Models.WalletWasabi;
-using WasabiCli.Services;
 
 namespace WasabiCli.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    [ObservableProperty] private string? _rpcServerPrefix;
+    [ObservableProperty] private RpcServiceViewModel _rpcService;
+    [ObservableProperty] private NavigationServiceViewModel _navigationService;
     [ObservableProperty] private string? _walletName;
     [ObservableProperty] private string? _walletPassword;
     [ObservableProperty] private string? _label;
-    [ObservableProperty] private Stack<object>? _dialogs;
-    [ObservableProperty] private object? _currentDialog;
     [ObservableProperty] private ObservableCollection<RpcMethodViewModel>? _rpcMethods;
 
     public MainWindowViewModel()
     {
-        RpcServerPrefix = "http://127.0.0.1:37128";
+        RpcService = new RpcServiceViewModel("http://127.0.0.1:37128");
+        NavigationService = new NavigationServiceViewModel();
         WalletName = "Wallet 1";
         WalletPassword = "";
         Label = "Label 1, Label 2";
-        Dialogs = new Stack<object>();
-        CurrentDialog = null;
         RpcMethods = new ObservableCollection<RpcMethodViewModel>()
         {
             new ("GetStatus", GetStatusCommand),
@@ -50,79 +43,6 @@ public partial class MainWindowViewModel : ViewModelBase
         };
     }
 
-    private async Task<Rpc?> SendRpcMethod<T>(
-        RpcMethod requestBody, 
-        string rpcServerUri, 
-        JsonTypeInfo<T> jsonTypeInfo) where T: Rpc
-    {
-        var requestBodyJson = JsonSerializer.Serialize(requestBody, RpcJsonContext.Default.RpcMethod);
-        var cts = new CancellationTokenSource();
-        var rpcService = new RpcService();
-        var responseBodyJson = await rpcService.GetResponseDataAsync(rpcServerUri, requestBodyJson, true, cts.Token);
-        if (responseBodyJson is not null)
-        {
-            try
-            {
-                var okResult = JsonSerializer.Deserialize(responseBodyJson, jsonTypeInfo);
-                if (okResult is not null)
-                {
-                    return okResult;
-                }
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-
-            try
-            {
-                return JsonSerializer.Deserialize(responseBodyJson, RpcJsonContext.Default.RpcErrorResult);
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-        }
-
-        return default;
-    }
-
-    [RelayCommand]
-    private void Back()
-    {
-        if (Dialogs is not null)
-        {
-            if (Dialogs.Count > 0)
-            {
-                Dialogs.Pop();
-            }
-
-            if (Dialogs.TryPeek(out var dialog))
-            {
-                CurrentDialog = dialog;
-            }
-            else
-            {
-                CurrentDialog = null;
-            }
-        }
-    }
-
-    [RelayCommand]
-    private void Navigate(object? dialog)
-    {
-        if (dialog is null)
-        {
-            Dialogs?.Clear();
-        }
-        else
-        {
-            Dialogs?.Push(dialog);
-        }
-
-        CurrentDialog = dialog;
-    }
-
     [RelayCommand]
     private async Task GetStatus()
     {
@@ -131,45 +51,24 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             Method = "getstatus"
         };
-        var rpcServerUri = $"{RpcServerPrefix}";
-        var rpcResult = await SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetStatusResult);
+        var rpcServerUri = $"{RpcService.RpcServerPrefix}";
+        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetStatusResult);
         if (rpcResult is RpcGetStatusResult { Result: not null } rpcGetStatusResult)
         {
             // TODO:
-            Navigate(rpcGetStatusResult.Result);
+            NavigationService.Navigate(rpcGetStatusResult.Result);
         }
         else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
-            Navigate(rpcErrorResult.Error);
+            NavigationService.Navigate(rpcErrorResult.Error);
         }
     }
 
     [RelayCommand]
     private async Task CreateWallet()
     {
-        // {"jsonrpc":"2.0","id":"1","method":"createwallet","params":["WalletName", "UserPassword"]}'
-        var requestBody = new RpcMethod()
-        {
-            Method = "createwallet",
-            Params = new []
-            {
-                WalletName,
-                WalletPassword
-            }
-        };
-        var rpcServerUri = $"{RpcServerPrefix}";
-        var rpcResult = await SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcCreateWalletResult);
-        if (rpcResult is RpcCreateWalletResult { Result: not null } rpcCreateWalletResult)
-        {
-            // TODO:
-            Navigate(new CreateWalletInfo { Mnemonic = rpcCreateWalletResult.Result });
-        }
-        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            // TODO:
-            Navigate(rpcErrorResult.Error);
-        }
+        NavigationService.Navigate(new CreateWalletViewModel(RpcService, NavigationService));
     }
 
     [RelayCommand]
@@ -180,17 +79,17 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             Method = "listcoins"
         };
-        var rpcServerUri = $"{RpcServerPrefix}/{WalletName}";
-        var rpcResult = await SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcListCoinsResult);
+        var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
+        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcListCoinsResult);
         if (rpcResult is RpcListCoinsResult { Result: not null } rpcListCoinsResult)
         {
             // TODO:
-            Navigate(new ListCoinsInfo { Coins = rpcListCoinsResult.Result });
+            NavigationService.Navigate(new ListCoinsInfo { Coins = rpcListCoinsResult.Result });
         }
         else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
-            Navigate(rpcErrorResult.Error);
+            NavigationService.Navigate(rpcErrorResult.Error);
         }
     }
 
@@ -202,17 +101,17 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             Method = "listunspentcoins"
         };
-        var rpcServerUri = $"{RpcServerPrefix}/{WalletName}";
-        var rpcResult = await SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcListUnspentCoinsResult);
+        var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
+        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcListUnspentCoinsResult);
         if (rpcResult is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
         {
             // TODO:
-            Navigate(new ListUnspentCoinsInfo { Coins = rpcListUnspentCoinsResult.Result });
+            NavigationService.Navigate(new ListUnspentCoinsInfo { Coins = rpcListUnspentCoinsResult.Result });
         }
         else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
-            Navigate(rpcErrorResult.Error);
+            NavigationService.Navigate(rpcErrorResult.Error);
         }
     }
 
@@ -224,17 +123,17 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             Method = "getwalletinfo"
         };
-        var rpcServerUri = $"{RpcServerPrefix}/{WalletName}";
-        var rpcResult = await SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetWalletInfoResult);
+        var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
+        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetWalletInfoResult);
         if (rpcResult is RpcGetWalletInfoResult { Result: not null } rpcGetWalletInfoResult)
         {
             // TODO:
-            Navigate(rpcGetWalletInfoResult.Result);
+            NavigationService.Navigate(rpcGetWalletInfoResult.Result);
         }
         else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
-            Navigate(rpcErrorResult.Error);
+            NavigationService.Navigate(rpcErrorResult.Error);
         }
     }
 
@@ -251,17 +150,17 @@ public partial class MainWindowViewModel : ViewModelBase
                 Label
             }
         };
-        var rpcServerUri = $"{RpcServerPrefix}/{WalletName}";
-        var rpcResult = await SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetNewAddressResult);
+        var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
+        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetNewAddressResult);
         if (rpcResult is RpcGetNewAddressResult { Result: not null } rpcGetNewAddressResult)
         {
             // TODO:
-            Navigate(rpcGetNewAddressResult.Result);
+            NavigationService.Navigate(rpcGetNewAddressResult.Result);
         }
         else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
-            Navigate(rpcErrorResult.Error);
+            NavigationService.Navigate(rpcErrorResult.Error);
         }
     }
 

@@ -13,7 +13,7 @@
       <Label Content="RPC server prefix:"
              Target="RpcServerTextBox" />
       <TextBox Name="RpcServerTextBox"
-               Text="{Binding RpcServerPrefix, Mode=TwoWay}" />
+               Text="{Binding RpcService.RpcServerPrefix, Mode=TwoWay}" />
       <!-- WalletName -->
       <Label Content="Wallet name:"
              Target="WalletNameTextBox" />

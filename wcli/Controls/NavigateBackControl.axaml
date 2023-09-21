@@ -22,7 +22,7 @@
                 DockPanel.Dock="Top">
             <Button Name="PART_BackButton"
                     Content="&lt; Back"
-                    Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).BackCommand, FallbackValue={x:Null}}"
+                    Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).NavigationService.BackCommand, FallbackValue={x:Null}}"
                     CommandParameter="{x:Null}"
                     IsVisible="{TemplateBinding EnableBack}"
                     Grid.Column="0" />

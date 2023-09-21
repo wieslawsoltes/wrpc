@@ -14,7 +14,7 @@
         <DataTemplate>
           <DockPanel>
             <Button Content="Details >"
-                    Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).NavigateCommand, FallbackValue={x:Null}}"
+                    Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).NavigationService.NavigateCommand, FallbackValue={x:Null}}"
                     CommandParameter="{Binding .}"
                     Margin="4"
                     DockPanel.Dock="Right"/>

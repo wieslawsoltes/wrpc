@@ -24,12 +24,19 @@
 
     <controls:NavigateBackControl Header="Wasabi.Wallet RPC"
                                   EnableBack="False"
-                                  IsVisible="{Binding CurrentDialog, Converter={x:Static ObjectConverters.IsNull}}">
+                                  IsVisible="{Binding NavigationService.CurrentDialog, Converter={x:Static ObjectConverters.IsNull}}">
       <views:HomeView />
     </controls:NavigateBackControl>
     
-    <ContentControl Content="{Binding CurrentDialog}">
+    <ContentControl Content="{Binding NavigationService.CurrentDialog}">
       <ContentControl.DataTemplates>
+        <!-- ViewModels: CreateWallet -->
+        <DataTemplate DataType="vm:CreateWalletViewModel">
+          <controls:NavigateBackControl Header="Create Wallet">
+            <views:CreateWalletView />
+          </controls:NavigateBackControl>
+        </DataTemplate>
+        <!-- Models: WalletWasabi -->
         <DataTemplate DataType="mww:ErrorInfo">
           <controls:NavigateBackControl Header="Error">
             <viewsWalletWasabi:ErrorInfoView />
