@@ -1,10 +1,8 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mww="using:WasabiCli.Models.WalletWasabi"
         xmlns:vm="using:WasabiCli.ViewModels"
         xmlns:controls="using:WasabiCli.Controls"
         xmlns:views="using:WasabiCli.Views"
-        xmlns:viewsWalletWasabi="using:WasabiCli.Views.WalletWasabi"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="680"
@@ -15,87 +13,15 @@
         Height="680"
         Icon="/Assets/avalonia-logo.ico"
         Title="Wasabi.Wallet RPC">
-
   <Design.DataContext>
     <vm:MainWindowViewModel />
   </Design.DataContext>
-
   <Panel>
-
     <controls:NavigateBackControl Header="Wasabi.Wallet RPC"
                                   EnableBack="False"
                                   IsVisible="{Binding NavigationService.CurrentDialog, Converter={x:Static ObjectConverters.IsNull}}">
       <views:HomeView />
     </controls:NavigateBackControl>
-    
-    <ContentControl Content="{Binding NavigationService.CurrentDialog}">
-      <ContentControl.DataTemplates>
-        <!-- ViewModels: CreateWallet -->
-        <DataTemplate DataType="vm:CreateWalletViewModel">
-          <controls:NavigateBackControl Header="Create Wallet">
-            <views:CreateWalletView />
-          </controls:NavigateBackControl>
-        </DataTemplate>
-        <!-- ViewModels: GetNewAddress -->
-        <DataTemplate DataType="vm:GetNewAddressViewModel">
-          <controls:NavigateBackControl Header="New Address">
-            <views:GetNewAddressView />
-          </controls:NavigateBackControl>
-        </DataTemplate>
-        <!-- Models: WalletWasabi -->
-        <DataTemplate DataType="mww:ErrorInfo">
-          <controls:NavigateBackControl Header="Error">
-            <viewsWalletWasabi:ErrorInfoView />
-          </controls:NavigateBackControl>
-        </DataTemplate>
-        <DataTemplate DataType="mww:PeerInfo">
-          <controls:NavigateBackControl Header="Peer">
-            <viewsWalletWasabi:PeerInfoView />
-          </controls:NavigateBackControl>
-        </DataTemplate>
-        <DataTemplate DataType="mww:StatusInfo">
-          <controls:NavigateBackControl Header="Status">
-            <viewsWalletWasabi:StatusInfoView />
-          </controls:NavigateBackControl>
-        </DataTemplate>
-        <DataTemplate DataType="mww:CreateWalletInfo">
-          <controls:NavigateBackControl Header="Create Wallet">
-            <viewsWalletWasabi:CreateWalletInfoView />
-          </controls:NavigateBackControl>
-        </DataTemplate>
-        <DataTemplate DataType="mww:CoinInfo">
-          <controls:NavigateBackControl Header="Coin">
-            <viewsWalletWasabi:CoinInfoView />
-          </controls:NavigateBackControl>
-        </DataTemplate>
-        <DataTemplate DataType="mww:ListCoinsInfo">
-          <controls:NavigateBackControl Header="Coins">
-            <viewsWalletWasabi:ListCoinsInfoView />
-          </controls:NavigateBackControl>
-        </DataTemplate>
-        <DataTemplate DataType="mww:ListUnspentCoinsInfo">
-          <controls:NavigateBackControl Header="Unspent Coins">
-            <viewsWalletWasabi:ListUnspentCoinsInfoView />
-          </controls:NavigateBackControl>
-        </DataTemplate>
-        <DataTemplate DataType="mww:AccountInfo">
-          <controls:NavigateBackControl Header="Account">
-            <viewsWalletWasabi:AccountInfoView />
-          </controls:NavigateBackControl>
-        </DataTemplate>
-        <DataTemplate DataType="mww:WalletInfo">
-          <controls:NavigateBackControl Header="Wallet">
-            <viewsWalletWasabi:WalletInfoView />
-          </controls:NavigateBackControl>
-        </DataTemplate>
-        <DataTemplate DataType="mww:AddressInfo">
-          <controls:NavigateBackControl Header="Address">
-            <viewsWalletWasabi:AddressInfoView />
-          </controls:NavigateBackControl>
-        </DataTemplate>
-      </ContentControl.DataTemplates>
-    </ContentControl>
-
+    <views:NavigationServiceView DataContext="{Binding NavigationService}" />
   </Panel>
-
 </Window>
