@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text.Json;
-using System.Text.Json.Serialization.Metadata;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiCli.Models.RpcJson;
 using WasabiCli.Models.WalletWasabi;
-using WasabiCli.Services;
 
 namespace WasabiCli.ViewModels;
 
