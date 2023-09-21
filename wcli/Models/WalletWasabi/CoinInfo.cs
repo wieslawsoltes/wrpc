@@ -11,7 +11,7 @@ public class CoinInfo
     public int Index { get; set; }
 
     [JsonPropertyName("amount")]
-    public int Amount { get; set; }
+    public long Amount { get; set; }
 
     [JsonPropertyName("anonymityScore")]
     public decimal AnonymityScore { get; set; }
