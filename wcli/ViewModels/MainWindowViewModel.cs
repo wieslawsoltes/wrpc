@@ -141,7 +141,8 @@ public partial class MainWindowViewModel : ViewModelBase
 
     private bool CanGetNewAddress()
     {
-        return WalletName is not null && WalletName.Length > 0;
+        return WalletName is not null 
+               && WalletName.Length > 0;
     }
 
     [RelayCommand(CanExecute = nameof(CanGetNewAddress))]
