@@ -66,7 +66,7 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task CreateWallet()
+    private void CreateWallet()
     {
         NavigationService.Navigate(new CreateWalletViewModel(RpcService, NavigationService));
     }
