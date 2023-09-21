@@ -5,12 +5,12 @@
         xmlns:views="using:WasabiCli.Views"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="640"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="670"
         x:Class="WasabiCli.Views.MainWindow"
         x:CompileBindings="True" x:DataType="vm:MainWindowViewModel"
         WindowStartupLocation="CenterScreen"
         Width="400"
-        Height="640"
+        Height="670"
         Icon="/Assets/avalonia-logo.ico"
         Title="Wasabi.Wallet RPC">
   <Design.DataContext>
