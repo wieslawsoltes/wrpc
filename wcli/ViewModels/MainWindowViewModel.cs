@@ -16,7 +16,9 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty] private ObservableCollection<WalletViewModel>? _wallets;
 
     [NotifyCanExecuteChangedFor(nameof(GetNewAddressCommand))]
-    [ObservableProperty] private WalletViewModel? _selectedWallet;
+    [ObservableProperty] 
+    private WalletViewModel? _selectedWallet;
+
     [ObservableProperty] private ObservableCollection<RpcMethodViewModel>? _rpcMethods;
 
     public MainWindowViewModel()
