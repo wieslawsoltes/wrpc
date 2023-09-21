@@ -40,7 +40,8 @@
       <!-- Peers -->
       <Label Content="Peers" />
       <TextBox Text="{Binding Peers.Count, FallbackValue=0}"
-               IsReadOnly="True" />
+               IsReadOnly="True"
+               IsEnabled="False" />
       <ListBox ItemsSource="{Binding Peers}">
         <ListBox.ItemTemplate>
           <DataTemplate>
