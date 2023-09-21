@@ -208,7 +208,22 @@ public partial class MainWindowViewModel : ViewModelBase
     private async Task ListKeys()
     {
         // {"jsonrpc":"2.0","id":"1","method":"listkeys"}
-        throw new NotImplementedException();
+        var requestBody = new RpcMethod
+        {
+            Method = "listkeys"
+        };
+        var rpcServerUri = $"{RpcService.RpcServerPrefix}/{SelectedWallet?.WalletName}";
+        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcListKeysResult);
+        if (rpcResult is RpcListKeysResult { Result: not null } rpcListKeysResult)
+        {
+            // TODO:
+            NavigationService.Navigate(new ListKeysInfo { Keys = rpcListKeysResult.Result });
+        }
+        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            // TODO:
+            NavigationService.Navigate(rpcErrorResult.Error);
+        }
     }
 
     [RelayCommand]

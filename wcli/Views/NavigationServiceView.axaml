@@ -84,6 +84,16 @@
           <viewsWalletWasabi:GetHistoryInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
+      <DataTemplate DataType="mww:KeyInfo">
+        <controls:NavigateBackControl Header="Key">
+          <viewsWalletWasabi:KeyInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:ListKeysInfo">
+        <controls:NavigateBackControl Header="Keys">
+          <viewsWalletWasabi:ListKeysInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
     </ContentControl.DataTemplates>
   </ContentControl>
 </UserControl>

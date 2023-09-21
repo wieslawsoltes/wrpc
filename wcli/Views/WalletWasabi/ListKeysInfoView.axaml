@@ -1,0 +1,33 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mww="using:WasabiCli.Models.WalletWasabi"
+             xmlns:vm="using:WasabiCli.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="WasabiCli.Views.WalletWasabi.ListKeysInfoView"
+             x:CompileBindings="True" x:DataType="mww:ListKeysInfo">
+  <DockPanel>
+    <TextBox Text="{Binding Keys.Count, FallbackValue=0}"
+             Classes="readonly"
+             IsEnabled="False"
+             DockPanel.Dock="Top"/>
+    <!-- Coins -->
+    <ListBox ItemsSource="{Binding Keys}">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <DockPanel>
+            <Button Content="Details >"
+                    Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).NavigationService.NavigateCommand, FallbackValue={x:Null}}"
+                    CommandParameter="{Binding .}"
+                    Margin="4"
+                    DockPanel.Dock="Right"/>
+            <TextBlock Text="{Binding Address}"
+                       VerticalAlignment="Center" />
+          </DockPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </DockPanel>
+</UserControl>
+
