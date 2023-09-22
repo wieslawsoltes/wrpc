@@ -23,6 +23,11 @@
           <views:GetNewAddressView />
         </controls:NavigateBackControl>
       </DataTemplate>
+      <DataTemplate DataType="vm:StartCoinJoinViewModel">
+        <controls:NavigateBackControl Header="Start CoinJoin">
+          <views:StartCoinJoinView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
       <!-- Models: WalletWasabi -->
       <DataTemplate DataType="mww:ErrorInfo">
         <controls:NavigateBackControl Header="Error">

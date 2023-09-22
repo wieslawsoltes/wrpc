@@ -15,7 +15,16 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty] private RpcServiceViewModel _rpcService;
     [ObservableProperty] private ObservableCollection<WalletViewModel>? _wallets;
 
+    [NotifyCanExecuteChangedFor(nameof(ListCoinsCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ListUnspentCoinsCommand))]
+    [NotifyCanExecuteChangedFor(nameof(GetWalletInfoCommand))]
     [NotifyCanExecuteChangedFor(nameof(GetNewAddressCommand))]
+    [NotifyCanExecuteChangedFor(nameof(SendCommand))]
+    [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
+    [NotifyCanExecuteChangedFor(nameof(GetHistoryCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ListKeysCommand))]
+    [NotifyCanExecuteChangedFor(nameof(StartCoinJoinCommand))]
+    [NotifyCanExecuteChangedFor(nameof(StopCoinJoinCommand))]
     [ObservableProperty] 
     private WalletViewModel? _selectedWallet;
 
@@ -84,7 +93,13 @@ public partial class MainWindowViewModel : ViewModelBase
         NavigationService.Navigate(new CreateWalletViewModel(RpcService, NavigationService));
     }
 
-    [RelayCommand]
+    private bool CanListCoins()
+    {
+        return SelectedWallet?.WalletName is not null 
+               && SelectedWallet?.WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanListCoins))]
     private async Task ListCoins()
     {
         // {"jsonrpc":"2.0","id":"1","method":"listcoins"}
@@ -106,7 +121,13 @@ public partial class MainWindowViewModel : ViewModelBase
         }
     }
 
-    [RelayCommand]
+    private bool CanListUnspentCoins()
+    {
+        return SelectedWallet?.WalletName is not null 
+               && SelectedWallet?.WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanListUnspentCoins))]
     private async Task ListUnspentCoins()
     {
         // {"jsonrpc":"2.0","id":"1","method":"listunspentcoins"}
@@ -128,7 +149,13 @@ public partial class MainWindowViewModel : ViewModelBase
         }
     }
 
-    [RelayCommand]
+    private bool CanGetWalletInfo()
+    {
+        return SelectedWallet?.WalletName is not null 
+               && SelectedWallet?.WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanGetWalletInfo))]
     private async Task GetWalletInfo()
     {
         // {"jsonrpc":"2.0","id":"1","method":"getwalletinfo"}
@@ -165,14 +192,26 @@ public partial class MainWindowViewModel : ViewModelBase
         }
     }
 
-    [RelayCommand]
+    private bool CanSend()
+    {
+        return SelectedWallet?.WalletName is not null 
+               && SelectedWallet?.WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanSend))]
     private async Task Send()
     {
         // {"jsonrpc":"2.0","id":"1","method":"send", "params": { "payments":[ {"sendto": "tb1qgvnht40a08gumw32kp05hs8mny954hp2snhxcz", "amount": 15000, "label": "David" }, {"sendto":"tb1qpyhfrpys6skr2mmnc35p3dp7zlv9ew4k0gn7qm", "amount": 86200, "label": "Michael"} ], "coins":[{"transactionid":"ab83d9d0b2a9873b8ab0dc48b618098f3e7fbd807e27a10f789e9bc330ca89f7", "index":0}], "feeTarget":2, "password": "UserPassword" }}
         throw new NotImplementedException();
     }
 
-    [RelayCommand]
+    private bool CanBuild()
+    {
+        return SelectedWallet?.WalletName is not null 
+               && SelectedWallet?.WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanBuild))]
     private async Task Build()
     {
         // {"jsonrpc":"2.0","id":"1","method":"build", "params": { "payments":[ {"sendto": "tb1qgjgy9k7q32rcvdjsp3nhq0x8saqcvyahhy8up2", "amount": 15000, "label": "David" }, ], "coins":[{"transactionid":"cdfda1d9839e71e82ca539a4f60e947b1cdfbeecb198616e1daa5c43e2e6fbb3", "index":0}], "feeTarget":2, "password": "UserPassword" }}
@@ -186,7 +225,13 @@ public partial class MainWindowViewModel : ViewModelBase
         throw new NotImplementedException();
     }
 
-    [RelayCommand]
+    private bool CanGetHistory()
+    {
+        return SelectedWallet?.WalletName is not null 
+               && SelectedWallet?.WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanGetHistory))]
     private async Task GetHistory()
     {
         // {"jsonrpc":"2.0","id":"1","method":"gethistory"}
@@ -208,7 +253,13 @@ public partial class MainWindowViewModel : ViewModelBase
         }
     }
 
-    [RelayCommand]
+    private bool CanListKeys()
+    {
+        return SelectedWallet?.WalletName is not null 
+               && SelectedWallet?.WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanListKeys))]
     private async Task ListKeys()
     {
         // {"jsonrpc":"2.0","id":"1","method":"listkeys"}
@@ -230,18 +281,47 @@ public partial class MainWindowViewModel : ViewModelBase
         }
     }
 
-    [RelayCommand]
-    private async Task StartCoinJoin()
+    private bool CanStartCoinJoin()
     {
-        // {"jsonrpc":"2.0","id":"1","method":"startcoinjoin", "params":["UserPassword", "True", "True"]}
-        throw new NotImplementedException();
+        return SelectedWallet?.WalletName is not null 
+               && SelectedWallet?.WalletName.Length > 0;
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanStartCoinJoin))]
+    private void StartCoinJoin()
+    {
+        if (SelectedWallet?.WalletName is not null)
+        {
+            NavigationService.Navigate(new StartCoinJoinViewModel(RpcService, NavigationService, SelectedWallet.WalletName));
+        }
+    }
+
+    private bool CanStopCoinJoin()
+    {
+        return SelectedWallet?.WalletName is not null 
+               && SelectedWallet?.WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanStopCoinJoin))]
     private async Task StopCoinJoin()
     {
         // {"jsonrpc":"2.0","id":"1","method":"stopcoinjoin"}
-        throw new NotImplementedException();
+        var requestBody = new RpcMethod
+        {
+            Method = "stopcoinjoin"
+        };
+        var rpcServerUri = $"{RpcService.RpcServerPrefix}/{SelectedWallet?.WalletName}";
+        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcStopCoinJoinResult);
+        if (rpcResult is RpcStopCoinJoinResult)
+        {
+            // TODO:
+            // Do nothing.
+        }
+        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            // TODO:
+            NavigationService.Navigate(rpcErrorResult.Error);
+        }
     }
 
     [RelayCommand]
@@ -254,10 +334,10 @@ public partial class MainWindowViewModel : ViewModelBase
         };
         var rpcServerUri = $"{RpcService.RpcServerPrefix}";
         var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcStopResult);
-        if (rpcResult is RpcStopResult { Result: not null } rpcStopResult)
+        if (rpcResult is RpcStopResult)
         {
             // TODO:
-            NavigationService.Navigate(rpcStopResult.Result);
+            // Do nothing.
         }
         else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
         {

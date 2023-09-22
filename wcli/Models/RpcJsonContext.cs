@@ -44,6 +44,10 @@ namespace WasabiCli.Models;
 [JsonSerializable(typeof(List<KeyInfo>))]
 [JsonSerializable(typeof(ListKeysInfo))]
 [JsonSerializable(typeof(RpcListKeysResult))]
+// startcoinjoin
+[JsonSerializable(typeof(RpcStartCoinJoinResult))]
+// stopcoinjoin
+[JsonSerializable(typeof(RpcStopCoinJoinResult))]
 // stop
 [JsonSerializable(typeof(RpcStopResult))]
 public partial class RpcJsonContext : JsonSerializerContext

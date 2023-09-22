@@ -33,11 +33,7 @@ public partial class RpcServiceViewModel : ViewModelBase
   
         try
         {
-            var okResult = JsonSerializer.Deserialize(responseBodyJson, jsonTypeInfo);
-            if (okResult is not null)
-            {
-                return okResult;
-            }
+            return JsonSerializer.Deserialize(responseBodyJson, RpcJsonContext.Default.RpcErrorResult);
         }
         catch (Exception)
         {
@@ -46,7 +42,11 @@ public partial class RpcServiceViewModel : ViewModelBase
 
         try
         {
-            return JsonSerializer.Deserialize(responseBodyJson, RpcJsonContext.Default.RpcErrorResult);
+            var okResult = JsonSerializer.Deserialize(responseBodyJson, jsonTypeInfo);
+            if (okResult is not null)
+            {
+                return okResult;
+            }
         }
         catch (Exception)
         {

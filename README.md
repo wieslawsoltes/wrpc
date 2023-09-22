@@ -13,8 +13,8 @@
 - [ ] broadcast
 - [x] gethistory
 - [x] listkeys
-- [ ] startcoinjoin
-- [ ] stopcoinjoin
+- [x] startcoinjoin
+- [x] stopcoinjoin
 - [x] stop
 
 ### Resources
