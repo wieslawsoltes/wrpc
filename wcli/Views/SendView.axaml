@@ -44,7 +44,6 @@
       <!-- Coins -->
       <Label Content="Coins:"
              Target="CoinsListBox" />
-      <!-- ListUnspentCoins -->
       <TextBox Text="{Binding Coins.Count, FallbackValue=0}"
                Classes="readonly"
                IsEnabled="False"
@@ -60,7 +59,6 @@
                 HorizontalAlignment="Stretch"
                 IsExpanded="True">
         <DockPanel>
-          <!-- Coins -->
           <ListBox Name="CoinsListBox"
                    ItemsSource="{Binding Coins}">
             <ListBox.ItemTemplate>
@@ -83,7 +81,7 @@
           </ListBox>
         </DockPanel>
       </Expander>
-      <!-- CreateWallet -->
+      <!-- Send -->
       <Button Content="Send"
               Command="{Binding SendCommand}"
               CommandParameter="{x:Null}"
