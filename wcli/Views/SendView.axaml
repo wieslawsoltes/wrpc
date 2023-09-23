@@ -68,13 +68,13 @@
                 <DockPanel>
                   <Button Content="Details >"
                           Command="{x:Static local:Navigation.NavigateCommand}"
-                          CommandParameter="{Binding .}"
+                          CommandParameter="{Binding CoinInfo}"
                           Margin="4"
                           DockPanel.Dock="Right"/>
                   <StackPanel Orientation="Horizontal"
                               Spacing="4">
                     <CheckBox IsChecked="{Binding IsSelected}" />
-                    <TextBlock Text="{Binding Amount}"
+                    <TextBlock Text="{Binding CoinInfo.Amount}"
                                VerticalAlignment="Center" />
                   </StackPanel>
                 </DockPanel>
