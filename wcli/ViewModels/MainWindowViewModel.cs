@@ -199,10 +199,12 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand(CanExecute = nameof(CanSend))]
-    private async Task Send()
+    private void Send()
     {
-        // {"jsonrpc":"2.0","id":"1","method":"send", "params": { "payments":[ {"sendto": "tb1qgvnht40a08gumw32kp05hs8mny954hp2snhxcz", "amount": 15000, "label": "David" }, {"sendto":"tb1qpyhfrpys6skr2mmnc35p3dp7zlv9ew4k0gn7qm", "amount": 86200, "label": "Michael"} ], "coins":[{"transactionid":"ab83d9d0b2a9873b8ab0dc48b618098f3e7fbd807e27a10f789e9bc330ca89f7", "index":0}], "feeTarget":2, "password": "UserPassword" }}
-        throw new NotImplementedException();
+        if (SelectedWallet?.WalletName is not null)
+        {
+            NavigationService.Navigate(new SendViewModel(RpcService, NavigationService, SelectedWallet.WalletName));
+        }
     }
 
     private bool CanBuild()

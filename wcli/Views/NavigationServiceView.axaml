@@ -23,6 +23,11 @@
           <views:GetNewAddressView />
         </controls:NavigateBackControl>
       </DataTemplate>
+      <DataTemplate DataType="vm:SendViewModel">
+        <controls:NavigateBackControl Header="Send">
+          <views:SendView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
       <DataTemplate DataType="vm:StartCoinJoinViewModel">
         <controls:NavigateBackControl Header="Start CoinJoin">
           <views:StartCoinJoinView />
@@ -77,6 +82,11 @@
       <DataTemplate DataType="mww:AddressInfo">
         <controls:NavigateBackControl Header="Address">
           <viewsWalletWasabi:AddressInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:SendInfo">
+        <controls:NavigateBackControl Header="Send">
+          <viewsWalletWasabi:SendInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="mww:TransactionInfo">

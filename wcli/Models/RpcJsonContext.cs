@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using WasabiCli.Models.RpcJson;
 using WasabiCli.Models.WalletWasabi;
+using WasabiCli.Models.WalletWasabi.Send;
 
 namespace WasabiCli.Models;
 
@@ -31,6 +32,12 @@ namespace WasabiCli.Models;
 [JsonSerializable(typeof(AddressInfo))]
 [JsonSerializable(typeof(List<AddressInfo>))]
 [JsonSerializable(typeof(RpcGetNewAddressResult))]
+// send
+[JsonSerializable(typeof(Coin))]
+[JsonSerializable(typeof(Payment))]
+[JsonSerializable(typeof(Send))]
+[JsonSerializable(typeof(SendInfo))]
+[JsonSerializable(typeof(RpcSendResult))]
 // getwalletinfo
 [JsonSerializable(typeof(WalletInfo))]
 [JsonSerializable(typeof(RpcGetWalletInfoResult))]
