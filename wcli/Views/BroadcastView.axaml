@@ -1,0 +1,27 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:WasabiCli.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="WasabiCli.Views.BroadcastView"
+             x:CompileBindings="True" x:DataType="vm:BroadcastViewModel">
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Spacing="4"
+                VerticalAlignment="Top">
+      <!-- Tx -->
+      <Label Content="Tx:"
+             Target="TxTextBox" />
+      <TextBox Name="TxTextBox"
+               Text="{Binding Tx, Mode=TwoWay}" />
+      <!-- Broadcast -->
+      <Button Content="Broadcast"
+              Command="{Binding BroadcastCommand}"
+              CommandParameter="{x:Null}"
+              HorizontalAlignment="Stretch"
+              HorizontalContentAlignment="Center"
+              Padding="6,4,6,4" />
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>
+

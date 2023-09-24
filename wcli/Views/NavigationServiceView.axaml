@@ -28,6 +28,16 @@
           <views:SendView />
         </controls:NavigateBackControl>
       </DataTemplate>
+      <DataTemplate DataType="vm:BuildViewModel">
+        <controls:NavigateBackControl Header="Build">
+          <views:BuildView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vm:BroadcastViewModel">
+        <controls:NavigateBackControl Header="Broadcast">
+          <views:BroadcastView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
       <DataTemplate DataType="vm:StartCoinJoinViewModel">
         <controls:NavigateBackControl Header="Start CoinJoin">
           <views:StartCoinJoinView />
@@ -87,6 +97,16 @@
       <DataTemplate DataType="mww:SendInfo">
         <controls:NavigateBackControl Header="Send">
           <viewsWalletWasabi:SendInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:BuildInfo">
+        <controls:NavigateBackControl Header="Build">
+          <viewsWalletWasabi:BuildInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:BroadcastInfo">
+        <controls:NavigateBackControl Header="Broadcast">
+          <viewsWalletWasabi:BroadcastInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="mww:TransactionInfo">

@@ -12,4 +12,7 @@ public class Payment
 
     [JsonPropertyName("label")]
     public string? Label { get; set; }
+
+    [JsonPropertyName("subtractFee")]
+    public bool SubtractFee { get; set; }
 }

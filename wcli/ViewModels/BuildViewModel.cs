@@ -7,44 +7,45 @@ using CommunityToolkit.Mvvm.Input;
 using WasabiCli.Models;
 using WasabiCli.Models.Navigation;
 using WasabiCli.Models.RpcJson;
+using WasabiCli.Models.WalletWasabi;
 using WasabiCli.Models.WalletWasabi.Send;
 
 namespace WasabiCli.ViewModels;
 
-public partial class SendViewModel : ViewModelBase
+public partial class BuildViewModel : ViewModelBase
 {
-    [NotifyCanExecuteChangedFor(nameof(SendCommand))]
+    [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
     [ObservableProperty] 
     private string? _walletName;
 
-    [NotifyCanExecuteChangedFor(nameof(SendCommand))]
+    [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
     [ObservableProperty]
     private string? _walletPassword;
 
-    [NotifyCanExecuteChangedFor(nameof(SendCommand))]
+    [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
     [ObservableProperty]
     private string? _sendTo;
 
-    [NotifyCanExecuteChangedFor(nameof(SendCommand))]
+    [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
     [ObservableProperty]
     private long _amount;
 
-    [NotifyCanExecuteChangedFor(nameof(SendCommand))]
+    [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
     [ObservableProperty]
     private string? _label;
 
-    [NotifyCanExecuteChangedFor(nameof(SendCommand))]
+    [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
     [ObservableProperty]
     private bool _subtractFee;
 
-    [NotifyCanExecuteChangedFor(nameof(SendCommand))]
+    [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
     [ObservableProperty]
     private int _feeTarget;
 
     [ObservableProperty]
     private ObservableCollection<CoinViewModel> _coins;
 
-    public SendViewModel(RpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
+    public BuildViewModel(RpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
     {
         RpcService = rpcService;
         NavigationService = navigationService;
@@ -62,7 +63,7 @@ public partial class SendViewModel : ViewModelBase
 
     private INavigationService NavigationService { get; }
 
-    private bool CanSend()
+    private bool CanBuild()
     {
         return WalletName is not null 
                && WalletName.Length > 0
@@ -75,13 +76,13 @@ public partial class SendViewModel : ViewModelBase
                && FeeTarget > 0;
     }
 
-    [RelayCommand(CanExecute = nameof(CanSend))]
-    private async Task Send()
+    [RelayCommand(CanExecute = nameof(CanBuild))]
+    private async Task Build()
     {
-        // {"jsonrpc":"2.0","id":"1","method":"send", "params": { "payments":[ {"sendto": "tb1qgvnht40a08gumw32kp05hs8mny954hp2snhxcz", "amount": 15000, "label": "David" }, {"sendto":"tb1qpyhfrpys6skr2mmnc35p3dp7zlv9ew4k0gn7qm", "amount": 86200, "label": "Michael"} ], "coins":[{"transactionid":"ab83d9d0b2a9873b8ab0dc48b618098f3e7fbd807e27a10f789e9bc330ca89f7", "index":0}], "feeTarget":2, "password": "UserPassword" }}
+        // {"jsonrpc":"2.0","id":"1","method":"build", "params": { "payments":[ {"sendto": "tb1qgjgy9k7q32rcvdjsp3nhq0x8saqcvyahhy8up2", "amount": 15000, "label": "David" }, ], "coins":[{"transactionid":"cdfda1d9839e71e82ca539a4f60e947b1cdfbeecb198616e1daa5c43e2e6fbb3", "index":0}], "feeTarget":2, "password": "UserPassword" }}
         var requestBody = new RpcMethod
         {
-            Method = "send",
+            Method = "build",
             Params = new Send
             {
                 Payments = new List<Payment>
@@ -103,12 +104,12 @@ public partial class SendViewModel : ViewModelBase
             }
         };
         var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
-        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcSendResult);
-        if (rpcResult is RpcSendResult { Result: not null } rpcSendResult)
+        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcBuildResult);
+        if (rpcResult is RpcBuildResult { Result: not null } rpcBuildResult)
         {
             // TODO:
             NavigationService.Clear();
-            NavigationService.Navigate(rpcSendResult.Result);
+            NavigationService.Navigate(new BuildInfo { Tx = rpcBuildResult.Result });
         }
         else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
         {

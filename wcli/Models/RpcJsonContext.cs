@@ -38,6 +38,12 @@ namespace WasabiCli.Models;
 [JsonSerializable(typeof(Send))]
 [JsonSerializable(typeof(SendInfo))]
 [JsonSerializable(typeof(RpcSendResult))]
+// build
+[JsonSerializable(typeof(BuildInfo))]
+[JsonSerializable(typeof(RpcBuildResult))]
+// broadcast
+[JsonSerializable(typeof(BroadcastInfo))]
+[JsonSerializable(typeof(RpcBroadcastResult))]
 // getwalletinfo
 [JsonSerializable(typeof(WalletInfo))]
 [JsonSerializable(typeof(RpcGetWalletInfoResult))]
