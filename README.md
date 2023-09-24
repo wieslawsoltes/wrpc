@@ -9,9 +9,9 @@
 - [x] listunspentcoins
 - [x] getwalletinfo
 - [x] getnewaddress
-- [ ] send
-- [ ] build
-- [ ] broadcast
+- [x] send
+- [x] build
+- [x] broadcast
 - [x] gethistory
 - [x] listkeys
 - [x] startcoinjoin
