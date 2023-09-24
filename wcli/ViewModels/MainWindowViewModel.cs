@@ -39,9 +39,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
         Wallets = new ObservableCollection<WalletViewModel>
         {
-            new () { WalletName = "Wallet 1" },
-            new () { WalletName = "Wallet 2" },
-            new () { WalletName = "Wallet 3" }
+            new () { WalletName = "Wallet 1" }
         };
 
         SelectedWallet = Wallets[0];
