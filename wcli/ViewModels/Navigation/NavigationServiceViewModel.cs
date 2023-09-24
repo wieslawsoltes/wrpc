@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiCli.Models.Navigation;
 
-namespace WasabiCli.ViewModels;
+namespace WasabiCli.ViewModels.Navigation;
 
 public partial class NavigationServiceViewModel : ViewModelBase, INavigationService
 {

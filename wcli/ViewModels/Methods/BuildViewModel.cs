@@ -9,6 +9,7 @@ using WasabiCli.Models.Navigation;
 using WasabiCli.Models.RpcJson;
 using WasabiCli.Models.WalletWasabi;
 using WasabiCli.Models.WalletWasabi.Send;
+using WasabiCli.ViewModels.RpcJson;
 
 namespace WasabiCli.ViewModels.Methods;
 

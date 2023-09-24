@@ -5,6 +5,7 @@ using WasabiCli.Models;
 using WasabiCli.Models.Navigation;
 using WasabiCli.Models.RpcJson;
 using WasabiCli.Models.WalletWasabi;
+using WasabiCli.ViewModels.RpcJson;
 
 namespace WasabiCli.ViewModels.Methods;
 

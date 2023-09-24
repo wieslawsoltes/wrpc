@@ -1,8 +1,10 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:WasabiCli.ViewModels"
+        xmlns:vmn="using:WasabiCli.ViewModels.Navigation"
         xmlns:controls="using:WasabiCli.Controls"
         xmlns:views="using:WasabiCli.Views"
+        xmlns:viewsNavigation="using:WasabiCli.Views.Navigation"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="670"
@@ -16,7 +18,7 @@
   <Design.DataContext>
     <vm:MainWindowViewModel>
       <x:Arguments>
-        <vm:NavigationServiceViewModel />
+        <vmn:NavigationServiceViewModel />
       </x:Arguments>
     </vm:MainWindowViewModel>
   </Design.DataContext>
@@ -26,6 +28,6 @@
                                   IsVisible="{Binding NavigationService.CurrentDialog, Converter={x:Static ObjectConverters.IsNull}}">
       <views:HomeView />
     </controls:NavigateBackControl>
-    <views:NavigationServiceView DataContext="{Binding NavigationService}" />
+    <viewsNavigation:NavigationServiceView DataContext="{Binding NavigationService}" />
   </Panel>
 </Window>

@@ -8,7 +8,7 @@ using WasabiCli.Models;
 using WasabiCli.Models.RpcJson;
 using WasabiCli.Services;
 
-namespace WasabiCli.ViewModels;
+namespace WasabiCli.ViewModels.RpcJson;
 
 public partial class RpcServiceViewModel : ViewModelBase
 {

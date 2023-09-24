@@ -1,7 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-namespace WasabiCli.ViewModels;
+namespace WasabiCli.ViewModels.RpcJson;
 
 public partial class RpcMethodViewModel : ViewModelBase
 {

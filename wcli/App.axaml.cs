@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using WasabiCli.ViewModels;
+using WasabiCli.ViewModels.Navigation;
 using WasabiCli.Views;
 
 namespace WasabiCli;

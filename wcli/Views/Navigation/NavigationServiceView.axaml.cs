@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace WasabiCli.Views;
+namespace WasabiCli.Views.Navigation;
 
 public partial class NavigationServiceView : UserControl
 {

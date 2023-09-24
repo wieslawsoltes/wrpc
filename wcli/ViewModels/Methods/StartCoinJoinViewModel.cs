@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using WasabiCli.Models;
 using WasabiCli.Models.Navigation;
 using WasabiCli.Models.RpcJson;
+using WasabiCli.ViewModels.RpcJson;
 
 namespace WasabiCli.ViewModels.Methods;
 
