@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:mww="using:WasabiCli.Models.WalletWasabi"
              xmlns:vm="using:WasabiCli.ViewModels"
+             xmlns:vmm="using:WasabiCli.ViewModels.Methods"
              xmlns:controls="using:WasabiCli.Controls"
-             xmlns:views="using:WasabiCli.Views"
+             xmlns:viewsMethods="using:WasabiCli.Views.Methods"
              xmlns:viewsWalletWasabi="using:WasabiCli.Views.WalletWasabi"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="WasabiCli.Views.NavigationServiceView"
@@ -13,34 +14,34 @@
  <ContentControl Content="{Binding CurrentDialog}">
     <ContentControl.DataTemplates>
       <!-- ViewModels -->
-      <DataTemplate DataType="vm:CreateWalletViewModel">
+      <DataTemplate DataType="vmm:CreateWalletViewModel">
         <controls:NavigateBackControl Header="Create Wallet">
-          <views:CreateWalletView />
+          <viewsMethods:CreateWalletView />
         </controls:NavigateBackControl>
       </DataTemplate>
-      <DataTemplate DataType="vm:GetNewAddressViewModel">
+      <DataTemplate DataType="vmm:GetNewAddressViewModel">
         <controls:NavigateBackControl Header="New Address">
-          <views:GetNewAddressView />
+          <viewsMethods:GetNewAddressView />
         </controls:NavigateBackControl>
       </DataTemplate>
-      <DataTemplate DataType="vm:SendViewModel">
+      <DataTemplate DataType="vmm:SendViewModel">
         <controls:NavigateBackControl Header="Send">
-          <views:SendView />
+          <viewsMethods:SendView />
         </controls:NavigateBackControl>
       </DataTemplate>
-      <DataTemplate DataType="vm:BuildViewModel">
+      <DataTemplate DataType="vmm:BuildViewModel">
         <controls:NavigateBackControl Header="Build">
-          <views:BuildView />
+          <viewsMethods:BuildView />
         </controls:NavigateBackControl>
       </DataTemplate>
-      <DataTemplate DataType="vm:BroadcastViewModel">
+      <DataTemplate DataType="vmm:BroadcastViewModel">
         <controls:NavigateBackControl Header="Broadcast">
-          <views:BroadcastView />
+          <viewsMethods:BroadcastView />
         </controls:NavigateBackControl>
       </DataTemplate>
-      <DataTemplate DataType="vm:StartCoinJoinViewModel">
+      <DataTemplate DataType="vmm:StartCoinJoinViewModel">
         <controls:NavigateBackControl Header="Start CoinJoin">
-          <views:StartCoinJoinView />
+          <viewsMethods:StartCoinJoinView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <!-- Models: WalletWasabi -->

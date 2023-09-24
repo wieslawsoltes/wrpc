@@ -5,7 +5,7 @@ using WasabiCli.Models;
 using WasabiCli.Models.Navigation;
 using WasabiCli.Models.RpcJson;
 
-namespace WasabiCli.ViewModels;
+namespace WasabiCli.ViewModels.Methods;
 
 public partial class BroadcastViewModel : ViewModelBase
 {

@@ -2,11 +2,11 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace WasabiCli.Views;
+namespace WasabiCli.Views.Methods;
 
-public partial class BuildView : UserControl
+public partial class GetNewAddressView : UserControl
 {
-    public BuildView()
+    public GetNewAddressView()
     {
         InitializeComponent();
     }

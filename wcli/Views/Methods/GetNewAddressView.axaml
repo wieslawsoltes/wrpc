@@ -2,10 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="using:WasabiCli.ViewModels"
+             xmlns:vmm="using:WasabiCli.ViewModels.Methods"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="WasabiCli.Views.GetNewAddressView"
-             x:CompileBindings="True" x:DataType="vm:GetNewAddressViewModel">
+             x:Class="WasabiCli.Views.Methods.GetNewAddressView"
+             x:CompileBindings="True" x:DataType="vmm:GetNewAddressViewModel">
   <ScrollViewer HorizontalScrollBarVisibility="Disabled">
     <StackPanel Spacing="4"
                 VerticalAlignment="Top">

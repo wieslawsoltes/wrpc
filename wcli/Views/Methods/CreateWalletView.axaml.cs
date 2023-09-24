@@ -2,11 +2,11 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace WasabiCli.Views;
+namespace WasabiCli.Views.Methods;
 
-public partial class StartCoinJoinView : UserControl
+public partial class CreateWalletView : UserControl
 {
-    public StartCoinJoinView()
+    public CreateWalletView()
     {
         InitializeComponent();
     }

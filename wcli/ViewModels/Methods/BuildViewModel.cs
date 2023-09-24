@@ -10,7 +10,7 @@ using WasabiCli.Models.RpcJson;
 using WasabiCli.Models.WalletWasabi;
 using WasabiCli.Models.WalletWasabi.Send;
 
-namespace WasabiCli.ViewModels;
+namespace WasabiCli.ViewModels.Methods;
 
 public partial class BuildViewModel : ViewModelBase
 {
