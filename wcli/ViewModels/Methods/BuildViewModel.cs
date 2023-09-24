@@ -59,7 +59,7 @@ public partial class BuildViewModel : ViewModelBase
         Coins = new ObservableCollection<CoinViewModel>();
     }
 
-    public RpcServiceViewModel RpcService { get; }
+    private RpcServiceViewModel RpcService { get; }
 
     private INavigationService NavigationService { get; }
 

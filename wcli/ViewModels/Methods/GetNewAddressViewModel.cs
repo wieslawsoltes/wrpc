@@ -23,7 +23,7 @@ public partial class GetNewAddressViewModel : ViewModelBase
         Label = "Label";
     }
 
-    public RpcServiceViewModel RpcService { get; }
+    private RpcServiceViewModel RpcService { get; }
 
     private INavigationService NavigationService { get; }
 

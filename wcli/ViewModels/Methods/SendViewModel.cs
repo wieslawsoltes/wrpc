@@ -58,7 +58,7 @@ public partial class SendViewModel : ViewModelBase
         Coins = new ObservableCollection<CoinViewModel>();
     }
 
-    public RpcServiceViewModel RpcService { get; }
+    private RpcServiceViewModel RpcService { get; }
 
     private INavigationService NavigationService { get; }
 

@@ -19,7 +19,7 @@ public partial class BroadcastViewModel : ViewModelBase
         NavigationService = navigationService;
     }
 
-    public RpcServiceViewModel RpcService { get; }
+    private RpcServiceViewModel RpcService { get; }
 
     private INavigationService NavigationService { get; }
 

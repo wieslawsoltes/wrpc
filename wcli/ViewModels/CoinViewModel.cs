@@ -16,7 +16,7 @@ public partial class CoinViewModel : ViewModelBase
         IsSelected = false;
     }
 
-    public RpcServiceViewModel RpcService { get; }
+    private RpcServiceViewModel RpcService { get; }
 
     private INavigationService NavigationService { get; }
 

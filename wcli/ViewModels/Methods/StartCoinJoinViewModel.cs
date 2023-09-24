@@ -24,7 +24,7 @@ public partial class StartCoinJoinViewModel : ViewModelBase
         OverridePlebStop = true;
     }
 
-    public RpcServiceViewModel RpcService { get; }
+    private RpcServiceViewModel RpcService { get; }
 
     private INavigationService NavigationService { get; }
 

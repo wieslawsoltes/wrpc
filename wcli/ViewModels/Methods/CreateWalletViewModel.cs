@@ -24,7 +24,7 @@ public partial class CreateWalletViewModel : ViewModelBase
         WalletPassword = "";
     }
 
-    public RpcServiceViewModel RpcService { get; }
+    private RpcServiceViewModel RpcService { get; }
 
     private INavigationService NavigationService { get; }
 
