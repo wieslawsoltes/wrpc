@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="WasabiCli.App"
              xmlns:local="using:WasabiCli"
-             RequestedThemeVariant="Default"
+             RequestedThemeVariant="Dark"
              Name="Wasabi.Wallet RPC">
   <Application.DataTemplates>
     <local:ViewLocator />
