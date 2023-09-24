@@ -38,10 +38,7 @@
       <TextBox Text="{Binding ExchangeRate}"
                Classes="readonly" />
       <!-- Peers -->
-      <Label Content="Peers" />
-      <TextBox Text="{Binding Peers.Count, FallbackValue=0}"
-               Classes="readonly"
-               IsEnabled="False" />
+      <Label Content="{Binding Peers.Count, StringFormat={}Peers: {0}, FallbackValue=0}" />
       <Expander Header="Peers"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"

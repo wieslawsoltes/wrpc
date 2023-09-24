@@ -14,7 +14,8 @@
       <Label Content="Wallet name:"
              Target="WalletNameTextBox" />
       <TextBox Name="WalletNameTextBox"
-               Text="{Binding WalletName, Mode=TwoWay}" />
+               Text="{Binding WalletName, Mode=TwoWay}"
+               Classes="readonly" />
       <!-- WalletPassword -->
       <Label Content="Wallet password:"
              Target="WalletPasswordTextBox" />
@@ -47,11 +48,8 @@
       <TextBox Name="FeeTargetTextBox"
                Text="{Binding FeeTarget, Mode=TwoWay}" />
       <!-- Coins -->
-      <Label Content="Coins:"
+      <Label Content="{Binding Coins.Count, StringFormat={}Coins: {0}, FallbackValue=0}"
              Target="CoinsListBox" />
-      <TextBox Text="{Binding Coins.Count, FallbackValue=0}"
-               Classes="readonly"
-               IsEnabled="False" />
       <Button Content="ListUnspentCoins"
               Command="{Binding ListUnspentCoinsCommand}"
               CommandParameter="{x:Null}"

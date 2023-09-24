@@ -13,7 +13,7 @@
         WindowStartupLocation="CenterScreen"
         Width="420"
         Height="730"
-        Background="#FF222222"
+        Background="#FF353535"
         Icon="/Assets/avalonia-logo.ico"
         Title="Wasabi.Wallet RPC">
   <Design.DataContext>

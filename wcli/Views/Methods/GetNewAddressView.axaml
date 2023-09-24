@@ -14,7 +14,6 @@
              Target="WalletNameTextBox" />
       <TextBox Name="WalletNameTextBox"
                Classes="readonly"
-               IsEnabled="False"
                Text="{Binding WalletName, Mode=TwoWay}" />
       <!-- Label -->
       <Label Content="Label:"

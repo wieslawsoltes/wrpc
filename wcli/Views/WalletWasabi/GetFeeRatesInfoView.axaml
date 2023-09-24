@@ -7,10 +7,8 @@
              x:Class="WasabiCli.Views.WalletWasabi.GetFeeRatesInfoView"
              x:CompileBindings="True" x:DataType="mww:GetFeeRatesInfo">
   <DockPanel>
-    <TextBox Text="{Binding FeeRates.Count, FallbackValue=0}"
-             Classes="readonly"
-             IsEnabled="False"
-             DockPanel.Dock="Top"/>
+    <Label Content="{Binding FeeRates.Count, StringFormat={}FeeRates: {0}, FallbackValue=0}"
+           DockPanel.Dock="Top"/>
     <!-- FeeRates -->
     <Expander Header="FeeRates"
               HorizontalAlignment="Stretch"

@@ -16,5 +16,23 @@
     <Style Selector="TextBox:pointerover.readonly">
       <Setter Property="IsReadOnly" Value="True" />
     </Style>
+    <Style Selector="TextBox">
+      <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+    <Style Selector="TextBox:disabled">
+      <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+    <Style Selector="ComboBox">
+      <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+    <Style Selector="ListBox">
+      <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+    <Style Selector="Expander">
+      <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+    <Style Selector="Expander ToggleButton">
+      <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
   </Application.Styles>
 </Application>

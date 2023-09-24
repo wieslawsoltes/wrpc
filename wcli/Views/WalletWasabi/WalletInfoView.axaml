@@ -34,10 +34,7 @@
       <TextBox Text="{Binding AnonScoreTarget}"
                Classes="readonly" />
       <!-- Accounts -->
-      <Label Content="Accounts" />
-      <TextBox Text="{Binding Accounts.Count, FallbackValue=0}"
-               Classes="readonly"
-               IsEnabled="False" />
+      <Label Content="{Binding Accounts.Count, StringFormat={}Accounts: {0}, FallbackValue=0}" />
       <Expander Header="Accounts"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
