@@ -57,13 +57,11 @@ public partial class RecoverWalletViewModel : ViewModelBase
         var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcRecoverWalletResult);
         if (result is RpcRecoverWalletResult)
         {
-            // TODO:
             NavigationService.Clear();
             NavigationService.Navigate(new Success { Message = $"Recovered wallet {WalletName}" });
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            // TODO:
             NavigationService.Navigate(rpcErrorResult.Error);
         }
         else if (result is Error error)

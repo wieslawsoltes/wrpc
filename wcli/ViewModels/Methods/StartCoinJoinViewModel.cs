@@ -34,7 +34,6 @@ public partial class StartCoinJoinViewModel : ViewModelBase
         var requestBody = new RpcMethod
         {
             Method = "startcoinjoin",
-            // TODO:
             Params = new []
             {
                 WalletPassword,
@@ -46,13 +45,11 @@ public partial class StartCoinJoinViewModel : ViewModelBase
         var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcStartCoinJoinResult);
         if (result is RpcStartCoinJoinResult)
         {
-            // TODO:
             NavigationService.Clear();
             NavigationService.Navigate(new Success { Message = $"Started coinjoin for wallet {WalletName}" });
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            // TODO:
             NavigationService.Navigate(rpcErrorResult.Error);
         }
         else if (result is Error error)

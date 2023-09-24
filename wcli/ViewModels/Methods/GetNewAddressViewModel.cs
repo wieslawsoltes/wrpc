@@ -39,7 +39,6 @@ public partial class GetNewAddressViewModel : ViewModelBase
         var requestBody = new RpcMethod
         {
             Method = "getnewaddress",
-            // TODO:
             Params = new []
             {
                 Label
@@ -49,13 +48,11 @@ public partial class GetNewAddressViewModel : ViewModelBase
         var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetNewAddressResult);
         if (result is RpcGetNewAddressResult { Result: not null } rpcGetNewAddressResult)
         {
-            // TODO:
             NavigationService.Clear();
             NavigationService.Navigate(rpcGetNewAddressResult.Result);
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            // TODO:
             NavigationService.Navigate(rpcErrorResult.Error);
         }
         else if (result is Error error)

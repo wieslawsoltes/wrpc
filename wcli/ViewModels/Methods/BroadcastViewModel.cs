@@ -44,13 +44,11 @@ public partial class BroadcastViewModel : ViewModelBase
         var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcBroadcastResult);
         if (result is RpcBroadcastResult { Result: not null } rpcBroadcastResult)
         {
-            // TODO:
             NavigationService.Clear();
             NavigationService.Navigate(rpcBroadcastResult.Result);
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            // TODO:
             NavigationService.Navigate(rpcErrorResult.Error);
         }
         else if (result is Error error)

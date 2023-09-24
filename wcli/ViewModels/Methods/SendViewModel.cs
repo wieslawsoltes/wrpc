@@ -105,13 +105,11 @@ public partial class SendViewModel : ViewModelBase
         var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcSendResult);
         if (result is RpcSendResult { Result: not null } rpcSendResult)
         {
-            // TODO:
             NavigationService.Clear();
             NavigationService.Navigate(rpcSendResult.Result);
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            // TODO:
             NavigationService.Navigate(rpcErrorResult.Error);
         }
         else if (result is Error error)
@@ -138,7 +136,6 @@ public partial class SendViewModel : ViewModelBase
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            // TODO:
             NavigationService.Navigate(rpcErrorResult.Error);
         }
         else if (result is Error error)

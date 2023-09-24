@@ -50,13 +50,11 @@ public partial class CreateWalletViewModel : ViewModelBase
         var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcCreateWalletResult);
         if (result is RpcCreateWalletResult { Result: not null } rpcCreateWalletResult)
         {
-            // TODO:
             NavigationService.Clear();
             NavigationService.Navigate(new CreateWalletInfo { Mnemonic = rpcCreateWalletResult.Result });
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            // TODO:
             NavigationService.Navigate(rpcErrorResult.Error);
         }
         else if (result is Error error)
