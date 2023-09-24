@@ -16,7 +16,7 @@
 - [x] listkeys
 - [x] startcoinjoin
 - [x] stopcoinjoin
-- [ ] getfeerates
+- [x] getfeerates
 - [x] stop
 
 ### Resources
