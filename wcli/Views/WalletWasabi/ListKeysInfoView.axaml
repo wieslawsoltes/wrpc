@@ -7,37 +7,35 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="WasabiCli.Views.WalletWasabi.ListKeysInfoView"
              x:CompileBindings="True" x:DataType="mww:ListKeysInfo">
-  <DockPanel>
-    <Label Content="{Binding Keys.Count, StringFormat={}Keys: {0}, FallbackValue=0}"
-           DockPanel.Dock="Top"/>
-    <!-- Keys -->
-    <Expander Header="Keys"
-              HorizontalAlignment="Stretch"
-              VerticalAlignment="Top"
-              Padding="0"
-              Margin="0,4,0,0"
-              IsExpanded="True">
-      <ListBox ItemsSource="{Binding Keys}">
-        <ListBox.ItemTemplate>
-          <DataTemplate>
-            <DockPanel>
-              <Button Content="Details >"
-                      Command="{x:Static local:Navigation.NavigateCommand}"
-                      CommandParameter="{Binding .}"
-                      Margin="4,4,8,4"
-                      DockPanel.Dock="Right"/>
-              <TextBlock VerticalAlignment="Center">
-                <Run>Address: </Run>
-                <Run Text="{Binding Address}" />
-                <LineBreak />
-                <Run>Label: </Run>
-                <Run Text="{Binding Label}" />
-              </TextBlock>
-            </DockPanel>
-          </DataTemplate>
-        </ListBox.ItemTemplate>
-      </ListBox>
-    </Expander>
-  </DockPanel>
+  <!-- Keys -->
+  <Expander HorizontalAlignment="Stretch"
+            VerticalAlignment="Top"
+            Padding="0"
+            Margin="0,4,0,0"
+            IsExpanded="True">
+    <Expander.Header>
+      <Label Content="{Binding Keys.Count, StringFormat={}Keys: {0}, FallbackValue=0}" />
+    </Expander.Header>
+    <ListBox ItemsSource="{Binding Keys}">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <DockPanel>
+            <Button Content="Details >"
+                    Command="{x:Static local:Navigation.NavigateCommand}"
+                    CommandParameter="{Binding .}"
+                    Margin="4,4,8,4"
+                    DockPanel.Dock="Right"/>
+            <TextBlock VerticalAlignment="Center">
+              <Run>Address: </Run>
+              <Run Text="{Binding Address}" />
+              <LineBreak />
+              <Run>Label: </Run>
+              <Run Text="{Binding Label}" />
+            </TextBlock>
+          </DockPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </Expander>
 </UserControl>
 

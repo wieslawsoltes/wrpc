@@ -48,19 +48,19 @@
       <TextBox Name="FeeTargetTextBox"
                Text="{Binding FeeTarget, Mode=TwoWay}" />
       <!-- Coins -->
-      <Label Content="{Binding Coins.Count, StringFormat={}Coins: {0}, FallbackValue=0}"
-             Target="CoinsListBox" />
       <Button Content="ListUnspentCoins"
               Command="{Binding ListUnspentCoinsCommand}"
               CommandParameter="{x:Null}"
               HorizontalAlignment="Stretch"
               HorizontalContentAlignment="Center"
               Padding="6,4,6,4" />
-      <Expander Header="UnspentCoins"
-                HorizontalAlignment="Stretch"
+      <Expander HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
                 Padding="0"
                 IsExpanded="True">
+        <Expander.Header>
+          <Label Content="{Binding Coins.Count, StringFormat={}UnspentCoins: {0}, FallbackValue=0}" />
+        </Expander.Header>
         <ListBox Name="CoinsListBox"
                  ItemsSource="{Binding Coins}">
           <ListBox.ItemTemplate>

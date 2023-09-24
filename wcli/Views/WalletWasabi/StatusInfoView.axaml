@@ -38,12 +38,13 @@
       <TextBox Text="{Binding ExchangeRate}"
                Classes="readonly" />
       <!-- Peers -->
-      <Label Content="{Binding Peers.Count, StringFormat={}Peers: {0}, FallbackValue=0}" />
-      <Expander Header="Peers"
-                HorizontalAlignment="Stretch"
+      <Expander HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
                 Padding="0"
                 IsExpanded="True">
+        <Expander.Header>
+          <Label Content="{Binding Peers.Count, StringFormat={}Peers: {0}, FallbackValue=0}" />
+        </Expander.Header>
         <ListBox ItemsSource="{Binding Peers}">
           <ListBox.ItemTemplate>
             <DataTemplate>

@@ -34,12 +34,13 @@
       <TextBox Text="{Binding AnonScoreTarget}"
                Classes="readonly" />
       <!-- Accounts -->
-      <Label Content="{Binding Accounts.Count, StringFormat={}Accounts: {0}, FallbackValue=0}" />
-      <Expander Header="Accounts"
-                HorizontalAlignment="Stretch"
+      <Expander HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
                 Padding="0"
                 IsExpanded="True">
+        <Expander.Header>
+          <Label Content="{Binding Accounts.Count, StringFormat={}Accounts: {0}, FallbackValue=0}" />
+        </Expander.Header>
         <ListBox ItemsSource="{Binding Accounts}">
           <ListBox.ItemTemplate>
             <DataTemplate>
