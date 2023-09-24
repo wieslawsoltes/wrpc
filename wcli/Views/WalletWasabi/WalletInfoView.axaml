@@ -38,21 +38,32 @@
       <TextBox Text="{Binding Accounts.Count, FallbackValue=0}"
                Classes="readonly"
                IsEnabled="False" />
-      <ListBox ItemsSource="{Binding Accounts}">
-        <ListBox.ItemTemplate>
-          <DataTemplate>
-            <DockPanel>
-              <Button Content="Details >"
-                      Command="{x:Static local:Navigation.NavigateCommand}"
-                      CommandParameter="{Binding .}"
-                      Margin="4"
-                      DockPanel.Dock="Right"/>
-              <TextBlock Text="{Binding Name}"
-                         VerticalAlignment="Center" />
-            </DockPanel>
-          </DataTemplate>
-        </ListBox.ItemTemplate>
-      </ListBox>
+      <Expander Header="Accounts"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Top"
+                Padding="0"
+                IsExpanded="True">
+        <ListBox ItemsSource="{Binding Accounts}">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <DockPanel>
+                <Button Content="Details >"
+                        Command="{x:Static local:Navigation.NavigateCommand}"
+                        CommandParameter="{Binding .}"
+                        Margin="4,4,8,4"
+                        DockPanel.Dock="Right"/>
+                <TextBlock VerticalAlignment="Center">
+                  <Run>IsConnected: </Run>
+                  <Run Text="{Binding Name}" />
+                  <LineBreak />
+                  <Run>KeyPath: </Run>
+                  <Run Text="{Binding KeyPath}" />
+                </TextBlock>
+              </DockPanel>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Expander>
     </StackPanel>
   </ScrollViewer>
 </UserControl>

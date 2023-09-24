@@ -12,22 +12,34 @@
              Classes="readonly"
              IsEnabled="False"
              DockPanel.Dock="Top"/>
-    <!-- Coins -->
-    <ListBox ItemsSource="{Binding Keys}">
-      <ListBox.ItemTemplate>
-        <DataTemplate>
-          <DockPanel>
-            <Button Content="Details >"
-                    Command="{x:Static local:Navigation.NavigateCommand}"
-                    CommandParameter="{Binding .}"
-                    Margin="4"
-                    DockPanel.Dock="Right"/>
-            <TextBlock Text="{Binding Address}"
-                       VerticalAlignment="Center" />
-          </DockPanel>
-        </DataTemplate>
-      </ListBox.ItemTemplate>
-    </ListBox>
+    <!-- Keys -->
+    <Expander Header="Keys"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Top"
+              Padding="0"
+              Margin="0,4,0,0"
+              IsExpanded="True">
+      <ListBox ItemsSource="{Binding Keys}">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <DockPanel>
+              <Button Content="Details >"
+                      Command="{x:Static local:Navigation.NavigateCommand}"
+                      CommandParameter="{Binding .}"
+                      Margin="4,4,8,4"
+                      DockPanel.Dock="Right"/>
+              <TextBlock VerticalAlignment="Center">
+                <Run>Address: </Run>
+                <Run Text="{Binding Address}" />
+                <LineBreak />
+                <Run>Label: </Run>
+                <Run Text="{Binding Label}" />
+              </TextBlock>
+            </DockPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </Expander>
   </DockPanel>
 </UserControl>
 

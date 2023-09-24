@@ -42,21 +42,35 @@
       <TextBox Text="{Binding Peers.Count, FallbackValue=0}"
                Classes="readonly"
                IsEnabled="False" />
-      <ListBox ItemsSource="{Binding Peers}">
-        <ListBox.ItemTemplate>
-          <DataTemplate>
-            <DockPanel>
-              <Button Content="Details >"
-                      Command="{x:Static local:Navigation.NavigateCommand}"
-                      CommandParameter="{Binding .}"
-                      Margin="4"
-                      DockPanel.Dock="Right"/>
-              <TextBlock Text="{Binding Endpoint}"
-                         VerticalAlignment="Center" />
-            </DockPanel>
-          </DataTemplate>
-        </ListBox.ItemTemplate>
-      </ListBox>
+      <Expander Header="Peers"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Top"
+                Padding="0"
+                IsExpanded="True">
+        <ListBox ItemsSource="{Binding Peers}">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <DockPanel>
+                <Button Content="Details >"
+                        Command="{x:Static local:Navigation.NavigateCommand}"
+                        CommandParameter="{Binding .}"
+                        Margin="4,4,8,4"
+                        DockPanel.Dock="Right"/>
+                <TextBlock VerticalAlignment="Center">
+                  <Run>IsConnected: </Run>
+                  <Run Text="{Binding IsConnected}" />
+                  <LineBreak />
+                  <Run>LastSeen: </Run>
+                  <Run Text="{Binding LastSeen}" />
+                  <LineBreak />
+                  <Run>Endpoint: </Run>
+                  <Run Text="{Binding Endpoint}" />
+                </TextBlock>
+              </DockPanel>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Expander>
     </StackPanel>
   </ScrollViewer>
 </UserControl>

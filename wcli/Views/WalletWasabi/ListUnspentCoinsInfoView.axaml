@@ -12,22 +12,34 @@
              Classes="readonly"
              IsEnabled="False"
              DockPanel.Dock="Top"/>
-    <!-- Coins -->
-    <ListBox ItemsSource="{Binding Coins}">
-      <ListBox.ItemTemplate>
-        <DataTemplate>
-          <DockPanel>
-            <Button Content="Details >"
-                    Command="{x:Static local:Navigation.NavigateCommand}"
-                    CommandParameter="{Binding .}"
-                    Margin="4"
-                    DockPanel.Dock="Right"/>
-            <TextBlock Text="{Binding Amount}"
-                       VerticalAlignment="Center" />
-          </DockPanel>
-        </DataTemplate>
-      </ListBox.ItemTemplate>
-    </ListBox>
+    <!-- UnspentCoins -->
+    <Expander Header="UnspentCoins"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Top"
+              Padding="0"
+              Margin="0,4,0,0"
+              IsExpanded="True">
+      <ListBox ItemsSource="{Binding Coins}">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <DockPanel>
+              <Button Content="Details >"
+                      Command="{x:Static local:Navigation.NavigateCommand}"
+                      CommandParameter="{Binding .}"
+                      Margin="4,4,8,4"
+                      DockPanel.Dock="Right"/>
+              <TextBlock VerticalAlignment="Center">
+                <Run>Amount: </Run>
+                <Run Text="{Binding Amount}" />
+                <LineBreak />
+                <Run>AnonymityScore: </Run>
+                <Run Text="{Binding AnonymityScore}" />
+              </TextBlock>
+            </DockPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </Expander>
   </DockPanel>
 </UserControl>
 

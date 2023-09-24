@@ -12,14 +12,21 @@
              IsEnabled="False"
              DockPanel.Dock="Top"/>
     <!-- FeeRates -->
-    <ListBox ItemsSource="{Binding FeeRates}">
-      <ListBox.ItemTemplate>
-        <DataTemplate>
-          <TextBlock Text="{Binding .}"
-                     VerticalAlignment="Center" />
-        </DataTemplate>
-      </ListBox.ItemTemplate>
-    </ListBox>
+    <Expander Header="FeeRates"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Top"
+              Padding="0"
+              Margin="0,4,0,0"
+              IsExpanded="True">
+      <ListBox ItemsSource="{Binding FeeRates}">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding .}"
+                       VerticalAlignment="Center" />
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </Expander>
   </DockPanel>
 </UserControl>
 

@@ -51,40 +51,43 @@
              Target="CoinsListBox" />
       <TextBox Text="{Binding Coins.Count, FallbackValue=0}"
                Classes="readonly"
-               IsEnabled="False"
-               DockPanel.Dock="Top" />
+               IsEnabled="False" />
       <Button Content="ListUnspentCoins"
               Command="{Binding ListUnspentCoinsCommand}"
               CommandParameter="{x:Null}"
               HorizontalAlignment="Stretch"
               HorizontalContentAlignment="Center"
-              Padding="6,4,6,4"
-              DockPanel.Dock="Top" />
+              Padding="6,4,6,4" />
       <Expander Header="UnspentCoins"
                 HorizontalAlignment="Stretch"
+                VerticalAlignment="Top"
+                Padding="0"
                 IsExpanded="True">
-        <DockPanel>
-          <ListBox Name="CoinsListBox"
-                   ItemsSource="{Binding Coins}">
-            <ListBox.ItemTemplate>
-              <DataTemplate>
-                <DockPanel>
-                  <Button Content="Details >"
-                          Command="{x:Static local:Navigation.NavigateCommand}"
-                          CommandParameter="{Binding CoinInfo}"
-                          Margin="4"
-                          DockPanel.Dock="Right"/>
-                  <StackPanel Orientation="Horizontal"
-                              Spacing="4">
-                    <CheckBox IsChecked="{Binding IsSelected}" />
-                    <TextBlock Text="{Binding CoinInfo.Amount}"
-                               VerticalAlignment="Center" />
-                  </StackPanel>
-                </DockPanel>
-              </DataTemplate>
-            </ListBox.ItemTemplate>
-          </ListBox>
-        </DockPanel>
+        <ListBox Name="CoinsListBox"
+                 ItemsSource="{Binding Coins}">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <DockPanel>
+                <Button Content="Details >"
+                        Command="{x:Static local:Navigation.NavigateCommand}"
+                        CommandParameter="{Binding CoinInfo}"
+                        Margin="4,4,8,4"
+                        DockPanel.Dock="Right"/>
+                <StackPanel Orientation="Horizontal"
+                            Spacing="4">
+                  <CheckBox IsChecked="{Binding IsSelected}" />
+                  <TextBlock VerticalAlignment="Center">
+                    <Run>Amount: </Run>
+                    <Run Text="{Binding CoinInfo.Amount}" />
+                    <LineBreak />
+                    <Run>AnonymityScore: </Run>
+                    <Run Text="{Binding CoinInfo.AnonymityScore}" />
+                  </TextBlock>
+                </StackPanel>
+              </DockPanel>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
       </Expander>
       <!-- Build -->
       <Button Content="Build"
