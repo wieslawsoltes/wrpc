@@ -68,7 +68,6 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private async Task GetStatus()
     {
-        // {"jsonrpc":"2.0","id":"1","method":"getstatus"}
         var requestBody = new RpcMethod
         {
             Method = "getstatus"
@@ -102,7 +101,6 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanListCoins))]
     private async Task ListCoins()
     {
-        // {"jsonrpc":"2.0","id":"1","method":"listcoins"}
         var requestBody = new RpcMethod
         {
             Method = "listcoins"
@@ -130,7 +128,6 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanListUnspentCoins))]
     private async Task ListUnspentCoins()
     {
-        // {"jsonrpc":"2.0","id":"1","method":"listunspentcoins"}
         var requestBody = new RpcMethod
         {
             Method = "listunspentcoins"
@@ -158,7 +155,6 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanGetWalletInfo))]
     private async Task GetWalletInfo()
     {
-        // {"jsonrpc":"2.0","id":"1","method":"getwalletinfo"}
         var requestBody = new RpcMethod
         {
             Method = "getwalletinfo"
@@ -240,7 +236,6 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanGetHistory))]
     private async Task GetHistory()
     {
-        // {"jsonrpc":"2.0","id":"1","method":"gethistory"}
         var requestBody = new RpcMethod
         {
             Method = "gethistory"
@@ -268,7 +263,6 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanListKeys))]
     private async Task ListKeys()
     {
-        // {"jsonrpc":"2.0","id":"1","method":"listkeys"}
         var requestBody = new RpcMethod
         {
             Method = "listkeys"
@@ -311,7 +305,6 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanStopCoinJoin))]
     private async Task StopCoinJoin()
     {
-        // {"jsonrpc":"2.0","id":"1","method":"stopcoinjoin"}
         var requestBody = new RpcMethod
         {
             Method = "stopcoinjoin"
@@ -333,7 +326,6 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private async Task Stop()
     {
-        // {"jsonrpc":"2.0", "method":"stop"}
         var requestBody = new RpcMethod
         {
             Method = "stop"

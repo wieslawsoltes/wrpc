@@ -79,7 +79,6 @@ public partial class BuildViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanBuild))]
     private async Task Build()
     {
-        // {"jsonrpc":"2.0","id":"1","method":"build", "params": { "payments":[ {"sendto": "tb1qgjgy9k7q32rcvdjsp3nhq0x8saqcvyahhy8up2", "amount": 15000, "label": "David" }, ], "coins":[{"transactionid":"cdfda1d9839e71e82ca539a4f60e947b1cdfbeecb198616e1daa5c43e2e6fbb3", "index":0}], "feeTarget":2, "password": "UserPassword" }}
         var requestBody = new RpcMethod
         {
             Method = "build",
@@ -121,7 +120,6 @@ public partial class BuildViewModel : ViewModelBase
     [RelayCommand]
     private async Task ListUnspentCoins()
     {
-        // {"jsonrpc":"2.0","id":"1","method":"listunspentcoins"}
         var requestBody = new RpcMethod
         {
             Method = "listunspentcoins"

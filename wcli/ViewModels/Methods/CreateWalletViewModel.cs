@@ -37,7 +37,6 @@ public partial class CreateWalletViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanCreateWallet))]
     private async Task CreateWallet()
     {
-        // {"jsonrpc":"2.0","id":"1","method":"createwallet","params":["WalletName", "UserPassword"]}'
         var requestBody = new RpcMethod
         {
             Method = "createwallet",

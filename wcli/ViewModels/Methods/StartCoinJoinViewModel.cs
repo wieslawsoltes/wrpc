@@ -31,7 +31,6 @@ public partial class StartCoinJoinViewModel : ViewModelBase
     [RelayCommand]
     private async Task StartCoinJoin()
     {
-        // {"jsonrpc":"2.0","id":"1","method":"startcoinjoin", "params":["UserPassword", "True", "True"]}
         var requestBody = new RpcMethod
         {
             Method = "startcoinjoin",
