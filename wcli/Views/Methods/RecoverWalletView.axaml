@@ -1,0 +1,38 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vmm="using:WasabiCli.ViewModels.Methods"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="WasabiCli.Views.Methods.RecoverWalletView"
+             x:CompileBindings="True" x:DataType="vmm:RecoverWalletViewModel">
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Spacing="4"
+                VerticalAlignment="Top">
+      <!-- WalletName -->
+      <Label Content="Wallet name:"
+             Target="WalletNameTextBox" />
+      <TextBox Name="WalletNameTextBox"
+               Text="{Binding WalletName, Mode=TwoWay}" />
+      <!-- WalletMnemonic -->
+      <Label Content="Wallet mnemonic:"
+             Target="WalletMnemonicTextBox" />
+      <TextBox Name="WalletMnemonicTextBox"
+               Text="{Binding WalletMnemonic, Mode=TwoWay}" />
+      <!-- WalletPassword -->
+      <Label Content="Wallet password:"
+             Target="WalletPasswordTextBox" />
+      <TextBox Name="WalletPasswordTextBox"
+               Text="{Binding WalletPassword, Mode=TwoWay}"
+               PasswordChar="*" />
+      <!-- RecoverWallet -->
+      <Button Content="RecoverWallet"
+              Command="{Binding RecoverWalletCommand}"
+              CommandParameter="{x:Null}"
+              HorizontalAlignment="Stretch"
+              HorizontalContentAlignment="Center"
+              Padding="6,4,6,4" />
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>
+

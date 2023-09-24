@@ -4,7 +4,7 @@
 
 - [x] getstatus
 - [x] createwallet
-- [ ] recoverwallet
+- [x] recoverwallet
 - [x] listcoins
 - [x] listunspentcoins
 - [x] getwalletinfo
@@ -16,6 +16,7 @@
 - [x] listkeys
 - [x] startcoinjoin
 - [x] stopcoinjoin
+- [ ] getfeerates
 - [x] stop
 
 ### Resources

@@ -19,18 +19,32 @@ public partial class RpcServiceViewModel : ViewModelBase
         RpcServerPrefix = rpcServerPrefix;
     }
 
-    public async Task<Rpc?> SendRpcMethod<T>(RpcMethod rpcMethod, string rpcServerUri, JsonTypeInfo<T> jsonTypeInfo) 
-        where T: Rpc
+    public async Task<object?> SendRpcMethod<T>(RpcMethod rpcMethod, string rpcServerUri, JsonTypeInfo<T> jsonTypeInfo) 
+        where T: class
     {
-        var requestBodyJson = JsonSerializer.Serialize(rpcMethod, RpcJsonContext.Default.RpcMethod);
-        var cts = new CancellationTokenSource();
-        var rpcService = new RpcService();
-        var responseBodyJson = await rpcService.GetResponseDataAsync(rpcServerUri, requestBodyJson, true, cts.Token);
-        if (responseBodyJson is null)
+        string? responseBodyJson;
+
+        try
         {
-            return default;
+            var requestBodyJson = JsonSerializer.Serialize(rpcMethod, RpcJsonContext.Default.RpcMethod);
+            var cts = new CancellationTokenSource();
+            var rpcService = new RpcService();
+            responseBodyJson = await rpcService.GetResponseDataAsync(rpcServerUri, requestBodyJson, true, cts.Token);
+            if (responseBodyJson is null)
+            {
+                return new Error { Message = "Invalid response."};
+            }
         }
-  
+        catch (Exception e)
+        {
+            return new Error { Message = $"{e.Message}"};
+        }
+
+        if (jsonTypeInfo.Type == typeof(string))
+        {
+            return responseBodyJson;
+        }
+        
         try
         {
             return JsonSerializer.Deserialize(responseBodyJson, RpcJsonContext.Default.RpcErrorResult);

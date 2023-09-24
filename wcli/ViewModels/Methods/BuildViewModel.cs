@@ -103,17 +103,21 @@ public partial class BuildViewModel : ViewModelBase
             }
         };
         var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
-        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcBuildResult);
-        if (rpcResult is RpcBuildResult { Result: not null } rpcBuildResult)
+        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcBuildResult);
+        if (result is RpcBuildResult { Result: not null } rpcBuildResult)
         {
             // TODO:
             NavigationService.Clear();
             NavigationService.Navigate(new BuildInfo { Tx = rpcBuildResult.Result });
         }
-        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
+        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
             NavigationService.Navigate(rpcErrorResult.Error);
+        }
+        else if (result is Error error)
+        {
+            NavigationService.Navigate(error);
         }
     }
 
@@ -125,18 +129,22 @@ public partial class BuildViewModel : ViewModelBase
             Method = "listunspentcoins"
         };
         var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
-        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcListUnspentCoinsResult);
-        if (rpcResult is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
+        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcListUnspentCoinsResult);
+        if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
         {
             var coins = rpcListUnspentCoinsResult.Result
                 .Select(x => new CoinViewModel(RpcService, NavigationService, x));
 
             Coins = new ObservableCollection<CoinViewModel>(coins);
         }
-        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
+        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
             NavigationService.Navigate(rpcErrorResult.Error);
+        }
+        else if (result is Error error)
+        {
+            NavigationService.Navigate(error);
         }
     }
 }

@@ -43,16 +43,21 @@ public partial class StartCoinJoinViewModel : ViewModelBase
             }
         };
         var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
-        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcStartCoinJoinResult);
-        if (rpcResult is RpcStartCoinJoinResult)
+        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcStartCoinJoinResult);
+        if (result is RpcStartCoinJoinResult)
         {
             // TODO:
-            NavigationService.Back();
+            NavigationService.Clear();
+            NavigationService.Navigate(new Success { Message = $"Started coinjoin for wallet {WalletName}" });
         }
-        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
+        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
             NavigationService.Navigate(rpcErrorResult.Error);
+        }
+        else if (result is Error error)
+        {
+            NavigationService.Navigate(error);
         }
     }
 }

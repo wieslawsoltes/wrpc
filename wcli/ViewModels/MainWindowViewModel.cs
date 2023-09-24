@@ -48,6 +48,7 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             new ("GetStatus", GetStatusCommand),
             new ("CreateWallet", CreateWalletCommand),
+            new ("RecoverWallet", RecoverWalletCommand),
             new ("ListCoins", ListCoinsCommand),
             new ("ListUnspentCoins", ListUnspentCoinsCommand),
             new ("GetWalletInfo", GetWalletInfoCommand),
@@ -73,16 +74,20 @@ public partial class MainWindowViewModel : ViewModelBase
             Method = "getstatus"
         };
         var rpcServerUri = $"{RpcService.RpcServerPrefix}";
-        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetStatusResult);
-        if (rpcResult is RpcGetStatusResult { Result: not null } rpcGetStatusResult)
+        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetStatusResult);
+        if (result is RpcGetStatusResult { Result: not null } rpcGetStatusResult)
         {
             // TODO:
             NavigationService.Navigate(rpcGetStatusResult.Result);
         }
-        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
+        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
             NavigationService.Navigate(rpcErrorResult.Error);
+        }
+        else if (result is Error error)
+        {
+            NavigationService.Navigate(error);
         }
     }
 
@@ -90,6 +95,12 @@ public partial class MainWindowViewModel : ViewModelBase
     private void CreateWallet()
     {
         NavigationService.Navigate(new CreateWalletViewModel(RpcService, NavigationService));
+    }
+
+    [RelayCommand]
+    private void RecoverWallet()
+    {
+        NavigationService.Navigate(new RecoverWalletViewModel(RpcService, NavigationService));
     }
 
     private bool CanListCoins()
@@ -106,16 +117,20 @@ public partial class MainWindowViewModel : ViewModelBase
             Method = "listcoins"
         };
         var rpcServerUri = $"{RpcService.RpcServerPrefix}/{SelectedWallet?.WalletName}";
-        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcListCoinsResult);
-        if (rpcResult is RpcListCoinsResult { Result: not null } rpcListCoinsResult)
+        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcListCoinsResult);
+        if (result is RpcListCoinsResult { Result: not null } rpcListCoinsResult)
         {
             // TODO:
             NavigationService.Navigate(new ListCoinsInfo { Coins = rpcListCoinsResult.Result });
         }
-        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
+        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
             NavigationService.Navigate(rpcErrorResult.Error);
+        }
+        else if (result is Error error)
+        {
+            NavigationService.Navigate(error);
         }
     }
 
@@ -133,16 +148,20 @@ public partial class MainWindowViewModel : ViewModelBase
             Method = "listunspentcoins"
         };
         var rpcServerUri = $"{RpcService.RpcServerPrefix}/{SelectedWallet?.WalletName}";
-        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcListUnspentCoinsResult);
-        if (rpcResult is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
+        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcListUnspentCoinsResult);
+        if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
         {
             // TODO:
             NavigationService.Navigate(new ListUnspentCoinsInfo { Coins = rpcListUnspentCoinsResult.Result });
         }
-        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
+        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
             NavigationService.Navigate(rpcErrorResult.Error);
+        }
+        else if (result is Error error)
+        {
+            NavigationService.Navigate(error);
         }
     }
 
@@ -160,16 +179,20 @@ public partial class MainWindowViewModel : ViewModelBase
             Method = "getwalletinfo"
         };
         var rpcServerUri = $"{RpcService.RpcServerPrefix}/{SelectedWallet?.WalletName}";
-        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetWalletInfoResult);
-        if (rpcResult is RpcGetWalletInfoResult { Result: not null } rpcGetWalletInfoResult)
+        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetWalletInfoResult);
+        if (result is RpcGetWalletInfoResult { Result: not null } rpcGetWalletInfoResult)
         {
             // TODO:
             NavigationService.Navigate(rpcGetWalletInfoResult.Result);
         }
-        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
+        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
             NavigationService.Navigate(rpcErrorResult.Error);
+        }
+        else if (result is Error error)
+        {
+            NavigationService.Navigate(error);
         }
     }
 
@@ -241,16 +264,20 @@ public partial class MainWindowViewModel : ViewModelBase
             Method = "gethistory"
         };
         var rpcServerUri = $"{RpcService.RpcServerPrefix}/{SelectedWallet?.WalletName}";
-        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetHistoryResult);
-        if (rpcResult is RpcGetHistoryResult { Result: not null } rpcGetHistoryResult)
+        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetHistoryResult);
+        if (result is RpcGetHistoryResult { Result: not null } rpcGetHistoryResult)
         {
             // TODO:
             NavigationService.Navigate(new GetHistoryInfo { Transactions = rpcGetHistoryResult.Result });
         }
-        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
+        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
             NavigationService.Navigate(rpcErrorResult.Error);
+        }
+        else if (result is Error error)
+        {
+            NavigationService.Navigate(error);
         }
     }
 
@@ -268,16 +295,20 @@ public partial class MainWindowViewModel : ViewModelBase
             Method = "listkeys"
         };
         var rpcServerUri = $"{RpcService.RpcServerPrefix}/{SelectedWallet?.WalletName}";
-        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcListKeysResult);
-        if (rpcResult is RpcListKeysResult { Result: not null } rpcListKeysResult)
+        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcListKeysResult);
+        if (result is RpcListKeysResult { Result: not null } rpcListKeysResult)
         {
             // TODO:
             NavigationService.Navigate(new ListKeysInfo { Keys = rpcListKeysResult.Result });
         }
-        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
+        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
             NavigationService.Navigate(rpcErrorResult.Error);
+        }
+        else if (result is Error error)
+        {
+            NavigationService.Navigate(error);
         }
     }
 
@@ -310,16 +341,20 @@ public partial class MainWindowViewModel : ViewModelBase
             Method = "stopcoinjoin"
         };
         var rpcServerUri = $"{RpcService.RpcServerPrefix}/{SelectedWallet?.WalletName}";
-        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcStopCoinJoinResult);
-        if (rpcResult is RpcStopCoinJoinResult)
+        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcStopCoinJoinResult);
+        if (result is RpcStopCoinJoinResult)
         {
             // TODO:
-            // Do nothing.
+            NavigationService.Navigate(new Success { Message = $"Stopped coinjoin for wallet {SelectedWallet?.WalletName}" });
         }
-        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
+        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
             NavigationService.Navigate(rpcErrorResult.Error);
+        }
+        else if (result is Error error)
+        {
+            NavigationService.Navigate(error);
         }
     }
 
@@ -331,16 +366,20 @@ public partial class MainWindowViewModel : ViewModelBase
             Method = "stop"
         };
         var rpcServerUri = $"{RpcService.RpcServerPrefix}";
-        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcStopResult);
-        if (rpcResult is RpcStopResult)
+        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.String);
+        if (result is string)
         {
             // TODO:
-            // Do nothing.
+            NavigationService.Navigate(new Success { Message = "Stopped daemon." });
         }
-        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
+        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
             NavigationService.Navigate(rpcErrorResult.Error);
+        }
+        else if (result is Error error)
+        {
+            NavigationService.Navigate(error);
         }
     }
 }

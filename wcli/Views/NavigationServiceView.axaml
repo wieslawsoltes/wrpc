@@ -2,10 +2,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:m="using:WasabiCli.Models"
              xmlns:mww="using:WasabiCli.Models.WalletWasabi"
              xmlns:vm="using:WasabiCli.ViewModels"
              xmlns:vmm="using:WasabiCli.ViewModels.Methods"
              xmlns:controls="using:WasabiCli.Controls"
+             xmlns:views="using:WasabiCli.Views"
              xmlns:viewsMethods="using:WasabiCli.Views.Methods"
              xmlns:viewsWalletWasabi="using:WasabiCli.Views.WalletWasabi"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -17,6 +19,11 @@
       <DataTemplate DataType="vmm:CreateWalletViewModel">
         <controls:NavigateBackControl Header="Create Wallet">
           <viewsMethods:CreateWalletView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:RecoverWalletViewModel">
+        <controls:NavigateBackControl Header="Recover Wallet">
+          <viewsMethods:RecoverWalletView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmm:GetNewAddressViewModel">
@@ -42,6 +49,17 @@
       <DataTemplate DataType="vmm:StartCoinJoinViewModel">
         <controls:NavigateBackControl Header="Start CoinJoin">
           <viewsMethods:StartCoinJoinView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <!-- Models -->
+      <DataTemplate DataType="m:Error">
+        <controls:NavigateBackControl Header="Error">
+          <views:ErrorView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="m:Success">
+        <controls:NavigateBackControl Header="Success">
+          <views:SuccessView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <!-- Models: WalletWasabi -->

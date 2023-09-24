@@ -4,23 +4,27 @@ using CommunityToolkit.Mvvm.Input;
 using WasabiCli.Models;
 using WasabiCli.Models.Navigation;
 using WasabiCli.Models.RpcJson;
-using WasabiCli.Models.WalletWasabi;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class CreateWalletViewModel : ViewModelBase
+public partial class RecoverWalletViewModel : ViewModelBase
 {
-    [NotifyCanExecuteChangedFor(nameof(CreateWalletCommand))]
+    [NotifyCanExecuteChangedFor(nameof(RecoverWalletCommand))]
     [ObservableProperty] 
     private string? _walletName;
 
+    [NotifyCanExecuteChangedFor(nameof(RecoverWalletCommand))]
+    [ObservableProperty] 
+    private string? _walletMnemonic;
+
     [ObservableProperty] private string? _walletPassword;
 
-    public CreateWalletViewModel(RpcServiceViewModel rpcService, INavigationService navigationService)
+    public RecoverWalletViewModel(RpcServiceViewModel rpcService, INavigationService navigationService)
     {
         RpcService = rpcService;
         NavigationService = navigationService;
         WalletName = "Wallet";
+        WalletMnemonic = "";
         WalletPassword = "";
     }
 
@@ -28,31 +32,34 @@ public partial class CreateWalletViewModel : ViewModelBase
 
     private INavigationService NavigationService { get; }
 
-    private bool CanCreateWallet()
+    private bool CanRecoverWallet()
     {
         return WalletName is not null 
-               && WalletName.Length > 0;
+               && WalletName.Length > 0
+               && WalletMnemonic is not null 
+               && WalletMnemonic.Length > 0;
     }
 
-    [RelayCommand(CanExecute = nameof(CanCreateWallet))]
-    private async Task CreateWallet()
+    [RelayCommand(CanExecute = nameof(CanRecoverWallet))]
+    private async Task RecoverWallet()
     {
         var requestBody = new RpcMethod
         {
-            Method = "createwallet",
+            Method = "recoverwallet",
             Params = new []
             {
                 WalletName,
+                WalletMnemonic,
                 WalletPassword
             }
         };
         var rpcServerUri = $"{RpcService.RpcServerPrefix}";
-        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcCreateWalletResult);
-        if (result is RpcCreateWalletResult { Result: not null } rpcCreateWalletResult)
+        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcRecoverWalletResult);
+        if (result is RpcRecoverWalletResult)
         {
             // TODO:
             NavigationService.Clear();
-            NavigationService.Navigate(new CreateWalletInfo { Mnemonic = rpcCreateWalletResult.Result });
+            NavigationService.Navigate(new Success { Message = $"Recovered wallet {WalletName}" });
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {

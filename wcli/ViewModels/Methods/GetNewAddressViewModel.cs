@@ -46,17 +46,21 @@ public partial class GetNewAddressViewModel : ViewModelBase
             }
         };
         var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
-        var rpcResult = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetNewAddressResult);
-        if (rpcResult is RpcGetNewAddressResult { Result: not null } rpcGetNewAddressResult)
+        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetNewAddressResult);
+        if (result is RpcGetNewAddressResult { Result: not null } rpcGetNewAddressResult)
         {
             // TODO:
             NavigationService.Clear();
             NavigationService.Navigate(rpcGetNewAddressResult.Result);
         }
-        else if (rpcResult is RpcErrorResult { Error: not null } rpcErrorResult)
+        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
             // TODO:
             NavigationService.Navigate(rpcErrorResult.Error);
+        }
+        else if (result is Error error)
+        {
+            NavigationService.Navigate(error);
         }
     }
 }

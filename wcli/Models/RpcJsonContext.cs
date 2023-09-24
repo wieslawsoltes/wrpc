@@ -20,6 +20,8 @@ namespace WasabiCli.Models;
 // createwallet
 [JsonSerializable(typeof(CreateWalletInfo))]
 [JsonSerializable(typeof(RpcCreateWalletResult))]
+// recoverwallet
+[JsonSerializable(typeof(RpcRecoverWalletResult))]
 // listcoins
 [JsonSerializable(typeof(CoinInfo))]
 [JsonSerializable(typeof(List<CoinInfo>))]
@@ -39,7 +41,7 @@ namespace WasabiCli.Models;
 [JsonSerializable(typeof(SendInfo))]
 [JsonSerializable(typeof(RpcSendResult))]
 // build
-[JsonSerializable(typeof(BuildInfo))]
+[JsonSerializable(typ// eof(BuildInfo))]
 [JsonSerializable(typeof(RpcBuildResult))]
 // broadcast
 [JsonSerializable(typeof(BroadcastInfo))]
@@ -61,9 +63,7 @@ namespace WasabiCli.Models;
 [JsonSerializable(typeof(RpcStartCoinJoinResult))]
 // stopcoinjoin
 [JsonSerializable(typeof(RpcStopCoinJoinResult))]
-// stop
-[JsonSerializable(typeof(RpcStopResult))]
-// string
+// stop, string
 [JsonSerializable(typeof(string))]
 // string[]
 [JsonSerializable(typeof(string[]))]
