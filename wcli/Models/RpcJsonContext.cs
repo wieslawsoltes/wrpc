@@ -41,7 +41,7 @@ namespace WasabiCli.Models;
 [JsonSerializable(typeof(SendInfo))]
 [JsonSerializable(typeof(RpcSendResult))]
 // build
-[JsonSerializable(typ// eof(BuildInfo))]
+[JsonSerializable(typeof(BuildInfo))]
 [JsonSerializable(typeof(RpcBuildResult))]
 // broadcast
 [JsonSerializable(typeof(BroadcastInfo))]
