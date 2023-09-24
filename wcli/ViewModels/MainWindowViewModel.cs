@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -67,6 +68,26 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     public INavigationService NavigationService { get; }
+
+    [RelayCommand]
+    private void AddWallet()
+    {
+        if (Wallets is not null)
+        {
+            Wallets.Add(new WalletViewModel { WalletName = "Wallet" });
+            SelectedWallet = Wallets.LastOrDefault();
+        }
+    }
+
+    [RelayCommand]
+    private void RemoveWallet()
+    {
+        if (Wallets is not null && SelectedWallet is not null)
+        {
+            Wallets.Remove(SelectedWallet);
+            SelectedWallet = Wallets.FirstOrDefault();
+        }
+    }
 
     [RelayCommand]
     private async Task GetStatus()

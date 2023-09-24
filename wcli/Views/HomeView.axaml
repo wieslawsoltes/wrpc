@@ -15,16 +15,38 @@
              Target="RpcServerTextBox" />
       <TextBox Name="RpcServerTextBox"
                Text="{Binding RpcService.RpcServerPrefix, Mode=TwoWay}" />
-      <!-- Wallets -->
-      <ComboBox ItemsSource="{Binding Wallets}"
-                SelectedItem="{Binding SelectedWallet}"
-                HorizontalAlignment="Stretch">
-        <ComboBox.ItemTemplate>
-          <DataTemplate>
-            <TextBlock Text="{Binding WalletName}" />
-          </DataTemplate>
-        </ComboBox.ItemTemplate>
-      </ComboBox>
+      <DockPanel>
+        <!-- AddWallet -->
+        <Button Content="+"
+                Command="{Binding AddWalletCommand}"
+                CommandParameter="{x:Null}"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                VerticalAlignment="Stretch"
+                VerticalContentAlignment="Center"
+                Margin="4,0,0,0"
+                DockPanel.Dock="Right"/>
+        <!-- RemoveWallet -->
+        <Button Content="-"
+                Command="{Binding RemoveWalletCommand}"
+                CommandParameter="{x:Null}"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                VerticalAlignment="Stretch"
+                VerticalContentAlignment="Center"
+                Margin="4,0,0,0"
+                DockPanel.Dock="Right"/>
+        <!-- Wallets -->
+        <ComboBox ItemsSource="{Binding Wallets}"
+                  SelectedItem="{Binding SelectedWallet}"
+                  HorizontalAlignment="Stretch">
+          <ComboBox.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding WalletName}" />
+            </DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+      </DockPanel>
       <!-- WalletName -->
       <Label Content="Wallet name:"
              Target="WalletNameTextBox" />
