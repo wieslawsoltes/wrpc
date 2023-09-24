@@ -63,6 +63,10 @@ namespace WasabiCli.Models;
 [JsonSerializable(typeof(RpcStartCoinJoinResult))]
 // stopcoinjoin
 [JsonSerializable(typeof(RpcStopCoinJoinResult))]
+// getfeerates
+[JsonSerializable(typeof(GetFeeRatesInfo))]
+[JsonSerializable(typeof(Dictionary<int, int>))]
+[JsonSerializable(typeof(RpcGetFeeRatesResult))]
 // stop, string
 [JsonSerializable(typeof(string))]
 // string[]

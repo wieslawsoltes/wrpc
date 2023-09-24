@@ -60,6 +60,7 @@ public partial class MainWindowViewModel : ViewModelBase
             new ("ListKeys", ListKeysCommand),
             new ("StartCoinJoin", StartCoinJoinCommand),
             new ("StopCoinJoin", StopCoinJoinCommand),
+            new ("GetFeeRates", GetFeeRatesCommand),
             new ("Stop", StopCommand)
         };
     }
@@ -333,6 +334,29 @@ public partial class MainWindowViewModel : ViewModelBase
         if (result is RpcStopCoinJoinResult)
         {
             NavigationService.Navigate(new Success { Message = $"Stopped coinjoin for wallet {SelectedWallet?.WalletName}" });
+        }
+        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            NavigationService.Navigate(rpcErrorResult.Error);
+        }
+        else if (result is Error error)
+        {
+            NavigationService.Navigate(error);
+        }
+    }
+
+    [RelayCommand]
+    private async Task GetFeeRates()
+    {
+        var requestBody = new RpcMethod
+        {
+            Method = "getfeerates"
+        };
+        var rpcServerUri = $"{RpcService.RpcServerPrefix}";
+        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcGetFeeRatesResult);
+        if (result is RpcGetFeeRatesResult { Result: not null } rpcGetFeeRatesResult)
+        {
+            NavigationService.Navigate(new GetFeeRatesInfo { FeeRates = rpcGetFeeRatesResult.Result });
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
