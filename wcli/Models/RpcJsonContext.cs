@@ -22,6 +22,8 @@ namespace WasabiCli.Models;
 [JsonSerializable(typeof(RpcCreateWalletResult))]
 // recoverwallet
 [JsonSerializable(typeof(RpcRecoverWalletResult))]
+// loadwallet
+[JsonSerializable(typeof(RpcLoadWalletResult))]
 // listcoins
 [JsonSerializable(typeof(CoinInfo))]
 [JsonSerializable(typeof(List<CoinInfo>))]
