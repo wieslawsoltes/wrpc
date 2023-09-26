@@ -5,6 +5,7 @@
 - [x] getstatus
 - [x] createwallet
 - [x] recoverwallet
+- [x] loadwallet
 - [x] listcoins
 - [x] listunspentcoins
 - [x] getwalletinfo
