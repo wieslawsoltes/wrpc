@@ -49,6 +49,7 @@ public partial class MainWindowViewModel : ViewModelBase
             new ("GetStatus", GetStatusCommand),
             new ("CreateWallet", CreateWalletCommand),
             new ("RecoverWallet", RecoverWalletCommand),
+            new ("LoadWallet", LoadWalletCommand),
             new ("ListCoins", ListCoinsCommand),
             new ("ListUnspentCoins", ListUnspentCoinsCommand),
             new ("GetWalletInfo", GetWalletInfoCommand),
@@ -120,6 +121,39 @@ public partial class MainWindowViewModel : ViewModelBase
     private void RecoverWallet()
     {
         NavigationService.Navigate(new RecoverWalletViewModel(RpcService, NavigationService));
+    }
+
+    private bool CanLoadWallet()
+    {
+        return SelectedWallet?.WalletName is not null 
+               && SelectedWallet?.WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanLoadWallet))]
+    private async Task LoadWallet()
+    {
+        var requestBody = new RpcMethod
+        {
+            Method = "loadwallet",
+            Params = new []
+            {
+                SelectedWallet?.WalletName,
+            }
+        };
+        var rpcServerUri = $"{RpcService.RpcServerPrefix}";
+        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcLoadWalletResult);
+        if (result is RpcLoadWalletResult)
+        {
+            NavigationService.Navigate(new Success { Message = $"Loaded wallet {SelectedWallet?.WalletName}" });
+        }
+        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            NavigationService.Navigate(rpcErrorResult.Error);
+        }
+        else if (result is Error error)
+        {
+            NavigationService.Navigate(error);
+        }
     }
 
     private bool CanListCoins()
