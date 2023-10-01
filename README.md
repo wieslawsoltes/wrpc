@@ -11,6 +11,8 @@
 - [x] getwalletinfo
 - [x] getnewaddress
 - [x] send
+- [ ] speeduptransaction
+- [ ] canceltransaction
 - [x] build
 - [x] broadcast
 - [x] gethistory
