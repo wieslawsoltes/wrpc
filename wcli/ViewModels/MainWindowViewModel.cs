@@ -22,6 +22,8 @@ public partial class MainWindowViewModel : ViewModelBase
     [NotifyCanExecuteChangedFor(nameof(GetWalletInfoCommand))]
     [NotifyCanExecuteChangedFor(nameof(GetNewAddressCommand))]
     [NotifyCanExecuteChangedFor(nameof(SendCommand))]
+    [NotifyCanExecuteChangedFor(nameof(SpeedUpTransactionCommand))]
+    [NotifyCanExecuteChangedFor(nameof(CancelTransactionCommand))]
     [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
     [NotifyCanExecuteChangedFor(nameof(GetHistoryCommand))]
     [NotifyCanExecuteChangedFor(nameof(ListKeysCommand))]
@@ -55,6 +57,8 @@ public partial class MainWindowViewModel : ViewModelBase
             new ("GetWalletInfo", GetWalletInfoCommand),
             new ("GetNewAddress", GetNewAddressCommand),
             new ("Send", SendCommand),
+            new ("SpeedUpTransaction", SpeedUpTransactionCommand),
+            new ("CancelTransaction", CancelTransactionCommand),
             new ("Build", BuildCommand),
             new ("Broadcast", BroadcastCommand),
             new ("GetHistory", GetHistoryCommand),
@@ -270,6 +274,36 @@ public partial class MainWindowViewModel : ViewModelBase
         if (SelectedWallet?.WalletName is not null)
         {
             NavigationService.Navigate(new SendViewModel(RpcService, NavigationService, SelectedWallet.WalletName));
+        }
+    }
+
+    private bool CanSpeedUpTransaction()
+    {
+        return SelectedWallet?.WalletName is not null 
+               && SelectedWallet?.WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanSpeedUpTransaction))]
+    private void SpeedUpTransaction()
+    {
+        if (SelectedWallet?.WalletName is not null)
+        {
+            NavigationService.Navigate(new SpeedUpTransactionViewModel(RpcService, NavigationService, SelectedWallet.WalletName));
+        }
+    }
+
+    private bool CanCancelTransaction()
+    {
+        return SelectedWallet?.WalletName is not null 
+               && SelectedWallet?.WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanCancelTransaction))]
+    private void CancelTransaction()
+    {
+        if (SelectedWallet?.WalletName is not null)
+        {
+            NavigationService.Navigate(new CancelTransactionViewModel(RpcService, NavigationService, SelectedWallet.WalletName));
         }
     }
 
