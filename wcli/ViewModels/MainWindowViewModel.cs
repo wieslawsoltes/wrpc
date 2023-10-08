@@ -22,6 +22,8 @@ public partial class MainWindowViewModel : ViewModelBase
     [NotifyCanExecuteChangedFor(nameof(GetWalletInfoCommand))]
     [NotifyCanExecuteChangedFor(nameof(GetNewAddressCommand))]
     [NotifyCanExecuteChangedFor(nameof(SendCommand))]
+    [NotifyCanExecuteChangedFor(nameof(SpeedUpTransactionCommand))]
+    [NotifyCanExecuteChangedFor(nameof(CancelTransactionCommand))]
     [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
     [NotifyCanExecuteChangedFor(nameof(GetHistoryCommand))]
     [NotifyCanExecuteChangedFor(nameof(ListKeysCommand))]
@@ -55,9 +57,12 @@ public partial class MainWindowViewModel : ViewModelBase
             new ("GetWalletInfo", GetWalletInfoCommand),
             new ("GetNewAddress", GetNewAddressCommand),
             new ("Send", SendCommand),
+            new ("SpeedUpTransaction", SpeedUpTransactionCommand),
+            new ("CancelTransaction", CancelTransactionCommand),
             new ("Build", BuildCommand),
             new ("Broadcast", BroadcastCommand),
             new ("GetHistory", GetHistoryCommand),
+            new ("ExcludeFromCoinjoin", ExcludeFromCoinjoinCommand),
             new ("ListKeys", ListKeysCommand),
             new ("StartCoinJoin", StartCoinJoinCommand),
             new ("StopCoinJoin", StopCoinJoinCommand),
@@ -273,6 +278,36 @@ public partial class MainWindowViewModel : ViewModelBase
         }
     }
 
+    private bool CanSpeedUpTransaction()
+    {
+        return SelectedWallet?.WalletName is not null 
+               && SelectedWallet?.WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanSpeedUpTransaction))]
+    private void SpeedUpTransaction()
+    {
+        if (SelectedWallet?.WalletName is not null)
+        {
+            NavigationService.Navigate(new SpeedUpTransactionViewModel(RpcService, NavigationService, SelectedWallet.WalletName));
+        }
+    }
+
+    private bool CanCancelTransaction()
+    {
+        return SelectedWallet?.WalletName is not null 
+               && SelectedWallet?.WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanCancelTransaction))]
+    private void CancelTransaction()
+    {
+        if (SelectedWallet?.WalletName is not null)
+        {
+            NavigationService.Navigate(new CancelTransactionViewModel(RpcService, NavigationService, SelectedWallet.WalletName));
+        }
+    }
+
     private bool CanBuild()
     {
         return SelectedWallet?.WalletName is not null 
@@ -323,6 +358,21 @@ public partial class MainWindowViewModel : ViewModelBase
         else if (result is Error error)
         {
             NavigationService.Navigate(error);
+        }
+    }
+
+    private bool CanCanExcludeFromCoinjoin()
+    {
+        return SelectedWallet?.WalletName is not null 
+               && SelectedWallet?.WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanCanExcludeFromCoinjoin))]
+    private void ExcludeFromCoinjoin()
+    {
+        if (SelectedWallet?.WalletName is not null)
+        {
+            NavigationService.Navigate(new ExcludeFromCoinJoinViewModel(RpcService, NavigationService, SelectedWallet.WalletName));
         }
     }
 

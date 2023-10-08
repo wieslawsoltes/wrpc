@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using WasabiCli.Models.RpcJson;
 using WasabiCli.Models.WalletWasabi;
 using WasabiCli.Models.WalletWasabi.Send;
+using WasabiCli.Models.WalletWasabi.Transactions;
 
 namespace WasabiCli.Models;
 
@@ -42,6 +43,14 @@ namespace WasabiCli.Models;
 [JsonSerializable(typeof(Send))]
 [JsonSerializable(typeof(SendInfo))]
 [JsonSerializable(typeof(RpcSendResult))]
+// speeduptransaction
+[JsonSerializable(typeof(SpeedUpTransaction))]
+[JsonSerializable(typeof(SpeedUpTransactionInfo))]
+[JsonSerializable(typeof(RpcCancelTransactionResult))]
+// canceltransaction
+[JsonSerializable(typeof(CancelTransaction))]
+[JsonSerializable(typeof(CancelTransactionInfo))]
+[JsonSerializable(typeof(RpcSpeedUpTransactionResult))]
 // build
 [JsonSerializable(typeof(BuildInfo))]
 [JsonSerializable(typeof(RpcBuildResult))]
@@ -51,11 +60,14 @@ namespace WasabiCli.Models;
 // getwalletinfo
 [JsonSerializable(typeof(WalletInfo))]
 [JsonSerializable(typeof(RpcGetWalletInfoResult))]
-// getwalletinfo
+// gethistory
 [JsonSerializable(typeof(TransactionInfo))]
 [JsonSerializable(typeof(List<TransactionInfo>))]
 [JsonSerializable(typeof(GetHistoryInfo))]
 [JsonSerializable(typeof(RpcGetHistoryResult))]
+// excludefromcoinjoin
+[JsonSerializable(typeof(ExcludeFromCoinJoin))]
+[JsonSerializable(typeof(RpcExcludeFromCoinJoinResult))]
 // listkeys
 [JsonSerializable(typeof(KeyInfo))]
 [JsonSerializable(typeof(List<KeyInfo>))]
