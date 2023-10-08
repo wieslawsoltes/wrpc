@@ -36,6 +36,16 @@
           <viewsMethods:SendView />
         </controls:NavigateBackControl>
       </DataTemplate>
+      <DataTemplate DataType="vmm:SpeedUpTransactionViewModel">
+        <controls:NavigateBackControl Header="SpeedUp Transaction">
+          <viewsMethods:SpeedUpTransactionView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:CancelTransactionViewModel">
+        <controls:NavigateBackControl Header="Cancel Transaction">
+          <viewsMethods:CancelTransactionView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
       <DataTemplate DataType="vmm:BuildViewModel">
         <controls:NavigateBackControl Header="Build">
           <viewsMethods:BuildView />
@@ -44,6 +54,11 @@
       <DataTemplate DataType="vmm:BroadcastViewModel">
         <controls:NavigateBackControl Header="Broadcast">
           <viewsMethods:BroadcastView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:ExcludeFromCoinjoinViewModel">
+        <controls:NavigateBackControl Header="Exclude from CoinJoin">
+          <viewsMethods:ExcludeFromCoinjoinView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmm:StartCoinJoinViewModel">
