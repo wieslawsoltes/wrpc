@@ -11,12 +11,12 @@
 - [x] getwalletinfo
 - [x] getnewaddress
 - [x] send
-- [ ] speeduptransaction
-- [ ] canceltransaction
+- [x] speeduptransaction
+- [x] canceltransaction
 - [x] build
 - [x] broadcast
 - [x] gethistory
-- [ ] excludefromcoinjoin
+- [x] excludefromcoinjoin
 - [x] listkeys
 - [x] startcoinjoin
 - [x] stopcoinjoin
