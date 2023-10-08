@@ -62,6 +62,7 @@ public partial class MainWindowViewModel : ViewModelBase
             new ("Build", BuildCommand),
             new ("Broadcast", BroadcastCommand),
             new ("GetHistory", GetHistoryCommand),
+            new ("ExcludeFromCoinjoin", ExcludeFromCoinjoinCommand),
             new ("ListKeys", ListKeysCommand),
             new ("StartCoinJoin", StartCoinJoinCommand),
             new ("StopCoinJoin", StopCoinJoinCommand),
@@ -357,6 +358,21 @@ public partial class MainWindowViewModel : ViewModelBase
         else if (result is Error error)
         {
             NavigationService.Navigate(error);
+        }
+    }
+
+    private bool CanCanExcludeFromCoinjoin()
+    {
+        return SelectedWallet?.WalletName is not null 
+               && SelectedWallet?.WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanCanExcludeFromCoinjoin))]
+    private void ExcludeFromCoinjoin()
+    {
+        if (SelectedWallet?.WalletName is not null)
+        {
+            NavigationService.Navigate(new ExcludeFromCoinjoinViewModel(RpcService, NavigationService, SelectedWallet.WalletName));
         }
     }
 

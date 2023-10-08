@@ -60,11 +60,14 @@ namespace WasabiCli.Models;
 // getwalletinfo
 [JsonSerializable(typeof(WalletInfo))]
 [JsonSerializable(typeof(RpcGetWalletInfoResult))]
-// getwalletinfo
+// gethistory
 [JsonSerializable(typeof(TransactionInfo))]
 [JsonSerializable(typeof(List<TransactionInfo>))]
 [JsonSerializable(typeof(GetHistoryInfo))]
 [JsonSerializable(typeof(RpcGetHistoryResult))]
+// excludefromcoinjoin
+[JsonSerializable(typeof(ExcludeFromCoinjoin))]
+[JsonSerializable(typeof(RpcExcludeFromCoinjoinResult))]
 // listkeys
 [JsonSerializable(typeof(KeyInfo))]
 [JsonSerializable(typeof(List<KeyInfo>))]
