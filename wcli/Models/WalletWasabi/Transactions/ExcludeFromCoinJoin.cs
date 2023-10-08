@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace WasabiCli.Models.WalletWasabi.Transactions;
 
-public class ExcludeFromCoinjoin
+public class ExcludeFromCoinJoin
 {
     [JsonPropertyName("transactionId")]
     public string? TransactionId { get; set; }

@@ -372,7 +372,7 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         if (SelectedWallet?.WalletName is not null)
         {
-            NavigationService.Navigate(new ExcludeFromCoinjoinViewModel(RpcService, NavigationService, SelectedWallet.WalletName));
+            NavigationService.Navigate(new ExcludeFromCoinJoinViewModel(RpcService, NavigationService, SelectedWallet.WalletName));
         }
     }
 

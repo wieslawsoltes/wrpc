@@ -10,25 +10,25 @@ using WasabiCli.ViewModels.RpcJson;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class ExcludeFromCoinjoinViewModel : ViewModelBase
+public partial class ExcludeFromCoinJoinViewModel : ViewModelBase
 {
-    [NotifyCanExecuteChangedFor(nameof(ExcludeFromCoinjoinCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ExcludeFromCoinJoinCommand))]
     [ObservableProperty] 
     private string? _walletName;
 
-    [NotifyCanExecuteChangedFor(nameof(ExcludeFromCoinjoinCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ExcludeFromCoinJoinCommand))]
     [ObservableProperty]
     private string? _transactionId;
 
-    [NotifyCanExecuteChangedFor(nameof(ExcludeFromCoinjoinCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ExcludeFromCoinJoinCommand))]
     [ObservableProperty]
     private int _n;
 
-    [NotifyCanExecuteChangedFor(nameof(ExcludeFromCoinjoinCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ExcludeFromCoinJoinCommand))]
     [ObservableProperty]
     private bool _exclude;
 
-    public ExcludeFromCoinjoinViewModel(RpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
+    public ExcludeFromCoinJoinViewModel(RpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
     {
         RpcService = rpcService;
         NavigationService = navigationService;
@@ -42,7 +42,7 @@ public partial class ExcludeFromCoinjoinViewModel : ViewModelBase
 
     private INavigationService NavigationService { get; }
 
-    private bool CanExcludeFromCoinjoin()
+    private bool CanExcludeFromCoinJoin()
     {
         return WalletName is not null 
                && WalletName.Length > 0
@@ -51,13 +51,13 @@ public partial class ExcludeFromCoinjoinViewModel : ViewModelBase
                && N >= 0;
     }
 
-    [RelayCommand(CanExecute = nameof(CanExcludeFromCoinjoin))]
-    private async Task ExcludeFromCoinjoin()
+    [RelayCommand(CanExecute = nameof(CanExcludeFromCoinJoin))]
+    private async Task ExcludeFromCoinJoin()
     {
         var requestBody = new RpcMethod
         {
             Method = "excludefromcoinjoin",
-            Params = new ExcludeFromCoinjoin
+            Params = new ExcludeFromCoinJoin
             {
                 TransactionId = TransactionId,
                 N = N,
@@ -65,8 +65,8 @@ public partial class ExcludeFromCoinjoinViewModel : ViewModelBase
             }
         };
         var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
-        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcExcludeFromCoinjoinResult);
-        if (result is RpcExcludeFromCoinjoinResult)
+        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcExcludeFromCoinJoinResult);
+        if (result is RpcExcludeFromCoinJoinResult)
         {
             NavigationService.Clear();
             NavigationService.Navigate(new Success { Message = $"{(Exclude ? "Excluded" : "Removed the exclusion")} from coinjoin" });

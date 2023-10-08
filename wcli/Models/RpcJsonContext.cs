@@ -66,8 +66,8 @@ namespace WasabiCli.Models;
 [JsonSerializable(typeof(GetHistoryInfo))]
 [JsonSerializable(typeof(RpcGetHistoryResult))]
 // excludefromcoinjoin
-[JsonSerializable(typeof(ExcludeFromCoinjoin))]
-[JsonSerializable(typeof(RpcExcludeFromCoinjoinResult))]
+[JsonSerializable(typeof(ExcludeFromCoinJoin))]
+[JsonSerializable(typeof(RpcExcludeFromCoinJoinResult))]
 // listkeys
 [JsonSerializable(typeof(KeyInfo))]
 [JsonSerializable(typeof(List<KeyInfo>))]

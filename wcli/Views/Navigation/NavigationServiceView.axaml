@@ -56,7 +56,7 @@
           <viewsMethods:BroadcastView />
         </controls:NavigateBackControl>
       </DataTemplate>
-      <DataTemplate DataType="vmm:ExcludeFromCoinjoinViewModel">
+      <DataTemplate DataType="vmm:ExcludeFromCoinJoinViewModel">
         <controls:NavigateBackControl Header="Exclude from CoinJoin">
           <viewsMethods:ExcludeFromCoinjoinView />
         </controls:NavigateBackControl>
