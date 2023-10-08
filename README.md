@@ -16,6 +16,7 @@
 - [x] build
 - [x] broadcast
 - [x] gethistory
+- [ ] excludefromcoinjoin
 - [x] listkeys
 - [x] startcoinjoin
 - [x] stopcoinjoin
