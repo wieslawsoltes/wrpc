@@ -34,6 +34,7 @@ public partial class ExcludeFromCoinjoinViewModel : ViewModelBase
         NavigationService = navigationService;
         WalletName = walletName;
         TransactionId = "";
+        N = 0;
         Exclude = true;
     }
 
