@@ -5,12 +5,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using WasabiCli.Models;
+using WasabiCli.Models.Services;
 using WasabiCli.Models.RpcJson;
 using WasabiCli.Services;
 
 namespace WasabiCli.ViewModels.RpcJson;
 
-public partial class RpcServiceViewModel : ViewModelBase
+public partial class RpcServiceViewModel : ViewModelBase, IRpcServiceViewModel
 {
     [ObservableProperty] private string? _rpcServerPrefix;
 
@@ -26,7 +27,7 @@ public partial class RpcServiceViewModel : ViewModelBase
 
         try
         {
-            var requestBodyJson = JsonSerializer.Serialize(rpcMethod, RpcJsonContext.Default.RpcMethod);
+            var requestBodyJson = JsonSerializer.Serialize(rpcMethod, ModelsJsonContext.Default.RpcMethod);
             var cts = new CancellationTokenSource();
             var rpcService = new RpcService();
             responseBodyJson = await rpcService.GetResponseDataAsync(rpcServerUri, requestBodyJson, true, cts.Token);
@@ -47,7 +48,7 @@ public partial class RpcServiceViewModel : ViewModelBase
         
         try
         {
-            return JsonSerializer.Deserialize(responseBodyJson, RpcJsonContext.Default.RpcErrorResult);
+            return JsonSerializer.Deserialize(responseBodyJson, ModelsJsonContext.Default.RpcErrorResult);
         }
         catch (Exception)
         {

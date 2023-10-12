@@ -1,5 +1,5 @@
 using CommunityToolkit.Mvvm.Input;
-using WasabiCli.Models.Navigation;
+using WasabiCli.Models.Services;
 
 namespace WasabiCli;
 

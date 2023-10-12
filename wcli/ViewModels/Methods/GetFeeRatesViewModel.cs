@@ -1,20 +1,16 @@
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using WasabiCli.Models;
 using WasabiCli.Models.App;
-using WasabiCli.Models.Services;
 using WasabiCli.Models.RpcJson;
+using WasabiCli.Models.Services;
+using WasabiCli.Models.WalletWasabi;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class BroadcastViewModel : BatchMethodViewModel
+public partial class GetFeeRatesViewModel : BatchMethodViewModel
 {
-    [NotifyCanExecuteChangedFor(nameof(BroadcastCommand))]
-    [ObservableProperty] 
-    private string? _tx;
-
-    public BroadcastViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
+    public GetFeeRatesViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
     {
         RpcService = rpcService;
         NavigationService = navigationService;
@@ -24,20 +20,14 @@ public partial class BroadcastViewModel : BatchMethodViewModel
 
     private INavigationService NavigationService { get; }
 
-    private bool CanBroadcast()
-    {
-        return Tx is not null
-               && Tx.Length > 0;
-    }
-
-    [RelayCommand(CanExecute = nameof(CanBroadcast))]
-    private async Task Broadcast()
+    [RelayCommand]
+    private async Task GetFeeRates()
     {
         var job = CreateJob();
-        var result = await RpcService.SendRpcMethod(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcBroadcastResult);
-        if (result is RpcBroadcastResult { Result: not null } rpcBroadcastResult)
+        var result = await RpcService.SendRpcMethod(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcGetFeeRatesResult);
+        if (result is RpcGetFeeRatesResult { Result: not null } rpcGetFeeRatesResult)
         {
-            OnRpcSuccess(rpcBroadcastResult);
+            OnRpcSuccess(rpcGetFeeRatesResult);
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
@@ -51,10 +41,9 @@ public partial class BroadcastViewModel : BatchMethodViewModel
 
     protected override void OnRpcSuccess(Rpc rpcResult)
     {
-        if (rpcResult is RpcBroadcastResult rpcBroadcastResult)
+        if (rpcResult is RpcGetFeeRatesResult rpcGetFeeRatesResult)
         {
-            NavigationService.Clear();
-            NavigationService.Navigate(rpcBroadcastResult.Result);
+            NavigationService.Navigate(new GetFeeRatesInfo { FeeRates = rpcGetFeeRatesResult.Result });
         }
     }
 
@@ -72,11 +61,7 @@ public partial class BroadcastViewModel : BatchMethodViewModel
     {
         var requestBody = new RpcMethod
         {
-            Method = "broadcast",
-            Params = new []
-            {
-                Tx
-            }
+            Method = "getfeerates"
         };
 
         var rpcServerUri = $"{RpcService.RpcServerPrefix}";

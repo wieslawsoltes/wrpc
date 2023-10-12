@@ -3,46 +3,34 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiCli.Models;
 using WasabiCli.Models.App;
-using WasabiCli.Models.Services;
 using WasabiCli.Models.RpcJson;
-using WasabiCli.Models.WalletWasabi;
+using WasabiCli.Models.Services;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class CreateWalletViewModel : BatchMethodViewModel
+public partial class LoadWalletViewModel : BatchMethodViewModel
 {
-    [NotifyCanExecuteChangedFor(nameof(CreateWalletCommand))]
-    [ObservableProperty] 
-    private string? _walletName;
+    [ObservableProperty] private string? _walletName;
 
-    [ObservableProperty] private string? _walletPassword;
-
-    public CreateWalletViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
+    public LoadWalletViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
     {
         RpcService = rpcService;
         NavigationService = navigationService;
-        WalletName = "Wallet";
-        WalletPassword = "";
+        WalletName = walletName;
     }
 
     private IRpcServiceViewModel RpcService { get; }
 
     private INavigationService NavigationService { get; }
 
-    private bool CanCreateWallet()
-    {
-        return WalletName is not null 
-               && WalletName.Length > 0;
-    }
-
-    [RelayCommand(CanExecute = nameof(CanCreateWallet))]
-    private async Task CreateWallet()
+    [RelayCommand]
+    private async Task LoadWallet()
     {
         var job = CreateJob();
-        var result = await RpcService.SendRpcMethod(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcCreateWalletResult);
-        if (result is RpcCreateWalletResult { Result: not null } rpcCreateWalletResult)
+        var result = await RpcService.SendRpcMethod(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcLoadWalletResult);
+        if (result is RpcLoadWalletResult rpcLoadWalletResult)
         {
-            OnRpcSuccess(rpcCreateWalletResult);
+            OnRpcSuccess(rpcLoadWalletResult);
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
@@ -56,11 +44,7 @@ public partial class CreateWalletViewModel : BatchMethodViewModel
 
     protected override void OnRpcSuccess(Rpc rpcResult)
     {
-        if (rpcResult is RpcCreateWalletResult rpcCreateWalletResult)
-        {
-            NavigationService.Clear();
-            NavigationService.Navigate(new CreateWalletInfo { Mnemonic = rpcCreateWalletResult.Result });
-        }
+        NavigationService.Navigate(new Success { Message = $"Loaded wallet {WalletName}" });
     }
 
     protected override void OnRpcError(RpcErrorResult rpcErrorResult)
@@ -77,11 +61,10 @@ public partial class CreateWalletViewModel : BatchMethodViewModel
     {
         var requestBody = new RpcMethod
         {
-            Method = "createwallet",
+            Method = "loadwallet",
             Params = new []
             {
                 WalletName,
-                WalletPassword
             }
         };
 

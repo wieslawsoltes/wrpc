@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiCli.Models;
-using WasabiCli.Models.Navigation;
+using WasabiCli.Models.App;
+using WasabiCli.Models.Services;
 using WasabiCli.Models.RpcJson;
 using WasabiCli.Models.WalletWasabi;
 using WasabiCli.Models.WalletWasabi.Send;
-using WasabiCli.ViewModels.RpcJson;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class BuildViewModel : ViewModelBase
+public partial class BuildViewModel : BatchMethodViewModel
 {
     [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
     [ObservableProperty] 
@@ -46,7 +46,7 @@ public partial class BuildViewModel : ViewModelBase
     [ObservableProperty]
     private ObservableCollection<CoinViewModel> _coins;
 
-    public BuildViewModel(RpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
+    public BuildViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
     {
         RpcService = rpcService;
         NavigationService = navigationService;
@@ -60,7 +60,7 @@ public partial class BuildViewModel : ViewModelBase
         Coins = new ObservableCollection<CoinViewModel>();
     }
 
-    private RpcServiceViewModel RpcService { get; }
+    private IRpcServiceViewModel RpcService { get; }
 
     private INavigationService NavigationService { get; }
 
@@ -79,6 +79,43 @@ public partial class BuildViewModel : ViewModelBase
 
     [RelayCommand(CanExecute = nameof(CanBuild))]
     private async Task Build()
+    {
+        var job = CreateJob();
+        var result = await RpcService.SendRpcMethod(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcBuildResult);
+        if (result is RpcBuildResult { Result: not null } rpcBuildResult)
+        {
+            OnRpcSuccess(rpcBuildResult);
+        }
+        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            OnRpcError(rpcErrorResult);
+        }
+        else if (result is Error error)
+        {
+            OnError(error);
+        }
+    }
+
+    protected override void OnRpcSuccess(Rpc rpcResult)
+    {
+        if (rpcResult is RpcBuildResult rpcBuildResult)
+        {
+            NavigationService.Clear();
+            NavigationService.Navigate(new BuildInfo { Tx = rpcBuildResult.Result });
+        }
+    }
+
+    protected override void OnRpcError(RpcErrorResult rpcErrorResult)
+    {
+        NavigationService.Navigate(rpcErrorResult.Error);
+    }
+
+    protected override void OnError(Error error)
+    {
+        NavigationService.Navigate(error);
+    }
+
+    public override Job CreateJob()
     {
         var requestBody = new RpcMethod
         {
@@ -103,35 +140,27 @@ public partial class BuildViewModel : ViewModelBase
                 Password = WalletPassword
             }
         };
+
         var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
-        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcBuildResult);
-        if (result is RpcBuildResult { Result: not null } rpcBuildResult)
-        {
-            NavigationService.Clear();
-            NavigationService.Navigate(new BuildInfo { Tx = rpcBuildResult.Result });
-        }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            NavigationService.Navigate(rpcErrorResult.Error);
-        }
-        else if (result is Error error)
-        {
-            NavigationService.Navigate(error);
-        }
+        
+        return new Job(requestBody, rpcServerUri);
     }
 
     [RelayCommand]
     private async Task ListUnspentCoins()
     {
-        var requestBody = new RpcMethod
+        if (WalletName is null)
         {
-            Method = "listunspentcoins"
-        };
-        var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
-        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcListUnspentCoinsResult);
+            return;
+        }
+
+        var listUnspentCoinsViewModel = new ListUnspentCoinsViewModel(RpcService, NavigationService, WalletName);
+        var job = listUnspentCoinsViewModel.CreateJob();
+        var result = await RpcService.SendRpcMethod(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcListUnspentCoinsResult);
         if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
         {
-            var coins = rpcListUnspentCoinsResult.Result
+            var coins = rpcListUnspentCoinsResult
+                .Result
                 .Select(x => new CoinViewModel(RpcService, NavigationService, x));
 
             Coins = new ObservableCollection<CoinViewModel>(coins);

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using WasabiCli.Models.App;
 using WasabiCli.Models.RpcJson;
 using WasabiCli.Models.WalletWasabi;
 using WasabiCli.Models.WalletWasabi.Send;
@@ -7,9 +8,17 @@ using WasabiCli.Models.WalletWasabi.Transactions;
 
 namespace WasabiCli.Models;
 
+// app
+[JsonSerializable(typeof(State))]
+[JsonSerializable(typeof(List<string>))]
+[JsonSerializable(typeof(Job))]
+[JsonSerializable(typeof(Batch))]
+[JsonSerializable(typeof(List<Job>))]
+[JsonSerializable(typeof(List<Batch>))]
 // rpc
 [JsonSerializable(typeof(RpcMethod))]
 [JsonSerializable(typeof(Rpc))]
+[JsonSerializable(typeof(RpcResult))]
 // error
 [JsonSerializable(typeof(ErrorInfo))]
 [JsonSerializable(typeof(RpcErrorResult))]
@@ -85,6 +94,6 @@ namespace WasabiCli.Models;
 [JsonSerializable(typeof(string))]
 // string[]
 [JsonSerializable(typeof(string[]))]
-public partial class RpcJsonContext : JsonSerializerContext
+public partial class ModelsJsonContext : JsonSerializerContext
 {
 }

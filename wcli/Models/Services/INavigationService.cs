@@ -1,6 +1,6 @@
 using CommunityToolkit.Mvvm.Input;
 
-namespace WasabiCli.Models.Navigation;
+namespace WasabiCli.Models.Services;
 
 public interface INavigationService
 {

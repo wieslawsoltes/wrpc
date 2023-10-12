@@ -2,13 +2,13 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiCli.Models;
-using WasabiCli.Models.Navigation;
+using WasabiCli.Models.App;
+using WasabiCli.Models.Services;
 using WasabiCli.Models.RpcJson;
-using WasabiCli.ViewModels.RpcJson;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class RecoverWalletViewModel : ViewModelBase
+public partial class RecoverWalletViewModel : BatchMethodViewModel
 {
     [NotifyCanExecuteChangedFor(nameof(RecoverWalletCommand))]
     [ObservableProperty] 
@@ -20,7 +20,7 @@ public partial class RecoverWalletViewModel : ViewModelBase
 
     [ObservableProperty] private string? _walletPassword;
 
-    public RecoverWalletViewModel(RpcServiceViewModel rpcService, INavigationService navigationService)
+    public RecoverWalletViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
     {
         RpcService = rpcService;
         NavigationService = navigationService;
@@ -29,7 +29,7 @@ public partial class RecoverWalletViewModel : ViewModelBase
         WalletPassword = "";
     }
 
-    private RpcServiceViewModel RpcService { get; }
+    private IRpcServiceViewModel RpcService { get; }
 
     private INavigationService NavigationService { get; }
 
@@ -44,6 +44,40 @@ public partial class RecoverWalletViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanRecoverWallet))]
     private async Task RecoverWallet()
     {
+        var job = CreateJob();
+        var result = await RpcService.SendRpcMethod(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcRecoverWalletResult);
+        if (result is RpcRecoverWalletResult rpcRecoverWalletResult)
+        {
+            OnRpcSuccess(rpcRecoverWalletResult);
+        }
+        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            OnRpcError(rpcErrorResult);
+        }
+        else if (result is Error error)
+        {
+            OnError(error);
+        }
+    }
+
+    protected override void OnRpcSuccess(Rpc rpcResult)
+    {
+        NavigationService.Clear();
+        NavigationService.Navigate(new Success { Message = $"Recovered wallet {WalletName}" });
+    }
+
+    protected override void OnRpcError(RpcErrorResult rpcErrorResult)
+    {
+        NavigationService.Navigate(rpcErrorResult.Error);
+    }
+
+    protected override void OnError(Error error)
+    {
+        NavigationService.Navigate(error);
+    }
+
+    public override Job CreateJob()
+    {
         var requestBody = new RpcMethod
         {
             Method = "recoverwallet",
@@ -54,20 +88,9 @@ public partial class RecoverWalletViewModel : ViewModelBase
                 WalletPassword
             }
         };
+
         var rpcServerUri = $"{RpcService.RpcServerPrefix}";
-        var result = await RpcService.SendRpcMethod(requestBody, rpcServerUri, RpcJsonContext.Default.RpcRecoverWalletResult);
-        if (result is RpcRecoverWalletResult)
-        {
-            NavigationService.Clear();
-            NavigationService.Navigate(new Success { Message = $"Recovered wallet {WalletName}" });
-        }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            NavigationService.Navigate(rpcErrorResult.Error);
-        }
-        else if (result is Error error)
-        {
-            NavigationService.Navigate(error);
-        }
+
+        return new Job(requestBody, rpcServerUri);
     }
 }
