@@ -13,14 +13,14 @@ namespace WasabiCli.ViewModels.RpcJson;
 
 public partial class RpcServiceViewModel : ViewModelBase, IRpcServiceViewModel
 {
-    [ObservableProperty] private string? _rpcServerPrefix;
+    [ObservableProperty] private string? _serverPrefix;
 
-    public RpcServiceViewModel(string rpcServerPrefix)
+    public RpcServiceViewModel(string serverPrefix)
     {
-        RpcServerPrefix = rpcServerPrefix;
+        ServerPrefix = serverPrefix;
     }
 
-    public async Task<object?> SendRpcMethod<T>(RpcMethod rpcMethod, string rpcServerUri, JsonTypeInfo<T> jsonTypeInfo) 
+    public async Task<object?> Send<T>(RpcMethod rpcMethod, string rpcServerUri, JsonTypeInfo<T> jsonTypeInfo) 
         where T: class
     {
         string? responseBodyJson;

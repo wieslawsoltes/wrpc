@@ -27,7 +27,7 @@ public partial class StopCoinJoinViewModel : BatchMethodViewModel
     private async Task StopCoinJoin()
     {
         var job = CreateJob();
-        var result = await RpcService.SendRpcMethod(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcStopCoinJoinResult);
+        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcStopCoinJoinResult);
         if (result is RpcStopCoinJoinResult rpcStopCoinJoinResult)
         {
             OnRpcSuccess(rpcStopCoinJoinResult);
@@ -64,7 +64,7 @@ public partial class StopCoinJoinViewModel : BatchMethodViewModel
             Method = "stopcoinjoin"
         };
 
-        var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
+        var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
         return new Job(requestBody, rpcServerUri);
     }

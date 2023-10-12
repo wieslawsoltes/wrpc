@@ -28,7 +28,7 @@ public partial class ListCoinsViewModel : BatchMethodViewModel
     private async Task ListCoins()
     {
         var job = CreateJob();
-        var result = await RpcService.SendRpcMethod(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcListCoinsResult);
+        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcListCoinsResult);
         if (result is RpcListCoinsResult { Result: not null } rpcListCoinsResult)
         {
             OnRpcSuccess(rpcListCoinsResult);
@@ -68,7 +68,7 @@ public partial class ListCoinsViewModel : BatchMethodViewModel
             Method = "listcoins"
         };
 
-        var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
+        var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
         return new Job(requestBody, rpcServerUri);
     }

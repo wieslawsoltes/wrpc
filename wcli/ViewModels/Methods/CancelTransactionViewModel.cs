@@ -50,7 +50,7 @@ public partial class CancelTransactionViewModel : BatchMethodViewModel
     private async Task CancelTransaction()
     {
         var job = CreateJob();
-        var result = await RpcService.SendRpcMethod(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcCancelTransactionResult);
+        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcCancelTransactionResult);
         if (result is RpcCancelTransactionResult { Result: not null } rpcCancelTransactionResult)
         {
             OnRpcSuccess(rpcCancelTransactionResult);
@@ -96,7 +96,7 @@ public partial class CancelTransactionViewModel : BatchMethodViewModel
             }
         };
 
-        var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
+        var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
         return new Job(requestBody, rpcServerUri);
     }

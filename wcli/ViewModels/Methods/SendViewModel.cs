@@ -80,7 +80,7 @@ public partial class SendViewModel : BatchMethodViewModel
     private async Task Send()
     {
         var job = CreateJob();
-        var result = await RpcService.SendRpcMethod(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcSendResult);
+        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcSendResult);
         if (result is RpcSendResult { Result: not null } rpcSendResult)
         {
             OnRpcSuccess(rpcSendResult);
@@ -140,7 +140,7 @@ public partial class SendViewModel : BatchMethodViewModel
             }
         };
 
-        var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
+        var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
         return new Job(requestBody, rpcServerUri);
     }
@@ -155,7 +155,7 @@ public partial class SendViewModel : BatchMethodViewModel
 
         var listUnspentCoinsViewModel = new ListUnspentCoinsViewModel(RpcService, NavigationService, WalletName);
         var job = listUnspentCoinsViewModel.CreateJob();
-        var result = await RpcService.SendRpcMethod(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcListUnspentCoinsResult);
+        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcListUnspentCoinsResult);
         if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
         {
             var coins = rpcListUnspentCoinsResult

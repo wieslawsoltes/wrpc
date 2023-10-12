@@ -27,7 +27,7 @@ public partial class LoadWalletViewModel : BatchMethodViewModel
     private async Task LoadWallet()
     {
         var job = CreateJob();
-        var result = await RpcService.SendRpcMethod(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcLoadWalletResult);
+        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcLoadWalletResult);
         if (result is RpcLoadWalletResult rpcLoadWalletResult)
         {
             OnRpcSuccess(rpcLoadWalletResult);
@@ -68,7 +68,7 @@ public partial class LoadWalletViewModel : BatchMethodViewModel
             }
         };
 
-        var rpcServerUri = $"{RpcService.RpcServerPrefix}";
+        var rpcServerUri = $"{RpcService.ServerPrefix}";
 
         return new Job(requestBody, rpcServerUri);
     }

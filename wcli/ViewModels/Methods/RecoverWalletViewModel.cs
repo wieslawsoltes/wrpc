@@ -45,7 +45,7 @@ public partial class RecoverWalletViewModel : BatchMethodViewModel
     private async Task RecoverWallet()
     {
         var job = CreateJob();
-        var result = await RpcService.SendRpcMethod(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcRecoverWalletResult);
+        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcRecoverWalletResult);
         if (result is RpcRecoverWalletResult rpcRecoverWalletResult)
         {
             OnRpcSuccess(rpcRecoverWalletResult);
@@ -89,7 +89,7 @@ public partial class RecoverWalletViewModel : BatchMethodViewModel
             }
         };
 
-        var rpcServerUri = $"{RpcService.RpcServerPrefix}";
+        var rpcServerUri = $"{RpcService.ServerPrefix}";
 
         return new Job(requestBody, rpcServerUri);
     }

@@ -50,7 +50,7 @@ public partial class SpeedUpTransactionViewModel : BatchMethodViewModel
     private async Task SpeedUpTransaction()
     {
         var job = CreateJob();
-        var result = await RpcService.SendRpcMethod(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcSpeedUpTransactionResult);
+        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcSpeedUpTransactionResult);
         if (result is RpcSpeedUpTransactionResult { Result: not null } rpcSpeedUpTransactionResult)
         {
             OnRpcSuccess(rpcSpeedUpTransactionResult);
@@ -96,7 +96,7 @@ public partial class SpeedUpTransactionViewModel : BatchMethodViewModel
             }
         };
 
-        var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
+        var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
         return new Job(requestBody, rpcServerUri);
     }

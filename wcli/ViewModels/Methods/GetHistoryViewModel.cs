@@ -28,7 +28,7 @@ public partial class GetHistoryViewModel : BatchMethodViewModel
     private async Task GetHistory()
     {
         var job = CreateJob();
-        var result = await RpcService.SendRpcMethod(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcGetHistoryResult);
+        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcGetHistoryResult);
         if (result is RpcGetHistoryResult { Result: not null } rpcGetHistoryResult)
         {
             OnRpcSuccess(rpcGetHistoryResult);
@@ -68,7 +68,7 @@ public partial class GetHistoryViewModel : BatchMethodViewModel
             Method = "gethistory"
         };
 
-        var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
+        var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
         return new Job(requestBody, rpcServerUri);
     }

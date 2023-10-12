@@ -6,10 +6,7 @@ namespace WasabiCli.Models.Services;
 
 public interface IRpcServiceViewModel
 {
-    Task<object?> SendRpcMethod<T>(
-        RpcMethod rpcMethod, 
-        string rpcServerUri, 
-        JsonTypeInfo<T> jsonTypeInfo) where T: class;
+    Task<object?> Send<T>(RpcMethod rpcMethod, string rpcServerUri, JsonTypeInfo<T> jsonTypeInfo) where T: class;
 
-    string? RpcServerPrefix { get; set; }
+    string? ServerPrefix { get; set; }
 }

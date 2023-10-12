@@ -23,7 +23,7 @@ public partial class GetStatusViewModel : BatchMethodViewModel
     private async Task GetStatus()
     {
         var job = CreateJob();
-        var result = await RpcService.SendRpcMethod(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcGetStatusResult);
+        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcGetStatusResult);
         if (result is RpcGetStatusResult { Result: not null } rpcGetStatusResult)
         {
             OnRpcSuccess(rpcGetStatusResult);
@@ -63,7 +63,7 @@ public partial class GetStatusViewModel : BatchMethodViewModel
             Method = "getstatus"
         };
 
-        var rpcServerUri = $"{RpcService.RpcServerPrefix}";
+        var rpcServerUri = $"{RpcService.ServerPrefix}";
 
         return new Job(requestBody, rpcServerUri);
     }

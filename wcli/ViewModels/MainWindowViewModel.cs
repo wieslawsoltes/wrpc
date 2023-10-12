@@ -1,8 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using WasabiCli.Models.App;
 using WasabiCli.Models.Services;
 using WasabiCli.ViewModels.Methods;
 using WasabiCli.ViewModels.RpcJson;
@@ -12,6 +14,7 @@ namespace WasabiCli.ViewModels;
 public partial class MainWindowViewModel : ViewModelBase
 {
     [ObservableProperty] private bool _batchMode;
+    [ObservableProperty] private ObservableCollection<Batch>? _batches;
     [ObservableProperty] private IRpcServiceViewModel _rpcService;
     [ObservableProperty] private ObservableCollection<WalletViewModel>? _wallets;
 
@@ -32,17 +35,19 @@ public partial class MainWindowViewModel : ViewModelBase
 
     [ObservableProperty] private ObservableCollection<RpcMethodViewModel>? _rpcMethods;
 
-    public MainWindowViewModel(INavigationService navigationService)
+    public MainWindowViewModel(INavigationService navigationService, IRpcServiceViewModel rpcService, State state)
     {
-        RpcService = new RpcServiceViewModel("http://127.0.0.1:37128");
+        RpcService = rpcService;
         NavigationService = navigationService;
 
-        Wallets = new ObservableCollection<WalletViewModel>
-        {
-            new () { WalletName = "Wallet 1" }
-        };
+        var wallets = 
+            state.Wallets?.Select(x => new WalletViewModel { WalletName = x }) ?? new List<WalletViewModel>();
 
-        SelectedWallet = Wallets[0];
+        Wallets = new ObservableCollection<WalletViewModel>(wallets);
+
+        SelectedWallet = !string.IsNullOrEmpty(state.SelectedWallet)
+            ? Wallets.FirstOrDefault(x => x.WalletName == state.SelectedWallet) 
+            : Wallets.FirstOrDefault();
 
         RpcMethods = new ObservableCollection<RpcMethodViewModel>
         {

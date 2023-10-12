@@ -33,7 +33,7 @@ public partial class StartCoinJoinViewModel : BatchMethodViewModel
     private async Task StartCoinJoin()
     {
         var job = CreateJob();
-        var result = await RpcService.SendRpcMethod(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcStartCoinJoinResult);
+        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcStartCoinJoinResult);
         if (result is RpcStartCoinJoinResult rpcStartCoinJoinResult)
         {
             OnRpcSuccess(rpcStartCoinJoinResult);
@@ -77,7 +77,7 @@ public partial class StartCoinJoinViewModel : BatchMethodViewModel
             }
         };
 
-        var rpcServerUri = $"{RpcService.RpcServerPrefix}/{WalletName}";
+        var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
         return new Job(requestBody, rpcServerUri);
     }

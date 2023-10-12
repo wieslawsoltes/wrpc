@@ -24,7 +24,7 @@ public partial class GetFeeRatesViewModel : BatchMethodViewModel
     private async Task GetFeeRates()
     {
         var job = CreateJob();
-        var result = await RpcService.SendRpcMethod(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcGetFeeRatesResult);
+        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcGetFeeRatesResult);
         if (result is RpcGetFeeRatesResult { Result: not null } rpcGetFeeRatesResult)
         {
             OnRpcSuccess(rpcGetFeeRatesResult);
@@ -64,7 +64,7 @@ public partial class GetFeeRatesViewModel : BatchMethodViewModel
             Method = "getfeerates"
         };
 
-        var rpcServerUri = $"{RpcService.RpcServerPrefix}";
+        var rpcServerUri = $"{RpcService.ServerPrefix}";
 
         return new Job(requestBody, rpcServerUri);
     }

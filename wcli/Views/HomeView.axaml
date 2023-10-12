@@ -14,7 +14,7 @@
       <Label Content="RPC server prefix:"
              Target="RpcServerTextBox" />
       <TextBox Name="RpcServerTextBox"
-               Text="{Binding RpcService.RpcServerPrefix, Mode=TwoWay}" />
+               Text="{Binding RpcService.ServerPrefix, Mode=TwoWay}" />
       <DockPanel>
         <!-- AddWallet -->
         <Button Content="+"
