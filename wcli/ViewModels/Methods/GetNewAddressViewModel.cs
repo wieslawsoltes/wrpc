@@ -38,7 +38,7 @@ public partial class GetNewAddressViewModel : BatchMethodViewModel
     private async Task GetNewAddress()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcGetNewAddressResult);
+        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcGetNewAddressResult);
         if (result is RpcGetNewAddressResult { Result: not null } rpcGetNewAddressResult)
         {
             OnRpcSuccess(rpcGetNewAddressResult);

@@ -39,7 +39,7 @@ public partial class CreateWalletViewModel : BatchMethodViewModel
     private async Task CreateWallet()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcCreateWalletResult);
+        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcCreateWalletResult);
         if (result is RpcCreateWalletResult { Result: not null } rpcCreateWalletResult)
         {
             OnRpcSuccess(rpcCreateWalletResult);

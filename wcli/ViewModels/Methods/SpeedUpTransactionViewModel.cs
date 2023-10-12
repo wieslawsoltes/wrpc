@@ -50,7 +50,7 @@ public partial class SpeedUpTransactionViewModel : BatchMethodViewModel
     private async Task SpeedUpTransaction()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcSpeedUpTransactionResult);
+        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcSpeedUpTransactionResult);
         if (result is RpcSpeedUpTransactionResult { Result: not null } rpcSpeedUpTransactionResult)
         {
             OnRpcSuccess(rpcSpeedUpTransactionResult);

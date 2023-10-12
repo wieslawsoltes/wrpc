@@ -8,6 +8,9 @@ public class State
     [JsonPropertyName("serverPrefix")]
     public string? ServerPrefix { get; set; }
 
+    [JsonPropertyName("batchMode")]
+    public bool BatchMode { get; set; }
+
     [JsonPropertyName("wallets")]
     public List<string?>? Wallets { get; set; }
 

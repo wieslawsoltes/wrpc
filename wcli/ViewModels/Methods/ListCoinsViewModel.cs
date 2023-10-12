@@ -28,7 +28,7 @@ public partial class ListCoinsViewModel : BatchMethodViewModel
     private async Task ListCoins()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcListCoinsResult);
+        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcListCoinsResult);
         if (result is RpcListCoinsResult { Result: not null } rpcListCoinsResult)
         {
             OnRpcSuccess(rpcListCoinsResult);

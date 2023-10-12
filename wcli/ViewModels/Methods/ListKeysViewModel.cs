@@ -28,7 +28,7 @@ public partial class ListKeysViewModel : BatchMethodViewModel
     private async Task ListKeys()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcListKeysResult);
+        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcListKeysResult);
         if (result is RpcListKeysResult { Result: not null } rpcListKeysResult)
         {
             OnRpcSuccess(rpcListKeysResult);

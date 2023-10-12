@@ -27,7 +27,7 @@ public partial class GetWalletInfoViewModel : BatchMethodViewModel
     private async Task GetWalletInfo()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcGetWalletInfoResult);
+        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcGetWalletInfoResult);
         if (result is RpcGetWalletInfoResult { Result: not null } rpcGetWalletInfoResult)
         {
             OnRpcSuccess(rpcGetWalletInfoResult);

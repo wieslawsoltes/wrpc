@@ -13,8 +13,6 @@ namespace WasabiCli.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    [ObservableProperty] private bool _batchMode;
-    [ObservableProperty] private ObservableCollection<Batch>? _batches;
     [ObservableProperty] private IRpcServiceViewModel _rpcService;
     [ObservableProperty] private ObservableCollection<WalletViewModel>? _wallets;
 

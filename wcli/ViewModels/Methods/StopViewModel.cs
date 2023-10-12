@@ -23,7 +23,7 @@ public partial class StopViewModel : BatchMethodViewModel
     private async Task Stop()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.String);
+        var result = await RpcService.Send(job, ModelsJsonContext.Default.String);
         if (result is string)
         {
             OnRpcSuccess(new RpcResult());

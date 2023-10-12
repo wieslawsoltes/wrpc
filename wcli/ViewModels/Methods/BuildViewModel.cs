@@ -81,7 +81,7 @@ public partial class BuildViewModel : BatchMethodViewModel
     private async Task Build()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcBuildResult);
+        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcBuildResult);
         if (result is RpcBuildResult { Result: not null } rpcBuildResult)
         {
             OnRpcSuccess(rpcBuildResult);
@@ -156,7 +156,7 @@ public partial class BuildViewModel : BatchMethodViewModel
 
         var listUnspentCoinsViewModel = new ListUnspentCoinsViewModel(RpcService, NavigationService, WalletName);
         var job = listUnspentCoinsViewModel.CreateJob();
-        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcListUnspentCoinsResult);
+        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcListUnspentCoinsResult);
         if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
         {
             var coins = rpcListUnspentCoinsResult

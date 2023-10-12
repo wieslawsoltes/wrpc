@@ -34,7 +34,7 @@ public partial class BroadcastViewModel : BatchMethodViewModel
     private async Task Broadcast()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job.RpcMethod, job.RpcServerUri, ModelsJsonContext.Default.RpcBroadcastResult);
+        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcBroadcastResult);
         if (result is RpcBroadcastResult { Result: not null } rpcBroadcastResult)
         {
             OnRpcSuccess(rpcBroadcastResult);

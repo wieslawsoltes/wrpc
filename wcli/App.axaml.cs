@@ -38,7 +38,9 @@ public partial class App : Application
                     "Wallet"
                 },
                 SelectedWallet = "Wallet",
-                Batches = new List<Batch>()
+                Batches = new List<Batch>(),
+                ServerPrefix = DefaultServerPrefix,
+                BatchMode = false
             };
 
             try
@@ -59,14 +61,14 @@ public partial class App : Application
             }
 
             var navigationService = new NavigationServiceViewModel();
-            var rpcService = new RpcServiceViewModel(defaultState.ServerPrefix ?? DefaultServerPrefix);
-
-            Navigation.NavigationService = navigationService;
-
-            var mainViewModel = new MainWindowViewModel(navigationService, rpcService, defaultState)
+            var rpcService = new RpcServiceViewModel(defaultState.ServerPrefix ?? DefaultServerPrefix, defaultState.BatchMode)
             {
                 Batches = new ObservableCollection<Batch>(defaultState.Batches ?? new List<Batch>())
             };
+
+            Navigation.NavigationService = navigationService;
+
+            var mainViewModel = new MainWindowViewModel(navigationService, rpcService, defaultState);
 
             desktop.MainWindow = new MainWindow
             {
@@ -82,9 +84,10 @@ public partial class App : Application
                     var state = new State
                     {
                         ServerPrefix = rpcService.ServerPrefix,
+                        BatchMode = rpcService.BatchMode,
                         Wallets = wallets?.ToList(),
                         SelectedWallet = mainViewModel.SelectedWallet?.WalletName ?? "",
-                        Batches = mainViewModel.Batches.ToList()
+                        Batches = rpcService.Batches?.ToList()
                     };
 
                     var json = JsonSerializer.Serialize(state, ModelsJsonContext.Default.State);
