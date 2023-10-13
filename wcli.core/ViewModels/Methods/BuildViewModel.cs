@@ -9,6 +9,7 @@ using WasabiCli.Models.App;
 using WasabiCli.Models.Services;
 using WasabiCli.Models.RpcJson;
 using WasabiCli.Models.WalletWasabi;
+using WasabiCli.Models.WalletWasabi.Build;
 using WasabiCli.Models.WalletWasabi.Send;
 
 namespace WasabiCli.ViewModels.Methods;
@@ -41,7 +42,11 @@ public partial class BuildViewModel : BatchMethodViewModel
 
     [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
     [ObservableProperty]
-    private int _feeTarget;
+    private int? _feeTarget;
+
+    [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
+    [ObservableProperty]
+    private decimal? _feeRate;
 
     [ObservableProperty]
     private ObservableCollection<CoinViewModel> _coins;
@@ -57,6 +62,7 @@ public partial class BuildViewModel : BatchMethodViewModel
         Label = "Label";
         SubtractFee = false;
         FeeTarget = 2;
+        FeeTarget = null;
         Coins = new ObservableCollection<CoinViewModel>();
     }
 
@@ -120,7 +126,7 @@ public partial class BuildViewModel : BatchMethodViewModel
         var requestBody = new RpcMethod
         {
             Method = "build",
-            Params = new Send
+            Params = new Build
             {
                 Payments = new List<Payment>
                 {
@@ -137,6 +143,7 @@ public partial class BuildViewModel : BatchMethodViewModel
                     .Select(x => new Coin { TransactionId = x.CoinInfo.TxId, Index = x.CoinInfo.Index })
                     .ToList(),
                 FeeTarget = FeeTarget,
+                FeeRate = FeeRate,
                 Password = WalletPassword
             }
         };

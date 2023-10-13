@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using WasabiCli.Models.WalletWasabi.Send;
 
-namespace WasabiCli.Models.WalletWasabi.Send;
+namespace WasabiCli.Models.WalletWasabi.Build;
 
-public class Send
+public class Build
 {
     [JsonPropertyName("payments")]
     public List<Payment>? Payments { get; set; }
@@ -15,7 +16,7 @@ public class Send
     public int? FeeTarget { get; set; }
 
     [JsonPropertyName("feeRate")]
-    public int? FeeRate { get; set; }
+    public decimal? FeeRate { get; set; }
 
     [JsonPropertyName("password")]
     public string? Password { get; set; }

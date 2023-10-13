@@ -40,7 +40,11 @@ public partial class SendViewModel : BatchMethodViewModel
 
     [NotifyCanExecuteChangedFor(nameof(SendCommand))]
     [ObservableProperty]
-    private int _feeTarget;
+    private int? _feeTarget;
+
+    [NotifyCanExecuteChangedFor(nameof(SendCommand))]
+    [ObservableProperty]
+    private int? _feeRate;
 
     [ObservableProperty]
     private ObservableCollection<CoinViewModel> _coins;
@@ -56,6 +60,7 @@ public partial class SendViewModel : BatchMethodViewModel
         Label = "Label";
         SubtractFee = false;
         FeeTarget = 2;
+        FeeRate = null;
         Coins = new ObservableCollection<CoinViewModel>();
     }
 
@@ -136,6 +141,7 @@ public partial class SendViewModel : BatchMethodViewModel
                     .Select(x => new Coin { TransactionId = x.CoinInfo.TxId, Index = x.CoinInfo.Index })
                     .ToList(),
                 FeeTarget = FeeTarget,
+                FeeRate = FeeRate,
                 Password = WalletPassword
             }
         };

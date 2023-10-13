@@ -47,6 +47,11 @@
              Target="FeeTargetTextBox" />
       <TextBox Name="FeeTargetTextBox"
                Text="{Binding FeeTarget, Mode=TwoWay}" />
+      <!-- FeeRate -->
+      <Label Content="FeeRate:"
+             Target="FeeRateTextBox" />
+      <TextBox Name="FeeRateTextBox"
+               Text="{Binding FeeRate, Mode=TwoWay}" />
       <!-- Coins -->
       <Button Content="ListUnspentCoins"
               Command="{Binding ListUnspentCoinsCommand}"

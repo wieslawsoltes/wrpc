@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using WasabiCli.Models.App;
 using WasabiCli.Models.RpcJson;
 using WasabiCli.Models.WalletWasabi;
+using WasabiCli.Models.WalletWasabi.Build;
 using WasabiCli.Models.WalletWasabi.Send;
 using WasabiCli.Models.WalletWasabi.Transactions;
 
@@ -61,6 +62,7 @@ namespace WasabiCli.Models;
 [JsonSerializable(typeof(CancelTransactionInfo))]
 [JsonSerializable(typeof(RpcSpeedUpTransactionResult))]
 // build
+[JsonSerializable(typeof(Build))]
 [JsonSerializable(typeof(BuildInfo))]
 [JsonSerializable(typeof(RpcBuildResult))]
 // broadcast
