@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
@@ -17,7 +18,7 @@ public partial class RpcServiceViewModel : ViewModelBase, IRpcServiceViewModel
 {
     [ObservableProperty] private string? _serverPrefix;
     [ObservableProperty] private bool _batchMode;
-    [ObservableProperty] private ObservableCollection<Batch>? _batches;
+    [ObservableProperty] private IList<Batch>? _batches;
     [ObservableProperty] private Batch? _currentBatch;
 
     public RpcServiceViewModel(string serverPrefix, bool batchMode)

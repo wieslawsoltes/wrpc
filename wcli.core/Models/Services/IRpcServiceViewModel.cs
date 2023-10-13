@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading.Tasks;
 using WasabiCli.Models.App;
@@ -11,4 +12,6 @@ public interface IRpcServiceViewModel
     string? ServerPrefix { get; set; }
 
     bool BatchMode { get; set; }
+
+    IList<Batch>? Batches { get; set; }
 }
