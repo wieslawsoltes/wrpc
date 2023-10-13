@@ -25,4 +25,7 @@
     <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.6" />
     <PackageReference Include="SkiaSharp.HarfBuzz" Version="2.88.6" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\wcli.core\wcli.core.csproj" />
+  </ItemGroup>
 </Project>

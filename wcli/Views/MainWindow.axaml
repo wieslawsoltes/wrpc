@@ -1,6 +1,6 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:app="clr-namespace:WasabiCli.Models.App"
+        xmlns:app="using:WasabiCli.Models.App"
         xmlns:vm="using:WasabiCli.ViewModels"
         xmlns:vmn="using:WasabiCli.ViewModels.Navigation"
         xmlns:vmrpc="using:WasabiCli.ViewModels.RpcJson"
