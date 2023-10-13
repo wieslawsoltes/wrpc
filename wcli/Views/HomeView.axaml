@@ -14,7 +14,10 @@
       <Label Content="RPC server prefix:"
              Target="RpcServerTextBox" />
       <TextBox Name="RpcServerTextBox"
-               Text="{Binding RpcService.RpcServerPrefix, Mode=TwoWay}" />
+               Text="{Binding RpcService.ServerPrefix, Mode=TwoWay}" />
+      <!-- BatchMode -->
+      <CheckBox IsChecked="{Binding RpcService.BatchMode}"
+                Content="Batch Mode" />
       <DockPanel>
         <!-- AddWallet -->
         <Button Content="+"

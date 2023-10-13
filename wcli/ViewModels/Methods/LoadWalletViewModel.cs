@@ -1,28 +1,22 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiCli.Models;
 using WasabiCli.Models.App;
-using WasabiCli.Models.Services;
 using WasabiCli.Models.RpcJson;
+using WasabiCli.Models.Services;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class StartCoinJoinViewModel : BatchMethodViewModel
+public partial class LoadWalletViewModel : BatchMethodViewModel
 {
     [ObservableProperty] private string? _walletName;
-    [ObservableProperty] private string? _walletPassword;
-    [ObservableProperty] private bool _stopWhenAllMixed;
-    [ObservableProperty] private bool _overridePlebStop;
 
-    public StartCoinJoinViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
+    public LoadWalletViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
     {
         RpcService = rpcService;
         NavigationService = navigationService;
         WalletName = walletName;
-        WalletPassword = "";
-        StopWhenAllMixed = true;
-        OverridePlebStop = true;
     }
 
     private IRpcServiceViewModel RpcService { get; }
@@ -30,13 +24,13 @@ public partial class StartCoinJoinViewModel : BatchMethodViewModel
     private INavigationService NavigationService { get; }
 
     [RelayCommand]
-    private async Task StartCoinJoin()
+    private async Task LoadWallet()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcStartCoinJoinResult);
-        if (result is RpcStartCoinJoinResult rpcStartCoinJoinResult)
+        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcLoadWalletResult);
+        if (result is RpcLoadWalletResult rpcLoadWalletResult)
         {
-            OnRpcSuccess(rpcStartCoinJoinResult);
+            OnRpcSuccess(rpcLoadWalletResult);
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
@@ -50,8 +44,7 @@ public partial class StartCoinJoinViewModel : BatchMethodViewModel
 
     protected override void OnRpcSuccess(Rpc rpcResult)
     {
-        NavigationService.Clear();
-        NavigationService.Navigate(new Success { Message = $"Started coinjoin for wallet {WalletName}" });
+        NavigationService.Navigate(new Success { Message = $"Loaded wallet {WalletName}" });
     }
 
     protected override void OnRpcError(RpcErrorResult rpcErrorResult)
@@ -68,16 +61,14 @@ public partial class StartCoinJoinViewModel : BatchMethodViewModel
     {
         var requestBody = new RpcMethod
         {
-            Method = "startcoinjoin",
+            Method = "loadwallet",
             Params = new []
             {
-                WalletPassword,
-                $"{StopWhenAllMixed}",
-                $"{OverridePlebStop}"
+                WalletName,
             }
         };
 
-        var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
+        var rpcServerUri = $"{RpcService.ServerPrefix}";
 
         return new Job(requestBody, rpcServerUri);
     }

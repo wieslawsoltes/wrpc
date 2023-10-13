@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using WasabiCli.Models.Navigation;
+using WasabiCli.Models.Services;
 
 namespace WasabiCli.ViewModels.Navigation;
 

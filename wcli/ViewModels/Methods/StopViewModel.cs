@@ -1,20 +1,15 @@
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiCli.Models;
 using WasabiCli.Models.App;
-using WasabiCli.Models.Services;
 using WasabiCli.Models.RpcJson;
+using WasabiCli.Models.Services;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class BroadcastViewModel : BatchMethodViewModel
+public partial class StopViewModel : BatchMethodViewModel
 {
-    [NotifyCanExecuteChangedFor(nameof(BroadcastCommand))]
-    [ObservableProperty] 
-    private string? _tx;
-
-    public BroadcastViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
+    public StopViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
     {
         RpcService = rpcService;
         NavigationService = navigationService;
@@ -24,20 +19,14 @@ public partial class BroadcastViewModel : BatchMethodViewModel
 
     private INavigationService NavigationService { get; }
 
-    private bool CanBroadcast()
-    {
-        return Tx is not null
-               && Tx.Length > 0;
-    }
-
-    [RelayCommand(CanExecute = nameof(CanBroadcast))]
-    private async Task Broadcast()
+    [RelayCommand]
+    private async Task Stop()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcBroadcastResult);
-        if (result is RpcBroadcastResult { Result: not null } rpcBroadcastResult)
+        var result = await RpcService.Send(job, ModelsJsonContext.Default.String);
+        if (result is string)
         {
-            OnRpcSuccess(rpcBroadcastResult);
+            OnRpcSuccess(new RpcResult());
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
@@ -51,11 +40,7 @@ public partial class BroadcastViewModel : BatchMethodViewModel
 
     protected override void OnRpcSuccess(Rpc rpcResult)
     {
-        if (rpcResult is RpcBroadcastResult rpcBroadcastResult)
-        {
-            NavigationService.Clear();
-            NavigationService.Navigate(rpcBroadcastResult.Result);
-        }
+        NavigationService.Navigate(new Success { Message = "Stopped daemon." });
     }
 
     protected override void OnRpcError(RpcErrorResult rpcErrorResult)
@@ -72,11 +57,7 @@ public partial class BroadcastViewModel : BatchMethodViewModel
     {
         var requestBody = new RpcMethod
         {
-            Method = "broadcast",
-            Params = new []
-            {
-                Tx
-            }
+            Method = "stop"
         };
 
         var rpcServerUri = $"{RpcService.ServerPrefix}";

@@ -1,7 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-using WasabiCli.Models.Navigation;
+using WasabiCli.Models.Services;
 using WasabiCli.Models.WalletWasabi;
-using WasabiCli.ViewModels.RpcJson;
 
 namespace WasabiCli.ViewModels;
 
@@ -9,7 +8,7 @@ public partial class CoinViewModel : ViewModelBase
 {
     [ObservableProperty] private bool _isSelected;
 
-    public CoinViewModel(RpcServiceViewModel rpcService, INavigationService navigationService, CoinInfo coinInfo)
+    public CoinViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, CoinInfo coinInfo)
     {
         RpcService = rpcService;
         NavigationService = navigationService;
@@ -17,7 +16,7 @@ public partial class CoinViewModel : ViewModelBase
         IsSelected = false;
     }
 
-    private RpcServiceViewModel RpcService { get; }
+    private IRpcServiceViewModel RpcService { get; }
 
     private INavigationService NavigationService { get; }
 

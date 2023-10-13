@@ -1,7 +1,9 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:app="clr-namespace:WasabiCli.Models.App"
         xmlns:vm="using:WasabiCli.ViewModels"
         xmlns:vmn="using:WasabiCli.ViewModels.Navigation"
+        xmlns:vmrpc="using:WasabiCli.ViewModels.RpcJson"
         xmlns:controls="using:WasabiCli.Controls"
         xmlns:views="using:WasabiCli.Views"
         xmlns:viewsNavigation="using:WasabiCli.Views.Navigation"
@@ -20,6 +22,12 @@
     <vm:MainWindowViewModel>
       <x:Arguments>
         <vmn:NavigationServiceViewModel />
+        <vmrpc:RpcServiceViewModel>
+          <x:Arguments>
+            <x:String>"http://127.0.0.1:37128"</x:String>
+          </x:Arguments>
+        </vmrpc:RpcServiceViewModel>
+        <app:State />
       </x:Arguments>
     </vm:MainWindowViewModel>
   </Design.DataContext>
