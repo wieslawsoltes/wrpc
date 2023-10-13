@@ -12,6 +12,11 @@
         <Setter Property="Spacing" Value="4" />
       </Style>
     </ItemsControl.Styles>
+    <ItemsControl.ItemsPanel>
+      <ItemsPanelTemplate>
+        <UniformGrid Columns="2"  />
+      </ItemsPanelTemplate>
+    </ItemsControl.ItemsPanel>
     <ItemsControl.ItemTemplate>
       <DataTemplate>
         <Button Name="GetStatusButton"
@@ -20,7 +25,10 @@
                 CommandParameter="{x:Null}"
                 HorizontalAlignment="Stretch"
                 HorizontalContentAlignment="Center"
-                Padding="6,4,6,4" />
+                VerticalAlignment="Stretch"
+                VerticalContentAlignment="Center"
+                Padding="4"
+                Margin="4" />
       </DataTemplate>
     </ItemsControl.ItemTemplate>
   </ItemsControl>
