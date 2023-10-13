@@ -1,43 +1,14 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:app="using:WasabiCli.Models.App"
-        xmlns:vm="using:WasabiCli.ViewModels"
-        xmlns:vmn="using:WasabiCli.ViewModels.Navigation"
-        xmlns:vmrpc="using:WasabiCli.ViewModels.RpcJson"
-        xmlns:controls="using:WasabiCli.Controls"
-        xmlns:views="using:WasabiCli.Views"
-        xmlns:viewsNavigation="using:WasabiCli.Views.Navigation"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:WasabiCli.Views"
         mc:Ignorable="d" d:DesignWidth="420" d:DesignHeight="730"
         x:Class="WasabiCli.Views.MainWindow"
-        x:CompileBindings="True" x:DataType="vm:MainWindowViewModel"
         WindowStartupLocation="CenterScreen"
         Width="420"
         Height="730"
-        Background="#FF353535"
         Icon="/Assets/avalonia-logo.ico"
         Title="Wasabi.Wallet RPC">
-  <Design.DataContext>
-    <vm:MainWindowViewModel>
-      <x:Arguments>
-        <vmn:NavigationServiceViewModel />
-        <vmrpc:RpcServiceViewModel>
-          <x:Arguments>
-            <x:String>"http://127.0.0.1:37128"</x:String>
-            <x:Boolean>False</x:Boolean>
-          </x:Arguments>
-        </vmrpc:RpcServiceViewModel>
-        <app:State />
-      </x:Arguments>
-    </vm:MainWindowViewModel>
-  </Design.DataContext>
-  <Panel>
-    <controls:NavigateBackControl Header="Wasabi.Wallet RPC"
-                                  EnableBack="False"
-                                  IsVisible="{Binding NavigationService.CurrentDialog, Converter={x:Static ObjectConverters.IsNull}}">
-      <views:HomeView />
-    </controls:NavigateBackControl>
-    <viewsNavigation:NavigationServiceView DataContext="{Binding NavigationService}" />
-  </Panel>
+  <views:MainView />
 </Window>

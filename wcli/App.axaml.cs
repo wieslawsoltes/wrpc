@@ -29,47 +29,10 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        var mainViewModel = CreateMainViewModel();
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            var defaultState = new State
-            {
-                Wallets = new List<string?>
-                {
-                    "Wallet"
-                },
-                SelectedWallet = "Wallet",
-                Batches = new List<Batch>(),
-                ServerPrefix = DefaultServerPrefix,
-                BatchMode = false
-            };
-
-            try
-            {
-                if (File.Exists(StateFileName))
-                {
-                    var json = File.ReadAllText(StateFileName);
-                    var state = JsonSerializer.Deserialize(json, ModelsJsonContext.Default.State);
-                    if (state is not null)
-                    {
-                        defaultState = state;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-
-            var navigationService = new NavigationServiceViewModel();
-            var rpcService = new RpcServiceViewModel(defaultState.ServerPrefix ?? DefaultServerPrefix, defaultState.BatchMode)
-            {
-                Batches = new ObservableCollection<Batch>(defaultState.Batches ?? new List<Batch>())
-            };
-
-            Navigation.NavigationService = navigationService;
-
-            var mainViewModel = new MainWindowViewModel(navigationService, rpcService, defaultState);
-
             desktop.MainWindow = new MainWindow
             {
                 DataContext = mainViewModel
@@ -77,29 +40,93 @@ public partial class App : Application
 
             desktop.Exit += (_, _) =>
             {
-                try
-                {
-                    var wallets = mainViewModel.Wallets?.Select(x => x.WalletName);
-
-                    var state = new State
-                    {
-                        ServerPrefix = rpcService.ServerPrefix,
-                        BatchMode = rpcService.BatchMode,
-                        Wallets = wallets?.ToList(),
-                        SelectedWallet = mainViewModel.SelectedWallet?.WalletName ?? "",
-                        Batches = rpcService.Batches?.ToList()
-                    };
-
-                    var json = JsonSerializer.Serialize(state, ModelsJsonContext.Default.State);
-                    File.WriteAllText(StateFileName, json);
-                }
-                catch (Exception)
-                {
-                    // ignored
-                }
+                SaveState(mainViewModel);
             };
+        }
+        else if (ApplicationLifetime is ISingleViewApplicationLifetime single)
+        {
+            single.MainView = new MainView
+            {
+                DataContext = mainViewModel
+            };
+
+            // TODO: SaveState(mainViewModel);
         }
 
         base.OnFrameworkInitializationCompleted();
+    }
+
+    private State LoadState()
+    {
+        var defaultState = new State
+        {
+            Wallets = new List<string?>
+            {
+                "Wallet"
+            },
+            SelectedWallet = "Wallet",
+            Batches = new List<Batch>(),
+            ServerPrefix = DefaultServerPrefix,
+            BatchMode = false
+        };
+
+        try
+        {
+            if (File.Exists(StateFileName))
+            {
+                var json = File.ReadAllText(StateFileName);
+                var state = JsonSerializer.Deserialize(json, ModelsJsonContext.Default.State);
+                if (state is not null)
+                {
+                    defaultState = state;
+                }
+            }
+        }
+        catch (Exception)
+        {
+            // ignored
+        }
+
+        return defaultState;
+    }
+
+    private void SaveState(MainWindowViewModel mainViewModel)
+    {
+        try
+        {
+            var wallets = mainViewModel.Wallets?.Select(x => x.WalletName);
+
+            var state = new State
+            {
+                ServerPrefix = mainViewModel.RpcService.ServerPrefix,
+                BatchMode = mainViewModel.RpcService.BatchMode,
+                Wallets = wallets?.ToList(),
+                SelectedWallet = mainViewModel.SelectedWallet?.WalletName ?? "",
+                Batches = mainViewModel.RpcService.Batches?.ToList()
+            };
+
+            var json = JsonSerializer.Serialize(state, ModelsJsonContext.Default.State);
+            File.WriteAllText(StateFileName, json);
+        }
+        catch (Exception)
+        {
+            // ignored
+        }
+    }
+
+    private MainWindowViewModel CreateMainViewModel()
+    {
+        var defaultState = LoadState();
+        var navigationService = new NavigationServiceViewModel();
+        var rpcService = new RpcServiceViewModel(defaultState.ServerPrefix ?? DefaultServerPrefix, defaultState.BatchMode)
+        {
+            Batches = new ObservableCollection<Batch>(defaultState.Batches ?? new List<Batch>())
+        };
+
+        Navigation.NavigationService = navigationService;
+
+        var mainViewModel = new MainWindowViewModel(navigationService, rpcService, defaultState);
+
+        return mainViewModel;
     }
 }
