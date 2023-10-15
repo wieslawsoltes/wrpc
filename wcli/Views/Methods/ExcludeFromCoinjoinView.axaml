@@ -21,7 +21,7 @@
       <TextBox Name="TransactionIdTextBox"
                Text="{Binding TransactionId, Mode=TwoWay}"/>
       <!-- N -->
-      <Label Content="Nd:"
+      <Label Content="N:"
              Target="NTextBox" />
       <TextBox Name="NTextBox"
                Text="{Binding N, Mode=TwoWay}"/>
