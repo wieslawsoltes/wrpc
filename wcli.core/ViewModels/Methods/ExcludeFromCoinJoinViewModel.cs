@@ -9,7 +9,7 @@ using WasabiCli.Models.WalletWasabi.Transactions;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class ExcludeFromCoinJoinViewModel : BatchMethodViewModel
+public partial class ExcludeFromCoinJoinViewModel : RpcMethodViewModel
 {
     [NotifyCanExecuteChangedFor(nameof(ExcludeFromCoinJoinCommand))]
     [ObservableProperty] 

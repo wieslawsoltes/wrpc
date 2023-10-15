@@ -7,7 +7,7 @@ using WasabiCli.Models.Services;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class GetStatusViewModel : BatchMethodViewModel
+public partial class GetStatusViewModel : RpcMethodViewModel
 {
     public GetStatusViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
     {

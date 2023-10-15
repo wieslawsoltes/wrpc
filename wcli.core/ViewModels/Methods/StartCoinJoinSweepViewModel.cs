@@ -8,7 +8,7 @@ using WasabiCli.Models.RpcJson;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class StartCoinJoinSweepViewModel : BatchMethodViewModel
+public partial class StartCoinJoinSweepViewModel : RpcMethodViewModel
 {
     [ObservableProperty] private string? _walletName;
     [ObservableProperty] private string? _walletPassword;

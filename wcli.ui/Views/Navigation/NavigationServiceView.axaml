@@ -1,0 +1,183 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:m="using:WasabiCli.Models"
+             xmlns:mww="using:WasabiCli.Models.WalletWasabi"
+             xmlns:vmn="using:WasabiCli.ViewModels.Navigation"
+             xmlns:vmm="using:WasabiCli.ViewModels.Methods"
+             xmlns:controls="using:WasabiCli.Controls"
+             xmlns:views="using:WasabiCli.Views"
+             xmlns:viewsMethods="using:WasabiCli.Views.Methods"
+             xmlns:viewsWalletWasabi="using:WasabiCli.Views.WalletWasabi"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="WasabiCli.Views.Navigation.NavigationServiceView"
+             x:CompileBindings="True" x:DataType="vmn:NavigationServiceViewModel">
+ <ContentControl Content="{Binding CurrentDialog}">
+    <ContentControl.DataTemplates>
+      <!-- ViewModels -->
+      <DataTemplate DataType="vmm:CreateWalletViewModel">
+        <controls:NavigateBackControl Header="Create Wallet">
+          <viewsMethods:CreateWalletView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:RecoverWalletViewModel">
+        <controls:NavigateBackControl Header="Recover Wallet">
+          <viewsMethods:RecoverWalletView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:GetNewAddressViewModel">
+        <controls:NavigateBackControl Header="New Address">
+          <viewsMethods:GetNewAddressView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:SendViewModel">
+        <controls:NavigateBackControl Header="Send">
+          <viewsMethods:SendView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:SpeedUpTransactionViewModel">
+        <controls:NavigateBackControl Header="SpeedUp Transaction">
+          <viewsMethods:SpeedUpTransactionView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:CancelTransactionViewModel">
+        <controls:NavigateBackControl Header="Cancel Transaction">
+          <viewsMethods:CancelTransactionView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:BuildViewModel">
+        <controls:NavigateBackControl Header="Build">
+          <viewsMethods:BuildView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:BroadcastViewModel">
+        <controls:NavigateBackControl Header="Broadcast">
+          <viewsMethods:BroadcastView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:ExcludeFromCoinJoinViewModel">
+        <controls:NavigateBackControl Header="Exclude from CoinJoin">
+          <viewsMethods:ExcludeFromCoinjoinView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:StartCoinJoinViewModel">
+        <controls:NavigateBackControl Header="Start CoinJoin">
+          <viewsMethods:StartCoinJoinView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:StartCoinJoinSweepViewModel">
+        <controls:NavigateBackControl Header="Start CoinJoin Sweep">
+          <viewsMethods:StartCoinJoinSweepView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <!-- Models -->
+      <DataTemplate DataType="m:Error">
+        <controls:NavigateBackControl Header="Error">
+          <views:ErrorView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="m:Success">
+        <controls:NavigateBackControl Header="Success">
+          <views:SuccessView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="m:Json">
+        <controls:NavigateBackControl Header="Json">
+          <views:JsonView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <!-- Models: WalletWasabi -->
+      <DataTemplate DataType="mww:ErrorInfo">
+        <controls:NavigateBackControl Header="Error">
+          <viewsWalletWasabi:ErrorInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:PeerInfo">
+        <controls:NavigateBackControl Header="Peer">
+          <viewsWalletWasabi:PeerInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:StatusInfo">
+        <controls:NavigateBackControl Header="Status">
+          <viewsWalletWasabi:StatusInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:CreateWalletInfo">
+        <controls:NavigateBackControl Header="Create Wallet">
+          <viewsWalletWasabi:CreateWalletInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:CoinInfo">
+        <controls:NavigateBackControl Header="Coin">
+          <viewsWalletWasabi:CoinInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:ListCoinsInfo">
+        <controls:NavigateBackControl Header="Coins">
+          <viewsWalletWasabi:ListCoinsInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:ListUnspentCoinsInfo">
+        <controls:NavigateBackControl Header="Unspent Coins">
+          <viewsWalletWasabi:ListUnspentCoinsInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:AccountInfo">
+        <controls:NavigateBackControl Header="Account">
+          <viewsWalletWasabi:AccountInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:WalletInfo">
+        <controls:NavigateBackControl Header="Wallet">
+          <viewsWalletWasabi:WalletInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:AddressInfo">
+        <controls:NavigateBackControl Header="Address">
+          <viewsWalletWasabi:AddressInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:SendInfo">
+        <controls:NavigateBackControl Header="Send">
+          <viewsWalletWasabi:SendInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:BuildInfo">
+        <controls:NavigateBackControl Header="Build">
+          <viewsWalletWasabi:BuildInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:BroadcastInfo">
+        <controls:NavigateBackControl Header="Broadcast">
+          <viewsWalletWasabi:BroadcastInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:TransactionInfo">
+        <controls:NavigateBackControl Header="Transaction">
+          <viewsWalletWasabi:TransactionInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:GetHistoryInfo">
+        <controls:NavigateBackControl Header="History">
+          <viewsWalletWasabi:GetHistoryInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:KeyInfo">
+        <controls:NavigateBackControl Header="Key">
+          <viewsWalletWasabi:KeyInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:ListKeysInfo">
+        <controls:NavigateBackControl Header="Keys">
+          <viewsWalletWasabi:ListKeysInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="mww:GetFeeRatesInfo">
+        <controls:NavigateBackControl Header="FeeRates">
+          <viewsWalletWasabi:GetFeeRatesInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+    </ContentControl.DataTemplates>
+  </ContentControl>
+</UserControl>

@@ -8,7 +8,7 @@ using WasabiCli.Models.RpcJson;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class BroadcastViewModel : BatchMethodViewModel
+public partial class BroadcastViewModel : RpcMethodViewModel
 {
     [NotifyCanExecuteChangedFor(nameof(BroadcastCommand))]
     [ObservableProperty] 

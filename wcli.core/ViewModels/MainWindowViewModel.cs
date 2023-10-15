@@ -32,7 +32,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty] 
     private WalletViewModel? _selectedWallet;
 
-    [ObservableProperty] private ObservableCollection<RpcMethodViewModel>? _rpcMethods;
+    [ObservableProperty] private ObservableCollection<RpcJson.RpcMethodViewModel>? _rpcMethods;
 
     public MainWindowViewModel(INavigationService navigationService, IRpcServiceViewModel rpcService, State state)
     {
@@ -48,7 +48,7 @@ public partial class MainWindowViewModel : ViewModelBase
             ? Wallets.FirstOrDefault(x => x.WalletName == state.SelectedWallet) 
             : Wallets.FirstOrDefault();
 
-        RpcMethods = new ObservableCollection<RpcMethodViewModel>
+        RpcMethods = new ObservableCollection<RpcJson.RpcMethodViewModel>
         {
             new ("GetStatus", GetStatusCommand),
             new ("CreateWallet", CreateWalletCommand),

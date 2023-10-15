@@ -10,7 +10,7 @@ using WasabiCli.Models.WalletWasabi.Transactions;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class CancelTransactionViewModel : BatchMethodViewModel
+public partial class CancelTransactionViewModel : RpcMethodViewModel
 {
     [NotifyCanExecuteChangedFor(nameof(CancelTransactionCommand))]
     [ObservableProperty] 

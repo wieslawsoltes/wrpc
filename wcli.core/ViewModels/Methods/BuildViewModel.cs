@@ -14,7 +14,7 @@ using WasabiCli.Models.WalletWasabi.Send;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class BuildViewModel : BatchMethodViewModel
+public partial class BuildViewModel : RpcMethodViewModel
 {
     [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
     [ObservableProperty] 

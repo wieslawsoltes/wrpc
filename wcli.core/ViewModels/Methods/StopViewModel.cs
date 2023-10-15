@@ -7,7 +7,7 @@ using WasabiCli.Models.Services;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class StopViewModel : BatchMethodViewModel
+public partial class StopViewModel : RpcMethodViewModel
 {
     public StopViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
     {

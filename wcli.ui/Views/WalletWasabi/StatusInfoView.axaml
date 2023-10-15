@@ -1,0 +1,74 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mww="using:WasabiCli.Models.WalletWasabi"
+             xmlns:local="using:WasabiCli"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="WasabiCli.Views.WalletWasabi.StatusInfoView"
+             x:CompileBindings="True" x:DataType="mww:StatusInfo">
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Spacing="4">
+      <!-- TorStatus -->
+      <Label Content="TorStatus" />
+      <TextBox Text="{Binding TorStatus}"
+               Classes="readonly" />
+      <!-- BackendStatus -->
+      <Label Content="BackendStatus" />
+      <TextBox Text="{Binding BackendStatus}"
+               Classes="readonly" />
+      <!-- BestBlockchainHeight -->
+      <Label Content="BestBlockchainHeight" />
+      <TextBox Text="{Binding BestBlockchainHeight}"
+               Classes="readonly" />
+      <!-- FiltersCount -->
+      <Label Content="FiltersCount" />
+      <TextBox Text="{Binding FiltersCount}"
+               Classes="readonly" />
+      <!-- FiltersLeft -->
+      <Label Content="FiltersLeft" />
+      <TextBox Text="{Binding FiltersLeft}"
+               Classes="readonly" />
+      <!-- Network -->
+      <Label Content="Network" />
+      <TextBox Text="{Binding Network}"
+               Classes="readonly" />
+      <!-- ExchangeRate -->
+      <Label Content="ExchangeRate" />
+      <TextBox Text="{Binding ExchangeRate}"
+               Classes="readonly" />
+      <!-- Peers -->
+      <Expander HorizontalAlignment="Stretch"
+                VerticalAlignment="Top"
+                Padding="0"
+                IsExpanded="True">
+        <Expander.Header>
+          <Label Content="{Binding Peers.Count, StringFormat={}Peers: {0}, FallbackValue=0}" />
+        </Expander.Header>
+        <ListBox ItemsSource="{Binding Peers}">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <DockPanel>
+                <Button Content="Details >"
+                        Command="{x:Static local:Navigation.NavigateCommand}"
+                        CommandParameter="{Binding .}"
+                        Margin="4,4,8,4"
+                        DockPanel.Dock="Right"/>
+                <TextBlock VerticalAlignment="Center">
+                  <Run>IsConnected: </Run>
+                  <Run Text="{Binding IsConnected}" />
+                  <LineBreak />
+                  <Run>LastSeen: </Run>
+                  <Run Text="{Binding LastSeen}" />
+                  <LineBreak />
+                  <Run>Endpoint: </Run>
+                  <Run Text="{Binding Endpoint}" />
+                </TextBlock>
+              </DockPanel>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Expander>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

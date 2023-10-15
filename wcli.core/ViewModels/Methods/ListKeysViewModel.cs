@@ -9,7 +9,7 @@ using WasabiCli.Models.WalletWasabi;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class ListKeysViewModel : BatchMethodViewModel
+public partial class ListKeysViewModel : RpcMethodViewModel
 {
     [ObservableProperty] private string? _walletName;
 

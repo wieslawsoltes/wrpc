@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <RuntimeIdentifiers>win7-x64;linux-x64;linux-arm64;osx-x64;osx-arm64</RuntimeIdentifiers>
+    <Nullable>enable</Nullable>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <RootNamespace>WasabiCli</RootNamespace>
+    <AssemblyName>wcli</AssemblyName>
+    <AvaloniaVersion>11.0.4</AvaloniaVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**"/>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)"/>
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="$(SkiaSharpVersion)"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\wcli.ui\wcli.ui.csproj" />
+  </ItemGroup>
+</Project>
