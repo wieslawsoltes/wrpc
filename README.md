@@ -5,6 +5,8 @@
 - [x] getstatus
   - params
     - [null]
+  - error
+    - TODO
   - result
     - torStatus
     - backendStatus
@@ -23,6 +25,8 @@
   - params
     - walletName
     - walletPassword
+  - error
+    - TODO
   - result
     - mnemonic
 - [x] recoverwallet
@@ -30,14 +34,20 @@
     - walletName
     - walletMnemonic
     - walletPassword
+  - error
+    - TODO
   - [empty]
 - [x] loadwallet
   - params
     - walletName
+  - error
+    - TODO
   - [empty]
 - [x] listcoins
   - params
     - [null]
+  - error
+    - TODO
   - result
     - coins
       - txid
@@ -52,6 +62,8 @@
 - [x] listunspentcoins
   - params
     - [null]
+  - error
+    - TODO
   - result
     - coins
       - txid
@@ -66,6 +78,8 @@
 - [x] getwalletinfo
   - params
     - [null]
+  - error
+    - TODO
   - result
     - walletName
     - walletFile
@@ -81,6 +95,8 @@
 - [x] getnewaddress
   - params
     - label
+  - error
+    - TODO
   - result
     - address
     - keyPath
@@ -102,6 +118,8 @@
       - feeTarget
       - feeRate
       - password
+  - error
+    - TODO
   - result
     - txid
     - tx
@@ -117,6 +135,8 @@
     - [object]
       - txId
       - password
+  - error
+    - TODO
   - result
     - tx
 - [x] build
@@ -134,6 +154,8 @@
       - feeTarget
       - feeRate
       - password
+  - error
+    - TODO
   - result
     - tx
 - [x] broadcast
@@ -144,6 +166,8 @@
 - [x] gethistory
   - params
     - [null]
+  - error
+    - TODO
   - result
     - transactions
       - datetime
@@ -158,10 +182,14 @@
       - transactionId
       - n
       - exclude
+  - error
+    - TODO
   - [empty]
 - [x] listkeys
   - params
     - [null]
+  - error
+    - TODO
   - result
     - keys
       - fullKeyPath
@@ -177,24 +205,34 @@
     - walletPassword
     - stopWhenAllMixed
     - overridePlebStop
+  - error
+  - TODO
   - [empty]
 - [x] startcoinjoinsweep
   - params
     - walletPassword
     - outputWalletName
+  - error
+    - TODO
   - [empty]
 - [x] stopcoinjoin
   - params
     - [null]
+  - error
+    - TODO
   - [empty]
 - [x] getfeerates
   - params
     - [null]
+  - error
+    - TODO
   - result
     - [dictionary]
 - [x] stop
   - params
     - [null]
+  - error
+    - TODO
   - [empty]
 
 ### Resources
