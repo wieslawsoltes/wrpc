@@ -19,6 +19,7 @@
 - [x] excludefromcoinjoin
 - [x] listkeys
 - [x] startcoinjoin
+- [ ] startcoinjoinsweep
 - [x] stopcoinjoin
 - [x] getfeerates
 - [x] stop
