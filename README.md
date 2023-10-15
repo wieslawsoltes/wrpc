@@ -3,6 +3,8 @@
 ### RPC
 
 - [x] getstatus
+  - params
+    - [null]
   - result
     - torStatus
     - backendStatus
@@ -18,13 +20,24 @@
       - endpoint
       - userAgent
 - [x] createwallet
+  - params
+    - walletName
+    - walletPassword
   - result
     - mnemonic
 - [x] recoverwallet
+  - params
+    - walletName
+    - walletMnemonic
+    - walletPassword
   - [empty]
 - [x] loadwallet
+  - params
+    - walletName
   - [empty]
 - [x] listcoins
+  - params
+    - [null]
   - result
     - coins
       - txid
@@ -37,6 +50,8 @@
       - address
       - spentBy
 - [x] listunspentcoins
+  - params
+    - [null]
   - result
     - coins
       - txid
@@ -49,6 +64,8 @@
       - address
       - spentBy
 - [x] getwalletinfo
+  - params
+    - [null]
   - result
     - walletName
     - walletFile
@@ -62,6 +79,8 @@
     - anonScoreTarget
     - coinjoinStatus
 - [x] getnewaddress
+  - params
+    - label
   - result
     - address
     - keyPath
@@ -69,22 +88,62 @@
     - publicKey
     - scriptPubKey
 - [x] send
+  - params
+    - [object]
+      - payments
+        - payment
+          - sendto
+          - amount
+          - label
+          - subtractFee
+      - coins
+        - transactionid
+        - index
+      - feeTarget
+      - feeRate
+      - password
   - result
     - txid
     - tx
 - [x] speeduptransaction
+  - params
+    - [object]
+      - txId
+      - password
   - result
     - tx
 - [x] canceltransaction
+  - params
+    - [object]
+      - txId
+      - password
   - result
     - tx
 - [x] build
+  - params
+    - [object]
+      - payments
+        - payment
+          - sendto
+          - amount
+          - label
+          - subtractFee
+      - coins
+        - transactionid
+        - index
+      - feeTarget
+      - feeRate
+      - password
   - result
     - tx
 - [x] broadcast
+  - params
+    - tx
   - result
     - txid
 - [x] gethistory
+  - params
+    - [null]
   - result
     - transactions
       - datetime
@@ -94,8 +153,15 @@
       - tx
       - islikelycoinjoin
 - [x] excludefromcoinjoin
+  - params
+    - [object]
+      - transactionId
+      - n
+      - exclude
   - [empty]
 - [x] listkeys
+  - params
+    - [null]
   - result
     - keys
       - fullKeyPath
@@ -107,15 +173,28 @@
       - pubKeyHash
       - address
 - [x] startcoinjoin
+  - params
+    - walletPassword
+    - stopWhenAllMixed
+    - overridePlebStop
   - [empty]
 - [x] startcoinjoinsweep
+  - params
+    - walletPassword
+    - outputWalletName
   - [empty]
 - [x] stopcoinjoin
+  - params
+    - [null]
   - [empty]
 - [x] getfeerates
+  - params
+    - [null]
   - result
     - [dictionary]
 - [x] stop
+  - params
+    - [null]
   - [empty]
 
 ### Resources
