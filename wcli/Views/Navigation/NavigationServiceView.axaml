@@ -66,6 +66,11 @@
           <viewsMethods:StartCoinJoinView />
         </controls:NavigateBackControl>
       </DataTemplate>
+      <DataTemplate DataType="vmm:StartCoinJoinSweepViewModel">
+        <controls:NavigateBackControl Header="Start CoinJoin Sweep">
+          <viewsMethods:StartCoinJoinSweepView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
       <!-- Models -->
       <DataTemplate DataType="m:Error">
         <controls:NavigateBackControl Header="Error">

@@ -86,6 +86,8 @@ namespace WasabiCli.Models;
 [JsonSerializable(typeof(RpcListKeysResult))]
 // startcoinjoin
 [JsonSerializable(typeof(RpcStartCoinJoinResult))]
+// startcoinjoinsweep
+[JsonSerializable(typeof(RpcStartCoinJoinSweepResult))]
 // stopcoinjoin
 [JsonSerializable(typeof(RpcStopCoinJoinResult))]
 // getfeerates
