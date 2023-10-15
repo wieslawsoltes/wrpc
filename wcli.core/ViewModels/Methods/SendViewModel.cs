@@ -12,7 +12,7 @@ using WasabiCli.Models.WalletWasabi.Send;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class SendViewModel : BatchMethodViewModel
+public partial class SendViewModel : RpcMethodViewModel
 {
     [NotifyCanExecuteChangedFor(nameof(SendCommand))]
     [ObservableProperty] 

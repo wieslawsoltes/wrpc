@@ -8,7 +8,7 @@ using WasabiCli.Models.WalletWasabi;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class GetFeeRatesViewModel : BatchMethodViewModel
+public partial class GetFeeRatesViewModel : RpcMethodViewModel
 {
     public GetFeeRatesViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
     {

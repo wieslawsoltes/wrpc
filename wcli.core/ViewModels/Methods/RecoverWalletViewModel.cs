@@ -8,7 +8,7 @@ using WasabiCli.Models.RpcJson;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class RecoverWalletViewModel : BatchMethodViewModel
+public partial class RecoverWalletViewModel : RpcMethodViewModel
 {
     [NotifyCanExecuteChangedFor(nameof(RecoverWalletCommand))]
     [ObservableProperty] 

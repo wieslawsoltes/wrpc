@@ -1,0 +1,104 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vmm="using:WasabiCli.ViewModels.Methods"
+             xmlns:local="using:WasabiCli"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="WasabiCli.Views.Methods.SendView"
+             x:CompileBindings="True" x:DataType="vmm:SendViewModel">
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Spacing="4"
+                VerticalAlignment="Top">
+      <!-- WalletName -->
+      <Label Content="Wallet name:"
+             Target="WalletNameTextBox" />
+      <TextBox Name="WalletNameTextBox"
+               Text="{Binding WalletName, Mode=TwoWay}"
+               Classes="readonly" />
+      <!-- WalletPassword -->
+      <Label Content="Wallet password:"
+             Target="WalletPasswordTextBox" />
+      <TextBox Name="WalletPasswordTextBox"
+               Text="{Binding WalletPassword, Mode=TwoWay}"
+               PasswordChar="*" />
+      <!-- SendTo -->
+      <Label Content="SendTo:"
+             Target="SendToTextBox" />
+      <TextBox Name="SendToTextBox"
+               Text="{Binding SendTo, Mode=TwoWay}" />
+      <!-- Amount -->
+      <Label Content="Amount:"
+             Target="AmountTextBox" />
+      <TextBox Name="AmountTextBox"
+               Text="{Binding Amount, Mode=TwoWay}" />
+      <!-- Label -->
+      <Label Content="Label:"
+             Target="LabelTextBox" />
+      <TextBox Name="LabelTextBox"
+               Text="{Binding Label, Mode=TwoWay}" />
+      <!-- SubtractFee -->
+      <Label Content="SubtractFee:"
+             Target="SubtractFeeCheckBox" />
+      <CheckBox Name="SubtractFeeCheckBox"
+                IsChecked="{Binding SubtractFee, Mode=TwoWay}" />
+      <!-- FeeTarget -->
+      <Label Content="FeeTarget:"
+             Target="FeeTargetTextBox" />
+      <TextBox Name="FeeTargetTextBox"
+               Text="{Binding FeeTarget, Mode=TwoWay}" />
+      <!-- FeeRate -->
+      <Label Content="FeeRate:"
+             Target="FeeRateTextBox" />
+      <TextBox Name="FeeRateTextBox"
+               Text="{Binding FeeRate, Mode=TwoWay}" />
+      <!-- Coins -->
+      <Button Content="ListUnspentCoins"
+              Command="{Binding ListUnspentCoinsCommand}"
+              CommandParameter="{x:Null}"
+              HorizontalAlignment="Stretch"
+              HorizontalContentAlignment="Center"
+              Padding="6,4,6,4" />
+      <Expander HorizontalAlignment="Stretch"
+                VerticalAlignment="Top"
+                Padding="0"
+                IsExpanded="True">
+        <Expander.Header>
+          <Label Content="{Binding Coins.Count, StringFormat={}UnspentCoins: {0}, FallbackValue=0}" />
+        </Expander.Header>
+        <ListBox Name="CoinsListBox"
+                 ItemsSource="{Binding Coins}">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <DockPanel>
+                <Button Content="Details >"
+                        Command="{x:Static local:Navigation.NavigateCommand}"
+                        CommandParameter="{Binding CoinInfo}"
+                        Margin="4,4,8,4"
+                        DockPanel.Dock="Right"/>
+                <StackPanel Orientation="Horizontal"
+                            Spacing="4">
+                  <CheckBox IsChecked="{Binding IsSelected}" />
+                  <TextBlock VerticalAlignment="Center">
+                    <Run>Amount: </Run>
+                    <Run Text="{Binding CoinInfo.Amount}" />
+                    <LineBreak />
+                    <Run>AnonymityScore: </Run>
+                    <Run Text="{Binding CoinInfo.AnonymityScore}" />
+                  </TextBlock>
+                </StackPanel>
+              </DockPanel>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Expander>
+      <!-- Send -->
+      <Button Content="Send"
+              Command="{Binding SendCommand}"
+              CommandParameter="{x:Null}"
+              HorizontalAlignment="Stretch"
+              HorizontalContentAlignment="Center"
+              Padding="6,4,6,4" />
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

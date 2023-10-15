@@ -10,7 +10,7 @@ using WasabiCli.Models.WalletWasabi.Transactions;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class SpeedUpTransactionViewModel : BatchMethodViewModel
+public partial class SpeedUpTransactionViewModel : RpcMethodViewModel
 {
     [NotifyCanExecuteChangedFor(nameof(SpeedUpTransactionCommand))]
     [ObservableProperty] 

@@ -7,6 +7,6 @@
     <AssemblyName>wcli.core</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="$(CommunityToolkitMvvmVersion)"/>
   </ItemGroup>
 </Project>

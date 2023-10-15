@@ -9,7 +9,7 @@ using WasabiCli.Models.WalletWasabi;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class CreateWalletViewModel : BatchMethodViewModel
+public partial class CreateWalletViewModel : RpcMethodViewModel
 {
     [NotifyCanExecuteChangedFor(nameof(CreateWalletCommand))]
     [ObservableProperty] 

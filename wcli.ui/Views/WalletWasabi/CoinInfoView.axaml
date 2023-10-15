@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mww="using:WasabiCli.Models.WalletWasabi"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="WasabiCli.Views.WalletWasabi.CoinInfoView"
+             x:CompileBindings="True" x:DataType="mww:CoinInfo">
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Spacing="4">
+      <!-- TxId -->
+      <Label Content="TxId" />
+      <TextBox Text="{Binding TxId}"
+               Classes="readonly" />
+      <!-- Index -->
+      <Label Content="Index" />
+      <TextBox Text="{Binding Index}"
+               Classes="readonly" />
+      <!-- Amount -->
+      <Label Content="Amount" />
+      <TextBox Text="{Binding Amount}"
+               Classes="readonly" />
+      <!-- AnonymityScore -->
+      <Label Content="AnonymityScore" />
+      <TextBox Text="{Binding AnonymityScore}"
+               Classes="readonly" />
+      <!-- Confirmed -->
+      <Label Content="Confirmed" />
+      <CheckBox IsChecked="{Binding Confirmed}"
+                IsEnabled="False" />
+      <!-- Confirmations -->
+      <Label Content="Confirmations" />
+      <TextBox Text="{Binding Confirmations}"
+               Classes="readonly" />
+      <!-- KeyPath -->
+      <Label Content="KeyPath" />
+      <TextBox Text="{Binding KeyPath}"
+               Classes="readonly" />
+      <!-- Address -->
+      <Label Content="Address" />
+      <TextBox Text="{Binding Address}"
+               Classes="readonly" />
+      <!-- SpentBy -->
+      <Label Content="SpentBy" />
+      <TextBox Text="{Binding SpentBy}"
+               Classes="readonly" />
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>
