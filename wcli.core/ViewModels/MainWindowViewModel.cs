@@ -27,6 +27,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [NotifyCanExecuteChangedFor(nameof(GetHistoryCommand))]
     [NotifyCanExecuteChangedFor(nameof(ListKeysCommand))]
     [NotifyCanExecuteChangedFor(nameof(StartCoinJoinCommand))]
+    [NotifyCanExecuteChangedFor(nameof(StartCoinJoinSweepCommand))]
     [NotifyCanExecuteChangedFor(nameof(StopCoinJoinCommand))]
     [ObservableProperty] 
     private WalletViewModel? _selectedWallet;
@@ -66,6 +67,7 @@ public partial class MainWindowViewModel : ViewModelBase
             new ("ExcludeFromCoinjoin", ExcludeFromCoinjoinCommand),
             new ("ListKeys", ListKeysCommand),
             new ("StartCoinJoin", StartCoinJoinCommand),
+            new ("StartCoinJoinSweep", StartCoinJoinSweepCommand),
             new ("StopCoinJoin", StopCoinJoinCommand),
             new ("GetFeeRates", GetFeeRatesCommand),
             new ("Stop", StopCommand)
@@ -333,6 +335,21 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             var startCoinJoinViewModel = new StartCoinJoinViewModel(RpcService, NavigationService, SelectedWallet.WalletName);
             NavigationService.Navigate(startCoinJoinViewModel);
+        }
+    }
+    private bool CanStartCoinJoinSweep()
+    {
+        return SelectedWallet?.WalletName is not null
+               && SelectedWallet?.WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanStartCoinJoinSweep))]
+    private void StartCoinJoinSweep()
+    {
+        if (SelectedWallet?.WalletName is not null)
+        {
+            var startCoinJoinSweepViewModel = new StartCoinJoinSweepViewModel(RpcService, NavigationService, SelectedWallet.WalletName);
+            NavigationService.Navigate(startCoinJoinSweepViewModel);
         }
     }
 

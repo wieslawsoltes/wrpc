@@ -20,12 +20,12 @@
     <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)"/>
     <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)"/>
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)"/>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
-    <PackageReference Include="SkiaSharp" Version="2.88.6" />
-    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.6" />
-    <PackageReference Include="SkiaSharp.HarfBuzz" Version="2.88.6" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1"/>
+    <PackageReference Include="SkiaSharp" Version="2.88.6"/>
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.6"/>
+    <PackageReference Include="SkiaSharp.HarfBuzz" Version="2.88.6"/>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\wcli.core\wcli.core.csproj" />
+    <ProjectReference Include="..\wcli.core\wcli.core.csproj"/>
   </ItemGroup>
 </Project>
