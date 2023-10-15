@@ -25,4 +25,8 @@ public class WalletInfo
 
     [JsonPropertyName("anonScoreTarget")]
     public int AnonScoreTarget { get; set; }
+
+    [JsonPropertyName("coinjoinStatus")]
+    public string? CoinJoinStatus { get; set; }
+    
 }

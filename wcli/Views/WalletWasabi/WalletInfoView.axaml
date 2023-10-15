@@ -33,6 +33,10 @@
       <Label Content="AnonScoreTarget" />
       <TextBox Text="{Binding AnonScoreTarget}"
                Classes="readonly" />
+      <!-- CoinJoinStatus -->
+      <Label Content="CoinJoinStatus" />
+      <TextBox Text="{Binding CoinJoinStatus}"
+               Classes="readonly" />
       <!-- Accounts -->
       <Expander HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
