@@ -24,10 +24,6 @@ public partial class GetNewAddressViewModel : BatchMethodViewModel
         Label = "Label";
     }
 
-    private IRpcServiceViewModel RpcService { get; }
-
-    private INavigationService NavigationService { get; }
-
     private bool CanGetNewAddress()
     {
         return Label is not null 
@@ -38,7 +34,14 @@ public partial class GetNewAddressViewModel : BatchMethodViewModel
     private async Task GetNewAddress()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcGetNewAddressResult);
+
+        if (RpcService.BatchMode)
+        {
+            OnBatch(job);
+            return;
+        }
+
+        var result = await RpcService.Send<RpcGetNewAddressResult>(job);
         if (result is RpcGetNewAddressResult { Result: not null } rpcGetNewAddressResult)
         {
             OnRpcSuccess(rpcGetNewAddressResult);
@@ -60,16 +63,6 @@ public partial class GetNewAddressViewModel : BatchMethodViewModel
             NavigationService.Clear();
             NavigationService.Navigate(rpcGetNewAddressResult.Result);
         }
-    }
-
-    protected override void OnRpcError(RpcErrorResult rpcErrorResult)
-    {
-        NavigationService.Navigate(rpcErrorResult.Error);
-    }
-
-    protected override void OnError(Error error)
-    {
-        NavigationService.Navigate(error);
     }
 
     public override Job CreateJob()

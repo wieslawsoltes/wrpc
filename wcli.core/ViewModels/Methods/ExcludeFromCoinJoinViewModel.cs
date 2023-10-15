@@ -37,10 +37,6 @@ public partial class ExcludeFromCoinJoinViewModel : BatchMethodViewModel
         Exclude = true;
     }
 
-    private IRpcServiceViewModel RpcService { get; }
-
-    private INavigationService NavigationService { get; }
-
     private bool CanExcludeFromCoinJoin()
     {
         return WalletName is not null 
@@ -54,7 +50,14 @@ public partial class ExcludeFromCoinJoinViewModel : BatchMethodViewModel
     private async Task ExcludeFromCoinJoin()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcExcludeFromCoinJoinResult);
+
+        if (RpcService.BatchMode)
+        {
+            OnBatch(job);
+            return;
+        }
+
+        var result = await RpcService.Send<RpcExcludeFromCoinJoinResult>(job);
         if (result is RpcExcludeFromCoinJoinResult rpcExcludeFromCoinJoinResult)
         {
             OnRpcSuccess(rpcExcludeFromCoinJoinResult);
@@ -73,16 +76,6 @@ public partial class ExcludeFromCoinJoinViewModel : BatchMethodViewModel
     {
         NavigationService.Clear();
         NavigationService.Navigate(new Success { Message = $"{(Exclude ? "Excluded" : "Removed the exclusion")} from coinjoin" });
-    }
-
-    protected override void OnRpcError(RpcErrorResult rpcErrorResult)
-    {
-        NavigationService.Navigate(rpcErrorResult.Error);
-    }
-
-    protected override void OnError(Error error)
-    {
-        NavigationService.Navigate(error);
     }
 
     public override Job CreateJob()

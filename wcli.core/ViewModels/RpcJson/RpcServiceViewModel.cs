@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Text.Json;
-using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -27,14 +25,13 @@ public partial class RpcServiceViewModel : ViewModelBase, IRpcServiceViewModel
         BatchMode = batchMode;
     }
 
-    public async Task<object?> Send<T>(Job job, JsonTypeInfo<T> jsonTypeInfo) 
-        where T: class
+    public async Task<object?> Send<TResult>(Job job) where TResult: class
     {
         string? responseBodyJson;
 
         try
         {
-            var requestBodyJson = JsonSerializer.Serialize(job.RpcMethod, ModelsJsonContext.Default.RpcMethod);
+            var requestBodyJson = JsonSerializer.Serialize(job.RpcMethod, typeof(RpcMethod), ModelsJsonContext.Default);
             var cts = new CancellationTokenSource();
             var rpcService = new RpcService();
             responseBodyJson = await rpcService.GetResponseDataAsync(job.RpcServerUri, requestBodyJson, true, cts.Token);
@@ -48,14 +45,14 @@ public partial class RpcServiceViewModel : ViewModelBase, IRpcServiceViewModel
             return new Error { Message = $"{e.Message}"};
         }
 
-        if (jsonTypeInfo.Type == typeof(string))
+        if (typeof(TResult) == typeof(string))
         {
             return responseBodyJson;
         }
         
         try
         {
-            return JsonSerializer.Deserialize(responseBodyJson, ModelsJsonContext.Default.RpcErrorResult);
+            return JsonSerializer.Deserialize(responseBodyJson, typeof(RpcErrorResult), ModelsJsonContext.Default);
         }
         catch (Exception)
         {
@@ -64,7 +61,7 @@ public partial class RpcServiceViewModel : ViewModelBase, IRpcServiceViewModel
 
         try
         {
-            var okResult = JsonSerializer.Deserialize(responseBodyJson, jsonTypeInfo);
+            var okResult = JsonSerializer.Deserialize(responseBodyJson, typeof(TResult), ModelsJsonContext.Default);
             if (okResult is not null)
             {
                 return okResult;

@@ -15,15 +15,18 @@ public partial class GetStatusViewModel : BatchMethodViewModel
         NavigationService = navigationService;
     }
 
-    private IRpcServiceViewModel RpcService { get; }
-
-    private INavigationService NavigationService { get; }
-
     [RelayCommand]
     private async Task GetStatus()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcGetStatusResult);
+
+        if (RpcService.BatchMode)
+        {
+            OnBatch(job);
+            return;
+        }
+
+        var result = await RpcService.Send<RpcGetStatusResult>(job);
         if (result is RpcGetStatusResult { Result: not null } rpcGetStatusResult)
         {
             OnRpcSuccess(rpcGetStatusResult);
@@ -44,16 +47,6 @@ public partial class GetStatusViewModel : BatchMethodViewModel
         {
             NavigationService.Navigate(rpcGetStatusResult.Result);
         }
-    }
-
-    protected override void OnRpcError(RpcErrorResult rpcErrorResult)
-    {
-        NavigationService.Navigate(rpcErrorResult.Error);
-    }
-
-    protected override void OnError(Error error)
-    {
-        NavigationService.Navigate(error);
     }
 
     public override Job CreateJob()

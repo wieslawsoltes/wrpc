@@ -20,15 +20,18 @@ public partial class ListCoinsViewModel : BatchMethodViewModel
         WalletName = walletName;
     }
 
-    private IRpcServiceViewModel RpcService { get; }
-
-    private INavigationService NavigationService { get; }
-
     [RelayCommand]
     private async Task ListCoins()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcListCoinsResult);
+
+        if (RpcService.BatchMode)
+        {
+            OnBatch(job);
+            return;
+        }
+
+        var result = await RpcService.Send<RpcListCoinsResult>(job);
         if (result is RpcListCoinsResult { Result: not null } rpcListCoinsResult)
         {
             OnRpcSuccess(rpcListCoinsResult);
@@ -49,16 +52,6 @@ public partial class ListCoinsViewModel : BatchMethodViewModel
         {
             NavigationService.Navigate(new ListCoinsInfo { Coins = rpcListCoinsResult.Result });
         }
-    }
-
-    protected override void OnRpcError(RpcErrorResult rpcErrorResult)
-    {
-        NavigationService.Navigate(rpcErrorResult.Error);
-    }
-
-    protected override void OnError(Error error)
-    {
-        NavigationService.Navigate(error);
     }
 
     public override Job CreateJob()

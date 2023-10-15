@@ -25,10 +25,6 @@ public partial class CreateWalletViewModel : BatchMethodViewModel
         WalletPassword = "";
     }
 
-    private IRpcServiceViewModel RpcService { get; }
-
-    private INavigationService NavigationService { get; }
-
     private bool CanCreateWallet()
     {
         return WalletName is not null 
@@ -39,7 +35,14 @@ public partial class CreateWalletViewModel : BatchMethodViewModel
     private async Task CreateWallet()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcCreateWalletResult);
+
+        if (RpcService.BatchMode)
+        {
+            OnBatch(job);
+            return;
+        }
+
+        var result = await RpcService.Send<RpcCreateWalletResult>(job);
         if (result is RpcCreateWalletResult { Result: not null } rpcCreateWalletResult)
         {
             OnRpcSuccess(rpcCreateWalletResult);
@@ -61,16 +64,6 @@ public partial class CreateWalletViewModel : BatchMethodViewModel
             NavigationService.Clear();
             NavigationService.Navigate(new CreateWalletInfo { Mnemonic = rpcCreateWalletResult.Result });
         }
-    }
-
-    protected override void OnRpcError(RpcErrorResult rpcErrorResult)
-    {
-        NavigationService.Navigate(rpcErrorResult.Error);
-    }
-
-    protected override void OnError(Error error)
-    {
-        NavigationService.Navigate(error);
     }
 
     public override Job CreateJob()

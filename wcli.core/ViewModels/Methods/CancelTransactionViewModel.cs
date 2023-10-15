@@ -33,10 +33,6 @@ public partial class CancelTransactionViewModel : BatchMethodViewModel
         TxId = "";
     }
 
-    private IRpcServiceViewModel RpcService { get; }
-
-    private INavigationService NavigationService { get; }
-
     private bool CanCancelTransaction()
     {
         return WalletName is not null 
@@ -50,7 +46,14 @@ public partial class CancelTransactionViewModel : BatchMethodViewModel
     private async Task CancelTransaction()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcCancelTransactionResult);
+
+        if (RpcService.BatchMode)
+        {
+            OnBatch(job);
+            return;
+        }
+
+        var result = await RpcService.Send<RpcCancelTransactionResult>(job);
         if (result is RpcCancelTransactionResult { Result: not null } rpcCancelTransactionResult)
         {
             OnRpcSuccess(rpcCancelTransactionResult);
@@ -72,16 +75,6 @@ public partial class CancelTransactionViewModel : BatchMethodViewModel
             NavigationService.Clear();
             NavigationService.Navigate(new BuildInfo { Tx = rpcCancelTransactionResult.Result });
         }
-    }
-
-    protected override void OnRpcError(RpcErrorResult rpcErrorResult)
-    {
-        NavigationService.Navigate(rpcErrorResult.Error);
-    }
-
-    protected override void OnError(Error error)
-    {
-        NavigationService.Navigate(error);
     }
 
     public override Job CreateJob()
