@@ -19,15 +19,18 @@ public partial class LoadWalletViewModel : BatchMethodViewModel
         WalletName = walletName;
     }
 
-    private IRpcServiceViewModel RpcService { get; }
-
-    private INavigationService NavigationService { get; }
-
     [RelayCommand]
     private async Task LoadWallet()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcLoadWalletResult);
+
+        if (RpcService.BatchMode)
+        {
+            OnBatch(job);
+            return;
+        }
+
+        var result = await RpcService.Send<RpcLoadWalletResult>(job);
         if (result is RpcLoadWalletResult rpcLoadWalletResult)
         {
             OnRpcSuccess(rpcLoadWalletResult);
@@ -45,16 +48,6 @@ public partial class LoadWalletViewModel : BatchMethodViewModel
     protected override void OnRpcSuccess(Rpc rpcResult)
     {
         NavigationService.Navigate(new Success { Message = $"Loaded wallet {WalletName}" });
-    }
-
-    protected override void OnRpcError(RpcErrorResult rpcErrorResult)
-    {
-        NavigationService.Navigate(rpcErrorResult.Error);
-    }
-
-    protected override void OnError(Error error)
-    {
-        NavigationService.Navigate(error);
     }
 
     public override Job CreateJob()

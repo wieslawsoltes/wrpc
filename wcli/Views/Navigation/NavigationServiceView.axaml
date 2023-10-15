@@ -82,6 +82,11 @@
           <views:SuccessView />
         </controls:NavigateBackControl>
       </DataTemplate>
+      <DataTemplate DataType="m:Json">
+        <controls:NavigateBackControl Header="Json">
+          <views:JsonView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
       <!-- Models: WalletWasabi -->
       <DataTemplate DataType="mww:ErrorInfo">
         <controls:NavigateBackControl Header="Error">

@@ -20,15 +20,18 @@ public partial class GetHistoryViewModel : BatchMethodViewModel
         WalletName = walletName;
     }
 
-    private IRpcServiceViewModel RpcService { get; }
-
-    private INavigationService NavigationService { get; }
-
     [RelayCommand]
     private async Task GetHistory()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcGetHistoryResult);
+
+        if (RpcService.BatchMode)
+        {
+            OnBatch(job);
+            return;
+        }
+
+        var result = await RpcService.Send<RpcGetHistoryResult>(job);
         if (result is RpcGetHistoryResult { Result: not null } rpcGetHistoryResult)
         {
             OnRpcSuccess(rpcGetHistoryResult);
@@ -49,16 +52,6 @@ public partial class GetHistoryViewModel : BatchMethodViewModel
         {
             NavigationService.Navigate(new GetHistoryInfo { Transactions = rpcGetHistoryResult.Result });
         }
-    }
-
-    protected override void OnRpcError(RpcErrorResult rpcErrorResult)
-    {
-        NavigationService.Navigate(rpcErrorResult.Error);
-    }
-
-    protected override void OnError(Error error)
-    {
-        NavigationService.Navigate(error);
     }
 
     public override Job CreateJob()

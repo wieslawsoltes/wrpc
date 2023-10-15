@@ -19,15 +19,18 @@ public partial class StopCoinJoinViewModel : BatchMethodViewModel
         WalletName = walletName;
     }
 
-    private IRpcServiceViewModel RpcService { get; }
-
-    private INavigationService NavigationService { get; }
-
     [RelayCommand]
     private async Task StopCoinJoin()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcStopCoinJoinResult);
+
+        if (RpcService.BatchMode)
+        {
+            OnBatch(job);
+            return;
+        }
+
+        var result = await RpcService.Send<RpcStopCoinJoinResult>(job);
         if (result is RpcStopCoinJoinResult rpcStopCoinJoinResult)
         {
             OnRpcSuccess(rpcStopCoinJoinResult);
@@ -45,16 +48,6 @@ public partial class StopCoinJoinViewModel : BatchMethodViewModel
     protected override void OnRpcSuccess(Rpc rpcResult)
     {
         NavigationService.Navigate(new Success { Message = $"Stopped coinjoin for wallet {WalletName}" });
-    }
-
-    protected override void OnRpcError(RpcErrorResult rpcErrorResult)
-    {
-        NavigationService.Navigate(rpcErrorResult.Error);
-    }
-
-    protected override void OnError(Error error)
-    {
-        NavigationService.Navigate(error);
     }
 
     public override Job CreateJob()

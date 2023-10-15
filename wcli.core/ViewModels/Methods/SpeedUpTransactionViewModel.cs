@@ -33,10 +33,6 @@ public partial class SpeedUpTransactionViewModel : BatchMethodViewModel
         TxId = "";
     }
 
-    private IRpcServiceViewModel RpcService { get; }
-
-    private INavigationService NavigationService { get; }
-
     private bool CanSpeedUpTransaction()
     {
         return WalletName is not null 
@@ -50,7 +46,14 @@ public partial class SpeedUpTransactionViewModel : BatchMethodViewModel
     private async Task SpeedUpTransaction()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcSpeedUpTransactionResult);
+
+        if (RpcService.BatchMode)
+        {
+            OnBatch(job);
+            return;
+        }
+
+        var result = await RpcService.Send<RpcSpeedUpTransactionResult>(job);
         if (result is RpcSpeedUpTransactionResult { Result: not null } rpcSpeedUpTransactionResult)
         {
             OnRpcSuccess(rpcSpeedUpTransactionResult);
@@ -72,16 +75,6 @@ public partial class SpeedUpTransactionViewModel : BatchMethodViewModel
             NavigationService.Clear();
             NavigationService.Navigate(new BuildInfo { Tx = rpcSpeedUpTransactionResult.Result });
         }
-    }
-
-    protected override void OnRpcError(RpcErrorResult rpcErrorResult)
-    {
-        NavigationService.Navigate(rpcErrorResult.Error);
-    }
-
-    protected override void OnError(Error error)
-    {
-        NavigationService.Navigate(error);
     }
 
     public override Job CreateJob()

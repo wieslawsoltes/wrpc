@@ -25,15 +25,18 @@ public partial class StartCoinJoinViewModel : BatchMethodViewModel
         OverridePlebStop = true;
     }
 
-    private IRpcServiceViewModel RpcService { get; }
-
-    private INavigationService NavigationService { get; }
-
     [RelayCommand]
     private async Task StartCoinJoin()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcStartCoinJoinResult);
+
+        if (RpcService.BatchMode)
+        {
+            OnBatch(job);
+            return;
+        }
+
+        var result = await RpcService.Send<RpcStartCoinJoinResult>(job);
         if (result is RpcStartCoinJoinResult rpcStartCoinJoinResult)
         {
             OnRpcSuccess(rpcStartCoinJoinResult);
@@ -52,16 +55,6 @@ public partial class StartCoinJoinViewModel : BatchMethodViewModel
     {
         NavigationService.Clear();
         NavigationService.Navigate(new Success { Message = $"Started coinjoin for wallet {WalletName}" });
-    }
-
-    protected override void OnRpcError(RpcErrorResult rpcErrorResult)
-    {
-        NavigationService.Navigate(rpcErrorResult.Error);
-    }
-
-    protected override void OnError(Error error)
-    {
-        NavigationService.Navigate(error);
     }
 
     public override Job CreateJob()

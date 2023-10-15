@@ -64,10 +64,6 @@ public partial class SendViewModel : BatchMethodViewModel
         Coins = new ObservableCollection<CoinViewModel>();
     }
 
-    private IRpcServiceViewModel RpcService { get; }
-
-    private INavigationService NavigationService { get; }
-
     private bool CanSend()
     {
         return WalletName is not null 
@@ -85,7 +81,14 @@ public partial class SendViewModel : BatchMethodViewModel
     private async Task Send()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcSendResult);
+
+        if (RpcService.BatchMode)
+        {
+            OnBatch(job);
+            return;
+        }
+
+        var result = await RpcService.Send<RpcSendResult>(job);
         if (result is RpcSendResult { Result: not null } rpcSendResult)
         {
             OnRpcSuccess(rpcSendResult);
@@ -107,16 +110,6 @@ public partial class SendViewModel : BatchMethodViewModel
             NavigationService.Clear();
             NavigationService.Navigate(rpcSendResult.Result);
         }
-    }
-
-    protected override void OnRpcError(RpcErrorResult rpcErrorResult)
-    {
-        NavigationService.Navigate(rpcErrorResult.Error);
-    }
-
-    protected override void OnError(Error error)
-    {
-        NavigationService.Navigate(error);
     }
 
     public override Job CreateJob()
@@ -161,7 +154,7 @@ public partial class SendViewModel : BatchMethodViewModel
 
         var listUnspentCoinsViewModel = new ListUnspentCoinsViewModel(RpcService, NavigationService, WalletName);
         var job = listUnspentCoinsViewModel.CreateJob();
-        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcListUnspentCoinsResult);
+        var result = await RpcService.Send<RpcListUnspentCoinsResult>(job);
         if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
         {
             var coins = rpcListUnspentCoinsResult

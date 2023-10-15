@@ -23,15 +23,18 @@ public partial class StartCoinJoinSweepViewModel : BatchMethodViewModel
         OutputWalletName = "";
     }
 
-    private IRpcServiceViewModel RpcService { get; }
-
-    private INavigationService NavigationService { get; }
-
     [RelayCommand]
     private async Task StartCoinJoinSweep()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcStartCoinJoinSweepResult);
+
+        if (RpcService.BatchMode)
+        {
+            OnBatch(job);
+            return;
+        }
+
+        var result = await RpcService.Send<RpcStartCoinJoinSweepResult>(job);
         if (result is RpcStartCoinJoinSweepResult rpcStartCoinJoinSweepResult)
         {
             OnRpcSuccess(rpcStartCoinJoinSweepResult);
@@ -50,16 +53,6 @@ public partial class StartCoinJoinSweepViewModel : BatchMethodViewModel
     {
         NavigationService.Clear();
         NavigationService.Navigate(new Success { Message = $"Started coinjoin for wallet {WalletName}" });
-    }
-
-    protected override void OnRpcError(RpcErrorResult rpcErrorResult)
-    {
-        NavigationService.Navigate(rpcErrorResult.Error);
-    }
-
-    protected override void OnError(Error error)
-    {
-        NavigationService.Navigate(error);
     }
 
     public override Job CreateJob()

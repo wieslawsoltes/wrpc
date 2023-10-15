@@ -29,10 +29,6 @@ public partial class RecoverWalletViewModel : BatchMethodViewModel
         WalletPassword = "";
     }
 
-    private IRpcServiceViewModel RpcService { get; }
-
-    private INavigationService NavigationService { get; }
-
     private bool CanRecoverWallet()
     {
         return WalletName is not null 
@@ -45,7 +41,14 @@ public partial class RecoverWalletViewModel : BatchMethodViewModel
     private async Task RecoverWallet()
     {
         var job = CreateJob();
-        var result = await RpcService.Send(job, ModelsJsonContext.Default.RpcRecoverWalletResult);
+
+        if (RpcService.BatchMode)
+        {
+            OnBatch(job);
+            return;
+        }
+
+        var result = await RpcService.Send<RpcRecoverWalletResult>(job);
         if (result is RpcRecoverWalletResult rpcRecoverWalletResult)
         {
             OnRpcSuccess(rpcRecoverWalletResult);
@@ -64,16 +67,6 @@ public partial class RecoverWalletViewModel : BatchMethodViewModel
     {
         NavigationService.Clear();
         NavigationService.Navigate(new Success { Message = $"Recovered wallet {WalletName}" });
-    }
-
-    protected override void OnRpcError(RpcErrorResult rpcErrorResult)
-    {
-        NavigationService.Navigate(rpcErrorResult.Error);
-    }
-
-    protected override void OnError(Error error)
-    {
-        NavigationService.Navigate(error);
     }
 
     public override Job CreateJob()
