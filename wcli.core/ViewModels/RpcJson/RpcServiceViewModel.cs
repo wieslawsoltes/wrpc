@@ -34,7 +34,7 @@ public partial class RpcServiceViewModel : ViewModelBase, IRpcServiceViewModel
             var requestBodyJson = JsonSerializer.Serialize(job.RpcMethod, typeof(RpcMethod), ModelsJsonContext.Default);
             var cts = new CancellationTokenSource();
             var rpcService = new RpcService();
-            responseBodyJson = await rpcService.GetResponseDataAsync(job.RpcServerUri, requestBodyJson, true, cts.Token);
+            responseBodyJson = await rpcService.GetResponseDataAsync(job.RpcServerUri, requestBodyJson, cts.Token);
             if (responseBodyJson is null)
             {
                 return new Error { Message = "Invalid response."};

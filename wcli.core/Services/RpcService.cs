@@ -16,22 +16,18 @@ public class RpcService
         s_httpClient = new();
     }
 
-    public async Task<string?> GetResponseDataAsync(string requestUri, string requestBodyJson, bool debug, CancellationToken token)
+    public async Task<string?> GetResponseDataAsync(string requestUri, string requestBodyJson, CancellationToken token)
     {
         var content = new StringContent(requestBodyJson, Encoding.UTF8, "application/json");
-        if (debug)
-        {
+#if DEBUG
             Console.WriteLine($"RequestBody:{Environment.NewLine}{requestBodyJson}");
-        }
-
+#endif
         var response = await s_httpClient.PostAsync(requestUri, content, token);
         var responseBody = await response.Content.ReadAsStringAsync(token);
-        if (debug)
-        {
+#if DEBUG
             Console.WriteLine($"Status code: {response.StatusCode}");
             Console.WriteLine($"Response body:{Environment.NewLine}{responseBody}");
-        }
-
+#endif
         return response.StatusCode switch
         {
             HttpStatusCode.OK => responseBody,
