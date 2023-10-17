@@ -16,9 +16,9 @@ public partial class CoinViewModel : ViewModelBase
         IsSelected = false;
     }
 
-    private IRpcServiceViewModel RpcService { get; }
+    public IRpcServiceViewModel RpcService { get; }
 
-    private INavigationService NavigationService { get; }
+    public INavigationService NavigationService { get; }
 
     public CoinInfo CoinInfo { get; }
 }

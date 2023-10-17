@@ -70,7 +70,7 @@
             <DataTemplate>
               <DockPanel>
                 <Button Content="Details >"
-                        Command="{x:Static local:Navigation.NavigateCommand}"
+                        Command="{Binding NavigationService.NavigateCommand}"
                         CommandParameter="{Binding CoinInfo}"
                         Margin="4,4,8,4"
                         DockPanel.Dock="Right"/>
