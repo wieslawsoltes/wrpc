@@ -94,6 +94,9 @@ namespace WasabiCli.Models;
 [JsonSerializable(typeof(GetFeeRatesInfo))]
 [JsonSerializable(typeof(Dictionary<int, int>))]
 [JsonSerializable(typeof(RpcGetFeeRatesResult))]
+// listwallets
+[JsonSerializable(typeof(ListWalletsInfo))]
+[JsonSerializable(typeof(RpcListWalletsResult))]
 // stop, string
 [JsonSerializable(typeof(string))]
 // string[]

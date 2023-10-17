@@ -178,6 +178,11 @@
           <viewsWalletWasabi:GetFeeRatesInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
+      <DataTemplate DataType="mww:ListWalletsInfo">
+        <controls:NavigateBackControl Header="Wallets">
+          <viewsWalletWasabi:ListWalletsInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
     </ContentControl.DataTemplates>
   </ContentControl>
 </UserControl>

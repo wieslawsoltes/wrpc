@@ -26,7 +26,18 @@ public class WalletInfo
     [JsonPropertyName("anonScoreTarget")]
     public int AnonScoreTarget { get; set; }
 
+    [JsonPropertyName("isWatchOnly")]
+    public bool IsWatchOnly { get; set; }
+
+    [JsonPropertyName("isHardwareWallet")]
+    public bool IsHardwareWallet { get; set; }
+
+    [JsonPropertyName("isAutoCoinjoin")]
+    public bool IsAutoCoinjoin { get; set; }
+
+    [JsonPropertyName("isRedCoinIsolation")]
+    public bool IsRedCoinIsolation { get; set; }
+
     [JsonPropertyName("coinjoinStatus")]
     public string? CoinJoinStatus { get; set; }
-    
 }

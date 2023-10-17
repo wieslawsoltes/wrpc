@@ -22,15 +22,11 @@
                Text="{Binding WalletPassword, Mode=TwoWay}"
                PasswordChar="*" />
       <!-- StopWhenAllMixed -->
-      <Label Content="StopWhenAllMixed:"
-             Target="StopWhenAllMixedCheckBox" />
-      <CheckBox Name="StopWhenAllMixedCheckBox"
+      <CheckBox Content="StopWhenAllMixed"
                 IsChecked="{Binding StopWhenAllMixed}" />
       <!-- OverridePlebStop -->
-      <Label Content="OverridePlebStop:"
-             Target="OverridePlebStopCheckBox" />
-      <CheckBox Name="OverridePlebStopCheckBox"
-                IsChecked="{Binding StopWhenAllMixed}" />
+      <CheckBox IsChecked="{Binding StopWhenAllMixed}"
+                Content="OverridePlebStop" />
       <!-- StartCoinJoin -->
       <Button Content="StartCoinJoin"
               Command="{Binding StartCoinJoinCommand}"
