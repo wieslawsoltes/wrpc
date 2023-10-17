@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace WasabiCli.Services;
 
-public class RpcService
+public class HttpService : IHttpService
 {
     private static readonly HttpClient s_httpClient;
 
-    static RpcService()
+    static HttpService()
     {
-        s_httpClient = new();
+        s_httpClient = new HttpClient();
     }
 
     public async Task<string?> GetResponseDataAsync(string requestUri, string requestBodyJson, CancellationToken token)

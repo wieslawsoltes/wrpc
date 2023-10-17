@@ -9,6 +9,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using WasabiCli.Models;
 using WasabiCli.Models.App;
+using WasabiCli.Services;
 using WasabiCli.ViewModels;
 using WasabiCli.ViewModels.Navigation;
 using WasabiCli.ViewModels.RpcJson;
@@ -117,8 +118,9 @@ public partial class App : Application
     private MainWindowViewModel CreateMainViewModel()
     {
         var defaultState = LoadState();
+        var httpService = new HttpService();
         var navigationService = new NavigationServiceViewModel();
-        var rpcService = new RpcServiceViewModel(defaultState.ServerPrefix ?? DefaultServerPrefix, defaultState.BatchMode)
+        var rpcService = new RpcServiceViewModel(httpService, defaultState.ServerPrefix ?? DefaultServerPrefix, defaultState.BatchMode)
         {
             Batches = new ObservableCollection<Batch>(defaultState.Batches ?? new List<Batch>())
         };

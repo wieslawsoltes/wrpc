@@ -14,13 +14,15 @@ namespace WasabiCli.ViewModels.RpcJson;
 
 public partial class RpcServiceViewModel : ViewModelBase, IRpcServiceViewModel
 {
+    private readonly IHttpService _httpService;
     [ObservableProperty] private string? _serverPrefix;
     [ObservableProperty] private bool _batchMode;
     [ObservableProperty] private IList<Batch>? _batches;
     [ObservableProperty] private Batch? _currentBatch;
 
-    public RpcServiceViewModel(string serverPrefix, bool batchMode)
+    public RpcServiceViewModel(IHttpService httpService, string serverPrefix, bool batchMode)
     {
+        _httpService = httpService;
         ServerPrefix = serverPrefix;
         BatchMode = batchMode;
     }
@@ -33,8 +35,7 @@ public partial class RpcServiceViewModel : ViewModelBase, IRpcServiceViewModel
         {
             var requestBodyJson = JsonSerializer.Serialize(job.RpcMethod, typeof(RpcMethod), ModelsJsonContext.Default);
             var cts = new CancellationTokenSource();
-            var rpcService = new RpcService();
-            responseBodyJson = await rpcService.GetResponseDataAsync(job.RpcServerUri, requestBodyJson, cts.Token);
+            responseBodyJson = await _httpService.GetResponseDataAsync(job.RpcServerUri, requestBodyJson, cts.Token);
             if (responseBodyJson is null)
             {
                 return new Error { Message = "Invalid response."};
