@@ -9,12 +9,7 @@ namespace WasabiCli.Services;
 
 public class HttpService : IHttpService
 {
-    private static readonly HttpClient s_httpClient;
-
-    static HttpService()
-    {
-        s_httpClient = new HttpClient();
-    }
+    private readonly HttpClient _httpClient = new();
 
     public async Task<string?> GetResponseDataAsync(string requestUri, string requestBodyJson, CancellationToken token)
     {
@@ -22,7 +17,7 @@ public class HttpService : IHttpService
 #if DEBUG
             Console.WriteLine($"RequestBody:{Environment.NewLine}{requestBodyJson}");
 #endif
-        var response = await s_httpClient.PostAsync(requestUri, content, token);
+        var response = await _httpClient.PostAsync(requestUri, content, token);
         var responseBody = await response.Content.ReadAsStringAsync(token);
 #if DEBUG
             Console.WriteLine($"Status code: {response.StatusCode}");
