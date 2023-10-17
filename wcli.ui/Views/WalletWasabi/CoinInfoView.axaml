@@ -25,8 +25,8 @@
       <TextBox Text="{Binding AnonymityScore}"
                Classes="readonly" />
       <!-- Confirmed -->
-      <Label Content="Confirmed" />
       <CheckBox IsChecked="{Binding Confirmed}"
+                Content="Confirmed"
                 IsEnabled="False" />
       <!-- Confirmations -->
       <Label Content="Confirmations" />

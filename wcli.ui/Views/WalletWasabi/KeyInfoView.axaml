@@ -13,8 +13,8 @@
       <TextBox Text="{Binding FullKeyPath}"
                Classes="readonly" />
       <!-- Internal -->
-      <Label Content="Internal" />
       <CheckBox IsChecked="{Binding Internal}"
+                Content="Internal"
                 IsEnabled="False" />
       <!-- KeyState -->
       <Label Content="KeyState" />

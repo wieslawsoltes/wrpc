@@ -4,18 +4,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using WasabiCli.Models;
 using WasabiCli.Models.App;
+using WasabiCli.Models.RpcJson;
 using WasabiCli.Models.Services;
 using WasabiCli.ViewModels.Methods;
-using WasabiCli.ViewModels.RpcJson;
 
 namespace WasabiCli.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
     [ObservableProperty] private IRpcServiceViewModel _rpcService;
-    [ObservableProperty] private ObservableCollection<WalletViewModel>? _wallets;
 
+    [NotifyCanExecuteChangedFor(nameof(AddWalletCommand))]
+    [NotifyCanExecuteChangedFor(nameof(RemoveWalletCommand))]
+    [ObservableProperty]
+    private ObservableCollection<WalletViewModel>? _wallets;
+
+    [NotifyCanExecuteChangedFor(nameof(AddWalletCommand))]
+    [NotifyCanExecuteChangedFor(nameof(RemoveWalletCommand))]
+    [NotifyCanExecuteChangedFor(nameof(LoadWalletCommand))]
     [NotifyCanExecuteChangedFor(nameof(ListCoinsCommand))]
     [NotifyCanExecuteChangedFor(nameof(ListUnspentCoinsCommand))]
     [NotifyCanExecuteChangedFor(nameof(GetWalletInfoCommand))]
@@ -25,6 +33,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [NotifyCanExecuteChangedFor(nameof(CancelTransactionCommand))]
     [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
     [NotifyCanExecuteChangedFor(nameof(GetHistoryCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ExcludeFromCoinjoinCommand))]
     [NotifyCanExecuteChangedFor(nameof(ListKeysCommand))]
     [NotifyCanExecuteChangedFor(nameof(StartCoinJoinCommand))]
     [NotifyCanExecuteChangedFor(nameof(StartCoinJoinSweepCommand))]
@@ -70,6 +79,7 @@ public partial class MainWindowViewModel : ViewModelBase
             new ("StartCoinJoinSweep", StartCoinJoinSweepCommand),
             new ("StopCoinJoin", StopCoinJoinCommand),
             new ("GetFeeRates", GetFeeRatesCommand),
+            new ("ListWallets", ListWalletsCommand),
             new ("Stop", StopCommand)
         };
     }
@@ -77,6 +87,39 @@ public partial class MainWindowViewModel : ViewModelBase
     public INavigationService NavigationService { get; }
 
     [RelayCommand]
+    private async Task LoadWallets()
+    {
+        var listWalletsViewModel = new ListWalletsViewModel(RpcService, NavigationService);
+        var job = listWalletsViewModel.CreateJob();
+        var result = await RpcService.Send<RpcListWalletsResult>(job);
+        if (result is RpcListWalletsResult { Result: not null } rpcListWalletsResult)
+        {
+            var wallets = rpcListWalletsResult
+                .Result
+                .Select(x => new WalletViewModel { WalletName = x.WalletName });
+
+            if (Wallets is not null)
+            {
+                Wallets = new ObservableCollection<WalletViewModel>(wallets);
+                SelectedWallet = Wallets.FirstOrDefault();
+            }
+        }
+        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            NavigationService.Navigate(rpcErrorResult.Error);
+        }
+        else if (result is Error error)
+        {
+            NavigationService.Navigate(error);
+        }
+    }
+
+    private bool CanAddWallet()
+    {
+        return Wallets is not null;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanAddWallet))]
     private void AddWallet()
     {
         if (Wallets is not null)
@@ -86,7 +129,13 @@ public partial class MainWindowViewModel : ViewModelBase
         }
     }
 
-    [RelayCommand]
+    private bool CanRemoveWallet()
+    {
+        return Wallets is not null 
+               && SelectedWallet is not null;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanRemoveWallet))]
     private void RemoveWallet()
     {
         if (Wallets is not null && SelectedWallet is not null)
@@ -374,6 +423,13 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         var getFeeRatesViewModel = new GetFeeRatesViewModel(RpcService, NavigationService);
         await getFeeRatesViewModel.GetFeeRatesCommand.ExecuteAsync(null);
+    }
+
+    [RelayCommand]
+    private async Task ListWallets()
+    {
+        var listWalletsViewModel = new ListWalletsViewModel(RpcService, NavigationService);
+        await listWalletsViewModel.ListWalletsCommand.ExecuteAsync(null);
     }
 
     [RelayCommand]

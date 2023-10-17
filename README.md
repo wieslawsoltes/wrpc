@@ -91,6 +91,10 @@
       - keyPath
     - balance
     - anonScoreTarget
+    - isWatchOnly
+    - isHardwareWallet
+    - isAutoCoinjoin
+    - isRedCoinIsolation
     - coinjoinStatus
 - [x] getnewaddress
   - params
@@ -228,6 +232,14 @@
     - TODO
   - result
     - [dictionary]
+- [x] listwallets
+  - params
+    - [null]
+  - error
+    - TODO
+  - result
+    - wallets
+      - walletName
 - [x] stop
   - params
     - [null]

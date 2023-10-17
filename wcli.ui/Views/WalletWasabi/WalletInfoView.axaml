@@ -33,6 +33,22 @@
       <Label Content="AnonScoreTarget" />
       <TextBox Text="{Binding AnonScoreTarget}"
                Classes="readonly" />
+      <!-- IsWatchOnly -->
+      <CheckBox IsChecked="{Binding IsWatchOnly}"
+                Content="IsWatchOnly"
+                IsEnabled="False" />
+      <!-- IsHardwareWallet -->
+      <CheckBox IsChecked="{Binding IsHardwareWallet}"
+                Content="IsHardwareWallet"
+                IsEnabled="False" />
+      <!-- IsAutoCoinjoin -->
+      <CheckBox IsChecked="{Binding IsAutoCoinjoin}"
+                Content="IsAutoCoinjoin"
+                IsEnabled="False" />
+      <!-- IsRedCoinIsolation -->
+      <CheckBox IsChecked="{Binding IsRedCoinIsolation}"
+                Content="IsRedCoinIsolation"
+                IsEnabled="False" />
       <!-- CoinJoinStatus -->
       <Label Content="CoinJoinStatus" />
       <TextBox Text="{Binding CoinJoinStatus}"

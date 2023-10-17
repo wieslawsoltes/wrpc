@@ -29,8 +29,8 @@
       <TextBox Text="{Binding TransactionId}"
                Classes="readonly" />
       <!-- IsLikelyCoinJoin -->
-      <Label Content="IsLikelyCoinJoin" />
       <CheckBox IsChecked="{Binding IsLikelyCoinJoin}"
+                Content="IsLikelyCoinJoin"
                 IsEnabled="False" />
     </StackPanel>
   </ScrollViewer>

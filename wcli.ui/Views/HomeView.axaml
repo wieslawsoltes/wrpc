@@ -41,6 +41,16 @@
                   VerticalContentAlignment="Center"
                   Margin="4,0,0,0"
                   DockPanel.Dock="Right"/>
+          <!-- LoadWallets -->
+          <Button Content="*"
+                  Command="{Binding LoadWalletsCommand}"
+                  CommandParameter="{x:Null}"
+                  HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Center"
+                  VerticalAlignment="Stretch"
+                  VerticalContentAlignment="Center"
+                  Margin="4,0,0,0"
+                  DockPanel.Dock="Right"/>
           <!-- Wallets -->
           <ComboBox ItemsSource="{Binding Wallets}"
                     SelectedItem="{Binding SelectedWallet}"

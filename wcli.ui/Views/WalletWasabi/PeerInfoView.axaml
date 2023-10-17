@@ -9,8 +9,8 @@
   <ScrollViewer HorizontalScrollBarVisibility="Disabled">
     <StackPanel Spacing="4">
       <!-- IsConnected -->
-      <Label Content="IsConnected" />
       <CheckBox IsChecked="{Binding IsConnected}"
+                Content="IsConnected"
                 IsEnabled="False" />
       <!-- LastSeen -->
       <Label Content="LastSeen" />

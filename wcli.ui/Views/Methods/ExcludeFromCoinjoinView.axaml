@@ -26,9 +26,7 @@
       <TextBox Name="NTextBox"
                Text="{Binding N, Mode=TwoWay}"/>
       <!-- Exclude -->
-      <Label Content="Exclude:"
-             Target="ExcludeCheckBox" />
-      <CheckBox Name="ExcludeCheckBox"
+      <CheckBox Content="Exclude"
                 IsChecked="{Binding Exclude}" />
       <!-- ExcludeFromCoinjoin -->
       <Button Content="ExcludeFromCoinjoin"

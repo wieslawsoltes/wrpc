@@ -38,9 +38,7 @@
       <TextBox Name="LabelTextBox"
                Text="{Binding Label, Mode=TwoWay}" />
       <!-- SubtractFee -->
-      <Label Content="SubtractFee:"
-             Target="SubtractFeeCheckBox" />
-      <CheckBox Name="SubtractFeeCheckBox"
+      <CheckBox Content="SubtractFee"
                 IsChecked="{Binding SubtractFee, Mode=TwoWay}" />
       <!-- FeeTarget -->
       <Label Content="FeeTarget:"
