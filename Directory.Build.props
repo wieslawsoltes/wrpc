@@ -12,8 +12,8 @@
     <Copyright>Copyright © Wiesław Šoltés 2023</Copyright>
   </PropertyGroup>
   <PropertyGroup>
-    <AvaloniaVersion>11.0.4</AvaloniaVersion>
-    <SkiaSharpVersion>2.88.3</SkiaSharpVersion>
+    <AvaloniaVersion>11.0.5</AvaloniaVersion>
+    <SkiaSharpVersion>2.88.6</SkiaSharpVersion>
     <CommunityToolkitMvvmVersion>8.2.1</CommunityToolkitMvvmVersion>
   </PropertyGroup>
 </Project>
