@@ -47,9 +47,9 @@ public partial class ListUnspentCoinsViewModel : RoutableMethodViewModel
 
     protected override void OnRpcSuccess(Rpc rpcResult)
     {
-        if (rpcResult is RpcListUnspentCoinsResult rpcListUnspentCoinsResult)
+        if (rpcResult is RpcListUnspentCoinsResult rpcListUnspentCoinsResult && WalletName is not null)
         {
-            NavigationService.NavigateTo(new ListUnspentCoinsInfo { Coins = rpcListUnspentCoinsResult.Result }.ToViewModel(RpcService, NavigationService));
+            NavigationService.NavigateTo(new ListUnspentCoinsInfo { Coins = rpcListUnspentCoinsResult.Result }.ToViewModel(RpcService, NavigationService, WalletName));
         }
     }
 

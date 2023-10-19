@@ -18,24 +18,31 @@
     <ListBox ItemsSource="{Binding Transactions}">
       <ListBox.ItemTemplate>
         <DataTemplate>
-          <DockPanel>
+          <DockPanel Background="Transparent">
+            <DockPanel.ContextMenu>
+              <ContextMenu>
+                <MenuItem Header="SpeedUp Transaction" Command="{Binding SpeedUpTransactionCommand}" />
+                <Separator />
+                <MenuItem Header="Cancel Transaction" Command="{Binding CancelTransactionCommand}" />
+              </ContextMenu>
+            </DockPanel.ContextMenu>
             <Button Content="Details >"
                     Command="{Binding NavigationService.NavigateToCommand}"
-                    CommandParameter="{Binding .}"
+                    CommandParameter="{Binding TransactionInfo}"
                     Margin="4,4,8,4"
                     DockPanel.Dock="Right"/>
             <TextBlock VerticalAlignment="Center">
               <Run>DateTime: </Run>
-              <Run Text="{Binding DateTime}" />
+              <Run Text="{Binding TransactionInfo.DateTime}" />
               <LineBreak />
               <Run>Amount: </Run>
-              <Run Text="{Binding Amount}" />
+              <Run Text="{Binding TransactionInfo.Amount}" />
               <LineBreak />
               <Run>Label: </Run>
-              <Run Text="{Binding Label}" />
+              <Run Text="{Binding TransactionInfo.Label}" />
               <LineBreak />
               <Run>IsLikelyCoinJoin: </Run>
-              <Run Text="{Binding IsLikelyCoinJoin}" />
+              <Run Text="{Binding TransactionInfo.IsLikelyCoinJoin}" />
             </TextBlock>
           </DockPanel>
         </DataTemplate>

@@ -159,7 +159,7 @@ public partial class BuildViewModel : RoutableMethodViewModel
         {
             var coins = rpcListUnspentCoinsResult
                 .Result
-                .Select(x => new CoinViewModel(RpcService, NavigationService, x.ToViewModel(RpcService, NavigationService)));
+                .Select(x => new CoinViewModel(RpcService, NavigationService, WalletName, x.ToViewModel(RpcService, NavigationService)));
 
             Coins = new ObservableCollection<CoinViewModel>(coins);
         }
