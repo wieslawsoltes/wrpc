@@ -2,6 +2,7 @@ using System.Linq;
 using WasabiRpc.Models.Info;
 using WasabiRpc.Models.Services;
 using WasabiRpc.ViewModels.Info;
+using WasabiRpc.ViewModels.Methods;
 
 namespace WasabiRpc.ViewModels.Factories;
 
@@ -105,12 +106,15 @@ public static class InfoFactory
         };
     }
 
-    public static GetHistoryInfoViewModel ToViewModel(this GetHistoryInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService)
+    public static GetHistoryInfoViewModel ToViewModel(this GetHistoryInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
     {
         return new GetHistoryInfoViewModel(rpcService, navigationService)
         {
+            //Transactions = info.Transactions?
+            //    .Select(x => x.ToViewModel(rpcService, navigationService))
+            //    .ToList(),
             Transactions = info.Transactions?
-                .Select(x => x.ToViewModel(rpcService, navigationService))
+                .Select(x => new TransactionViewModel(rpcService, navigationService, walletName, x.ToViewModel(rpcService, navigationService)))
                 .ToList(),
         };
     }
@@ -150,12 +154,15 @@ public static class InfoFactory
         };
     }
 
-    public static ListUnspentCoinsInfoViewModel ToViewModel(this ListUnspentCoinsInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService)
+    public static ListUnspentCoinsInfoViewModel ToViewModel(this ListUnspentCoinsInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
     {
         return new ListUnspentCoinsInfoViewModel(rpcService, navigationService)
         {
+            // Coins = info.Coins?
+            //     .Select(x => x.ToViewModel(rpcService, navigationService))
+            //     .ToList(),
             Coins = info.Coins?
-                .Select(x => x.ToViewModel(rpcService, navigationService))
+                .Select(x => new CoinViewModel(rpcService, navigationService, walletName, x.ToViewModel(rpcService, navigationService)))
                 .ToList(),
         };
     }

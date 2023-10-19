@@ -18,18 +18,25 @@
     <ListBox ItemsSource="{Binding Coins}">
       <ListBox.ItemTemplate>
         <DataTemplate>
-          <DockPanel>
+          <DockPanel Background="Transparent">
+            <DockPanel.ContextMenu>
+              <ContextMenu>
+                <MenuItem Header="Exclude Coin" Command="{Binding ExcludeFromCoinJoinCommand}" />
+                <Separator />
+                <MenuItem Header="Remove Coin Exclusion" Command="{Binding RemoveExclusionFromCoinJoinCommand}" />
+              </ContextMenu>
+            </DockPanel.ContextMenu>
             <Button Content="Details >"
                     Command="{Binding NavigationService.NavigateToCommand}"
-                    CommandParameter="{Binding .}"
+                    CommandParameter="{Binding  CoinInfo}"
                     Margin="4,4,8,4"
                     DockPanel.Dock="Right"/>
             <TextBlock VerticalAlignment="Center">
               <Run>Amount: </Run>
-              <Run Text="{Binding Amount}" />
+              <Run Text="{Binding CoinInfo.Amount}" />
               <LineBreak />
               <Run>AnonymityScore: </Run>
-              <Run Text="{Binding AnonymityScore}" />
+              <Run Text="{Binding CoinInfo.AnonymityScore}" />
             </TextBlock>
           </DockPanel>
         </DataTemplate>
