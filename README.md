@@ -15,7 +15,13 @@ cd wcli/wcli.ui.desktop
 dotnet run
 ```
 
-In order to use it, Wasabi Wallet needs to be running with JSON RPC Server enabled/configured.
+In order to use it, Wasabi Wallet ([Daemon](https://docs.wasabiwallet.io/using-wasabi/Daemon.html) or GUI app) needs to be running with JSON RPC Server [enabled/configured](https://docs.wasabiwallet.io/using-wasabi/RPC.html#configure-rpc).
+
+```
+cd WalletWasabi.Daemon
+dotnet run --usetor=false --network=testnet --jsonrpcserverenabled=true --blockonly=true
+```
+
 Note: Not all methods might work, depending on your Wasabi version.
 
 ### Available RPC methods
