@@ -68,6 +68,11 @@
           <ListBox.ItemTemplate>
             <DataTemplate>
               <DockPanel>
+                <Button Content="Details >"
+                        Command="{Binding NavigationService.NavigateToCommand}"
+                        CommandParameter="{Binding CoinInfo}"
+                        Margin="4,4,8,4"
+                        DockPanel.Dock="Right"/>
                 <StackPanel Orientation="Horizontal"
                             Spacing="4">
                   <CheckBox IsChecked="{Binding IsSelected}" />
@@ -79,11 +84,6 @@
                     <Run Text="{Binding CoinInfo.AnonymityScore}" />
                   </TextBlock>
                 </StackPanel>
-                <Button Content="Details >"
-                        Command="{Binding NavigationService.NavigateToCommand}"
-                        CommandParameter="{Binding CoinInfo}"
-                        Margin="4,4,8,4"
-                        DockPanel.Dock="Right"/>
               </DockPanel>
             </DataTemplate>
           </ListBox.ItemTemplate>
