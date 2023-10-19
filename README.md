@@ -6,12 +6,12 @@ You need the [same requirements](https://github.com/zkSNACKs/WalletWasabi/blob/m
 
 Clone this repository:
 ```sh
-git clone https://github.com/wieslawsoltes/wcli.git
+git clone https://github.com/wieslawsoltes/wrpc.git
 ```
 
 Easiest way to get started is by using the Desktop app:
 ```sh
-cd wcli/wcli.ui.desktop
+cd wrpc/wrpc.ui.desktop
 dotnet run
 ```
 
@@ -280,7 +280,7 @@ Note: Not all methods might work, depending on your Wasabi version.
 
 ### Resources
 
-- [wcli](https://github.com/wieslawsoltes/wcli)
+- [wrpc](https://github.com/wieslawsoltes/wrpc)
 - [RPC Docs](https://docs.wasabiwallet.io/using-wasabi/RPC.html)
 - [WalletWasabi.Daemon](https://github.com/zkSNACKs/WalletWasabi/tree/master/WalletWasabi.Daemon)
 - [WalletWasabi.Daemon WasabiJsonRpcService.cs](https://github.com/zkSNACKs/WalletWasabi/blob/master/WalletWasabi.Daemon/Rpc/WasabiJsonRpcService.cs)

@@ -1,0 +1,86 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vmi="using:WasabiRpc.ViewModels.Info"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="WasabiRpc.Views.Info.WalletInfoView"
+             x:CompileBindings="True" x:DataType="vmi:WalletInfoViewModel">
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Spacing="4">
+      <!-- WalletName -->
+      <Label Content="WalletName" />
+      <TextBox Text="{Binding WalletName}"
+               Classes="readonly" />
+      <!-- WalletFile -->
+      <Label Content="WalletFile" />
+      <TextBox Text="{Binding WalletFile}"
+               Classes="readonly" />
+      <!-- State -->
+      <Label Content="State" />
+      <TextBox Text="{Binding State}"
+               Classes="readonly" />
+      <!-- MasterKeyFingerprint -->
+      <Label Content="MasterKeyFingerprint" />
+      <TextBox Text="{Binding MasterKeyFingerprint}"
+               Classes="readonly" />
+      <!-- Balance -->
+      <Label Content="Balance" />
+      <TextBox Text="{Binding Balance}"
+               Classes="readonly" />
+      <!-- AnonScoreTarget -->
+      <Label Content="AnonScoreTarget" />
+      <TextBox Text="{Binding AnonScoreTarget}"
+               Classes="readonly" />
+      <!-- IsWatchOnly -->
+      <CheckBox IsChecked="{Binding IsWatchOnly}"
+                Content="IsWatchOnly"
+                IsEnabled="False" />
+      <!-- IsHardwareWallet -->
+      <CheckBox IsChecked="{Binding IsHardwareWallet}"
+                Content="IsHardwareWallet"
+                IsEnabled="False" />
+      <!-- IsAutoCoinjoin -->
+      <CheckBox IsChecked="{Binding IsAutoCoinjoin}"
+                Content="IsAutoCoinjoin"
+                IsEnabled="False" />
+      <!-- IsRedCoinIsolation -->
+      <CheckBox IsChecked="{Binding IsRedCoinIsolation}"
+                Content="IsRedCoinIsolation"
+                IsEnabled="False" />
+      <!-- CoinJoinStatus -->
+      <Label Content="CoinJoinStatus" />
+      <TextBox Text="{Binding CoinjoinStatus}"
+               Classes="readonly" />
+      <!-- Accounts -->
+      <Expander HorizontalAlignment="Stretch"
+                VerticalAlignment="Top"
+                Padding="0"
+                IsExpanded="True">
+        <Expander.Header>
+          <Label Content="{Binding Accounts.Count, StringFormat={}Accounts: {0}, FallbackValue=0}" />
+        </Expander.Header>
+        <ListBox ItemsSource="{Binding Accounts}">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <DockPanel>
+                <Button Content="Details >"
+                        Command="{Binding NavigationService.NavigateToCommand}"
+                        CommandParameter="{Binding .}"
+                        Margin="4,4,8,4"
+                        DockPanel.Dock="Right"/>
+                <TextBlock VerticalAlignment="Center">
+                  <Run>IsConnected: </Run>
+                  <Run Text="{Binding Name}" />
+                  <LineBreak />
+                  <Run>KeyPath: </Run>
+                  <Run Text="{Binding KeyPath}" />
+                </TextBlock>
+              </DockPanel>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Expander>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

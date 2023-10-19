@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{CC7E5159-6721-415D-8890-8185CA12B2BE}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{2CD460BA-618A-430F-AE7E-B2B53DF88C2F}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		NuGet.Config = NuGet.Config
+		global.json = global.json
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{71EEC36F-F4F8-4F82-A6A0-EE43416B20C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wrpc.core", "wrpc.core\wrpc.core.csproj", "{53B035A5-2F66-46BF-936E-A078D436010F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wrpc.ui", "wrpc.ui\wrpc.ui.csproj", "{118A188E-4C0C-487B-B2A2-54B382D9D1F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wrpc.ui.desktop", "wrpc.ui.desktop\wrpc.ui.desktop.csproj", "{564BE183-1D7F-41A7-AD79-78EC631220BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wrpc.ui.web", "wrpc.ui.web\wrpc.ui.web.csproj", "{40C5CB2A-C339-4E68-945B-E4522BFC1A8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wrpc.ui.android", "wrpc.ui.android\wrpc.ui.android.csproj", "{8A343679-C721-4B7D-A576-C4105CF821CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53B035A5-2F66-46BF-936E-A078D436010F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53B035A5-2F66-46BF-936E-A078D436010F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53B035A5-2F66-46BF-936E-A078D436010F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53B035A5-2F66-46BF-936E-A078D436010F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{118A188E-4C0C-487B-B2A2-54B382D9D1F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{118A188E-4C0C-487B-B2A2-54B382D9D1F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{118A188E-4C0C-487B-B2A2-54B382D9D1F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{118A188E-4C0C-487B-B2A2-54B382D9D1F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{564BE183-1D7F-41A7-AD79-78EC631220BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{564BE183-1D7F-41A7-AD79-78EC631220BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{564BE183-1D7F-41A7-AD79-78EC631220BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{564BE183-1D7F-41A7-AD79-78EC631220BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40C5CB2A-C339-4E68-945B-E4522BFC1A8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40C5CB2A-C339-4E68-945B-E4522BFC1A8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40C5CB2A-C339-4E68-945B-E4522BFC1A8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40C5CB2A-C339-4E68-945B-E4522BFC1A8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A343679-C721-4B7D-A576-C4105CF821CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A343679-C721-4B7D-A576-C4105CF821CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A343679-C721-4B7D-A576-C4105CF821CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A343679-C721-4B7D-A576-C4105CF821CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{53B035A5-2F66-46BF-936E-A078D436010F} = {71EEC36F-F4F8-4F82-A6A0-EE43416B20C9}
+		{118A188E-4C0C-487B-B2A2-54B382D9D1F2} = {71EEC36F-F4F8-4F82-A6A0-EE43416B20C9}
+		{564BE183-1D7F-41A7-AD79-78EC631220BF} = {71EEC36F-F4F8-4F82-A6A0-EE43416B20C9}
+		{40C5CB2A-C339-4E68-945B-E4522BFC1A8B} = {71EEC36F-F4F8-4F82-A6A0-EE43416B20C9}
+		{8A343679-C721-4B7D-A576-C4105CF821CF} = {71EEC36F-F4F8-4F82-A6A0-EE43416B20C9}
+	EndGlobalSection
+EndGlobal

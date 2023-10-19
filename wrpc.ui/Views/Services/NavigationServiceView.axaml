@@ -1,0 +1,233 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vma="using:WasabiRpc.ViewModels.App"
+             xmlns:vmi="using:WasabiRpc.ViewModels.Info"
+             xmlns:vms="using:WasabiRpc.ViewModels.Services"
+             xmlns:vmm="using:WasabiRpc.ViewModels.Methods"
+             xmlns:controls="using:WasabiRpc.Controls"
+             xmlns:viewsApp="using:WasabiRpc.Views.App"
+             xmlns:viewsMethods="using:WasabiRpc.Views.Methods"
+             xmlns:viewsInfo="using:WasabiRpc.Views.Info"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="WasabiRpc.Views.Services.NavigationServiceView"
+             x:CompileBindings="True" x:DataType="vms:NavigationServiceViewModel">
+ <ContentControl Content="{Binding CurrentRoutable}">
+    <ContentControl.DataTemplates>
+      <!-- ViewModels: App -->
+      <DataTemplate DataType="vma:ErrorViewModel">
+        <controls:NavigateBackControl Header="Error"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsApp:ErrorView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vma:SuccessViewModel">
+        <controls:NavigateBackControl Header="Success"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsApp:SuccessView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vma:JsonViewModel">
+        <controls:NavigateBackControl Header="Json"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsApp:JsonView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <!-- ViewModels: Methods -->
+      <DataTemplate DataType="vmm:CreateWalletViewModel">
+        <controls:NavigateBackControl Header="Create Wallet"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsMethods:CreateWalletView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:RecoverWalletViewModel">
+        <controls:NavigateBackControl Header="Recover Wallet"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsMethods:RecoverWalletView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:GetNewAddressViewModel">
+        <controls:NavigateBackControl Header="New Address"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsMethods:GetNewAddressView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:SendViewModel">
+        <controls:NavigateBackControl Header="Send"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsMethods:SendView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:SpeedUpTransactionViewModel">
+        <controls:NavigateBackControl Header="SpeedUp Transaction"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsMethods:SpeedUpTransactionView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:CancelTransactionViewModel">
+        <controls:NavigateBackControl Header="Cancel Transaction"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsMethods:CancelTransactionView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:BuildViewModel">
+        <controls:NavigateBackControl Header="Build"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsMethods:BuildView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:PayInCoinjoinViewModel">
+        <controls:NavigateBackControl Header="PayInCoinjoin"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsMethods:PayInCoinjoinView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:BroadcastViewModel">
+        <controls:NavigateBackControl Header="Broadcast"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsMethods:BroadcastView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:ExcludeFromCoinJoinViewModel">
+        <controls:NavigateBackControl Header="Exclude from CoinJoin"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsMethods:ExcludeFromCoinjoinView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:StartCoinJoinViewModel">
+        <controls:NavigateBackControl Header="Start CoinJoin"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsMethods:StartCoinJoinView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:StartCoinJoinSweepViewModel">
+        <controls:NavigateBackControl Header="Start CoinJoin Sweep"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsMethods:StartCoinJoinSweepView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <!-- ViewModels: Info -->
+      <DataTemplate DataType="vmi:ErrorInfoViewModel">
+        <controls:NavigateBackControl Header="Error"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:ErrorInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:PeerInfoViewModel">
+        <controls:NavigateBackControl Header="Peer"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:PeerInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:StatusInfoViewModel">
+        <controls:NavigateBackControl Header="Status"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:StatusInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:CreateWalletInfoViewModel">
+        <controls:NavigateBackControl Header="Create Wallet"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:CreateWalletInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:CoinInfoViewModel">
+        <controls:NavigateBackControl Header="Coin"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:CoinInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:ListCoinsInfoViewModel">
+        <controls:NavigateBackControl Header="Coins"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:ListCoinsInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:ListUnspentCoinsInfoViewModel">
+        <controls:NavigateBackControl Header="Unspent Coins"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:ListUnspentCoinsInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:AccountInfoViewModel">
+        <controls:NavigateBackControl Header="Account"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:AccountInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:WalletInfoViewModel">
+        <controls:NavigateBackControl Header="Wallet"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:WalletInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:AddressInfoViewModel">
+        <controls:NavigateBackControl Header="Address"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:AddressInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:SendInfoViewModel">
+        <controls:NavigateBackControl Header="Send"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:SendInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:BuildInfoViewModel">
+        <controls:NavigateBackControl Header="Build"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:BuildInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:PayInCoinjoinInfoViewModel">
+        <controls:NavigateBackControl Header="PayInCoinjoin"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:PayInCoinjoinInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:BroadcastInfoViewModel">
+        <controls:NavigateBackControl Header="Broadcast"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:BroadcastInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:TransactionInfoViewModel">
+        <controls:NavigateBackControl Header="Transaction"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:TransactionInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:GetHistoryInfoViewModel">
+        <controls:NavigateBackControl Header="History"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:GetHistoryInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:KeyInfoViewModel">
+        <controls:NavigateBackControl Header="Key"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:KeyInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:ListKeysInfoViewModel">
+        <controls:NavigateBackControl Header="Keys"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:ListKeysInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:GetFeeRatesInfoViewModel">
+        <controls:NavigateBackControl Header="FeeRates"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:GetFeeRatesInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:ListWalletsInfoViewModel">
+        <controls:NavigateBackControl Header="Wallets"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:ListWalletsInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+    </ContentControl.DataTemplates>
+  </ContentControl>
+</UserControl>
