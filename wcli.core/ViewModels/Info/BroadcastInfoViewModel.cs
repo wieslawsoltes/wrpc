@@ -12,6 +12,4 @@ public partial class BroadcastInfoViewModel : RoutableViewModel
         : base(rpcService, navigationService)
     {
     }
-
-    // TODO:
 }

@@ -13,6 +13,4 @@ public partial class ListUnspentCoinsInfoViewModel : RoutableViewModel
         : base(rpcService, navigationService)
     {
     }
-
-    // TODO:
 }

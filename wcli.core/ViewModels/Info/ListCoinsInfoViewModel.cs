@@ -13,6 +13,4 @@ public partial class ListCoinsInfoViewModel : RoutableViewModel
         : base(rpcService, navigationService)
     {
     }
-
-    // TODO:
 }

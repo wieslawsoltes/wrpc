@@ -13,6 +13,4 @@ public partial class GetFeeRatesInfoViewModel : RoutableViewModel
         : base(rpcService, navigationService)
     {
     }
-
-    // TODO:
 }

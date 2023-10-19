@@ -46,6 +46,4 @@ public partial class WalletInfoViewModel : RoutableViewModel
         : base(rpcService, navigationService)
     {
     }
-
-    // TODO:
 }

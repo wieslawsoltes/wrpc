@@ -40,6 +40,4 @@ public partial class StatusInfoViewModel : RoutableViewModel
         : base(rpcService, navigationService)
     {
     }
-
-    // TODO:
 }

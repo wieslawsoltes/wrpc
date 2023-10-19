@@ -36,6 +36,4 @@ public partial class CoinInfoViewModel : RoutableViewModel
         : base(rpcService, navigationService)
     {
     }
-
-    // TODO:
 }

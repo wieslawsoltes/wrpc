@@ -13,6 +13,4 @@ public partial class ListKeysInfoViewModel : RoutableViewModel
         : base(rpcService, navigationService)
     {
     }
-
-    // TODO:
 }

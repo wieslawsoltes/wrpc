@@ -12,6 +12,4 @@ public partial class CancelTransactionInfoViewModel : RoutableViewModel
         : base(rpcService, navigationService)
     {
     }
-
-    // TODO:
 }

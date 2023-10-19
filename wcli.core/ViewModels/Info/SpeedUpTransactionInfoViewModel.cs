@@ -12,6 +12,4 @@ public partial class SpeedUpTransactionInfoViewModel : RoutableViewModel
         : base(rpcService, navigationService)
     {
     }
-
-    // TODO:
 }

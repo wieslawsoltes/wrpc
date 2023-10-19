@@ -33,6 +33,4 @@ public partial class KeyInfoViewModel : RoutableViewModel
         : base(rpcService, navigationService)
     {
     }
-
-    // TODO:
 }

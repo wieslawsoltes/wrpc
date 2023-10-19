@@ -12,6 +12,4 @@ public partial class BuildInfoViewModel : RoutableViewModel
         : base(rpcService, navigationService)
     {
     }
-
-    // TODO:
 }

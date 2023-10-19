@@ -24,6 +24,4 @@ public partial class AddressInfoViewModel : RoutableViewModel
         : base(rpcService, navigationService)
     {
     }
-
-    // TODO:
 }

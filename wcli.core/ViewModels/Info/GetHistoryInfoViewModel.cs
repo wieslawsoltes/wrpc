@@ -13,6 +13,4 @@ public partial class GetHistoryInfoViewModel : RoutableViewModel
         : base(rpcService, navigationService)
     {
     }
-
-    // TODO:
 }

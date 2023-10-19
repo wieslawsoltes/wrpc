@@ -28,6 +28,4 @@ public partial class TransactionInfoViewModel : RoutableViewModel
         : base(rpcService, navigationService)
     {
     }
-
-    // TODO:
 }

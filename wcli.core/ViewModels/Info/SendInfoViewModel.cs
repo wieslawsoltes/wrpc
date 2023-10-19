@@ -15,6 +15,4 @@ public partial class SendInfoViewModel : RoutableViewModel
         : base(rpcService, navigationService)
     {
     }
-
-    // TODO:
 }

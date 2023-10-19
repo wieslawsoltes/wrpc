@@ -22,6 +22,4 @@ public partial class PeerInfoViewModel : RoutableViewModel
         : base(rpcService, navigationService)
     {
     }
-
-    // TODO:
 }

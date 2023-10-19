@@ -15,6 +15,4 @@ public partial class ErrorInfoViewModel : RoutableViewModel
         : base(rpcService, navigationService)
     {
     }
-
-    // TODO:
 }
