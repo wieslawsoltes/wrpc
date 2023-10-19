@@ -33,6 +33,7 @@ Note: Not all methods might work, depending on your Wasabi version.
     - TODO
   - result
     - torStatus
+    - onionService
     - backendStatus
     - bestBlockchainHeight
     - bestBlockchainHash
