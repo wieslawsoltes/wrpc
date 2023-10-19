@@ -71,6 +71,7 @@ public partial class MainWindowViewModel : ViewModelBase
             new ("SpeedUpTransaction", SpeedUpTransactionCommand),
             new ("CancelTransaction", CancelTransactionCommand),
             new ("Build", BuildCommand),
+            new ("PayInCoinjoin", PayInCoinjoinCommand),
             new ("Broadcast", BroadcastCommand),
             new ("GetHistory", GetHistoryCommand),
             new ("ExcludeFromCoinjoin", ExcludeFromCoinjoinCommand),
@@ -310,6 +311,22 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             var buildViewModel = new BuildViewModel(RpcService, NavigationService, SelectedWallet.WalletName);
             NavigationService.NavigateTo(buildViewModel);
+        }
+    }
+
+    private bool CanPayInCoinjoin()
+    {
+        return SelectedWallet?.WalletName is not null 
+               && SelectedWallet?.WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanPayInCoinjoin))]
+    private void PayInCoinjoin()
+    {
+        if (SelectedWallet?.WalletName is not null)
+        {
+            var payInCoinjoinViewModel = new PayInCoinjoinViewModel(RpcService, NavigationService, SelectedWallet.WalletName);
+            NavigationService.NavigateTo(payInCoinjoinViewModel);
         }
     }
 

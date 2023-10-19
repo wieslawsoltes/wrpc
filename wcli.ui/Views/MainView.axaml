@@ -9,7 +9,7 @@
              xmlns:views="using:WasabiCli.Views"
              xmlns:viewsServices="using:WasabiCli.Views.Services"
              xmlns:services="using:WasabiCli.Services"
-             mc:Ignorable="d" d:DesignWidth="420" d:DesignHeight="655"
+             mc:Ignorable="d" d:DesignWidth="420" d:DesignHeight="695"
              x:Class="WasabiCli.Views.MainView"
              x:CompileBindings="True" x:DataType="vm:MainWindowViewModel"
              Background="#FF353535">

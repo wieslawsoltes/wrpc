@@ -29,6 +29,14 @@ public static class InfoFactory
         };
     }
 
+    public static PayInCoinjoinInfoViewModel ToViewModel(this PayInCoinjoinInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService)
+    {
+        return new PayInCoinjoinInfoViewModel(rpcService, navigationService)
+        {
+            PaymentId = info.PaymentId,
+        };
+    }
+
     public static BroadcastInfoViewModel ToViewModel(this BroadcastInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService)
     {
         return new BroadcastInfoViewModel(rpcService, navigationService)
