@@ -65,6 +65,9 @@ namespace WasabiCli.Models;
 [JsonSerializable(typeof(Build))]
 [JsonSerializable(typeof(BuildInfo))]
 [JsonSerializable(typeof(RpcBuildResult))]
+// payincoinjoin
+[JsonSerializable(typeof(PayInCoinjoinInfo))]
+[JsonSerializable(typeof(RpcPayInCoinjoinResult))]
 // broadcast
 [JsonSerializable(typeof(BroadcastInfo))]
 [JsonSerializable(typeof(RpcBroadcastResult))]

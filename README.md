@@ -187,6 +187,12 @@ Note: Not all methods might work, depending on your Wasabi version.
     - TODO
   - result
     - tx
+- [x] payincoinjoin
+  - params
+    - address
+    - amount
+  - result
+    - paymentId
 - [x] broadcast
   - params
     - tx

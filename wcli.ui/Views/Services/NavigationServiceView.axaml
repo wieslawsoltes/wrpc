@@ -77,6 +77,12 @@
           <viewsMethods:BuildView />
         </controls:NavigateBackControl>
       </DataTemplate>
+      <DataTemplate DataType="vmm:PayInCoinjoinViewModel">
+        <controls:NavigateBackControl Header="PayInCoinjoin"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsMethods:PayInCoinjoinView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
       <DataTemplate DataType="vmm:BroadcastViewModel">
         <controls:NavigateBackControl Header="Broadcast"
                                       NavigationService="{Binding NavigationService}">
@@ -172,6 +178,12 @@
         <controls:NavigateBackControl Header="Build"
                                       NavigationService="{Binding NavigationService}">
           <viewsInfo:BuildInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:PayInCoinjoinInfoViewModel">
+        <controls:NavigateBackControl Header="PayInCoinjoin"
+                                      NavigationService="{Binding NavigationService}">
+          <viewsInfo:PayInCoinjoinInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:BroadcastInfoViewModel">
