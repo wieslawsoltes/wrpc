@@ -1,6 +1,24 @@
-# wcli
+# A Graphical User Interface for using the Wasabi Wallet RPC
 
-### RPC
+### How to run
+
+You need the [same requirements](https://github.com/zkSNACKs/WalletWasabi/blob/master/README.md#get-the-requirements) as Wasabi Wallet.
+
+Clone this repository:
+```sh
+git clone https://github.com/wieslawsoltes/wcli.git
+```
+
+Easiest way to get started is by using the Desktop app:
+```sh
+cd wcli/wcli.ui.desktop
+dotnet run
+```
+
+In order to use it, Wasabi Wallet needs to be running with JSON RPC Server enabled/configured.
+Note: Not all methods might work, depending on your Wasabi version.
+
+### Available RPC methods
 
 - [x] getstatus
   - params
