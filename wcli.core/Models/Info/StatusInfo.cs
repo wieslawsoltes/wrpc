@@ -8,6 +8,9 @@ public class StatusInfo
     [JsonPropertyName("torStatus")]
     public string? TorStatus { get; set; }
 
+    [JsonPropertyName("onionService")]
+    public string? OnionService { get; set; }
+
     [JsonPropertyName("backendStatus")]
     public string? BackendStatus { get; set; }
 

@@ -12,6 +12,10 @@
       <Label Content="TorStatus" />
       <TextBox Text="{Binding TorStatus}"
                Classes="readonly" />
+      <!-- OnionService -->
+      <Label Content="OnionService" />
+      <TextBox Text="{Binding OnionService}"
+               Classes="readonly" />
       <!-- BackendStatus -->
       <Label Content="BackendStatus" />
       <TextBox Text="{Binding BackendStatus}"

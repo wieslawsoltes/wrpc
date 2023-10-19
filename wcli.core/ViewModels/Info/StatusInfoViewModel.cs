@@ -10,6 +10,9 @@ public partial class StatusInfoViewModel : RoutableViewModel
     private string? _torStatus;
 
     [ObservableProperty] 
+    private string? _onionService;
+
+    [ObservableProperty] 
     private string? _backendStatus;
 
     [ObservableProperty] 

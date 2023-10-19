@@ -195,6 +195,7 @@ public static class InfoFactory
         return new StatusInfoViewModel(rpcService, navigationService)
         {
             TorStatus = info.TorStatus,
+            OnionService = info.OnionService,
             BackendStatus = info.BackendStatus,
             BestBlockchainHeight = info.BestBlockchainHeight,
             BestBlockchainHash = info.BestBlockchainHash,
