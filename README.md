@@ -1,6 +1,30 @@
-# wcli
+# A Graphical User Interface for using the Wasabi Wallet RPC
 
-### RPC
+### How to run
+
+You need the [same requirements](https://github.com/zkSNACKs/WalletWasabi/blob/master/README.md#get-the-requirements) as Wasabi Wallet.
+
+Clone this repository:
+```sh
+git clone https://github.com/wieslawsoltes/wcli.git
+```
+
+Easiest way to get started is by using the Desktop app:
+```sh
+cd wcli/wcli.ui.desktop
+dotnet run
+```
+
+In order to use it, Wasabi Wallet ([Daemon](https://docs.wasabiwallet.io/using-wasabi/Daemon.html) or GUI app) needs to be running with JSON RPC Server [enabled/configured](https://docs.wasabiwallet.io/using-wasabi/RPC.html#configure-rpc).
+
+```
+cd WalletWasabi.Daemon
+dotnet run --usetor=false --network=testnet --jsonrpcserverenabled=true --blockonly=true
+```
+
+Note: Not all methods might work, depending on your Wasabi version.
+
+### Available RPC methods
 
 - [x] getstatus
   - params
@@ -255,14 +279,3 @@
 - [WalletWasabi.Daemon WasabiJsonRpcService.cs](https://github.com/zkSNACKs/WalletWasabi/blob/master/WalletWasabi.Daemon/Rpc/WasabiJsonRpcService.cs)
 - [bitcoin.design](https://bitcoin.design/)
 - [bitcoinuikit.com](https://www.bitcoinuikit.com/)
-
-### Testing
-
-```
-cd WalletWasabi.Daemon
-dotnet run -- --usetor=false --network=testnet --jsonrpcserverenabled=true --blockonly=true
-```
-
-```
-wasabi.daemon --usetor=false --network=testnet --jsonrpcserverenabled=true --blockonly=true
-```
