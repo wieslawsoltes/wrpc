@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using WasabiCli.Models.App;
-using WasabiCli.Models.RpcJson;
-using WasabiCli.Models.WalletWasabi;
-using WasabiCli.Models.WalletWasabi.Build;
-using WasabiCli.Models.WalletWasabi.Send;
-using WasabiCli.Models.WalletWasabi.Transactions;
+using WasabiCli.Models.Info;
+using WasabiCli.Models.Params.Build;
+using WasabiCli.Models.Params.Send;
+using WasabiCli.Models.Params.Transactions;
+using WasabiCli.Models.Results;
 
 namespace WasabiCli.Models;
 

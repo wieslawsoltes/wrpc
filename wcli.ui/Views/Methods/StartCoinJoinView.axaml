@@ -25,7 +25,7 @@
       <CheckBox Content="StopWhenAllMixed"
                 IsChecked="{Binding StopWhenAllMixed}" />
       <!-- OverridePlebStop -->
-      <CheckBox IsChecked="{Binding StopWhenAllMixed}"
+      <CheckBox IsChecked="{Binding OverridePlebStop}"
                 Content="OverridePlebStop" />
       <!-- StartCoinJoin -->
       <Button Content="StartCoinJoin"

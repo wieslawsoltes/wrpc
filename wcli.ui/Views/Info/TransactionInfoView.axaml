@@ -1,0 +1,37 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vmi="using:WasabiCli.ViewModels.Info"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="WasabiCli.Views.Info.TransactionInfoView"
+             x:CompileBindings="True" x:DataType="vmi:TransactionInfoViewModel">
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Spacing="4">
+      <!-- DateTime -->
+      <Label Content="DateTime" />
+      <TextBox Text="{Binding DateTime}"
+               Classes="readonly" />
+      <!-- Height -->
+      <Label Content="Height" />
+      <TextBox Text="{Binding Height}"
+               Classes="readonly" />
+      <!-- Amount -->
+      <Label Content="Amount" />
+      <TextBox Text="{Binding Amount}"
+               Classes="readonly" />
+      <!-- Label -->
+      <Label Content="Label" />
+      <TextBox Text="{Binding Label}"
+               Classes="readonly" />
+      <!-- TransactionId -->
+      <Label Content="TransactionId" />
+      <TextBox Text="{Binding Tx}"
+               Classes="readonly" />
+      <!-- IsLikelyCoinJoin -->
+      <CheckBox IsChecked="{Binding IsLikelyCoinJoin}"
+                Content="IsLikelyCoinJoin"
+                IsEnabled="False" />
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

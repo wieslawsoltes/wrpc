@@ -1,19 +1,18 @@
 ﻿using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
-using WasabiCli.Models;
 using WasabiCli.Models.App;
-using WasabiCli.Models.RpcJson;
+using WasabiCli.Models.Info;
+using WasabiCli.Models.Results;
 using WasabiCli.Models.Services;
-using WasabiCli.Models.WalletWasabi;
+using WasabiCli.ViewModels.Factories;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class GetFeeRatesViewModel : RpcMethodViewModel
+public partial class GetFeeRatesViewModel : RoutableMethodViewModel
 {
     public GetFeeRatesViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
+        : base(rpcService, navigationService)
     {
-        RpcService = rpcService;
-        NavigationService = navigationService;
     }
 
     [RelayCommand]
@@ -27,7 +26,7 @@ public partial class GetFeeRatesViewModel : RpcMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcGetFeeRatesResult>(job);
+        var result = await RpcService.Send<RpcGetFeeRatesResult>(job, NavigationService);
         if (result is RpcGetFeeRatesResult { Result: not null } rpcGetFeeRatesResult)
         {
             OnRpcSuccess(rpcGetFeeRatesResult);
@@ -46,7 +45,7 @@ public partial class GetFeeRatesViewModel : RpcMethodViewModel
     {
         if (rpcResult is RpcGetFeeRatesResult rpcGetFeeRatesResult)
         {
-            NavigationService.Navigate(new GetFeeRatesInfo { FeeRates = rpcGetFeeRatesResult.Result });
+            NavigationService.NavigateTo(new GetFeeRatesInfo { FeeRates = rpcGetFeeRatesResult.Result }.ToViewModel(RpcService, NavigationService));
         }
     }
 

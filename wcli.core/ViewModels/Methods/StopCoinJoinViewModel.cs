@@ -1,21 +1,20 @@
 ﻿using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using WasabiCli.Models;
 using WasabiCli.Models.App;
-using WasabiCli.Models.RpcJson;
+using WasabiCli.Models.Results;
 using WasabiCli.Models.Services;
+using WasabiCli.ViewModels.Factories;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class StopCoinJoinViewModel : RpcMethodViewModel
+public partial class StopCoinJoinViewModel : RoutableMethodViewModel
 {
     [ObservableProperty] private string? _walletName;
 
     public StopCoinJoinViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
+        : base(rpcService, navigationService)
     {
-        RpcService = rpcService;
-        NavigationService = navigationService;
         WalletName = walletName;
     }
 
@@ -30,7 +29,7 @@ public partial class StopCoinJoinViewModel : RpcMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcStopCoinJoinResult>(job);
+        var result = await RpcService.Send<RpcStopCoinJoinResult>(job, NavigationService);
         if (result is RpcStopCoinJoinResult rpcStopCoinJoinResult)
         {
             OnRpcSuccess(rpcStopCoinJoinResult);
@@ -47,7 +46,7 @@ public partial class StopCoinJoinViewModel : RpcMethodViewModel
 
     protected override void OnRpcSuccess(Rpc rpcResult)
     {
-        NavigationService.Navigate(new Success { Message = $"Stopped coinjoin for wallet {WalletName}" });
+        NavigationService.NavigateTo(new Success { Message = $"Stopped coinjoin for wallet {WalletName}" }.ToViewModel(RpcService, NavigationService));
     }
 
     public override Job CreateJob()

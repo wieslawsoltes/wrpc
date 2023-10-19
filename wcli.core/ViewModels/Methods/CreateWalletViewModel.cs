@@ -1,15 +1,15 @@
 ﻿using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using WasabiCli.Models;
 using WasabiCli.Models.App;
+using WasabiCli.Models.Info;
+using WasabiCli.Models.Results;
 using WasabiCli.Models.Services;
-using WasabiCli.Models.RpcJson;
-using WasabiCli.Models.WalletWasabi;
+using WasabiCli.ViewModels.Factories;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class CreateWalletViewModel : RpcMethodViewModel
+public partial class CreateWalletViewModel : RoutableMethodViewModel
 {
     [NotifyCanExecuteChangedFor(nameof(CreateWalletCommand))]
     [ObservableProperty] 
@@ -18,9 +18,8 @@ public partial class CreateWalletViewModel : RpcMethodViewModel
     [ObservableProperty] private string? _walletPassword;
 
     public CreateWalletViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
+        : base(rpcService, navigationService)
     {
-        RpcService = rpcService;
-        NavigationService = navigationService;
         WalletName = "Wallet";
         WalletPassword = "";
     }
@@ -42,7 +41,7 @@ public partial class CreateWalletViewModel : RpcMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcCreateWalletResult>(job);
+        var result = await RpcService.Send<RpcCreateWalletResult>(job, NavigationService);
         if (result is RpcCreateWalletResult { Result: not null } rpcCreateWalletResult)
         {
             OnRpcSuccess(rpcCreateWalletResult);
@@ -61,8 +60,7 @@ public partial class CreateWalletViewModel : RpcMethodViewModel
     {
         if (rpcResult is RpcCreateWalletResult rpcCreateWalletResult)
         {
-            NavigationService.Clear();
-            NavigationService.Navigate(new CreateWalletInfo { Mnemonic = rpcCreateWalletResult.Result });
+            NavigationService.ClearAndNavigateTo(new CreateWalletInfo { Mnemonic = rpcCreateWalletResult.Result }.ToViewModel(RpcService, NavigationService));
         }
     }
 

@@ -4,11 +4,13 @@ namespace WasabiCli.Models.Services;
 
 public interface INavigationService
 {
-    object? CurrentDialog { get; set; }
-    IRelayCommand<object?> NavigateCommand { get; }
-    IRelayCommand BackCommand { get; }
+    IRoutable? CurrentRoutable { get; set; }
+    IRelayCommand<IRoutable?> NavigateToCommand { get; }
+    IRelayCommand<IRoutable?> ClearAndNavigateToCommand { get; }
+    IRelayCommand NavigateBackCommand { get; }
     IRelayCommand ClearCommand { get; }
     void Clear();
-    void Back();
-    void Navigate(object? dialog);
+    void NavigateBack();
+    void NavigateTo(IRoutable? routable);
+    void ClearAndNavigateTo(IRoutable? routable);
 }

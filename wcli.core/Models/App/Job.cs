@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using WasabiCli.Models.RpcJson;
+using WasabiCli.Models.Results;
 
 namespace WasabiCli.Models.App;
 

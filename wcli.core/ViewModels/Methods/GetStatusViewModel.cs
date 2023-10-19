@@ -1,18 +1,17 @@
 ﻿using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
-using WasabiCli.Models;
 using WasabiCli.Models.App;
-using WasabiCli.Models.RpcJson;
+using WasabiCli.Models.Results;
 using WasabiCli.Models.Services;
+using WasabiCli.ViewModels.Factories;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class GetStatusViewModel : RpcMethodViewModel
+public partial class GetStatusViewModel : RoutableMethodViewModel
 {
     public GetStatusViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
+        : base(rpcService, navigationService)
     {
-        RpcService = rpcService;
-        NavigationService = navigationService;
     }
 
     [RelayCommand]
@@ -26,7 +25,7 @@ public partial class GetStatusViewModel : RpcMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcGetStatusResult>(job);
+        var result = await RpcService.Send<RpcGetStatusResult>(job, NavigationService);
         if (result is RpcGetStatusResult { Result: not null } rpcGetStatusResult)
         {
             OnRpcSuccess(rpcGetStatusResult);
@@ -45,7 +44,7 @@ public partial class GetStatusViewModel : RpcMethodViewModel
     {
         if (rpcResult is RpcGetStatusResult rpcGetStatusResult)
         {
-            NavigationService.Navigate(rpcGetStatusResult.Result);
+            NavigationService.NavigateTo(rpcGetStatusResult.Result?.ToViewModel(RpcService, NavigationService));
         }
     }
 

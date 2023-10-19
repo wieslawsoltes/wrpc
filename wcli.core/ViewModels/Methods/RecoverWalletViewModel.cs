@@ -1,14 +1,14 @@
 ﻿using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using WasabiCli.Models;
 using WasabiCli.Models.App;
+using WasabiCli.Models.Results;
 using WasabiCli.Models.Services;
-using WasabiCli.Models.RpcJson;
+using WasabiCli.ViewModels.Factories;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class RecoverWalletViewModel : RpcMethodViewModel
+public partial class RecoverWalletViewModel : RoutableMethodViewModel
 {
     [NotifyCanExecuteChangedFor(nameof(RecoverWalletCommand))]
     [ObservableProperty] 
@@ -21,9 +21,8 @@ public partial class RecoverWalletViewModel : RpcMethodViewModel
     [ObservableProperty] private string? _walletPassword;
 
     public RecoverWalletViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
+        : base(rpcService, navigationService)
     {
-        RpcService = rpcService;
-        NavigationService = navigationService;
         WalletName = "Wallet";
         WalletMnemonic = "";
         WalletPassword = "";
@@ -48,7 +47,7 @@ public partial class RecoverWalletViewModel : RpcMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcRecoverWalletResult>(job);
+        var result = await RpcService.Send<RpcRecoverWalletResult>(job, NavigationService);
         if (result is RpcRecoverWalletResult rpcRecoverWalletResult)
         {
             OnRpcSuccess(rpcRecoverWalletResult);
@@ -65,8 +64,7 @@ public partial class RecoverWalletViewModel : RpcMethodViewModel
 
     protected override void OnRpcSuccess(Rpc rpcResult)
     {
-        NavigationService.Clear();
-        NavigationService.Navigate(new Success { Message = $"Recovered wallet {WalletName}" });
+        NavigationService.ClearAndNavigateTo(new Success { Message = $"Recovered wallet {WalletName}" }.ToViewModel(RpcService, NavigationService));
     }
 
     public override Job CreateJob()

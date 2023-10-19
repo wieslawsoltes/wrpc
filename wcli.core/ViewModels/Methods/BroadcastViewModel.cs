@@ -1,23 +1,22 @@
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using WasabiCli.Models;
 using WasabiCli.Models.App;
+using WasabiCli.Models.Results;
 using WasabiCli.Models.Services;
-using WasabiCli.Models.RpcJson;
+using WasabiCli.ViewModels.Factories;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class BroadcastViewModel : RpcMethodViewModel
+public partial class BroadcastViewModel : RoutableMethodViewModel
 {
     [NotifyCanExecuteChangedFor(nameof(BroadcastCommand))]
     [ObservableProperty] 
     private string? _tx;
 
     public BroadcastViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
+        : base(rpcService, navigationService)
     {
-        RpcService = rpcService;
-        NavigationService = navigationService;
     }
 
     private bool CanBroadcast()
@@ -37,7 +36,7 @@ public partial class BroadcastViewModel : RpcMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcBroadcastResult>(job);
+        var result = await RpcService.Send<RpcBroadcastResult>(job, NavigationService);
         if (result is RpcBroadcastResult { Result: not null } rpcBroadcastResult)
         {
             OnRpcSuccess(rpcBroadcastResult);
@@ -56,8 +55,7 @@ public partial class BroadcastViewModel : RpcMethodViewModel
     {
         if (rpcResult is RpcBroadcastResult rpcBroadcastResult)
         {
-            NavigationService.Clear();
-            NavigationService.Navigate(rpcBroadcastResult.Result);
+            NavigationService.ClearAndNavigateTo(rpcBroadcastResult.Result?.ToViewModel(RpcService, NavigationService));
         }
     }
 

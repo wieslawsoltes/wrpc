@@ -1,16 +1,16 @@
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using WasabiCli.Models;
 using WasabiCli.Models.App;
+using WasabiCli.Models.Info;
+using WasabiCli.Models.Params.Transactions;
+using WasabiCli.Models.Results;
 using WasabiCli.Models.Services;
-using WasabiCli.Models.RpcJson;
-using WasabiCli.Models.WalletWasabi;
-using WasabiCli.Models.WalletWasabi.Transactions;
+using WasabiCli.ViewModels.Factories;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class SpeedUpTransactionViewModel : RpcMethodViewModel
+public partial class SpeedUpTransactionViewModel : RoutableMethodViewModel
 {
     [NotifyCanExecuteChangedFor(nameof(SpeedUpTransactionCommand))]
     [ObservableProperty] 
@@ -25,9 +25,8 @@ public partial class SpeedUpTransactionViewModel : RpcMethodViewModel
     private string? _txId;
 
     public SpeedUpTransactionViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
+        : base(rpcService, navigationService)
     {
-        RpcService = rpcService;
-        NavigationService = navigationService;
         WalletName = walletName;
         WalletPassword = "";
         TxId = "";
@@ -53,7 +52,7 @@ public partial class SpeedUpTransactionViewModel : RpcMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcSpeedUpTransactionResult>(job);
+        var result = await RpcService.Send<RpcSpeedUpTransactionResult>(job, NavigationService);
         if (result is RpcSpeedUpTransactionResult { Result: not null } rpcSpeedUpTransactionResult)
         {
             OnRpcSuccess(rpcSpeedUpTransactionResult);
@@ -72,8 +71,7 @@ public partial class SpeedUpTransactionViewModel : RpcMethodViewModel
     {
         if (rpcResult is RpcSpeedUpTransactionResult rpcSpeedUpTransactionResult)
         {
-            NavigationService.Clear();
-            NavigationService.Navigate(new BuildInfo { Tx = rpcSpeedUpTransactionResult.Result });
+            NavigationService.ClearAndNavigateTo(new BuildInfo { Tx = rpcSpeedUpTransactionResult.Result }.ToViewModel(RpcService, NavigationService));
         }
     }
 

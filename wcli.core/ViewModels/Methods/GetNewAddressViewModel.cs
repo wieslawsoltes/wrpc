@@ -1,14 +1,14 @@
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using WasabiCli.Models;
 using WasabiCli.Models.App;
+using WasabiCli.Models.Results;
 using WasabiCli.Models.Services;
-using WasabiCli.Models.RpcJson;
+using WasabiCli.ViewModels.Factories;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class GetNewAddressViewModel : RpcMethodViewModel
+public partial class GetNewAddressViewModel : RoutableMethodViewModel
 {
     [ObservableProperty] private string? _walletName;
 
@@ -17,9 +17,8 @@ public partial class GetNewAddressViewModel : RpcMethodViewModel
     private string? _label;
 
     public GetNewAddressViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
+        : base(rpcService, navigationService)
     {
-        RpcService = rpcService;
-        NavigationService = navigationService;
         WalletName = walletName;
         Label = "Label";
     }
@@ -41,7 +40,7 @@ public partial class GetNewAddressViewModel : RpcMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcGetNewAddressResult>(job);
+        var result = await RpcService.Send<RpcGetNewAddressResult>(job, NavigationService);
         if (result is RpcGetNewAddressResult { Result: not null } rpcGetNewAddressResult)
         {
             OnRpcSuccess(rpcGetNewAddressResult);
@@ -60,8 +59,7 @@ public partial class GetNewAddressViewModel : RpcMethodViewModel
     {
         if (rpcResult is RpcGetNewAddressResult rpcGetNewAddressResult)
         {
-            NavigationService.Clear();
-            NavigationService.Navigate(rpcGetNewAddressResult.Result);
+            NavigationService.ClearAndNavigateTo(rpcGetNewAddressResult.Result?.ToViewModel(RpcService, NavigationService));
         }
     }
 

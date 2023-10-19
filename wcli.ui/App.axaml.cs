@@ -11,8 +11,7 @@ using WasabiCli.Models;
 using WasabiCli.Models.App;
 using WasabiCli.Services;
 using WasabiCli.ViewModels;
-using WasabiCli.ViewModels.Navigation;
-using WasabiCli.ViewModels.RpcJson;
+using WasabiCli.ViewModels.Services;
 using WasabiCli.Views;
 
 namespace WasabiCli;
@@ -124,8 +123,6 @@ public partial class App : Application
         {
             Batches = new ObservableCollection<Batch>(defaultState.Batches ?? new List<Batch>())
         };
-
-        Navigation.NavigationService = navigationService;
 
         var mainViewModel = new MainWindowViewModel(navigationService, rpcService, defaultState);
 
