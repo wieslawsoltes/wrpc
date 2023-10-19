@@ -1,22 +1,21 @@
 ﻿using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using WasabiCli.Models;
 using WasabiCli.Models.App;
-using WasabiCli.Models.RpcJson;
+using WasabiCli.Models.Info;
+using WasabiCli.Models.Results;
 using WasabiCli.Models.Services;
-using WasabiCli.Models.WalletWasabi;
+using WasabiCli.ViewModels.Factories;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class ListKeysViewModel : RpcMethodViewModel
+public partial class ListKeysViewModel : RoutableMethodViewModel
 {
     [ObservableProperty] private string? _walletName;
 
     public ListKeysViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
+        : base(rpcService, navigationService)
     {
-        RpcService = rpcService;
-        NavigationService = navigationService;
         WalletName = walletName;
     }
 
@@ -31,7 +30,7 @@ public partial class ListKeysViewModel : RpcMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcListKeysResult>(job);
+        var result = await RpcService.Send<RpcListKeysResult>(job, NavigationService);
         if (result is RpcListKeysResult { Result: not null } rpcListKeysResult)
         {
             OnRpcSuccess(rpcListKeysResult);
@@ -50,7 +49,7 @@ public partial class ListKeysViewModel : RpcMethodViewModel
     {
         if (rpcResult is RpcListKeysResult rpcListKeysResult)
         {
-            NavigationService.Navigate(new ListKeysInfo { Keys = rpcListKeysResult.Result });
+            NavigationService.NavigateTo(new ListKeysInfo { Keys = rpcListKeysResult.Result }.ToViewModel(RpcService, NavigationService));
         }
     }
 

@@ -1,18 +1,17 @@
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
-using WasabiCli.Models;
 using WasabiCli.Models.App;
-using WasabiCli.Models.RpcJson;
+using WasabiCli.Models.Results;
 using WasabiCli.Models.Services;
+using WasabiCli.ViewModels.Factories;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class StopViewModel : RpcMethodViewModel
+public partial class StopViewModel : RoutableMethodViewModel
 {
     public StopViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
+        : base(rpcService, navigationService)
     {
-        RpcService = rpcService;
-        NavigationService = navigationService;
     }
 
     [RelayCommand]
@@ -26,7 +25,7 @@ public partial class StopViewModel : RpcMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<string>(job);
+        var result = await RpcService.Send<string>(job, NavigationService);
         if (result is string)
         {
             OnRpcSuccess(new RpcResult());
@@ -43,7 +42,7 @@ public partial class StopViewModel : RpcMethodViewModel
 
     protected override void OnRpcSuccess(Rpc rpcResult)
     {
-        NavigationService.Navigate(new Success { Message = "Stopped daemon." });
+        NavigationService.NavigateTo(new Success { Message = "Stopped daemon." }.ToViewModel(RpcService, NavigationService));
     }
 
     public override Job CreateJob()

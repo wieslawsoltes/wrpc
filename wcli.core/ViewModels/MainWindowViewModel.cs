@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using WasabiCli.Models;
 using WasabiCli.Models.App;
-using WasabiCli.Models.RpcJson;
+using WasabiCli.Models.Results;
 using WasabiCli.Models.Services;
+using WasabiCli.ViewModels.Factories;
 using WasabiCli.ViewModels.Methods;
 
 namespace WasabiCli.ViewModels;
@@ -41,7 +41,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty] 
     private WalletViewModel? _selectedWallet;
 
-    [ObservableProperty] private ObservableCollection<RpcJson.RpcMethodViewModel>? _rpcMethods;
+    [ObservableProperty] private ObservableCollection<RpcMethodViewModel>? _rpcMethods;
 
     public MainWindowViewModel(INavigationService navigationService, IRpcServiceViewModel rpcService, State state)
     {
@@ -57,7 +57,7 @@ public partial class MainWindowViewModel : ViewModelBase
             ? Wallets.FirstOrDefault(x => x.WalletName == state.SelectedWallet) 
             : Wallets.FirstOrDefault();
 
-        RpcMethods = new ObservableCollection<RpcJson.RpcMethodViewModel>
+        RpcMethods = new ObservableCollection<RpcMethodViewModel>
         {
             new ("GetStatus", GetStatusCommand),
             new ("CreateWallet", CreateWalletCommand),
@@ -91,7 +91,7 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         var listWalletsViewModel = new ListWalletsViewModel(RpcService, NavigationService);
         var job = listWalletsViewModel.CreateJob();
-        var result = await RpcService.Send<RpcListWalletsResult>(job);
+        var result = await RpcService.Send<RpcListWalletsResult>(job, NavigationService);
         if (result is RpcListWalletsResult { Result: not null } rpcListWalletsResult)
         {
             var wallets = rpcListWalletsResult
@@ -106,11 +106,11 @@ public partial class MainWindowViewModel : ViewModelBase
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            NavigationService.Navigate(rpcErrorResult.Error);
+            NavigationService.NavigateTo(rpcErrorResult.Error.ToViewModel(RpcService, NavigationService));
         }
         else if (result is Error error)
         {
-            NavigationService.Navigate(error);
+            NavigationService.NavigateTo(error.ToViewModel(RpcService, NavigationService));
         }
     }
 
@@ -159,14 +159,14 @@ public partial class MainWindowViewModel : ViewModelBase
     private void CreateWallet()
     {
         var createWalletViewModel = new CreateWalletViewModel(RpcService, NavigationService);
-        NavigationService.Navigate(createWalletViewModel);
+        NavigationService.NavigateTo(createWalletViewModel);
     }
 
     [RelayCommand]
     private void RecoverWallet()
     {
         var recoverWalletViewModel = new RecoverWalletViewModel(RpcService, NavigationService);
-        NavigationService.Navigate(recoverWalletViewModel);
+        NavigationService.NavigateTo(recoverWalletViewModel);
     }
 
     private bool CanLoadWallet()
@@ -245,7 +245,7 @@ public partial class MainWindowViewModel : ViewModelBase
         if (SelectedWallet?.WalletName is not null)
         {
             var getNewAddressViewModel = new GetNewAddressViewModel(RpcService, NavigationService, SelectedWallet.WalletName);
-            NavigationService.Navigate(getNewAddressViewModel);
+            NavigationService.NavigateTo(getNewAddressViewModel);
         }
     }
 
@@ -261,7 +261,7 @@ public partial class MainWindowViewModel : ViewModelBase
         if (SelectedWallet?.WalletName is not null)
         {
             var sendViewModel = new SendViewModel(RpcService, NavigationService, SelectedWallet.WalletName);
-            NavigationService.Navigate(sendViewModel);
+            NavigationService.NavigateTo(sendViewModel);
         }
     }
 
@@ -277,7 +277,7 @@ public partial class MainWindowViewModel : ViewModelBase
         if (SelectedWallet?.WalletName is not null)
         {
             var speedUpTransactionViewModel = new SpeedUpTransactionViewModel(RpcService, NavigationService, SelectedWallet.WalletName);
-            NavigationService.Navigate(speedUpTransactionViewModel);
+            NavigationService.NavigateTo(speedUpTransactionViewModel);
         }
     }
 
@@ -293,7 +293,7 @@ public partial class MainWindowViewModel : ViewModelBase
         if (SelectedWallet?.WalletName is not null)
         {
             var cancelTransactionViewModel = new CancelTransactionViewModel(RpcService, NavigationService, SelectedWallet.WalletName);
-            NavigationService.Navigate(cancelTransactionViewModel);
+            NavigationService.NavigateTo(cancelTransactionViewModel);
         }
     }
 
@@ -309,7 +309,7 @@ public partial class MainWindowViewModel : ViewModelBase
         if (SelectedWallet?.WalletName is not null)
         {
             var buildViewModel = new BuildViewModel(RpcService, NavigationService, SelectedWallet.WalletName);
-            NavigationService.Navigate(buildViewModel);
+            NavigationService.NavigateTo(buildViewModel);
         }
     }
 
@@ -319,7 +319,7 @@ public partial class MainWindowViewModel : ViewModelBase
         if (SelectedWallet?.WalletName is not null)
         {
             var broadcastViewModel = new BroadcastViewModel(RpcService, NavigationService);
-            NavigationService.Navigate(broadcastViewModel);
+            NavigationService.NavigateTo(broadcastViewModel);
         }
     }
 
@@ -351,7 +351,7 @@ public partial class MainWindowViewModel : ViewModelBase
         if (SelectedWallet?.WalletName is not null)
         {
             var excludeFromCoinJoinViewModel = new ExcludeFromCoinJoinViewModel(RpcService, NavigationService, SelectedWallet.WalletName);
-            NavigationService.Navigate(excludeFromCoinJoinViewModel);
+            NavigationService.NavigateTo(excludeFromCoinJoinViewModel);
         }
     }
 
@@ -383,7 +383,7 @@ public partial class MainWindowViewModel : ViewModelBase
         if (SelectedWallet?.WalletName is not null)
         {
             var startCoinJoinViewModel = new StartCoinJoinViewModel(RpcService, NavigationService, SelectedWallet.WalletName);
-            NavigationService.Navigate(startCoinJoinViewModel);
+            NavigationService.NavigateTo(startCoinJoinViewModel);
         }
     }
     private bool CanStartCoinJoinSweep()
@@ -398,7 +398,7 @@ public partial class MainWindowViewModel : ViewModelBase
         if (SelectedWallet?.WalletName is not null)
         {
             var startCoinJoinSweepViewModel = new StartCoinJoinSweepViewModel(RpcService, NavigationService, SelectedWallet.WalletName);
-            NavigationService.Navigate(startCoinJoinSweepViewModel);
+            NavigationService.NavigateTo(startCoinJoinSweepViewModel);
         }
     }
 

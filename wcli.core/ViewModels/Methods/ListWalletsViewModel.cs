@@ -1,19 +1,18 @@
 ﻿using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
-using WasabiCli.Models;
 using WasabiCli.Models.App;
-using WasabiCli.Models.RpcJson;
+using WasabiCli.Models.Info;
+using WasabiCli.Models.Results;
 using WasabiCli.Models.Services;
-using WasabiCli.Models.WalletWasabi;
+using WasabiCli.ViewModels.Factories;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class ListWalletsViewModel : RpcMethodViewModel
+public partial class ListWalletsViewModel : RoutableMethodViewModel
 {
     public ListWalletsViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
+        : base(rpcService, navigationService)
     {
-        RpcService = rpcService;
-        NavigationService = navigationService;
     }
 
     [RelayCommand]
@@ -27,7 +26,7 @@ public partial class ListWalletsViewModel : RpcMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcListWalletsResult>(job);
+        var result = await RpcService.Send<RpcListWalletsResult>(job, NavigationService);
         if (result is RpcListWalletsResult { Result: not null } rpcListWalletsResult)
         {
             OnRpcSuccess(rpcListWalletsResult);
@@ -46,7 +45,7 @@ public partial class ListWalletsViewModel : RpcMethodViewModel
     {
         if (rpcResult is RpcListWalletsResult rpcListWalletsResult)
         {
-            NavigationService.Navigate(new ListWalletsInfo { Wallets = rpcListWalletsResult.Result });
+            NavigationService.NavigateTo(new ListWalletsInfo { Wallets = rpcListWalletsResult.Result }.ToViewModel(RpcService, NavigationService));
         }
     }
 

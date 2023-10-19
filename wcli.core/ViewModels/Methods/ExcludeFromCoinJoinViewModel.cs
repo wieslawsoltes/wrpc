@@ -1,15 +1,15 @@
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using WasabiCli.Models;
 using WasabiCli.Models.App;
+using WasabiCli.Models.Params.Transactions;
+using WasabiCli.Models.Results;
 using WasabiCli.Models.Services;
-using WasabiCli.Models.RpcJson;
-using WasabiCli.Models.WalletWasabi.Transactions;
+using WasabiCli.ViewModels.Factories;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class ExcludeFromCoinJoinViewModel : RpcMethodViewModel
+public partial class ExcludeFromCoinJoinViewModel : RoutableMethodViewModel
 {
     [NotifyCanExecuteChangedFor(nameof(ExcludeFromCoinJoinCommand))]
     [ObservableProperty] 
@@ -28,9 +28,8 @@ public partial class ExcludeFromCoinJoinViewModel : RpcMethodViewModel
     private bool _exclude;
 
     public ExcludeFromCoinJoinViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
+        : base(rpcService, navigationService)
     {
-        RpcService = rpcService;
-        NavigationService = navigationService;
         WalletName = walletName;
         TransactionId = "";
         N = 0;
@@ -57,7 +56,7 @@ public partial class ExcludeFromCoinJoinViewModel : RpcMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcExcludeFromCoinJoinResult>(job);
+        var result = await RpcService.Send<RpcExcludeFromCoinJoinResult>(job, NavigationService);
         if (result is RpcExcludeFromCoinJoinResult rpcExcludeFromCoinJoinResult)
         {
             OnRpcSuccess(rpcExcludeFromCoinJoinResult);
@@ -74,8 +73,7 @@ public partial class ExcludeFromCoinJoinViewModel : RpcMethodViewModel
 
     protected override void OnRpcSuccess(Rpc rpcResult)
     {
-        NavigationService.Clear();
-        NavigationService.Navigate(new Success { Message = $"{(Exclude ? "Excluded" : "Removed the exclusion")} from coinjoin" });
+        NavigationService.ClearAndNavigateTo(new Success { Message = $"{(Exclude ? "Excluded" : "Removed the exclusion")} from coinjoin" }.ToViewModel(RpcService, NavigationService));
     }
 
     public override Job CreateJob()

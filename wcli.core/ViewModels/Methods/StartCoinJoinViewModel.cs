@@ -1,14 +1,14 @@
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using WasabiCli.Models;
 using WasabiCli.Models.App;
+using WasabiCli.Models.Results;
 using WasabiCli.Models.Services;
-using WasabiCli.Models.RpcJson;
+using WasabiCli.ViewModels.Factories;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class StartCoinJoinViewModel : RpcMethodViewModel
+public partial class StartCoinJoinViewModel : RoutableMethodViewModel
 {
     [ObservableProperty] private string? _walletName;
     [ObservableProperty] private string? _walletPassword;
@@ -16,9 +16,8 @@ public partial class StartCoinJoinViewModel : RpcMethodViewModel
     [ObservableProperty] private bool _overridePlebStop;
 
     public StartCoinJoinViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
+        : base(rpcService, navigationService)
     {
-        RpcService = rpcService;
-        NavigationService = navigationService;
         WalletName = walletName;
         WalletPassword = "";
         StopWhenAllMixed = true;
@@ -36,7 +35,7 @@ public partial class StartCoinJoinViewModel : RpcMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcStartCoinJoinResult>(job);
+        var result = await RpcService.Send<RpcStartCoinJoinResult>(job, NavigationService);
         if (result is RpcStartCoinJoinResult rpcStartCoinJoinResult)
         {
             OnRpcSuccess(rpcStartCoinJoinResult);
@@ -53,8 +52,7 @@ public partial class StartCoinJoinViewModel : RpcMethodViewModel
 
     protected override void OnRpcSuccess(Rpc rpcResult)
     {
-        NavigationService.Clear();
-        NavigationService.Navigate(new Success { Message = $"Started coinjoin for wallet {WalletName}" });
+        NavigationService.ClearAndNavigateTo(new Success { Message = $"Started coinjoin for wallet {WalletName}" }.ToViewModel(RpcService, NavigationService));
     }
 
     public override Job CreateJob()

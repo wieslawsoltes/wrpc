@@ -4,15 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using WasabiCli.Models;
 using WasabiCli.Models.App;
+using WasabiCli.Models.Params.Send;
+using WasabiCli.Models.Results;
 using WasabiCli.Models.Services;
-using WasabiCli.Models.RpcJson;
-using WasabiCli.Models.WalletWasabi.Send;
+using WasabiCli.ViewModels.Factories;
 
 namespace WasabiCli.ViewModels.Methods;
 
-public partial class SendViewModel : RpcMethodViewModel
+public partial class SendViewModel : RoutableMethodViewModel
 {
     [NotifyCanExecuteChangedFor(nameof(SendCommand))]
     [ObservableProperty] 
@@ -50,9 +50,8 @@ public partial class SendViewModel : RpcMethodViewModel
     private ObservableCollection<CoinViewModel> _coins;
 
     public SendViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
+        : base(rpcService, navigationService)
     {
-        RpcService = rpcService;
-        NavigationService = navigationService;
         WalletName = walletName;
         WalletPassword = "";
         SendTo = "";
@@ -88,7 +87,7 @@ public partial class SendViewModel : RpcMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcSendResult>(job);
+        var result = await RpcService.Send<RpcSendResult>(job, NavigationService);
         if (result is RpcSendResult { Result: not null } rpcSendResult)
         {
             OnRpcSuccess(rpcSendResult);
@@ -107,8 +106,7 @@ public partial class SendViewModel : RpcMethodViewModel
     {
         if (rpcResult is RpcSendResult rpcSendResult)
         {
-            NavigationService.Clear();
-            NavigationService.Navigate(rpcSendResult.Result);
+            NavigationService.ClearAndNavigateTo(rpcSendResult.Result?.ToViewModel(RpcService, NavigationService));
         }
     }
 
@@ -154,22 +152,22 @@ public partial class SendViewModel : RpcMethodViewModel
 
         var listUnspentCoinsViewModel = new ListUnspentCoinsViewModel(RpcService, NavigationService, WalletName);
         var job = listUnspentCoinsViewModel.CreateJob();
-        var result = await RpcService.Send<RpcListUnspentCoinsResult>(job);
+        var result = await RpcService.Send<RpcListUnspentCoinsResult>(job, NavigationService);
         if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
         {
             var coins = rpcListUnspentCoinsResult
                 .Result
-                .Select(x => new CoinViewModel(RpcService, NavigationService, x));
+                .Select(x => new CoinViewModel(RpcService, NavigationService, x.ToViewModel(RpcService, NavigationService)));
 
             Coins = new ObservableCollection<CoinViewModel>(coins);
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            NavigationService.Navigate(rpcErrorResult.Error);
+            NavigationService.NavigateTo(rpcErrorResult.Error.ToViewModel(RpcService, NavigationService));
         }
         else if (result is Error error)
         {
-            NavigationService.Navigate(error);
+            NavigationService.NavigateTo(error.ToViewModel(RpcService, NavigationService));
         }
     }
 }

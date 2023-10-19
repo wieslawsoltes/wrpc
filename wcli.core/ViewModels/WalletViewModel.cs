@@ -6,8 +6,4 @@ public partial class WalletViewModel : ViewModelBase
 {
     [ObservableProperty] 
     private string? _walletName;
-
-    public WalletViewModel()
-    {
-    }
 }

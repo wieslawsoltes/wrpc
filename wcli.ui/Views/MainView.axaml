@@ -4,11 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:app="using:WasabiCli.Models.App"
              xmlns:vm="using:WasabiCli.ViewModels"
-             xmlns:vmn="using:WasabiCli.ViewModels.Navigation"
-             xmlns:vmrpc="using:WasabiCli.ViewModels.RpcJson"
+             xmlns:vms="using:WasabiCli.ViewModels.Services"
              xmlns:controls="using:WasabiCli.Controls"
              xmlns:views="using:WasabiCli.Views"
-             xmlns:viewsNavigation="using:WasabiCli.Views.Navigation"
+             xmlns:viewsServices="using:WasabiCli.Views.Services"
              xmlns:services="using:WasabiCli.Services"
              mc:Ignorable="d" d:DesignWidth="420" d:DesignHeight="655"
              x:Class="WasabiCli.Views.MainView"
@@ -17,24 +16,25 @@
   <Design.DataContext>
     <vm:MainWindowViewModel>
       <x:Arguments>
-        <vmn:NavigationServiceViewModel />
-        <vmrpc:RpcServiceViewModel>
+        <vms:NavigationServiceViewModel />
+        <vms:RpcServiceViewModel>
           <x:Arguments>
             <services:HttpService />
             <x:String>"http://127.0.0.1:37128"</x:String>
             <x:Boolean>False</x:Boolean>
           </x:Arguments>
-        </vmrpc:RpcServiceViewModel>
+        </vms:RpcServiceViewModel>
         <app:State />
       </x:Arguments>
     </vm:MainWindowViewModel>
   </Design.DataContext>
   <Panel>
     <controls:NavigateBackControl Header="Wasabi.Wallet RPC"
+                                  NavigationService="{Binding NavigationService}"
                                   EnableBack="False"
-                                  IsVisible="{Binding NavigationService.CurrentDialog, Converter={x:Static ObjectConverters.IsNull}}">
+                                  IsVisible="{Binding NavigationService.CurrentRoutable, Converter={x:Static ObjectConverters.IsNull}}">
       <views:HomeView />
     </controls:NavigateBackControl>
-    <viewsNavigation:NavigationServiceView DataContext="{Binding NavigationService}" />
+    <viewsServices:NavigationServiceView DataContext="{Binding NavigationService}" />
   </Panel>
 </UserControl>
