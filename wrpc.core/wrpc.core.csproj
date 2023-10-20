@@ -6,6 +6,9 @@
     <RootNamespace>WasabiRpc</RootNamespace>
     <AssemblyName>wrpc.core</AssemblyName>
   </PropertyGroup>
+  <PropertyGroup>
+    <IsAotCompatible>true</IsAotCompatible>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="$(CommunityToolkitMvvmVersion)"/>
   </ItemGroup>
