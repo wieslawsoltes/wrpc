@@ -41,7 +41,7 @@ dotnet publish -r win-x64 -c Release
 ```
 
 ```sh
-.\bin\Release\net8.0\win-x64\publish\wrpc.exe
+.\bin\Release\net7.0\win-x64\publish\wrpc.exe
 ```
 
 #### Publish `linux-x64` RID
