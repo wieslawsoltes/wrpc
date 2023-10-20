@@ -1,12 +1,8 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="WasabiRpc.App"
-             xmlns:local="using:WasabiRpc"
              RequestedThemeVariant="Dark"
              Name="Wasabi.Wallet RPC">
-  <Application.DataTemplates>
-    <local:ViewLocator />
-  </Application.DataTemplates>
   <Application.Styles>
     <FluentTheme />
     <StyleInclude Source="/Controls/NavigateBackControl.axaml" />
