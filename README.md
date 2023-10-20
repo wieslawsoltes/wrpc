@@ -24,6 +24,59 @@ dotnet run --usetor=false --network=testnet --jsonrpcserverenabled=true --blocko
 
 Note: Not all methods might work, depending on your Wasabi version.
 
+### Native AOT deployment
+
+The Desktop version supports [NativeAOT](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot) deployment.
+
+#### Change directory to Desktop project
+
+```sh
+cd wrpc.ui.desktop
+```
+
+#### Publish `win-x64` RID
+
+```sh
+dotnet publish -r win-x64 -c Release
+```
+
+```sh
+.\bin\Release\net7.0\win-x64\publish\wrpc.exe
+```
+
+#### Publish `linux-x64` RID
+
+```sh
+dotnet publish -r linux-x64 -c Release
+```
+
+#### Publish `linux-arm64` RID
+
+```sh
+dotnet publish -r linux-arm64 -c Release
+```
+
+#### Publish `osx-x64` RID
+
+```sh
+dotnet publish -r osx-x64 -c Release
+```
+
+#### Publish `osx-arm64` RID
+
+```sh
+dotnet publish -r osx-arm64 -c Release
+```
+
+### Resources
+
+- [wrpc](https://github.com/wieslawsoltes/wrpc)
+- [RPC Docs](https://docs.wasabiwallet.io/using-wasabi/RPC.html)
+- [WalletWasabi.Daemon](https://github.com/zkSNACKs/WalletWasabi/tree/master/WalletWasabi.Daemon)
+- [WalletWasabi.Daemon WasabiJsonRpcService.cs](https://github.com/zkSNACKs/WalletWasabi/blob/master/WalletWasabi.Daemon/Rpc/WasabiJsonRpcService.cs)
+- [bitcoin.design](https://bitcoin.design/)
+- [bitcoinuikit.com](https://www.bitcoinuikit.com/)
+
 ### Available RPC methods
 
 - [x] getstatus
@@ -277,12 +330,3 @@ Note: Not all methods might work, depending on your Wasabi version.
   - error
     - TODO
   - [empty]
-
-### Resources
-
-- [wrpc](https://github.com/wieslawsoltes/wrpc)
-- [RPC Docs](https://docs.wasabiwallet.io/using-wasabi/RPC.html)
-- [WalletWasabi.Daemon](https://github.com/zkSNACKs/WalletWasabi/tree/master/WalletWasabi.Daemon)
-- [WalletWasabi.Daemon WasabiJsonRpcService.cs](https://github.com/zkSNACKs/WalletWasabi/blob/master/WalletWasabi.Daemon/Rpc/WasabiJsonRpcService.cs)
-- [bitcoin.design](https://bitcoin.design/)
-- [bitcoinuikit.com](https://www.bitcoinuikit.com/)

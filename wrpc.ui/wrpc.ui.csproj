@@ -6,6 +6,9 @@
     <RootNamespace>WasabiRpc</RootNamespace>
     <AssemblyName>wrpc.ui</AssemblyName>
   </PropertyGroup>
+  <PropertyGroup>
+    <IsAotCompatible>true</IsAotCompatible>
+  </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**"/>
   </ItemGroup>
