@@ -30,7 +30,7 @@
   </Design.DataContext>
   <Panel>
     <controls:NavigateBackControl Header="Wasabi.Wallet RPC"
-                                  NavigationService="{Binding NavigationService}"
+                                  BackCommand="{Binding NavigationService.NavigateBackCommand}"
                                   EnableBack="False"
                                   IsVisible="{Binding NavigationService.CurrentRoutable, Converter={x:Static ObjectConverters.IsNull}}">
       <views:HomeView />

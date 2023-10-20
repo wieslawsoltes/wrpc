@@ -1,6 +1,7 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="using:WasabiRpc.Controls">
+        xmlns:controls="using:WasabiRpc.Controls"
+        x:CompileBindings="True" x:DataType="controls:NavigateBackControl">
   <Design.PreviewWith>
     <controls:NavigateBackControl Header="Header"
                                   Width="400"
@@ -21,7 +22,7 @@
                 DockPanel.Dock="Top">
             <Button Name="PART_BackButton"
                     Content="&lt; Back"
-                    Command="{Binding NavigationService.NavigateBackCommand, RelativeSource={RelativeSource AncestorType={x:Type controls:NavigateBackControl}}, FallbackValue={x:Null}}"
+                    Command="{TemplateBinding BackCommand}"
                     CommandParameter="{x:Null}"
                     IsVisible="{TemplateBinding EnableBack}"
                     Grid.Column="0" />

@@ -1,21 +1,21 @@
+using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls.Primitives;
-using WasabiRpc.Models.Services;
 
 namespace WasabiRpc.Controls;
 
 public class NavigateBackControl : HeaderedContentControl
 {
-    public static readonly StyledProperty<INavigationService?> NavigationServiceProperty = 
-        AvaloniaProperty.Register<NavigateBackControl, INavigationService?>(nameof(NavigationService));
+    public static readonly StyledProperty<ICommand?> BackCommandProperty = 
+        AvaloniaProperty.Register<NavigateBackControl, ICommand?>(nameof(BackCommand));
 
     public static readonly StyledProperty<bool> EnableBackProperty = 
         AvaloniaProperty.Register<NavigateBackControl, bool>(nameof(EnableBack), true);
 
-    public INavigationService? NavigationService
+    public ICommand? BackCommand
     {
-        get => GetValue(NavigationServiceProperty);
-        set => SetValue(NavigationServiceProperty, value);
+        get => GetValue(BackCommandProperty);
+        set => SetValue(BackCommandProperty, value);
     }
 
     public bool EnableBack

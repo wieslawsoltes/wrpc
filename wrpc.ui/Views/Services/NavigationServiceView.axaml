@@ -18,213 +18,213 @@
       <!-- ViewModels: App -->
       <DataTemplate DataType="vma:ErrorViewModel">
         <controls:NavigateBackControl Header="Error"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsApp:ErrorView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vma:SuccessViewModel">
         <controls:NavigateBackControl Header="Success"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsApp:SuccessView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vma:JsonViewModel">
         <controls:NavigateBackControl Header="Json"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsApp:JsonView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <!-- ViewModels: Methods -->
       <DataTemplate DataType="vmm:CreateWalletViewModel">
         <controls:NavigateBackControl Header="Create Wallet"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsMethods:CreateWalletView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmm:RecoverWalletViewModel">
         <controls:NavigateBackControl Header="Recover Wallet"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsMethods:RecoverWalletView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmm:GetNewAddressViewModel">
         <controls:NavigateBackControl Header="New Address"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsMethods:GetNewAddressView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmm:SendViewModel">
         <controls:NavigateBackControl Header="Send"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsMethods:SendView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmm:SpeedUpTransactionViewModel">
         <controls:NavigateBackControl Header="SpeedUp Transaction"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsMethods:SpeedUpTransactionView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmm:CancelTransactionViewModel">
         <controls:NavigateBackControl Header="Cancel Transaction"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsMethods:CancelTransactionView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmm:BuildViewModel">
         <controls:NavigateBackControl Header="Build"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsMethods:BuildView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmm:PayInCoinjoinViewModel">
         <controls:NavigateBackControl Header="PayInCoinjoin"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsMethods:PayInCoinjoinView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmm:BroadcastViewModel">
         <controls:NavigateBackControl Header="Broadcast"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsMethods:BroadcastView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmm:ExcludeFromCoinJoinViewModel">
         <controls:NavigateBackControl Header="Exclude from CoinJoin"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsMethods:ExcludeFromCoinjoinView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmm:StartCoinJoinViewModel">
         <controls:NavigateBackControl Header="Start CoinJoin"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsMethods:StartCoinJoinView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmm:StartCoinJoinSweepViewModel">
         <controls:NavigateBackControl Header="Start CoinJoin Sweep"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsMethods:StartCoinJoinSweepView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <!-- ViewModels: Info -->
       <DataTemplate DataType="vmi:ErrorInfoViewModel">
         <controls:NavigateBackControl Header="Error"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:ErrorInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:PeerInfoViewModel">
         <controls:NavigateBackControl Header="Peer"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:PeerInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:StatusInfoViewModel">
         <controls:NavigateBackControl Header="Status"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:StatusInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:CreateWalletInfoViewModel">
         <controls:NavigateBackControl Header="Create Wallet"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:CreateWalletInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:CoinInfoViewModel">
         <controls:NavigateBackControl Header="Coin"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:CoinInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:ListCoinsInfoViewModel">
         <controls:NavigateBackControl Header="Coins"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:ListCoinsInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:ListUnspentCoinsInfoViewModel">
         <controls:NavigateBackControl Header="Unspent Coins"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:ListUnspentCoinsInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:AccountInfoViewModel">
         <controls:NavigateBackControl Header="Account"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:AccountInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:WalletInfoViewModel">
         <controls:NavigateBackControl Header="Wallet"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:WalletInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:AddressInfoViewModel">
         <controls:NavigateBackControl Header="Address"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:AddressInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:SendInfoViewModel">
         <controls:NavigateBackControl Header="Send"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:SendInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:BuildInfoViewModel">
         <controls:NavigateBackControl Header="Build"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:BuildInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:PayInCoinjoinInfoViewModel">
         <controls:NavigateBackControl Header="PayInCoinjoin"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:PayInCoinjoinInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:BroadcastInfoViewModel">
         <controls:NavigateBackControl Header="Broadcast"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:BroadcastInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:TransactionInfoViewModel">
         <controls:NavigateBackControl Header="Transaction"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:TransactionInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:GetHistoryInfoViewModel">
         <controls:NavigateBackControl Header="History"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:GetHistoryInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:KeyInfoViewModel">
         <controls:NavigateBackControl Header="Key"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:KeyInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:ListKeysInfoViewModel">
         <controls:NavigateBackControl Header="Keys"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:ListKeysInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:GetFeeRatesInfoViewModel">
         <controls:NavigateBackControl Header="FeeRates"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:GetFeeRatesInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:ListWalletsInfoViewModel">
         <controls:NavigateBackControl Header="Wallets"
-                                      NavigationService="{Binding NavigationService}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:ListWalletsInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
