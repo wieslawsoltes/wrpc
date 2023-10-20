@@ -97,7 +97,8 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             var wallets = rpcListWalletsResult
                 .Result
-                .Select(x => new WalletViewModel { WalletName = x.WalletName });
+                .Select(x => new WalletViewModel { WalletName = x.WalletName })
+                .OrderBy(x => x.WalletName);
 
             if (Wallets is not null)
             {

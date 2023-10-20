@@ -115,6 +115,7 @@ public static class InfoFactory
             //    .ToList(),
             Transactions = info.Transactions?
                 .Select(x => new TransactionViewModel(rpcService, navigationService, walletName, x.ToViewModel(rpcService, navigationService)))
+                .OrderByDescending(x => x.TransactionInfo.DateTime)
                 .ToList(),
         };
     }
@@ -140,6 +141,7 @@ public static class InfoFactory
         {
             Coins = info.Coins?
                 .Select(x => x.ToViewModel(rpcService, navigationService))
+                .OrderByDescending(x => x.AnonymityScore)
                 .ToList(),
         };
     }
@@ -163,6 +165,7 @@ public static class InfoFactory
             //     .ToList(),
             Coins = info.Coins?
                 .Select(x => new CoinViewModel(rpcService, navigationService, walletName, x.ToViewModel(rpcService, navigationService)))
+                .OrderByDescending(x => x.CoinInfo.AnonymityScore)
                 .ToList(),
         };
     }
@@ -173,6 +176,7 @@ public static class InfoFactory
         {
             Wallets = info.Wallets?
                 .Select(x => x.ToViewModel(rpcService, navigationService))
+                .OrderBy(x => x.WalletName)
                 .ToList(),
         };
     }
