@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:app="using:WasabiRpc.Models.App"
+             xmlns:vm="using:WasabiRpc.ViewModels"
+             xmlns:vms="using:WasabiRpc.ViewModels.Services"
+             xmlns:controls="using:WasabiRpc.Controls"
+             xmlns:views="using:WasabiRpc.Views"
+             xmlns:viewsServices="using:WasabiRpc.Views.Services"
+             xmlns:services="using:WasabiRpc.Services"
+             mc:Ignorable="d" d:DesignWidth="420" d:DesignHeight="695"
+             x:Class="WasabiRpc.Views.MainView"
+             x:CompileBindings="True" x:DataType="vm:MainWindowViewModel"
+             Background="#FF353535">
+  <Design.DataContext>
+    <vm:MainWindowViewModel>
+      <x:Arguments>
+        <vms:NavigationServiceViewModel />
+        <vms:RpcServiceViewModel>
+          <x:Arguments>
+            <services:HttpService />
+            <x:String>"http://127.0.0.1:37128"</x:String>
+            <x:Boolean>False</x:Boolean>
+          </x:Arguments>
+        </vms:RpcServiceViewModel>
+        <app:State />
+      </x:Arguments>
+    </vm:MainWindowViewModel>
+  </Design.DataContext>
+  <Panel>
+    <controls:NavigateBackControl Header="Wasabi.Wallet RPC"
+                                  NavigationService="{Binding NavigationService}"
+                                  EnableBack="False"
+                                  IsVisible="{Binding NavigationService.CurrentRoutable, Converter={x:Static ObjectConverters.IsNull}}">
+      <views:HomeView />
+    </controls:NavigateBackControl>
+    <viewsServices:NavigationServiceView DataContext="{Binding NavigationService}" />
+  </Panel>
+</UserControl>

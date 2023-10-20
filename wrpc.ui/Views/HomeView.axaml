@@ -1,0 +1,75 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:WasabiRpc.ViewModels"
+             xmlns:views="using:WasabiRpc.Views"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="WasabiRpc.Views.HomeView"
+             x:CompileBindings="True" x:DataType="vm:MainWindowViewModel">
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+    <DockPanel>
+      <StackPanel Spacing="4"
+                  Margin="6,0,6,0"
+                  DockPanel.Dock="Top">
+        <!-- RpcServerPrefix -->
+        <Label Content="RPC server prefix:"
+               Target="RpcServerTextBox" />
+        <TextBox Name="RpcServerTextBox"
+                 Text="{Binding RpcService.ServerPrefix, Mode=TwoWay}" />
+        <!-- BatchMode -->
+        <CheckBox IsChecked="{Binding RpcService.BatchMode}"
+                  Content="Batch Mode" />
+        <DockPanel>
+          <!-- AddWallet -->
+          <Button Content="+"
+                  Command="{Binding AddWalletCommand}"
+                  CommandParameter="{x:Null}"
+                  HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Center"
+                  VerticalAlignment="Stretch"
+                  VerticalContentAlignment="Center"
+                  Margin="4,0,0,0"
+                  DockPanel.Dock="Right"/>
+          <!-- RemoveWallet -->
+          <Button Content="-"
+                  Command="{Binding RemoveWalletCommand}"
+                  CommandParameter="{x:Null}"
+                  HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Center"
+                  VerticalAlignment="Stretch"
+                  VerticalContentAlignment="Center"
+                  Margin="4,0,0,0"
+                  DockPanel.Dock="Right"/>
+          <!-- LoadWallets -->
+          <Button Content="*"
+                  Command="{Binding LoadWalletsCommand}"
+                  CommandParameter="{x:Null}"
+                  HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Center"
+                  VerticalAlignment="Stretch"
+                  VerticalContentAlignment="Center"
+                  Margin="4,0,0,0"
+                  DockPanel.Dock="Right"/>
+          <!-- Wallets -->
+          <ComboBox ItemsSource="{Binding Wallets}"
+                    SelectedItem="{Binding SelectedWallet}"
+                    HorizontalAlignment="Stretch">
+            <ComboBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding WalletName}" />
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+        </DockPanel>
+        <!-- WalletName -->
+        <Label Content="Wallet name:"
+               Target="WalletNameTextBox" />
+        <TextBox Name="WalletNameTextBox"
+                 Text="{Binding SelectedWallet.WalletName, Mode=TwoWay, FallbackValue=''}" />
+      </StackPanel>
+      <!-- RpcMethods -->
+      <views:RpcMethodsView Margin="0,4,0,0" />
+    </DockPanel>
+  </ScrollViewer>
+</UserControl>

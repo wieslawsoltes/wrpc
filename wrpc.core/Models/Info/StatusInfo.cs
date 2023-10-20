@@ -1,0 +1,37 @@
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
+
+namespace WasabiRpc.Models.Info;
+
+public class StatusInfo
+{
+    [JsonPropertyName("torStatus")]
+    public string? TorStatus { get; set; }
+
+    [JsonPropertyName("onionService")]
+    public string? OnionService { get; set; }
+
+    [JsonPropertyName("backendStatus")]
+    public string? BackendStatus { get; set; }
+
+    [JsonPropertyName("bestBlockchainHeight")]
+    public string? BestBlockchainHeight { get; set; }
+
+    [JsonPropertyName("bestBlockchainHash")]
+    public string? BestBlockchainHash { get; set; }
+
+    [JsonPropertyName("filtersCount")]
+    public int FiltersCount { get; set; }
+
+    [JsonPropertyName("filtersLeft")]
+    public int FiltersLeft { get; set; }
+
+    [JsonPropertyName("network")]
+    public string? Network { get; set; }
+
+    [JsonPropertyName("exchangeRate")]
+    public decimal ExchangeRate { get; set; }
+
+    [JsonPropertyName("peers")]
+    public List<PeerInfo>? Peers { get; set; }
+}
