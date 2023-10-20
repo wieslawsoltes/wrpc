@@ -5,7 +5,6 @@
              Name="Wasabi.Wallet RPC">
   <Application.Styles>
     <FluentTheme />
-    <StyleInclude Source="/Controls/NavigateBackControl.axaml" />
     <Style Selector="TextBox.readonly">
       <Setter Property="IsReadOnly" Value="True" />
     </Style>
@@ -31,4 +30,11 @@
       <Setter Property="BorderBrush" Value="Transparent" />
     </Style>
   </Application.Styles>
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <MergeResourceInclude Source="/Controls/NavigateBackControl.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
 </Application>
