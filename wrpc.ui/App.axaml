@@ -5,6 +5,25 @@
              Name="Wasabi.Wallet RPC">
   <Application.Styles>
     <FluentTheme />
+    <Style Selector="TextBox">
+      <Setter Property="InnerRightContent">
+        <Template>
+          <Button>
+            <Button.Styles>
+              <Style Selector="Button">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="Padding" Value="2" />
+              </Style>
+            </Button.Styles>
+            <Svg Path="/Assets/Icons/ic_fluent_copy_24_regular.svg" 
+                 Opacity="0.5"
+                 MaxHeight="20" />
+          </Button>
+        </Template>
+      </Setter>
+    </Style>
     <Style Selector="TextBox.readonly">
       <Setter Property="IsReadOnly" Value="True" />
     </Style>
