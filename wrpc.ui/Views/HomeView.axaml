@@ -12,6 +12,20 @@
       <StackPanel Spacing="4"
                   Margin="6,0,6,0"
                   DockPanel.Dock="Top">
+        <!--
+        <Menu>
+          <MenuItem Header="RPC" 
+                    ItemsSource="{Binding RpcMethods}">
+            <MenuItem.Styles>
+              <Style Selector="MenuItem" x:DataType="vm:RpcMethodViewModel">
+                <Setter Property="Header" Value="{Binding Name}"/>
+                <Setter Property="Command" Value="{Binding Command}"/>
+                <Setter Property="CommandParameter" Value="{x:Null}"/>
+              </Style>
+            </MenuItem.Styles>
+          </MenuItem>
+        </Menu>
+        -->
         <!-- RpcServerPrefix -->
         <Label Content="RPC server prefix:"
                Target="RpcServerTextBox" />
