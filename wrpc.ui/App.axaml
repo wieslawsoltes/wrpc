@@ -9,7 +9,7 @@
     <Style Selector="TextBox:pointerover, TextBox:focus-within">
       <Setter Property="InnerRightContent">
         <Template>
-          <Button Command="{x:Static local:AppCopy.CopyTextCommand}"
+          <Button Command="{x:Static local:App.CopyTextCommand}"
                   CommandParameter="{Binding $parent[TextBox].Text}">
             <Button.Styles>
               <Style Selector="Button">
