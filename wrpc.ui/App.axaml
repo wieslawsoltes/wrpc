@@ -1,14 +1,16 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:WasabiRpc"
              x:Class="WasabiRpc.App"
              RequestedThemeVariant="Dark"
              Name="Wasabi.Wallet RPC">
   <Application.Styles>
     <FluentTheme />
-    <Style Selector="TextBox">
+    <Style Selector="TextBox:pointerover, TextBox:focus-within">
       <Setter Property="InnerRightContent">
         <Template>
-          <Button>
+          <Button Command="{x:Static local:AppCopy.CopyTextCommand}"
+                  CommandParameter="{Binding $parent[TextBox].Text}">
             <Button.Styles>
               <Style Selector="Button">
                 <Setter Property="VerticalAlignment" Value="Center" />

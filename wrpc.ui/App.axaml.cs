@@ -5,8 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Input.Platform;
 using Avalonia.Markup.Xaml;
+using Avalonia.VisualTree;
+using CommunityToolkit.Mvvm.Input;
 using WasabiRpc.Models;
 using WasabiRpc.Models.App;
 using WasabiRpc.Services;
@@ -21,6 +25,8 @@ public partial class App : Application
     private string StateFileName => "state.json";
 
     private string DefaultServerPrefix => "http://127.0.0.1:37128";
+
+    public static IRelayCommand<string?>? CopyTextCommand = (Current as App)?.CopyCommand;
 
     public override void Initialize()
     {
@@ -127,5 +133,41 @@ public partial class App : Application
         var mainViewModel = new MainWindowViewModel(navigationService, rpcService, defaultState);
 
         return mainViewModel;
+    }
+
+    private static void CopyText(string? text, IClipboard clipboard)
+    {
+        try
+        {
+            clipboard.SetTextAsync(text);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    [RelayCommand]
+    private void Copy(string? text)
+    {
+        switch (ApplicationLifetime)
+        {
+            case IClassicDesktopStyleApplicationLifetime classicDesktopStyleApplicationLifetime:
+            {
+                if (classicDesktopStyleApplicationLifetime.MainWindow?.Clipboard is { } clipboard)
+                {
+                    CopyText(text, clipboard);
+                }
+                break;
+            }
+            case ISingleViewApplicationLifetime singleViewApplicationLifetime:
+            {
+                if (singleViewApplicationLifetime?.MainView?.GetVisualRoot() is TopLevel { Clipboard: { } clipboard })
+                {
+                    CopyText(text, clipboard);
+                }
+                break;
+            }
+        }
     }
 }
