@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using WasabiRpc.Models.App;
 
@@ -11,6 +10,4 @@ public interface IRpcServiceViewModel
     string? ServerPrefix { get; set; }
 
     bool BatchMode { get; set; }
-
-    IList<Batch>? Batches { get; set; }
 }

@@ -13,8 +13,10 @@ using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.Input;
 using WasabiRpc.Models;
 using WasabiRpc.Models.App;
+using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Services;
 using WasabiRpc.ViewModels;
+using WasabiRpc.ViewModels.BatchMode;
 using WasabiRpc.ViewModels.Services;
 using WasabiRpc.Views;
 
@@ -108,7 +110,8 @@ public partial class App : Application
                 BatchMode = mainViewModel.RpcService.BatchMode,
                 Wallets = wallets?.ToList(),
                 SelectedWallet = mainViewModel.SelectedWallet?.WalletName ?? "",
-                Batches = mainViewModel.RpcService.Batches?.ToList()
+                // TODO:
+                // Batches = mainViewModel.RpcService.Batches?.ToList()
             };
 
             var json = JsonSerializer.Serialize(state, ModelsJsonContext.Default.State);
@@ -127,12 +130,34 @@ public partial class App : Application
         var navigationService = new NavigationServiceViewModel();
         var rpcService = new RpcServiceViewModel(httpService, defaultState.ServerPrefix ?? DefaultServerPrefix, defaultState.BatchMode)
         {
-            Batches = new ObservableCollection<Batch>(defaultState.Batches ?? new List<Batch>())
+            // TODO:
+            // Batches = new ObservableCollection<Batch>(defaultState.Batches ?? new List<Batch>())
         };
 
-        var mainViewModel = new MainWindowViewModel(rpcService, navigationService, defaultState);
+        var batchManager = CreateBatchManager(rpcService, navigationService);
+
+        var mainViewModel = new MainWindowViewModel(rpcService, navigationService, batchManager, defaultState);
 
         return mainViewModel;
+    }
+
+    private IBatchManager CreateBatchManager(RpcServiceViewModel rpcService, NavigationServiceViewModel navigationService)
+    {
+        var batchManager = new BatchManagerViewModel(rpcService, navigationService);
+
+        var batch = new BatchViewModel(rpcService, navigationService)
+        {
+            Jobs = new ObservableCollection<IJob>()
+        };
+
+        batchManager.Batches = new ObservableCollection<IBatch>
+        {
+            batch
+        };
+
+        batchManager.SelectedBatch = batch;
+
+        return batchManager;
     }
 
     private static void CopyText(string? text, IClipboard clipboard)

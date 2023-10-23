@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,12 +15,14 @@ public partial class RpcServiceViewModel : ViewModelBase, IRpcServiceViewModel
     private readonly IHttpService _httpService;
     [ObservableProperty] private string? _serverPrefix;
     [ObservableProperty] private bool _batchMode;
-    [ObservableProperty] private IList<Batch>? _batches;
-    [ObservableProperty] private Batch? _currentBatch;
 
-    public RpcServiceViewModel(IHttpService httpService, string serverPrefix, bool batchMode)
+    public RpcServiceViewModel(
+        IHttpService httpService, 
+        string serverPrefix, 
+        bool batchMode)
     {
         _httpService = httpService;
+
         ServerPrefix = serverPrefix;
         BatchMode = batchMode;
     }
