@@ -17,6 +17,7 @@
     <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)"/>
     <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)"/>
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)"/>
+    <PackageReference Include="Avalonia.Svg.Skia" Version="$(AvaloniaSvgSkia)" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="$(CommunityToolkitMvvmVersion)"/>
     <PackageReference Include="SkiaSharp" Version="$(SkiaSharpVersion)"/>
     <PackageReference Include="SkiaSharp.HarfBuzz" Version="$(SkiaSharpVersion)"/>
