@@ -162,7 +162,7 @@ public partial class App : Application
             }
             case ISingleViewApplicationLifetime singleViewApplicationLifetime:
             {
-                if (singleViewApplicationLifetime?.MainView?.GetVisualRoot() is TopLevel { Clipboard: { } clipboard })
+                if (singleViewApplicationLifetime.MainView?.GetVisualRoot() is TopLevel { Clipboard: { } clipboard })
                 {
                     CopyText(text, clipboard);
                 }
