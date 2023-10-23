@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiRpc.ViewModels.Factories;
 using WasabiRpc.Models.App;
+using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Models.Info;
 using WasabiRpc.Models.Params.Transactions;
 using WasabiRpc.Models.Results;
@@ -24,8 +25,8 @@ public partial class SpeedUpTransactionViewModel : RoutableMethodViewModel
     [ObservableProperty]
     private string? _txId;
 
-    public SpeedUpTransactionViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
-        : base(rpcService, navigationService)
+    public SpeedUpTransactionViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
+        : base(rpcService, navigationService, batchManager)
     {
         WalletName = walletName;
         WalletPassword = "";

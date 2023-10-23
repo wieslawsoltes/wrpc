@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiRpc.Models.App;
+using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Models.Info;
 using WasabiRpc.Models.Results;
 using WasabiRpc.Models.Services;
@@ -12,12 +13,14 @@ namespace WasabiRpc.ViewModels.Methods;
 
 public partial class TransactionViewModel : RoutableViewModel
 {
+    private readonly IBatchManager _batchManager;
     [ObservableProperty] private string _walletName;
     [ObservableProperty] private bool _isSelected;
 
-    public TransactionViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName, TransactionInfoViewModel transactionInfo)
+    public TransactionViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName, TransactionInfoViewModel transactionInfo)
         : base(rpcService, navigationService)
     {
+        _batchManager = batchManager;
         WalletName = walletName;
         TransactionInfo = transactionInfo;
         IsSelected = false;
@@ -28,7 +31,7 @@ public partial class TransactionViewModel : RoutableViewModel
     [RelayCommand]
     private async Task SpeedUpTransaction()
     {
-        var speedUpTransactionViewModel = new SpeedUpTransactionViewModel(RpcService, NavigationService, WalletName)
+        var speedUpTransactionViewModel = new SpeedUpTransactionViewModel(RpcService, NavigationService, _batchManager, WalletName)
         {
             TxId = TransactionInfo.Tx,
             // TODO: WalletPassword
@@ -53,7 +56,7 @@ public partial class TransactionViewModel : RoutableViewModel
     [RelayCommand]
     private async Task CancelTransaction()
     {
-        var cancelTransactionViewModel = new CancelTransactionViewModel(RpcService, NavigationService, WalletName)
+        var cancelTransactionViewModel = new CancelTransactionViewModel(RpcService, NavigationService, _batchManager, WalletName)
         {
             TxId = TransactionInfo.Tx,
             // TODO: WalletPassword

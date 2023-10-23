@@ -5,6 +5,7 @@
              xmlns:app="using:WasabiRpc.Models.App"
              xmlns:vm="using:WasabiRpc.ViewModels"
              xmlns:vms="using:WasabiRpc.ViewModels.Services"
+             xmlns:vmbm="using:WasabiRpc.ViewModels.BatchMode"
              xmlns:controls="using:WasabiRpc.Controls"
              xmlns:views="using:WasabiRpc.Views"
              xmlns:viewsServices="using:WasabiRpc.Views.Services"
@@ -25,6 +26,11 @@
           </x:Arguments>
         </vms:RpcServiceViewModel>
         <vms:NavigationServiceViewModel />
+        <vmbm:BatchManagerViewModel>
+          <x:Arguments>
+            <!-- TODO -->
+          </x:Arguments>
+        </vmbm:BatchManagerViewModel>
         <app:State />
       </x:Arguments>
     </vm:MainWindowViewModel>

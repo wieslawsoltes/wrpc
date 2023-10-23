@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiRpc.ViewModels.Factories;
 using WasabiRpc.Models.App;
+using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Models.Results;
 using WasabiRpc.Models.Services;
 
@@ -14,8 +15,8 @@ public partial class StartCoinJoinSweepViewModel : RoutableMethodViewModel
     [ObservableProperty] private string? _walletPassword;
     [ObservableProperty] private string? _outputWalletName;
 
-    public StartCoinJoinSweepViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
-        : base(rpcService, navigationService)
+    public StartCoinJoinSweepViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
+        : base(rpcService, navigationService, batchManager)
     {
         WalletName = walletName;
         WalletPassword = "";

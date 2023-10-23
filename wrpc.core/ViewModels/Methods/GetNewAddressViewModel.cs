@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiRpc.ViewModels.Factories;
 using WasabiRpc.Models.App;
+using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Models.Results;
 using WasabiRpc.Models.Services;
 
@@ -16,8 +17,8 @@ public partial class GetNewAddressViewModel : RoutableMethodViewModel
     [ObservableProperty] 
     private string? _label;
 
-    public GetNewAddressViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
-        : base(rpcService, navigationService)
+    public GetNewAddressViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
+        : base(rpcService, navigationService, batchManager)
     {
         WalletName = walletName;
         Label = "Label";

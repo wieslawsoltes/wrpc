@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiRpc.ViewModels.Factories;
 using WasabiRpc.Models.App;
+using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Models.Params.Send;
 using WasabiRpc.Models.Results;
 using WasabiRpc.Models.Services;
@@ -49,8 +50,8 @@ public partial class SendViewModel : RoutableMethodViewModel
     [ObservableProperty]
     private ObservableCollection<CoinViewModel> _coins;
 
-    public SendViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
-        : base(rpcService, navigationService)
+    public SendViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
+        : base(rpcService, navigationService, batchManager)
     {
         WalletName = walletName;
         WalletPassword = "";
@@ -150,14 +151,14 @@ public partial class SendViewModel : RoutableMethodViewModel
             return;
         }
 
-        var listUnspentCoinsViewModel = new ListUnspentCoinsViewModel(RpcService, NavigationService, WalletName);
+        var listUnspentCoinsViewModel = new ListUnspentCoinsViewModel(RpcService, NavigationService, BatchManager, WalletName);
         var job = listUnspentCoinsViewModel.CreateJob();
         var result = await RpcService.Send<RpcListUnspentCoinsResult>(job, NavigationService);
         if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
         {
             var coins = rpcListUnspentCoinsResult
                 .Result
-                .Select(x => new CoinViewModel(RpcService, NavigationService, WalletName, x.ToViewModel(RpcService, NavigationService)));
+                .Select(x => new CoinViewModel(RpcService, NavigationService, BatchManager, WalletName, x.ToViewModel(RpcService, NavigationService)));
 
             Coins = new ObservableCollection<CoinViewModel>(coins);
         }

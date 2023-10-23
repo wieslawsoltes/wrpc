@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiRpc.ViewModels.Factories;
 using WasabiRpc.Models.App;
+using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Models.Info;
 using WasabiRpc.Models.Results;
 using WasabiRpc.Models.Services;
@@ -13,8 +14,8 @@ public partial class ListKeysViewModel : RoutableMethodViewModel
 {
     [ObservableProperty] private string? _walletName;
 
-    public ListKeysViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
-        : base(rpcService, navigationService)
+    public ListKeysViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
+        : base(rpcService, navigationService, batchManager)
     {
         WalletName = walletName;
     }

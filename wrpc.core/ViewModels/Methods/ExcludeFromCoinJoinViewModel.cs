@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiRpc.ViewModels.Factories;
 using WasabiRpc.Models.App;
+using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Models.Params.Transactions;
 using WasabiRpc.Models.Results;
 using WasabiRpc.Models.Services;
@@ -27,8 +28,8 @@ public partial class ExcludeFromCoinJoinViewModel : RoutableMethodViewModel
     [ObservableProperty]
     private bool _exclude;
 
-    public ExcludeFromCoinJoinViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
-        : base(rpcService, navigationService)
+    public ExcludeFromCoinJoinViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
+        : base(rpcService, navigationService, batchManager)
     {
         WalletName = walletName;
         TransactionId = "";

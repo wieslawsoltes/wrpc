@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiRpc.ViewModels.Factories;
 using WasabiRpc.Models.App;
+using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Models.Results;
 using WasabiRpc.Models.Services;
 
@@ -14,8 +15,8 @@ public partial class BroadcastViewModel : RoutableMethodViewModel
     [ObservableProperty] 
     private string? _tx;
 
-    public BroadcastViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
-        : base(rpcService, navigationService)
+    public BroadcastViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager)
+        : base(rpcService, navigationService, batchManager)
     {
     }
 

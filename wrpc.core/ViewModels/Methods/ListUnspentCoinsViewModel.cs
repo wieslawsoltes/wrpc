@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiRpc.ViewModels.Factories;
 using WasabiRpc.Models.App;
+using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Models.Info;
 using WasabiRpc.Models.Results;
 using WasabiRpc.Models.Services;
@@ -13,8 +14,8 @@ public partial class ListUnspentCoinsViewModel : RoutableMethodViewModel
 {
     [ObservableProperty] private string? _walletName;
 
-    public ListUnspentCoinsViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, string walletName)
-        : base(rpcService, navigationService)
+    public ListUnspentCoinsViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
+        : base(rpcService, navigationService, batchManager)
     {
         WalletName = walletName;
     }
@@ -49,7 +50,7 @@ public partial class ListUnspentCoinsViewModel : RoutableMethodViewModel
     {
         if (rpcResult is RpcListUnspentCoinsResult rpcListUnspentCoinsResult && WalletName is not null)
         {
-            NavigationService.NavigateTo(new ListUnspentCoinsInfo { Coins = rpcListUnspentCoinsResult.Result }.ToViewModel(RpcService, NavigationService, WalletName));
+            NavigationService.NavigateTo(new ListUnspentCoinsInfo { Coins = rpcListUnspentCoinsResult.Result }.ToViewModel(RpcService, NavigationService, BatchManager, WalletName));
         }
     }
 
