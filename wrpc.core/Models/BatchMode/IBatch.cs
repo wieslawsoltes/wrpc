@@ -18,5 +18,5 @@ public interface IBatch
 
     IRelayCommand<Job> AddJobCommand { get; }
 
-    IAsyncRelayCommand RunJobCommand { get; }
+    IAsyncRelayCommand<IJob> RunJobCommand { get; }
 }

@@ -15,5 +15,5 @@ public interface IBatchManager
 
     IRelayCommand AddBatchCommand { get; } 
 
-    IAsyncRelayCommand RunBatchCommand { get; }
+    IAsyncRelayCommand<IBatch> RunBatchCommand { get; }
 }

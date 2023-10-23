@@ -71,7 +71,7 @@ public partial class BatchManagerViewModel : RoutableViewModel, IBatchManager
     }
 
     [RelayCommand(CanExecute = nameof(CanRunBatch))]
-    private async Task RunBatch()
+    private async Task RunBatch(IBatch batch)
     {
         IsRunning = true;
 
