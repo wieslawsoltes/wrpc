@@ -12,10 +12,8 @@ using WasabiRpc.ViewModels.Methods;
 
 namespace WasabiRpc.ViewModels;
 
-public partial class MainWindowViewModel : ViewModelBase
+public partial class MainWindowViewModel : RoutableViewModel
 {
-    [ObservableProperty] private IRpcServiceViewModel _rpcService;
-
     [NotifyCanExecuteChangedFor(nameof(AddWalletCommand))]
     [NotifyCanExecuteChangedFor(nameof(RemoveWalletCommand))]
     [ObservableProperty]
@@ -43,11 +41,9 @@ public partial class MainWindowViewModel : ViewModelBase
 
     [ObservableProperty] private ObservableCollection<RpcMethodViewModel>? _rpcMethods;
 
-    public MainWindowViewModel(INavigationService navigationService, IRpcServiceViewModel rpcService, State state)
+    public MainWindowViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, State state)
+        : base(rpcService, navigationService)
     {
-        RpcService = rpcService;
-        NavigationService = navigationService;
-
         var wallets = 
             state.Wallets?.Select(x => new WalletViewModel { WalletName = x }) ?? new List<WalletViewModel>();
 
@@ -84,8 +80,6 @@ public partial class MainWindowViewModel : ViewModelBase
             new ("Stop", StopCommand)
         };
     }
-
-    public INavigationService NavigationService { get; }
 
     [RelayCommand]
     private async Task LoadWallets()

@@ -130,7 +130,7 @@ public partial class App : Application
             Batches = new ObservableCollection<Batch>(defaultState.Batches ?? new List<Batch>())
         };
 
-        var mainViewModel = new MainWindowViewModel(navigationService, rpcService, defaultState);
+        var mainViewModel = new MainWindowViewModel(rpcService, navigationService, defaultState);
 
         return mainViewModel;
     }
