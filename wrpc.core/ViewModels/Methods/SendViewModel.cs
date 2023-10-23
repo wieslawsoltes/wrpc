@@ -139,7 +139,7 @@ public partial class SendViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
-        return new Job(requestBody, rpcServerUri);
+        return new Job("send", requestBody, rpcServerUri);
     }
 
     [RelayCommand]

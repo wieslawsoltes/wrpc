@@ -62,6 +62,6 @@ public partial class ListUnspentCoinsViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
-        return new Job(requestBody, rpcServerUri);
+        return new Job("listunspentcoins", requestBody, rpcServerUri);
     }
 }

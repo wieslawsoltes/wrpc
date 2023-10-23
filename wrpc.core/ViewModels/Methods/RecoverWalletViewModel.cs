@@ -82,6 +82,6 @@ public partial class RecoverWalletViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}";
 
-        return new Job(requestBody, rpcServerUri);
+        return new Job("recoverwallet", requestBody, rpcServerUri);
     }
 }

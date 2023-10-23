@@ -62,6 +62,6 @@ public partial class ListKeysViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
-        return new Job(requestBody, rpcServerUri);
+        return new Job("listkeys", requestBody, rpcServerUri);
     }
 }

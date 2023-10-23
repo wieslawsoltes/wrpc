@@ -58,6 +58,6 @@ public partial class StopCoinJoinViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
-        return new Job(requestBody, rpcServerUri);
+        return new Job("stopcoinjoin", requestBody, rpcServerUri);
     }
 }

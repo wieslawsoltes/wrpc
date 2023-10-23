@@ -5,6 +5,9 @@ namespace WasabiRpc.Models.App;
 
 public class Batch
 {
+    [JsonPropertyName("name")]
+    public string? Name { get; set; }
+
     [JsonPropertyName("jobs")]
-    public List<Job>? Jobs { get; set; } 
+    public List<Job>? Jobs { get; set; }
 }
