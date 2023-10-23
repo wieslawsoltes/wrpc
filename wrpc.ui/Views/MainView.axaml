@@ -17,7 +17,6 @@
   <Design.DataContext>
     <vm:MainWindowViewModel>
       <x:Arguments>
-        <vms:NavigationServiceViewModel />
         <vms:RpcServiceViewModel>
           <x:Arguments>
             <services:HttpService />
@@ -25,6 +24,7 @@
             <x:Boolean>False</x:Boolean>
           </x:Arguments>
         </vms:RpcServiceViewModel>
+        <vms:NavigationServiceViewModel />
         <app:State />
       </x:Arguments>
     </vm:MainWindowViewModel>
