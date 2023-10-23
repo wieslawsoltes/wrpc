@@ -55,29 +55,35 @@ public partial class MainWindowViewModel : RoutableViewModel
 
         RpcMethods = new ObservableCollection<RpcMethodViewModel>
         {
+            // Backend
             new ("GetStatus", GetStatusCommand),
+            new ("Stop", StopCommand),
+            // Wallet
             new ("CreateWallet", CreateWalletCommand),
             new ("RecoverWallet", RecoverWalletCommand),
             new ("LoadWallet", LoadWalletCommand),
+            // Info
+            new ("GetWalletInfo", GetWalletInfoCommand),
+            new ("ListWallets", ListWalletsCommand),
             new ("ListCoins", ListCoinsCommand),
             new ("ListUnspentCoins", ListUnspentCoinsCommand),
-            new ("GetWalletInfo", GetWalletInfoCommand),
+            new ("GetHistory", GetHistoryCommand),
+            new ("ListKeys", ListKeysCommand),
+            new ("GetFeeRates", GetFeeRatesCommand),
+            // Receive
             new ("GetNewAddress", GetNewAddressCommand),
+            // Send
             new ("Send", SendCommand),
+            new ("Build", BuildCommand),
+            new ("Broadcast", BroadcastCommand),
+            new ("PayInCoinjoin", PayInCoinjoinCommand),
             new ("SpeedUpTransaction", SpeedUpTransactionCommand),
             new ("CancelTransaction", CancelTransactionCommand),
-            new ("Build", BuildCommand),
-            new ("PayInCoinjoin", PayInCoinjoinCommand),
-            new ("Broadcast", BroadcastCommand),
-            new ("GetHistory", GetHistoryCommand),
-            new ("ExcludeFromCoinjoin", ExcludeFromCoinjoinCommand),
-            new ("ListKeys", ListKeysCommand),
+            // Coinjoin
             new ("StartCoinJoin", StartCoinJoinCommand),
             new ("StartCoinJoinSweep", StartCoinJoinSweepCommand),
             new ("StopCoinJoin", StopCoinJoinCommand),
-            new ("GetFeeRates", GetFeeRatesCommand),
-            new ("ListWallets", ListWalletsCommand),
-            new ("Stop", StopCommand)
+            new ("ExcludeFromCoinjoin", ExcludeFromCoinjoinCommand),
         };
     }
 
