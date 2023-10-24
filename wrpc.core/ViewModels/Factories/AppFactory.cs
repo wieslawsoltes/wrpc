@@ -1,4 +1,5 @@
 using WasabiRpc.Models.App;
+using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Models.Services;
 using WasabiRpc.ViewModels.App;
 
@@ -13,15 +14,6 @@ public static class AppFactory
             Message = error.Message,
         };
     }
-
-    public static JsonViewModel ToViewModel(this Json json, IRpcServiceViewModel rpcService, INavigationService navigationService)
-    {
-        return new JsonViewModel(rpcService, navigationService)
-        {
-            Content = json.Content,
-        };
-    }
-
 
     public static SuccessViewModel ToViewModel(this Success success, IRpcServiceViewModel rpcService, INavigationService navigationService)
     {

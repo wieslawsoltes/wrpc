@@ -1,10 +1,11 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiRpc.Models.App;
+using WasabiRpc.Models.Services;
 
 namespace WasabiRpc.Models.BatchMode;
 
-public interface IBatch
+public interface IBatch : IRoutable
 {
     string? Name { get; set; }
 

@@ -97,6 +97,12 @@ public partial class MainWindowViewModel : RoutableViewModel
     private IBatchManager BatchManager { get; }
 
     [RelayCommand]
+    private void ShowBatchManager()
+    {
+        NavigationService.NavigateTo(BatchManager);
+    }
+
+    [RelayCommand]
     private async Task LoadWallets()
     {
         var listWalletsViewModel = new ListWalletsViewModel(RpcService, NavigationService, BatchManager);

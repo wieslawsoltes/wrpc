@@ -6,9 +6,11 @@
              xmlns:vmi="using:WasabiRpc.ViewModels.Info"
              xmlns:vms="using:WasabiRpc.ViewModels.Services"
              xmlns:vmm="using:WasabiRpc.ViewModels.Methods"
+             xmlns:vmbm="using:WasabiRpc.ViewModels.BatchMode"
              xmlns:controls="using:WasabiRpc.Controls"
              xmlns:viewsApp="using:WasabiRpc.Views.App"
              xmlns:viewsMethods="using:WasabiRpc.Views.Methods"
+             xmlns:viewsBatchMode="using:WasabiRpc.Views.BatchMode"
              xmlns:viewsInfo="using:WasabiRpc.Views.Info"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="WasabiRpc.Views.Services.NavigationServiceView"
@@ -26,12 +28,6 @@
         <controls:NavigateBackControl Header="Success"
                                       BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsApp:SuccessView />
-        </controls:NavigateBackControl>
-      </DataTemplate>
-      <DataTemplate DataType="vma:JsonViewModel">
-        <controls:NavigateBackControl Header="Json"
-                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
-          <viewsApp:JsonView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <!-- ViewModels: Methods -->
@@ -226,6 +222,31 @@
         <controls:NavigateBackControl Header="Wallets"
                                       BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsInfo:ListWalletsInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <!-- BatchMode -->
+      <DataTemplate DataType="vmbm:AddJobViewModel">
+        <controls:NavigateBackControl Header="Batch Job"
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+          <viewsBatchMode:AddJobView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmbm:BatchManagerViewModel">
+        <controls:NavigateBackControl Header="Batch Manager"
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+          <viewsBatchMode:BatchManagerView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmbm:BatchViewModel">
+        <controls:NavigateBackControl Header="Batch"
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+          <viewsBatchMode:BatchView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmbm:JobViewModel">
+        <controls:NavigateBackControl Header="Job"
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+          <viewsBatchMode:JobView />
         </controls:NavigateBackControl>
       </DataTemplate>
     </ContentControl.DataTemplates>

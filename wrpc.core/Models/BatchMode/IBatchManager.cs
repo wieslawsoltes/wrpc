@@ -1,9 +1,10 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
+using WasabiRpc.Models.Services;
 
 namespace WasabiRpc.Models.BatchMode;
 
-public interface IBatchManager
+public interface IBatchManager : IRoutable
 {
     ObservableCollection<IBatch>? Batches { get; set; }
 

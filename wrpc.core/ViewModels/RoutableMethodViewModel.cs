@@ -6,6 +6,8 @@ using WasabiRpc.Models.App;
 using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Models.Results;
 using WasabiRpc.Models.Services;
+using WasabiRpc.ViewModels.App;
+using WasabiRpc.ViewModels.BatchMode;
 
 namespace WasabiRpc.ViewModels;
 
@@ -37,7 +39,7 @@ public abstract partial class RoutableMethodViewModel : RoutableViewModel
         {
             var options = new JsonSerializerOptions { WriteIndented = true };
             var json = JsonSerializer.Serialize(job, typeof(Job), new ModelsJsonContext(options));
-            NavigationService.ClearAndNavigateTo(new Json { Content = json }.ToViewModel(RpcService, NavigationService));
+            NavigationService.ClearAndNavigateTo(new AddJobViewModel(RpcService, NavigationService, BatchManager, job, json));
         }
         catch (Exception e)
         {
