@@ -92,6 +92,6 @@ public partial class ExcludeFromCoinJoinViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
-        return new Job("excludefromcoinjoin", requestBody, rpcServerUri);
+        return new Job("excludefromcoinjoin", requestBody, rpcServerUri, typeof(RpcExcludeFromCoinJoinResult));
     }
 }

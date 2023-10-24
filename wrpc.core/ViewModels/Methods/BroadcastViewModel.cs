@@ -73,6 +73,6 @@ public partial class BroadcastViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}";
 
-        return new Job("broadcast", requestBody, rpcServerUri);
+        return new Job("broadcast", requestBody, rpcServerUri, typeof(RpcBroadcastResult));
     }
 }

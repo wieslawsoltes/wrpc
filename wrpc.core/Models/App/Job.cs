@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json.Serialization;
 using WasabiRpc.Models.Results;
 
@@ -14,11 +15,15 @@ public class Job
     [JsonPropertyName("rpcServerUri")]
     public string RpcServerUri { get; set; }
 
+    [JsonPropertyName("resultType")]
+    public string ResultType { get; set; }
+
     [JsonConstructor]
-    public Job(string name, RpcMethod rpcMethod, string rpcServerUri)
+    public Job(string name, RpcMethod rpcMethod, string rpcServerUri, Type resultType)
     {
         Name = name;
         RpcMethod = rpcMethod;
         RpcServerUri = rpcServerUri;
+        ResultType = resultType.ToString();
     }
 }

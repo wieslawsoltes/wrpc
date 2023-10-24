@@ -77,6 +77,6 @@ public partial class GetNewAddressViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
-        return new Job("getnewaddress", requestBody, rpcServerUri);
+        return new Job("getnewaddress", requestBody, rpcServerUri, typeof(RpcGetNewAddressResult));
     }
 }

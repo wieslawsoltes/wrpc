@@ -142,7 +142,7 @@ public partial class BuildViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
         
-        return new Job("build", requestBody, rpcServerUri);
+        return new Job("build", requestBody, rpcServerUri, typeof(RpcBuildResult));
     }
 
     [RelayCommand]

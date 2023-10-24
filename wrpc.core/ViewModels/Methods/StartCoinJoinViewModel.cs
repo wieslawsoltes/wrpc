@@ -71,6 +71,6 @@ public partial class StartCoinJoinViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
-        return new Job("startcoinjoin", requestBody, rpcServerUri);
+        return new Job("startcoinjoin", requestBody, rpcServerUri, typeof(RpcStartCoinJoinResult));
     }
 }

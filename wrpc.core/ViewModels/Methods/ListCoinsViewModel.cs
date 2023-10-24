@@ -63,6 +63,6 @@ public partial class ListCoinsViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
-        return new Job("listcoins", requestBody, rpcServerUri);
+        return new Job("listcoins", requestBody, rpcServerUri, typeof(RpcListCoinsResult));
     }
 }

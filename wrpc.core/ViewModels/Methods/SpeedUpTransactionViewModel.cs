@@ -90,6 +90,6 @@ public partial class SpeedUpTransactionViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
-        return new Job("speeduptransaction", requestBody, rpcServerUri);
+        return new Job("speeduptransaction", requestBody, rpcServerUri, typeof(RpcSpeedUpTransactionResult));
     }
 }

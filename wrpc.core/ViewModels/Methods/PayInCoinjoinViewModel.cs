@@ -90,6 +90,6 @@ public partial class PayInCoinjoinViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
-        return new Job("payincoinjoin", requestBody, rpcServerUri);
+        return new Job("payincoinjoin", requestBody, rpcServerUri, typeof(RpcPayInCoinjoinResult));
     }
 }

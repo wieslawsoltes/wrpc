@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -76,7 +77,7 @@ public partial class RpcServiceViewModel : ViewModelBase, IRpcServiceViewModel
         return default;
     }
 
-    public async Task<object?> Send<TResult>(RpcMethod[] rpcMethods, string rpcServerUri, INavigationService navigationService) where TResult : class
+    public async Task<object?> Send(RpcMethod[] rpcMethods, string rpcServerUri, string[] resultTypes, INavigationService navigationService)
     {
         string? responseBodyJson;
 
@@ -95,33 +96,68 @@ public partial class RpcServiceViewModel : ViewModelBase, IRpcServiceViewModel
             return new Error { Message = $"{e.Message}"};
         }
 
-        if (typeof(TResult) == typeof(string))
+        using var jsonDocument = JsonDocument.Parse(responseBodyJson);
+
+        if (jsonDocument.RootElement.ValueKind != JsonValueKind.Array)
         {
-            return responseBodyJson;
-        }
-        
-        try
-        {
-            return JsonSerializer.Deserialize(responseBodyJson, typeof(RpcErrorResult), ModelsJsonContext.Default);
-        }
-        catch (Exception)
-        {
-            // ignored
+            return default;
         }
 
-        try
+        var length = jsonDocument.RootElement.GetArrayLength();
+        if (length != resultTypes.Length)
         {
-            var okResult = JsonSerializer.Deserialize(responseBodyJson, typeof(TResult), ModelsJsonContext.Default);
-            if (okResult is not null)
+            return default;
+        }
+
+        var results = new List<object?>();
+
+        for (var i = 0; i < length; i++)
+        {
+            var jsonElement = jsonDocument.RootElement[i];
+            var resultType = Type.GetType(resultTypes[i]);
+            if (resultType is null)
             {
-                return okResult;
+                results.Add(default);
+                continue;
             }
-        }
-        catch (Exception)
-        {
-            // ignored
+
+            if (resultType == typeof(string))
+            {
+                results.Add(responseBodyJson);
+                continue;
+            }
+
+            try
+            {
+                var errorResult = jsonElement.Deserialize(typeof(RpcErrorResult), ModelsJsonContext.Default);
+                if (errorResult is not null)
+                {
+                    results.Add(errorResult);
+                    continue;
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+
+            try
+            {
+                var okResult = jsonElement.Deserialize(resultType, ModelsJsonContext.Default);
+                if (okResult is not null)
+                {
+                    results.Add(okResult);
+                    continue;
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+
+            results.Add(default);
         }
 
-        return default;
+        return results;
     }
 }
