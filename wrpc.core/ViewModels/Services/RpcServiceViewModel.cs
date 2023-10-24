@@ -27,15 +27,64 @@ public partial class RpcServiceViewModel : ViewModelBase, IRpcServiceViewModel
         BatchMode = batchMode;
     }
 
-    public async Task<object?> Send<TResult>(Job job, INavigationService navigationService) where TResult: class
+    public async Task<object?> Send<TResult>(RpcMethod rpcMethod, string rpcServerUri, INavigationService navigationService) where TResult: class
     {
         string? responseBodyJson;
 
         try
         {
-            var requestBodyJson = JsonSerializer.Serialize(job.RpcMethod, typeof(RpcMethod), ModelsJsonContext.Default);
+            var requestBodyJson = JsonSerializer.Serialize(rpcMethod, typeof(RpcMethod), ModelsJsonContext.Default);
             var cts = new CancellationTokenSource();
-            responseBodyJson = await _httpService.GetResponseDataAsync(job.RpcServerUri, requestBodyJson, cts.Token);
+            responseBodyJson = await _httpService.GetResponseDataAsync(rpcServerUri, requestBodyJson, cts.Token);
+            if (responseBodyJson is null)
+            {
+                return new Error { Message = "Invalid response."};
+            }
+        }
+        catch (Exception e)
+        {
+            return new Error { Message = $"{e.Message}"};
+        }
+
+        if (typeof(TResult) == typeof(string))
+        {
+            return responseBodyJson;
+        }
+        
+        try
+        {
+            return JsonSerializer.Deserialize(responseBodyJson, typeof(RpcErrorResult), ModelsJsonContext.Default);
+        }
+        catch (Exception)
+        {
+            // ignored
+        }
+
+        try
+        {
+            var okResult = JsonSerializer.Deserialize(responseBodyJson, typeof(TResult), ModelsJsonContext.Default);
+            if (okResult is not null)
+            {
+                return okResult;
+            }
+        }
+        catch (Exception)
+        {
+            // ignored
+        }
+
+        return default;
+    }
+
+    public async Task<object?> Send<TResult>(RpcMethod[] rpcMethods, string rpcServerUri, INavigationService navigationService) where TResult : class
+    {
+        string? responseBodyJson;
+
+        try
+        {
+            var requestBodyJson = JsonSerializer.Serialize(rpcMethods, typeof(RpcMethod[]), ModelsJsonContext.Default);
+            var cts = new CancellationTokenSource();
+            responseBodyJson = await _httpService.GetResponseDataAsync(rpcServerUri, requestBodyJson, cts.Token);
             if (responseBodyJson is null)
             {
                 return new Error { Message = "Invalid response."};

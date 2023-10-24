@@ -107,7 +107,7 @@ public partial class MainWindowViewModel : RoutableViewModel
     {
         var listWalletsViewModel = new ListWalletsViewModel(RpcService, NavigationService, BatchManager);
         var job = listWalletsViewModel.CreateJob();
-        var result = await RpcService.Send<RpcListWalletsResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcListWalletsResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcListWalletsResult { Result: not null } rpcListWalletsResult)
         {
             var wallets = rpcListWalletsResult

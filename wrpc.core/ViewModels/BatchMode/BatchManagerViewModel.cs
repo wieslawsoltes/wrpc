@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiRpc.Models.BatchMode;
+using WasabiRpc.Models.Results;
 using WasabiRpc.Models.Services;
 
 namespace WasabiRpc.ViewModels.BatchMode;
@@ -33,7 +34,7 @@ public partial class BatchManagerViewModel : RoutableViewModel, IBatchManager
     private bool CanAddBatch()
     {
         return Batches is not null 
-               && IsRunning;
+               && !IsRunning;
     }
 
     [RelayCommand(CanExecute = nameof(CanAddBatch))]
@@ -50,7 +51,7 @@ public partial class BatchManagerViewModel : RoutableViewModel, IBatchManager
     {
         return Batches is not null 
                && SelectedBatch is not null
-               && IsRunning;
+               && !IsRunning;
     }
 
     [RelayCommand(CanExecute = nameof(CanRemoveBatch))]
@@ -67,7 +68,7 @@ public partial class BatchManagerViewModel : RoutableViewModel, IBatchManager
     {
         return Batches is not null 
                && SelectedBatch is not null
-               && IsRunning;
+               && !IsRunning;
     }
 
     [RelayCommand(CanExecute = nameof(CanRunBatch))]
@@ -75,9 +76,22 @@ public partial class BatchManagerViewModel : RoutableViewModel, IBatchManager
     {
         IsRunning = true;
 
-        await Task.Run(() =>
+        await Task.Run(async () => await Run(batch));
+
+        IsRunning = false;
+    }
+
+    private async Task Run(IBatch batch)
+    {
+        var serverPrefix = batch.Jobs?.FirstOrDefault()?.Job.RpcServerUri;
+        var rpcMethods = batch.Jobs?.Select(x => x.Job.RpcMethod).ToArray();
+        if (serverPrefix is not null && rpcMethods is not null)
         {
-            // TODO:
-        });
+            var results = await RpcService.Send<RpcResult[]>(rpcMethods, serverPrefix, NavigationService);
+            if (results is not null)
+            {
+                // TODO:
+            }
+        }
     }
 }

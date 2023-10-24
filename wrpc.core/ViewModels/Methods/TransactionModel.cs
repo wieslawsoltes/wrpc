@@ -38,7 +38,7 @@ public partial class TransactionViewModel : RoutableViewModel
             WalletPassword = "",
         };
         var job = speedUpTransactionViewModel.CreateJob();
-        var result = await RpcService.Send<RpcSpeedUpTransactionResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcSpeedUpTransactionResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcSpeedUpTransactionResult rpcSpeedUpTransactionResult)
         {
             NavigationService.NavigateTo(new BuildInfo { Tx = rpcSpeedUpTransactionResult.Result }.ToViewModel(RpcService, NavigationService));
@@ -63,7 +63,7 @@ public partial class TransactionViewModel : RoutableViewModel
             WalletPassword = "",
         };
         var job = cancelTransactionViewModel.CreateJob();
-        var result = await RpcService.Send<RpcCancelTransactionResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcCancelTransactionResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcCancelTransactionResult rpcCancelTransactionResult)
         {
             NavigationService.NavigateTo(new BuildInfo { Tx = rpcCancelTransactionResult.Result }.ToViewModel(RpcService, NavigationService));

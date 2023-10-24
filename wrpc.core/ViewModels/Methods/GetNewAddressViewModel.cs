@@ -41,7 +41,7 @@ public partial class GetNewAddressViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcGetNewAddressResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcGetNewAddressResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcGetNewAddressResult { Result: not null } rpcGetNewAddressResult)
         {
             OnRpcSuccess(rpcGetNewAddressResult);

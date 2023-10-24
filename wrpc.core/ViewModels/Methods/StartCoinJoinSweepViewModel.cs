@@ -34,7 +34,7 @@ public partial class StartCoinJoinSweepViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcStartCoinJoinSweepResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcStartCoinJoinSweepResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcStartCoinJoinSweepResult rpcStartCoinJoinSweepResult)
         {
             OnRpcSuccess(rpcStartCoinJoinSweepResult);

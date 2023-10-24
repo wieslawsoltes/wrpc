@@ -31,7 +31,7 @@ public partial class GetHistoryViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcGetHistoryResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcGetHistoryResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcGetHistoryResult { Result: not null } rpcGetHistoryResult)
         {
             OnRpcSuccess(rpcGetHistoryResult);

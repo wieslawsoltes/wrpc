@@ -36,7 +36,7 @@ public partial class StartCoinJoinViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcStartCoinJoinResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcStartCoinJoinResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcStartCoinJoinResult rpcStartCoinJoinResult)
         {
             OnRpcSuccess(rpcStartCoinJoinResult);

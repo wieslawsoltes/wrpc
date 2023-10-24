@@ -53,7 +53,7 @@ public partial class CancelTransactionViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcCancelTransactionResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcCancelTransactionResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcCancelTransactionResult { Result: not null } rpcCancelTransactionResult)
         {
             OnRpcSuccess(rpcCancelTransactionResult);

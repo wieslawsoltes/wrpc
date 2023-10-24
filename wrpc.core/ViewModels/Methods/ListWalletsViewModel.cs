@@ -27,7 +27,7 @@ public partial class ListWalletsViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcListWalletsResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcListWalletsResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcListWalletsResult { Result: not null } rpcListWalletsResult)
         {
             OnRpcSuccess(rpcListWalletsResult);

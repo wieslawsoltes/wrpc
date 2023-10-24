@@ -37,7 +37,7 @@ public partial class BatchViewModel : RoutableViewModel, IBatch
     private bool CanAddJob()
     {
         return Jobs is not null 
-               && IsRunning;
+               && !IsRunning;
     }
 
     [RelayCommand(CanExecute = nameof(CanAddJob))]
@@ -54,7 +54,7 @@ public partial class BatchViewModel : RoutableViewModel, IBatch
     {
         return Jobs is not null 
                && SelectedJob is not null
-               && IsRunning;
+               && !IsRunning;
     }
 
     [RelayCommand(CanExecute = nameof(CanRemoveJob))]
@@ -71,7 +71,7 @@ public partial class BatchViewModel : RoutableViewModel, IBatch
     {
         return Jobs is not null 
                && SelectedJob is not null
-               && IsRunning;
+               && !IsRunning;
     }
 
     [RelayCommand(CanExecute = nameof(CanRunJob))]
@@ -83,5 +83,7 @@ public partial class BatchViewModel : RoutableViewModel, IBatch
         {
             // TODO:
         });
+
+        IsRunning = false;
     }
 }

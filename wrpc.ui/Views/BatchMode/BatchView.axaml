@@ -15,7 +15,8 @@
     <Expander.Header>
       <Label Content="{Binding Jobs.Count, StringFormat={}Jobs: {0}, FallbackValue=0}" />
     </Expander.Header>
-    <ListBox ItemsSource="{Binding Jobs}">
+    <ListBox ItemsSource="{Binding Jobs}"
+             SelectedItem="{Binding SelectedJob}">
       <ListBox.ItemTemplate>
         <DataTemplate>
           <DockPanel>

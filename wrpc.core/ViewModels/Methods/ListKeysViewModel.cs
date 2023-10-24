@@ -31,7 +31,7 @@ public partial class ListKeysViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcListKeysResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcListKeysResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcListKeysResult { Result: not null } rpcListKeysResult)
         {
             OnRpcSuccess(rpcListKeysResult);

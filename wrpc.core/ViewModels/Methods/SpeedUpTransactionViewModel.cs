@@ -53,7 +53,7 @@ public partial class SpeedUpTransactionViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcSpeedUpTransactionResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcSpeedUpTransactionResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcSpeedUpTransactionResult { Result: not null } rpcSpeedUpTransactionResult)
         {
             OnRpcSuccess(rpcSpeedUpTransactionResult);

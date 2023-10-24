@@ -31,7 +31,7 @@ public partial class ListCoinsViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcListCoinsResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcListCoinsResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcListCoinsResult { Result: not null } rpcListCoinsResult)
         {
             OnRpcSuccess(rpcListCoinsResult);

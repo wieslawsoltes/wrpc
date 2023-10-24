@@ -42,7 +42,7 @@ public partial class CreateWalletViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcCreateWalletResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcCreateWalletResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcCreateWalletResult { Result: not null } rpcCreateWalletResult)
         {
             OnRpcSuccess(rpcCreateWalletResult);

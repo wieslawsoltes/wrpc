@@ -30,7 +30,7 @@ public partial class StopCoinJoinViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcStopCoinJoinResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcStopCoinJoinResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcStopCoinJoinResult rpcStopCoinJoinResult)
         {
             OnRpcSuccess(rpcStopCoinJoinResult);

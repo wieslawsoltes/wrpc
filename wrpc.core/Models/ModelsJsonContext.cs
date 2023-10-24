@@ -18,6 +18,8 @@ namespace WasabiRpc.Models;
 [JsonSerializable(typeof(List<Batch>))]
 // rpc
 [JsonSerializable(typeof(RpcMethod))]
+[JsonSerializable(typeof(List<RpcMethod>))]
+[JsonSerializable(typeof(RpcMethod[]))]
 [JsonSerializable(typeof(Rpc))]
 [JsonSerializable(typeof(RpcResult))]
 // error

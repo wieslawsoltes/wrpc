@@ -31,7 +31,7 @@ public partial class ListUnspentCoinsViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcListUnspentCoinsResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcListUnspentCoinsResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
         {
             OnRpcSuccess(rpcListUnspentCoinsResult);

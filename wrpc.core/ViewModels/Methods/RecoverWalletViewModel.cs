@@ -48,7 +48,7 @@ public partial class RecoverWalletViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcRecoverWalletResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcRecoverWalletResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcRecoverWalletResult rpcRecoverWalletResult)
         {
             OnRpcSuccess(rpcRecoverWalletResult);

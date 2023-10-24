@@ -90,7 +90,7 @@ public partial class BuildViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcBuildResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcBuildResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcBuildResult { Result: not null } rpcBuildResult)
         {
             OnRpcSuccess(rpcBuildResult);
@@ -155,7 +155,7 @@ public partial class BuildViewModel : RoutableMethodViewModel
 
         var listUnspentCoinsViewModel = new ListUnspentCoinsViewModel(RpcService, NavigationService, BatchManager, WalletName);
         var job = listUnspentCoinsViewModel.CreateJob();
-        var result = await RpcService.Send<RpcListUnspentCoinsResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcListUnspentCoinsResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
         {
             var coins = rpcListUnspentCoinsResult

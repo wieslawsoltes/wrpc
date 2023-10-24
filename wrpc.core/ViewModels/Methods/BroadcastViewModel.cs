@@ -37,7 +37,7 @@ public partial class BroadcastViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcBroadcastResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcBroadcastResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcBroadcastResult { Result: not null } rpcBroadcastResult)
         {
             OnRpcSuccess(rpcBroadcastResult);

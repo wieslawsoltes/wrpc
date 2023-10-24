@@ -26,7 +26,7 @@ public partial class StopViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<string>(job, NavigationService);
+        var result = await RpcService.Send<string>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is string)
         {
             OnRpcSuccess(new RpcResult());

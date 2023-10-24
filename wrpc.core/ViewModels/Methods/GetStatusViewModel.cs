@@ -26,7 +26,7 @@ public partial class GetStatusViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcGetStatusResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcGetStatusResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcGetStatusResult { Result: not null } rpcGetStatusResult)
         {
             OnRpcSuccess(rpcGetStatusResult);

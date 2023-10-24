@@ -27,7 +27,7 @@ public partial class GetFeeRatesViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcGetFeeRatesResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcGetFeeRatesResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcGetFeeRatesResult { Result: not null } rpcGetFeeRatesResult)
         {
             OnRpcSuccess(rpcGetFeeRatesResult);

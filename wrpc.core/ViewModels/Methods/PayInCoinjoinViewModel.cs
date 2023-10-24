@@ -53,7 +53,7 @@ public partial class PayInCoinjoinViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcPayInCoinjoinResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcPayInCoinjoinResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcPayInCoinjoinResult { Result: not null } payInCoinjoinResult)
         {
             OnRpcSuccess(payInCoinjoinResult);

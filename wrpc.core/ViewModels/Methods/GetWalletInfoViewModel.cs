@@ -30,7 +30,7 @@ public partial class GetWalletInfoViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcGetWalletInfoResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcGetWalletInfoResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcGetWalletInfoResult { Result: not null } rpcGetWalletInfoResult)
         {
             OnRpcSuccess(rpcGetWalletInfoResult);

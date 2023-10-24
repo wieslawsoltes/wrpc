@@ -57,7 +57,7 @@ public partial class ExcludeFromCoinJoinViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcExcludeFromCoinJoinResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcExcludeFromCoinJoinResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcExcludeFromCoinJoinResult rpcExcludeFromCoinJoinResult)
         {
             OnRpcSuccess(rpcExcludeFromCoinJoinResult);

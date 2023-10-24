@@ -30,7 +30,7 @@ public partial class LoadWalletViewModel : RoutableMethodViewModel
             return;
         }
 
-        var result = await RpcService.Send<RpcLoadWalletResult>(job, NavigationService);
+        var result = await RpcService.Send<RpcLoadWalletResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcLoadWalletResult rpcLoadWalletResult)
         {
             OnRpcSuccess(rpcLoadWalletResult);
