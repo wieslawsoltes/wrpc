@@ -90,6 +90,11 @@ public partial class BuildViewModel : RoutableMethodViewModel
             return;
         }
 
+        await Execute(job);
+    }
+
+    public override async Task Execute(Job job)
+    {
         var result = await RpcService.Send<RpcBuildResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcBuildResult { Result: not null } rpcBuildResult)
         {
@@ -154,7 +159,14 @@ public partial class BuildViewModel : RoutableMethodViewModel
         }
 
         var listUnspentCoinsViewModel = new ListUnspentCoinsViewModel(RpcService, NavigationService, BatchManager, WalletName);
+
         var job = listUnspentCoinsViewModel.CreateJob();
+
+        await ExecuteListUnspentCoins(job);
+    }
+
+    private async Task ExecuteListUnspentCoins(Job job)
+    {
         var result = await RpcService.Send<RpcListUnspentCoinsResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
         {

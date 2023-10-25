@@ -27,6 +27,11 @@ public partial class ListWalletsViewModel : RoutableMethodViewModel
             return;
         }
 
+        await Execute(job);
+    }
+
+    public override async Task Execute(Job job)
+    {
         var result = await RpcService.Send<RpcListWalletsResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcListWalletsResult { Result: not null } rpcListWalletsResult)
         {

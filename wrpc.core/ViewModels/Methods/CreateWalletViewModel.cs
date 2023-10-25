@@ -42,6 +42,11 @@ public partial class CreateWalletViewModel : RoutableMethodViewModel
             return;
         }
 
+        await Execute(job);
+    }
+
+    public override async Task Execute(Job job)
+    {
         var result = await RpcService.Send<RpcCreateWalletResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcCreateWalletResult { Result: not null } rpcCreateWalletResult)
         {

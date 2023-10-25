@@ -1,5 +1,6 @@
 using System;
 using System.Text.Json;
+using System.Threading.Tasks;
 using WasabiRpc.ViewModels.Factories;
 using WasabiRpc.Models;
 using WasabiRpc.Models.App;
@@ -48,4 +49,6 @@ public abstract partial class RoutableMethodViewModel : RoutableViewModel
     }
 
     public abstract Job CreateJob();
+
+    public abstract Task Execute(Job job);
 }

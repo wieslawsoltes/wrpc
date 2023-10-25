@@ -31,6 +31,11 @@ public partial class GetHistoryViewModel : RoutableMethodViewModel
             return;
         }
 
+        await Execute(job);
+    }
+
+    public override async Task Execute(Job job)
+    {
         var result = await RpcService.Send<RpcGetHistoryResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcGetHistoryResult { Result: not null } rpcGetHistoryResult)
         {

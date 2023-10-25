@@ -48,6 +48,11 @@ public partial class RecoverWalletViewModel : RoutableMethodViewModel
             return;
         }
 
+        await Execute(job);
+    }
+
+    public override async Task Execute(Job job)
+    {
         var result = await RpcService.Send<RpcRecoverWalletResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcRecoverWalletResult rpcRecoverWalletResult)
         {

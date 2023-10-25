@@ -30,6 +30,11 @@ public partial class LoadWalletViewModel : RoutableMethodViewModel
             return;
         }
 
+        await Execute(job);
+    }
+
+    public override async Task Execute(Job job)
+    {
         var result = await RpcService.Send<RpcLoadWalletResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcLoadWalletResult rpcLoadWalletResult)
         {

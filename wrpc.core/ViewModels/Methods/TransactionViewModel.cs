@@ -15,6 +15,7 @@ public partial class TransactionViewModel : RoutableViewModel
 {
     private readonly IBatchManager _batchManager;
     [ObservableProperty] private string _walletName;
+    [ObservableProperty] private string? _walletPassword;
     [ObservableProperty] private bool _isSelected;
 
     public TransactionViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName, TransactionInfoViewModel transactionInfo)
@@ -22,6 +23,8 @@ public partial class TransactionViewModel : RoutableViewModel
     {
         _batchManager = batchManager;
         WalletName = walletName;
+        // TODO: Set WalletPassword
+        WalletPassword = null;
         TransactionInfo = transactionInfo;
         IsSelected = false;
     }
@@ -34,10 +37,16 @@ public partial class TransactionViewModel : RoutableViewModel
         var speedUpTransactionViewModel = new SpeedUpTransactionViewModel(RpcService, NavigationService, _batchManager, WalletName)
         {
             TxId = TransactionInfo.Tx,
-            // TODO: WalletPassword
-            WalletPassword = "",
+            WalletPassword = WalletPassword,
         };
+
         var job = speedUpTransactionViewModel.CreateJob();
+
+        await Execute(job);
+    }
+
+    public async Task Execute(Job job)
+    {
         var result = await RpcService.Send<RpcSpeedUpTransactionResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcSpeedUpTransactionResult rpcSpeedUpTransactionResult)
         {
@@ -59,10 +68,16 @@ public partial class TransactionViewModel : RoutableViewModel
         var cancelTransactionViewModel = new CancelTransactionViewModel(RpcService, NavigationService, _batchManager, WalletName)
         {
             TxId = TransactionInfo.Tx,
-            // TODO: WalletPassword
-            WalletPassword = "",
+            WalletPassword = WalletPassword,
         };
+
         var job = cancelTransactionViewModel.CreateJob();
+
+        await ExecuteCancel(job);
+    }
+
+    private async Task ExecuteCancel(Job job)
+    {
         var result = await RpcService.Send<RpcCancelTransactionResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcCancelTransactionResult rpcCancelTransactionResult)
         {

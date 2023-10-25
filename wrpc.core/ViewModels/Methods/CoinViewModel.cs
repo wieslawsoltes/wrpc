@@ -47,13 +47,20 @@ public partial class CoinViewModel : RoutableViewModel
             N = 0,
             Exclude = exclude
         };
+
         var job = excludeFromCoinJoinViewModel.CreateJob();
+
+        await Execute(job, exclude);
+    }
+
+    public async Task Execute(Job job, bool exclude)
+    {
         var result = await RpcService.Send<RpcExcludeFromCoinJoinResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcExcludeFromCoinJoinResult)
         {
             NavigationService.NavigateTo(new Success
             {
-                Message = $"{(excludeFromCoinJoinViewModel.Exclude ? "Excluded" : "Removed the exclusion")} from coinjoin"
+                Message = $"{(exclude ? "Excluded" : "Removed the exclusion")} from coinjoin"
             }.ToViewModel(RpcService, NavigationService));
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)

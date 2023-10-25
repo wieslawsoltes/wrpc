@@ -26,6 +26,11 @@ public partial class GetStatusViewModel : RoutableMethodViewModel
             return;
         }
 
+        await Execute(job);
+    }
+
+    public override async Task Execute(Job job)
+    {
         var result = await RpcService.Send<RpcGetStatusResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcGetStatusResult { Result: not null } rpcGetStatusResult)
         {

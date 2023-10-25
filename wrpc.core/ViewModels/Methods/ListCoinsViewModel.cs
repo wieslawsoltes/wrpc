@@ -31,6 +31,11 @@ public partial class ListCoinsViewModel : RoutableMethodViewModel
             return;
         }
 
+        await Execute(job);
+    }
+
+    public override async Task Execute(Job job)
+    {
         var result = await RpcService.Send<RpcListCoinsResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcListCoinsResult { Result: not null } rpcListCoinsResult)
         {

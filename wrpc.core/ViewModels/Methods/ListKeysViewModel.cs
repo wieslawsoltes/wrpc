@@ -31,6 +31,11 @@ public partial class ListKeysViewModel : RoutableMethodViewModel
             return;
         }
 
+        await Execute(job);
+    }
+
+    public override async Task Execute(Job job)
+    {
         var result = await RpcService.Send<RpcListKeysResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcListKeysResult { Result: not null } rpcListKeysResult)
         {

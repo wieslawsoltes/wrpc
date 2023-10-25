@@ -26,6 +26,11 @@ public partial class StopViewModel : RoutableMethodViewModel
             return;
         }
 
+        await Execute(job);
+    }
+
+    public override async Task Execute(Job job)
+    {
         var result = await RpcService.Send<string>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is string)
         {
