@@ -28,7 +28,7 @@ public partial class ListCoinsViewModel : RoutableMethodViewModel
 
     public override async Task<IRoutable?> Execute(Job job)
     {
-        var result = await RpcService.Send<RpcListCoinsResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
+        var result = await RpcService.Send<RpcListCoinsResult>(job.RpcMethod, job.RpcServerUri);
         if (result is RpcListCoinsResult { Result: not null } rpcListCoinsResult)
         {
             return new ListCoinsInfo { Coins = rpcListCoinsResult.Result }.ToViewModel(RpcService, NavigationService);

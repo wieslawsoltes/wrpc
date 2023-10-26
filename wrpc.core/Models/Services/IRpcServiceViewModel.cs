@@ -5,9 +5,9 @@ namespace WasabiRpc.Models.Services;
 
 public interface IRpcServiceViewModel
 {
-    Task<object?> Send<TResult>(RpcMethod rpcMethod, string rpcServerUri, INavigationService navigationService) where TResult: class;
+    Task<object?> Send<TResult>(RpcMethod rpcMethod, string rpcServerUri) where TResult: class;
 
-    Task<object?> Send(RpcMethod[] rpcMethods, string rpcServerUri, INavigationService navigationService);
+    Task<object?> Send(RpcMethod[] rpcMethods, string rpcServerUri);
 
     string? ServerPrefix { get; set; }
 

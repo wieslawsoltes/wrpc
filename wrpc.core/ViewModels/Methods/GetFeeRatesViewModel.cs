@@ -24,7 +24,7 @@ public partial class GetFeeRatesViewModel : RoutableMethodViewModel
 
     public override async Task<IRoutable?> Execute(Job job)
     {
-        var result = await RpcService.Send<RpcGetFeeRatesResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
+        var result = await RpcService.Send<RpcGetFeeRatesResult>(job.RpcMethod, job.RpcServerUri);
         if (result is RpcGetFeeRatesResult { Result: not null } rpcGetFeeRatesResult)
         {
             return new GetFeeRatesInfo { FeeRates = rpcGetFeeRatesResult.Result }.ToViewModel(RpcService, NavigationService);

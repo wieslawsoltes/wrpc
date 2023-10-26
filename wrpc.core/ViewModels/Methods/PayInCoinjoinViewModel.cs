@@ -50,7 +50,7 @@ public partial class PayInCoinjoinViewModel : RoutableMethodViewModel
 
     public override async Task<IRoutable?> Execute(Job job)
     {
-        var result = await RpcService.Send<RpcPayInCoinjoinResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
+        var result = await RpcService.Send<RpcPayInCoinjoinResult>(job.RpcMethod, job.RpcServerUri);
         if (result is RpcPayInCoinjoinResult { Result: not null } rpcPayInCoinjoinResult)
         {
             return new PayInCoinjoinInfo { PaymentId = rpcPayInCoinjoinResult.Result }.ToViewModel(RpcService, NavigationService);

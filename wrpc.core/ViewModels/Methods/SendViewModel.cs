@@ -88,7 +88,7 @@ public partial class SendViewModel : RoutableMethodViewModel
 
     public override async Task<IRoutable?> Execute(Job job)
     {
-        var result = await RpcService.Send<RpcSendResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
+        var result = await RpcService.Send<RpcSendResult>(job.RpcMethod, job.RpcServerUri);
         if (result is RpcSendResult { Result: not null } rpcSendResult)
         {
             return rpcSendResult.Result?.ToViewModel(RpcService, NavigationService);

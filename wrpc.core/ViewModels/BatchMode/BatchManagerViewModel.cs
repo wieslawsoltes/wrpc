@@ -86,7 +86,7 @@ public partial class BatchManagerViewModel : RoutableViewModel, IBatchManager
         var rpcMethods = batch.Jobs?.Select(x => x.Job.RpcMethod).ToArray();
         if (serverPrefix is not null && rpcMethods is not null)
         {
-            var results = await RpcService.Send(rpcMethods, serverPrefix, NavigationService);
+            var results = await RpcService.Send(rpcMethods, serverPrefix);
             if (results is not null)
             {
                 // TODO:

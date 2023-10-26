@@ -31,7 +31,7 @@ public partial class StartCoinJoinSweepViewModel : RoutableMethodViewModel
 
     public override async Task<IRoutable?> Execute(Job job)
     {
-        var result = await RpcService.Send<RpcStartCoinJoinSweepResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
+        var result = await RpcService.Send<RpcStartCoinJoinSweepResult>(job.RpcMethod, job.RpcServerUri);
         if (result is RpcStartCoinJoinSweepResult)
         {
             return new Success { Message = $"Started coinjoin for wallet {WalletName}" }.ToViewModel(RpcService, NavigationService);

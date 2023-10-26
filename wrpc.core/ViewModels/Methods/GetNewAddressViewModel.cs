@@ -38,7 +38,7 @@ public partial class GetNewAddressViewModel : RoutableMethodViewModel
 
     public override async Task<IRoutable?> Execute(Job job)
     {
-        var result = await RpcService.Send<RpcGetNewAddressResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
+        var result = await RpcService.Send<RpcGetNewAddressResult>(job.RpcMethod, job.RpcServerUri);
         if (result is RpcGetNewAddressResult { Result: not null } rpcGetNewAddressResult)
         {
             return rpcGetNewAddressResult.Result?.ToViewModel(RpcService, NavigationService);

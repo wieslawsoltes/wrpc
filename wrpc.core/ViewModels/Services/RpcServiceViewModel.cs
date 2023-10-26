@@ -29,7 +29,7 @@ public partial class RpcServiceViewModel : ViewModelBase, IRpcServiceViewModel
         BatchMode = batchMode;
     }
 
-    public async Task<object?> Send<TResult>(RpcMethod rpcMethod, string rpcServerUri, INavigationService navigationService) where TResult: class
+    public async Task<object?> Send<TResult>(RpcMethod rpcMethod, string rpcServerUri) where TResult: class
     {
         string? responseBodyJson;
 
@@ -78,7 +78,7 @@ public partial class RpcServiceViewModel : ViewModelBase, IRpcServiceViewModel
         return default;
     }
 
-    public async Task<object?> Send(RpcMethod[] rpcMethods, string rpcServerUri, INavigationService navigationService)
+    public async Task<object?> Send(RpcMethod[] rpcMethods, string rpcServerUri)
     {
         string? responseBodyJson;
 

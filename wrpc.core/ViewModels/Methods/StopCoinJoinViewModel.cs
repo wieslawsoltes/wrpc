@@ -27,7 +27,7 @@ public partial class StopCoinJoinViewModel : RoutableMethodViewModel
 
     public override async Task<IRoutable?> Execute(Job job)
     {
-        var result = await RpcService.Send<RpcStopCoinJoinResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
+        var result = await RpcService.Send<RpcStopCoinJoinResult>(job.RpcMethod, job.RpcServerUri);
         if (result is RpcStopCoinJoinResult)
         {
             return new Success { Message = $"Stopped coinjoin for wallet {WalletName}" }.ToViewModel(RpcService, NavigationService);

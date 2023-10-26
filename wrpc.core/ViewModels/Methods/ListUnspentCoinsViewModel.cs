@@ -33,7 +33,7 @@ public partial class ListUnspentCoinsViewModel : RoutableMethodViewModel
 
     public override async Task<IRoutable?> Execute(Job job)
     {
-        var result = await RpcService.Send<RpcListUnspentCoinsResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
+        var result = await RpcService.Send<RpcListUnspentCoinsResult>(job.RpcMethod, job.RpcServerUri);
         if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult && WalletName is not null)
         {
             return new ListUnspentCoinsInfo { Coins = rpcListUnspentCoinsResult.Result }.ToViewModelAdapter(RpcService, NavigationService, BatchManager, WalletName);

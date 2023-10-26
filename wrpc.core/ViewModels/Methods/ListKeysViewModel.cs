@@ -28,7 +28,7 @@ public partial class ListKeysViewModel : RoutableMethodViewModel
 
     public override async Task<IRoutable?> Execute(Job job)
     {
-        var result = await RpcService.Send<RpcListKeysResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
+        var result = await RpcService.Send<RpcListKeysResult>(job.RpcMethod, job.RpcServerUri);
         if (result is RpcListKeysResult { Result: not null } rpcListKeysResult)
         {
             return new ListKeysInfo { Keys = rpcListKeysResult.Result }.ToViewModel(RpcService, NavigationService);

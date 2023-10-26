@@ -90,7 +90,7 @@ public partial class BuildViewModel : RoutableMethodViewModel
 
     public override async Task<IRoutable?> Execute(Job job)
     {
-        var result = await RpcService.Send<RpcBuildResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
+        var result = await RpcService.Send<RpcBuildResult>(job.RpcMethod, job.RpcServerUri);
         if (result is RpcBuildResult { Result: not null } rpcBuildResult)
         {
             return new BuildInfo { Tx = rpcBuildResult.Result }.ToViewModel(RpcService, NavigationService);

@@ -45,7 +45,7 @@ public partial class RecoverWalletViewModel : RoutableMethodViewModel
 
     public override async Task<IRoutable?> Execute(Job job)
     {
-        var result = await RpcService.Send<RpcRecoverWalletResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
+        var result = await RpcService.Send<RpcRecoverWalletResult>(job.RpcMethod, job.RpcServerUri);
         if (result is RpcRecoverWalletResult)
         {
             return new Success { Message = $"Recovered wallet {WalletName}" }.ToViewModel(RpcService, NavigationService);

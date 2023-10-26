@@ -23,7 +23,7 @@ public partial class StopViewModel : RoutableMethodViewModel
 
     public override async Task<IRoutable?> Execute(Job job)
     {
-        var result = await RpcService.Send<string>(job.RpcMethod, job.RpcServerUri, NavigationService);
+        var result = await RpcService.Send<string>(job.RpcMethod, job.RpcServerUri);
         if (result is string)
         {
             return new Success { Message = "Stopped daemon." }.ToViewModel(RpcService, NavigationService);

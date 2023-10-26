@@ -28,7 +28,7 @@ public partial class GetHistoryViewModel : RoutableMethodViewModel
 
     public override async Task<IRoutable?> Execute(Job job)
     {
-        var result = await RpcService.Send<RpcGetHistoryResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
+        var result = await RpcService.Send<RpcGetHistoryResult>(job.RpcMethod, job.RpcServerUri);
         if (result is RpcGetHistoryResult { Result: not null } rpcGetHistoryResult && WalletName is not null)
         {
             return new GetHistoryInfo { Transactions = rpcGetHistoryResult.Result }.ToViewModelAdapter(RpcService, NavigationService, BatchManager, WalletName);
