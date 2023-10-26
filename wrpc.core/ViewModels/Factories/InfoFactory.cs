@@ -3,7 +3,7 @@ using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Models.Info;
 using WasabiRpc.Models.Services;
 using WasabiRpc.ViewModels.Info;
-using WasabiRpc.ViewModels.Methods;
+using WasabiRpc.ViewModels.Methods.Adapters;
 
 namespace WasabiRpc.ViewModels.Factories;
 
@@ -107,7 +107,7 @@ public static class InfoFactory
         };
     }
 
-    public static GetHistoryInfoViewModel ToViewModel(this GetHistoryInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
+    public static GetHistoryInfoViewModel ToViewModelAdapter(this GetHistoryInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
     {
         return new GetHistoryInfoViewModel(rpcService, navigationService)
         {
@@ -115,7 +115,7 @@ public static class InfoFactory
             //    .Select(x => x.ToViewModel(rpcService, navigationService))
             //    .ToList(),
             Transactions = info.Transactions?
-                .Select(x => new TransactionViewModel(rpcService, navigationService, batchManager, walletName, x.ToViewModel(rpcService, navigationService)))
+                .Select(x => new TransactionAdapterViewModel(rpcService, navigationService, batchManager, walletName, x.ToViewModel(rpcService, navigationService)))
                 .OrderByDescending(x => x.TransactionInfo.DateTime)
                 .ToList(),
         };
@@ -157,7 +157,7 @@ public static class InfoFactory
         };
     }
 
-    public static ListUnspentCoinsInfoViewModel ToViewModel(this ListUnspentCoinsInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
+    public static ListUnspentCoinsInfoViewModel ToViewModelAdapter(this ListUnspentCoinsInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
     {
         return new ListUnspentCoinsInfoViewModel(rpcService, navigationService)
         {
@@ -165,7 +165,7 @@ public static class InfoFactory
             //     .Select(x => x.ToViewModel(rpcService, navigationService))
             //     .ToList(),
             Coins = info.Coins?
-                .Select(x => new CoinViewModel(rpcService, navigationService, batchManager, walletName, x.ToViewModel(rpcService, navigationService)))
+                .Select(x => new CoinAdapterViewModel(rpcService, navigationService, batchManager, walletName, x.ToViewModel(rpcService, navigationService)))
                 .OrderByDescending(x => x.CoinInfo.AnonymityScore)
                 .ToList(),
         };

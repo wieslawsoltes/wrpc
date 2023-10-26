@@ -10,6 +10,7 @@ using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Models.Params.Send;
 using WasabiRpc.Models.Results;
 using WasabiRpc.Models.Services;
+using WasabiRpc.ViewModels.Methods.Adapters;
 
 namespace WasabiRpc.ViewModels.Methods;
 
@@ -48,7 +49,7 @@ public partial class SendViewModel : RoutableMethodViewModel
     private int? _feeRate;
 
     [ObservableProperty]
-    private ObservableCollection<CoinViewModel> _coins;
+    private ObservableCollection<CoinAdapterViewModel> _coins;
 
     public SendViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
         : base(rpcService, navigationService, batchManager)
@@ -61,7 +62,7 @@ public partial class SendViewModel : RoutableMethodViewModel
         SubtractFee = false;
         FeeTarget = 2;
         FeeRate = null;
-        Coins = new ObservableCollection<CoinViewModel>();
+        Coins = new ObservableCollection<CoinAdapterViewModel>();
     }
 
     private bool CanSend()
@@ -170,9 +171,9 @@ public partial class SendViewModel : RoutableMethodViewModel
         {
             var coins = rpcListUnspentCoinsResult
                 .Result
-                .Select(x => new CoinViewModel(RpcService, NavigationService, BatchManager, WalletName, x.ToViewModel(RpcService, NavigationService)));
+                .Select(x => new CoinAdapterViewModel(RpcService, NavigationService, BatchManager, WalletName, x.ToViewModel(RpcService, NavigationService)));
 
-            Coins = new ObservableCollection<CoinViewModel>(coins);
+            Coins = new ObservableCollection<CoinAdapterViewModel>(coins);
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {

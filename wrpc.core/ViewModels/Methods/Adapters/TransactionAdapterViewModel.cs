@@ -9,16 +9,16 @@ using WasabiRpc.Models.Services;
 using WasabiRpc.ViewModels.Factories;
 using WasabiRpc.ViewModels.Info;
 
-namespace WasabiRpc.ViewModels.Methods;
+namespace WasabiRpc.ViewModels.Methods.Adapters;
 
-public partial class TransactionViewModel : RoutableViewModel
+public partial class TransactionAdapterViewModel : RoutableViewModel
 {
     private readonly IBatchManager _batchManager;
     [ObservableProperty] private string _walletName;
     [ObservableProperty] private string? _walletPassword;
     [ObservableProperty] private bool _isSelected;
 
-    public TransactionViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName, TransactionInfoViewModel transactionInfo)
+    public TransactionAdapterViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName, TransactionInfoViewModel transactionInfo)
         : base(rpcService, navigationService)
     {
         _batchManager = batchManager;

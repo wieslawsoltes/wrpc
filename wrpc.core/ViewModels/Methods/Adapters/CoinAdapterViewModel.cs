@@ -8,15 +8,15 @@ using WasabiRpc.Models.Services;
 using WasabiRpc.ViewModels.Factories;
 using WasabiRpc.ViewModels.Info;
 
-namespace WasabiRpc.ViewModels.Methods;
+namespace WasabiRpc.ViewModels.Methods.Adapters;
 
-public partial class CoinViewModel : RoutableViewModel
+public partial class CoinAdapterViewModel : RoutableViewModel
 {
     private readonly IBatchManager _batchManager;
     [ObservableProperty] private string _walletName;
     [ObservableProperty] private bool _isSelected;
 
-    public CoinViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName, CoinInfoViewModel coinInfo)
+    public CoinAdapterViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName, CoinInfoViewModel coinInfo)
         : base(rpcService, navigationService)
     {
         _batchManager = batchManager;

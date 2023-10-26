@@ -1,5 +1,4 @@
 using WasabiRpc.Models.App;
-using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Models.Services;
 using WasabiRpc.ViewModels.App;
 
