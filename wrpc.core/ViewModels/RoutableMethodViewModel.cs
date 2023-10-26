@@ -22,7 +22,7 @@ public abstract partial class RoutableMethodViewModel : RoutableViewModel
 
     protected IBatchManager BatchManager { get; }
 
-    protected async Task RunCommand()
+    protected virtual async Task RunCommand()
     {
         var job = CreateJob();
 
