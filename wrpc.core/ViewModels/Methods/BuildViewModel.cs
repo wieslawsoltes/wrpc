@@ -115,7 +115,8 @@ public partial class BuildViewModel : RoutableMethodViewModel
     {
         if (rpcResult is RpcBuildResult rpcBuildResult)
         {
-            NavigationService.ClearAndNavigateTo(new BuildInfo { Tx = rpcBuildResult.Result }.ToViewModel(RpcService, NavigationService));
+            var buildInfoViewModel = new BuildInfo { Tx = rpcBuildResult.Result }.ToViewModel(RpcService, NavigationService);
+            NavigationService.ClearAndNavigateTo(buildInfoViewModel);
         }
     }
 
@@ -184,11 +185,13 @@ public partial class BuildViewModel : RoutableMethodViewModel
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            NavigationService.NavigateTo(rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService));
+            var errorInfoViewModel = rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(errorInfoViewModel);
         }
         else if (result is Error error)
         {
-            NavigationService.NavigateTo(error.ToViewModel(RpcService, NavigationService));
+            var errorViewModel = error.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(errorViewModel);
         }
     }
 }

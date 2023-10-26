@@ -50,15 +50,18 @@ public partial class TransactionAdapterViewModel : RoutableViewModel
         var result = await RpcService.Send<RpcSpeedUpTransactionResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcSpeedUpTransactionResult rpcSpeedUpTransactionResult)
         {
-            NavigationService.NavigateTo(new BuildInfo { Tx = rpcSpeedUpTransactionResult.Result }.ToViewModel(RpcService, NavigationService));
+            var buildInfoViewModel = new BuildInfo { Tx = rpcSpeedUpTransactionResult.Result }.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(buildInfoViewModel);
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            NavigationService.NavigateTo(rpcErrorResult.Error.ToViewModel(RpcService, NavigationService));
+            var errorInfoViewModel = rpcErrorResult.Error.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(errorInfoViewModel);
         }
         else if (result is Error error)
         {
-            NavigationService.NavigateTo(error.ToViewModel(RpcService, NavigationService));
+            var errorViewModel = error.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(errorViewModel);
         }
     }
 
@@ -81,15 +84,18 @@ public partial class TransactionAdapterViewModel : RoutableViewModel
         var result = await RpcService.Send<RpcCancelTransactionResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcCancelTransactionResult rpcCancelTransactionResult)
         {
-            NavigationService.NavigateTo(new BuildInfo { Tx = rpcCancelTransactionResult.Result }.ToViewModel(RpcService, NavigationService));
+            var buildInfoViewModel = new BuildInfo { Tx = rpcCancelTransactionResult.Result }.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(buildInfoViewModel);
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            NavigationService.NavigateTo(rpcErrorResult.Error.ToViewModel(RpcService, NavigationService));
+            var errorInfoViewModel = rpcErrorResult.Error.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(errorInfoViewModel);
         }
         else if (result is Error error)
         {
-            NavigationService.NavigateTo(error.ToViewModel(RpcService, NavigationService));
+            var errorViewModel = error.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(errorViewModel);
         }
     }
 }

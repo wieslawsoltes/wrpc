@@ -77,7 +77,8 @@ public partial class SpeedUpTransactionViewModel : RoutableMethodViewModel
     {
         if (rpcResult is RpcSpeedUpTransactionResult rpcSpeedUpTransactionResult)
         {
-            NavigationService.ClearAndNavigateTo(new BuildInfo { Tx = rpcSpeedUpTransactionResult.Result }.ToViewModel(RpcService, NavigationService));
+            var buildInfoViewModel = new BuildInfo { Tx = rpcSpeedUpTransactionResult.Result }.ToViewModel(RpcService, NavigationService);
+            NavigationService.ClearAndNavigateTo(buildInfoViewModel);
         }
     }
 

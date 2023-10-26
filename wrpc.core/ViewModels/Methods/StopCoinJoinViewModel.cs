@@ -52,7 +52,8 @@ public partial class StopCoinJoinViewModel : RoutableMethodViewModel
 
     protected override void OnRpcSuccess(Rpc rpcResult)
     {
-        NavigationService.NavigateTo(new Success { Message = $"Stopped coinjoin for wallet {WalletName}" }.ToViewModel(RpcService, NavigationService));
+        var successViewModel = new Success { Message = $"Stopped coinjoin for wallet {WalletName}" }.ToViewModel(RpcService, NavigationService);
+        NavigationService.NavigateTo(successViewModel);
     }
 
     public override Job CreateJob()

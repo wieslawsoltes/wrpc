@@ -55,7 +55,8 @@ public partial class ListKeysViewModel : RoutableMethodViewModel
     {
         if (rpcResult is RpcListKeysResult rpcListKeysResult)
         {
-            NavigationService.NavigateTo(new ListKeysInfo { Keys = rpcListKeysResult.Result }.ToViewModel(RpcService, NavigationService));
+            var listKeysInfoViewModel = new ListKeysInfo { Keys = rpcListKeysResult.Result }.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(listKeysInfoViewModel);
         }
     }
 

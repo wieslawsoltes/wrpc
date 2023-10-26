@@ -58,7 +58,8 @@ public partial class StartCoinJoinViewModel : RoutableMethodViewModel
 
     protected override void OnRpcSuccess(Rpc rpcResult)
     {
-        NavigationService.ClearAndNavigateTo(new Success { Message = $"Started coinjoin for wallet {WalletName}" }.ToViewModel(RpcService, NavigationService));
+        var successViewModel = new Success { Message = $"Started coinjoin for wallet {WalletName}" }.ToViewModel(RpcService, NavigationService);
+        NavigationService.ClearAndNavigateTo(successViewModel);
     }
 
     public override Job CreateJob()

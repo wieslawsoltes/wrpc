@@ -55,7 +55,8 @@ public partial class ListCoinsViewModel : RoutableMethodViewModel
     {
         if (rpcResult is RpcListCoinsResult rpcListCoinsResult)
         {
-            NavigationService.NavigateTo(new ListCoinsInfo { Coins = rpcListCoinsResult.Result }.ToViewModel(RpcService, NavigationService));
+            var listCoinsInfoViewModel = new ListCoinsInfo { Coins = rpcListCoinsResult.Result }.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(listCoinsInfoViewModel);
         }
     }
 

@@ -25,26 +25,35 @@ public abstract partial class RoutableMethodViewModel : RoutableViewModel
 
     protected virtual void OnRpcError(RpcErrorResult rpcErrorResult)
     {
-        NavigationService.NavigateTo(rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService));
+        var errorInfoViewModel = rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+        NavigationService.NavigateTo(errorInfoViewModel);
     }
 
     protected virtual void OnError(Error error)
     {
-        NavigationService.NavigateTo(error.ToViewModel(RpcService, NavigationService));
+        var errorViewModel = error.ToViewModel(RpcService, NavigationService);
+        NavigationService.NavigateTo(errorViewModel);
     }
 
     protected virtual void OnBatch(Job job)
     {
         try
         {
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            var json = JsonSerializer.Serialize(job, typeof(Job), new ModelsJsonContext(options));
-            NavigationService.ClearAndNavigateTo(new AddJobViewModel(RpcService, NavigationService, BatchManager, job, json));
+            var addJobViewModel = ToJobViewModel(job);
+            NavigationService.ClearAndNavigateTo(addJobViewModel);
         }
         catch (Exception e)
         {
-            NavigationService.NavigateTo(new Error { Message = e.Message }.ToViewModel(RpcService, NavigationService));
+            var errorViewModel = new Error { Message = e.Message }.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(errorViewModel);
         }
+    }
+
+    private AddJobViewModel ToJobViewModel(Job job)
+    {
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        var json = JsonSerializer.Serialize(job, typeof(Job), new ModelsJsonContext(options));
+        return new AddJobViewModel(RpcService, NavigationService, BatchManager, job, json);
     }
 
     public abstract Job CreateJob();

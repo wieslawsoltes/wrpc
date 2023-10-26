@@ -66,7 +66,8 @@ public partial class CreateWalletViewModel : RoutableMethodViewModel
     {
         if (rpcResult is RpcCreateWalletResult rpcCreateWalletResult)
         {
-            NavigationService.ClearAndNavigateTo(new CreateWalletInfo { Mnemonic = rpcCreateWalletResult.Result }.ToViewModel(RpcService, NavigationService));
+            var createWalletInfoViewModel = new CreateWalletInfo { Mnemonic = rpcCreateWalletResult.Result }.ToViewModel(RpcService, NavigationService);
+            NavigationService.ClearAndNavigateTo(createWalletInfoViewModel);
         }
     }
 

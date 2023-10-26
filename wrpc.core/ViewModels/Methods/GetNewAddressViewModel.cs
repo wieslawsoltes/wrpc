@@ -65,7 +65,8 @@ public partial class GetNewAddressViewModel : RoutableMethodViewModel
     {
         if (rpcResult is RpcGetNewAddressResult rpcGetNewAddressResult)
         {
-            NavigationService.ClearAndNavigateTo(rpcGetNewAddressResult.Result?.ToViewModel(RpcService, NavigationService));
+            var addressInfoViewModel = rpcGetNewAddressResult.Result?.ToViewModel(RpcService, NavigationService);
+            NavigationService.ClearAndNavigateTo(addressInfoViewModel);
         }
     }
 

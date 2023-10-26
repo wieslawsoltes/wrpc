@@ -58,18 +58,21 @@ public partial class CoinAdapterViewModel : RoutableViewModel
         var result = await RpcService.Send<RpcExcludeFromCoinJoinResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcExcludeFromCoinJoinResult)
         {
-            NavigationService.NavigateTo(new Success
+            var successViewModel = new Success
             {
                 Message = $"{(exclude ? "Excluded" : "Removed the exclusion")} from coinjoin"
-            }.ToViewModel(RpcService, NavigationService));
+            }.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(successViewModel);
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            NavigationService.NavigateTo(rpcErrorResult.Error.ToViewModel(RpcService, NavigationService));
+            var errorInfoViewModel = rpcErrorResult.Error.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(errorInfoViewModel);
         }
         else if (result is Error error)
         {
-            NavigationService.NavigateTo(error.ToViewModel(RpcService, NavigationService));
+            var errorViewModel = error.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(errorViewModel);
         }
     }
 }

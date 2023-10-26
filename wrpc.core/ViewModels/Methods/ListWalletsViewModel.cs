@@ -51,7 +51,8 @@ public partial class ListWalletsViewModel : RoutableMethodViewModel
     {
         if (rpcResult is RpcListWalletsResult rpcListWalletsResult)
         {
-            NavigationService.NavigateTo(new ListWalletsInfo { Wallets = rpcListWalletsResult.Result }.ToViewModel(RpcService, NavigationService));
+            var listWalletsInfoViewModel = new ListWalletsInfo { Wallets = rpcListWalletsResult.Result }.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(listWalletsInfoViewModel);
         }
     }
 

@@ -52,7 +52,8 @@ public partial class LoadWalletViewModel : RoutableMethodViewModel
 
     protected override void OnRpcSuccess(Rpc rpcResult)
     {
-        NavigationService.NavigateTo(new Success { Message = $"Loaded wallet {WalletName}" }.ToViewModel(RpcService, NavigationService));
+        var successViewModel = new Success { Message = $"Loaded wallet {WalletName}" }.ToViewModel(RpcService, NavigationService);
+        NavigationService.NavigateTo(successViewModel);
     }
 
     public override Job CreateJob()

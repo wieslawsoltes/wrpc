@@ -50,7 +50,8 @@ public partial class GetStatusViewModel : RoutableMethodViewModel
     {
         if (rpcResult is RpcGetStatusResult rpcGetStatusResult)
         {
-            NavigationService.NavigateTo(rpcGetStatusResult.Result?.ToViewModel(RpcService, NavigationService));
+            var statusInfoViewModel = rpcGetStatusResult.Result?.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(statusInfoViewModel);
         }
     }
 

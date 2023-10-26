@@ -113,7 +113,8 @@ public partial class SendViewModel : RoutableMethodViewModel
     {
         if (rpcResult is RpcSendResult rpcSendResult)
         {
-            NavigationService.ClearAndNavigateTo(rpcSendResult.Result?.ToViewModel(RpcService, NavigationService));
+            var sendInfoViewModel = rpcSendResult.Result?.ToViewModel(RpcService, NavigationService);
+            NavigationService.ClearAndNavigateTo(sendInfoViewModel);
         }
     }
 
@@ -182,11 +183,13 @@ public partial class SendViewModel : RoutableMethodViewModel
         }
         else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            NavigationService.NavigateTo(rpcErrorResult.Error.ToViewModel(RpcService, NavigationService));
+            var errorInfoViewModel = rpcErrorResult.Error.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(errorInfoViewModel);
         }
         else if (result is Error error)
         {
-            NavigationService.NavigateTo(error.ToViewModel(RpcService, NavigationService));
+            var errorViewModel = error.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(errorViewModel);
         }
     }
 }

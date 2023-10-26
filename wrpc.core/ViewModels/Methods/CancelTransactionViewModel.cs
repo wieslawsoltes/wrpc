@@ -77,7 +77,8 @@ public partial class CancelTransactionViewModel : RoutableMethodViewModel
     {
         if (rpcResult is RpcCancelTransactionResult rpcCancelTransactionResult)
         {
-            NavigationService.ClearAndNavigateTo(new BuildInfo { Tx = rpcCancelTransactionResult.Result }.ToViewModel(RpcService, NavigationService));
+            var buildInfoViewModel = new BuildInfo { Tx = rpcCancelTransactionResult.Result }.ToViewModel(RpcService, NavigationService);
+            NavigationService.ClearAndNavigateTo(buildInfoViewModel);
         }
     }
 

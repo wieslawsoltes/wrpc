@@ -37,11 +37,13 @@ public partial class AddJobViewModel : RoutableViewModel
         if (_batchManager.Batches is not null && _batchManager.SelectedBatch is not null)
         {
             _batchManager.SelectedBatch.AddJobCommand.Execute(_job);
-            NavigationService.ClearAndNavigateTo(new Success { Message = $"Added job '{_job.Name}'" }.ToViewModel(RpcService, NavigationService));
+            var successViewModel = new Success { Message = $"Added job '{_job.Name}'" }.ToViewModel(RpcService, NavigationService);
+            NavigationService.ClearAndNavigateTo(successViewModel);
         }
         else
         {
-            NavigationService.ClearAndNavigateTo(new Error { Message = $"Could not add job '{_job.Name}'" }.ToViewModel(RpcService, NavigationService));
+            var errorViewModel = new Error { Message = $"Could not add job '{_job.Name}'" }.ToViewModel(RpcService, NavigationService);
+            NavigationService.ClearAndNavigateTo(errorViewModel);
         }
     }
 }

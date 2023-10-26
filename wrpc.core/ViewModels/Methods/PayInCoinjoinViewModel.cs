@@ -77,7 +77,8 @@ public partial class PayInCoinjoinViewModel : RoutableMethodViewModel
     {
         if (rpcResult is RpcPayInCoinjoinResult rpcPayInCoinjoinResult)
         {
-            NavigationService.ClearAndNavigateTo(new PayInCoinjoinInfo { PaymentId = rpcPayInCoinjoinResult.Result }.ToViewModel(RpcService, NavigationService));
+            var payInCoinjoinInfoViewModel = new PayInCoinjoinInfo { PaymentId = rpcPayInCoinjoinResult.Result }.ToViewModel(RpcService, NavigationService);
+            NavigationService.ClearAndNavigateTo(payInCoinjoinInfoViewModel);
         }
     }
 

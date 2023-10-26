@@ -48,7 +48,8 @@ public partial class StopViewModel : RoutableMethodViewModel
 
     protected override void OnRpcSuccess(Rpc rpcResult)
     {
-        NavigationService.NavigateTo(new Success { Message = "Stopped daemon." }.ToViewModel(RpcService, NavigationService));
+        var successViewModel = new Success { Message = "Stopped daemon." }.ToViewModel(RpcService, NavigationService);
+        NavigationService.NavigateTo(successViewModel);
     }
 
     public override Job CreateJob()

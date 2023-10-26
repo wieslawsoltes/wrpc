@@ -61,7 +61,8 @@ public partial class BroadcastViewModel : RoutableMethodViewModel
     {
         if (rpcResult is RpcBroadcastResult rpcBroadcastResult)
         {
-            NavigationService.ClearAndNavigateTo(rpcBroadcastResult.Result?.ToViewModel(RpcService, NavigationService));
+            var broadcastInfoViewModel = rpcBroadcastResult.Result?.ToViewModel(RpcService, NavigationService);
+            NavigationService.ClearAndNavigateTo(broadcastInfoViewModel);
         }
     }
 
