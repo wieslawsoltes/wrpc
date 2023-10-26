@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using WasabiRpc.ViewModels.Factories;
 using WasabiRpc.Models.App;
 using WasabiRpc.Models.BatchMode;
-using WasabiRpc.Models.Results;
 using WasabiRpc.Models.Services;
+using WasabiRpc.ViewModels.App;
+using WasabiRpc.ViewModels.Info;
 using WasabiRpc.ViewModels.Methods;
 
 namespace WasabiRpc.ViewModels;
@@ -97,31 +97,33 @@ public partial class MainWindowViewModel : RoutableViewModel
     private IBatchManager BatchManager { get; }
 
     [RelayCommand]
+    private void ShowBatchManager()
+    {
+        NavigationService.NavigateTo(BatchManager);
+    }
+
+    [RelayCommand]
     private async Task LoadWallets()
     {
         var listWalletsViewModel = new ListWalletsViewModel(RpcService, NavigationService, BatchManager);
         var job = listWalletsViewModel.CreateJob();
-        var result = await RpcService.Send<RpcListWalletsResult>(job, NavigationService);
-        if (result is RpcListWalletsResult { Result: not null } rpcListWalletsResult)
+        var routable = await listWalletsViewModel.Execute(job);
+        if (routable is ListWalletsInfoViewModel listWalletsInfoViewModel)
         {
-            var wallets = rpcListWalletsResult
-                .Result
-                .Select(x => new WalletViewModel { WalletName = x.WalletName })
-                .OrderBy(x => x.WalletName);
-
-            if (Wallets is not null)
+            if (listWalletsInfoViewModel.Wallets is not null)
             {
+                var wallets = listWalletsInfoViewModel.Wallets.Select(x => new WalletViewModel { WalletName = x.WalletName });
                 Wallets = new ObservableCollection<WalletViewModel>(wallets);
                 SelectedWallet = Wallets.FirstOrDefault();
             }
         }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        else if (routable is ErrorInfoViewModel errorInfoViewModel)
         {
-            NavigationService.NavigateTo(rpcErrorResult.Error.ToViewModel(RpcService, NavigationService));
+            NavigationService.NavigateTo(errorInfoViewModel);
         }
-        else if (result is Error error)
+        else if (routable is ErrorViewModel errorViewModel)
         {
-            NavigationService.NavigateTo(error.ToViewModel(RpcService, NavigationService));
+            NavigationService.NavigateTo(errorViewModel);
         }
     }
 

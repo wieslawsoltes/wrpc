@@ -18,35 +18,28 @@ public partial class GetStatusViewModel : RoutableMethodViewModel
     [RelayCommand]
     private async Task GetStatus()
     {
-        var job = CreateJob();
-
-        if (RpcService.BatchMode)
-        {
-            OnBatch(job);
-            return;
-        }
-
-        var result = await RpcService.Send<RpcGetStatusResult>(job, NavigationService);
-        if (result is RpcGetStatusResult { Result: not null } rpcGetStatusResult)
-        {
-            OnRpcSuccess(rpcGetStatusResult);
-        }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            OnRpcError(rpcErrorResult);
-        }
-        else if (result is Error error)
-        {
-            OnError(error);
-        }
+        await RunCommand();
     }
 
-    protected override void OnRpcSuccess(Rpc rpcResult)
+    public override async Task<IRoutable?> Execute(Job job)
     {
-        if (rpcResult is RpcGetStatusResult rpcGetStatusResult)
+        var result = await RpcService.Send<RpcGetStatusResult>(job.RpcMethod, job.RpcServerUri);
+        if (result is RpcGetStatusResult { Result: not null } rpcGetStatusResult)
         {
-            NavigationService.NavigateTo(rpcGetStatusResult.Result?.ToViewModel(RpcService, NavigationService));
+            return rpcGetStatusResult.Result?.ToViewModel(RpcService, NavigationService);
         }
+
+        if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+        }
+
+        if (result is Error error)
+        {
+            return error.ToViewModel(RpcService, NavigationService);
+        }
+
+        return null;
     }
 
     public override Job CreateJob()

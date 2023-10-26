@@ -20,38 +20,36 @@ public partial class ListUnspentCoinsViewModel : RoutableMethodViewModel
         WalletName = walletName;
     }
 
-    [RelayCommand]
-    private async Task ListUnspentCoins()
+    private bool CanListUnspentCoins()
     {
-        var job = CreateJob();
-
-        if (RpcService.BatchMode)
-        {
-            OnBatch(job);
-            return;
-        }
-
-        var result = await RpcService.Send<RpcListUnspentCoinsResult>(job, NavigationService);
-        if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
-        {
-            OnRpcSuccess(rpcListUnspentCoinsResult);
-        }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            OnRpcError(rpcErrorResult);
-        }
-        else if (result is Error error)
-        {
-            OnError(error);
-        }
+        return true;
     }
 
-    protected override void OnRpcSuccess(Rpc rpcResult)
+    [RelayCommand(CanExecute = nameof(CanListUnspentCoins))]
+    private async Task ListUnspentCoins()
     {
-        if (rpcResult is RpcListUnspentCoinsResult rpcListUnspentCoinsResult && WalletName is not null)
+        await RunCommand();
+    }
+
+    public override async Task<IRoutable?> Execute(Job job)
+    {
+        var result = await RpcService.Send<RpcListUnspentCoinsResult>(job.RpcMethod, job.RpcServerUri);
+        if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult && WalletName is not null)
         {
-            NavigationService.NavigateTo(new ListUnspentCoinsInfo { Coins = rpcListUnspentCoinsResult.Result }.ToViewModel(RpcService, NavigationService, BatchManager, WalletName));
+            return new ListUnspentCoinsInfo { Coins = rpcListUnspentCoinsResult.Result }.ToViewModelAdapter(RpcService, NavigationService, BatchManager, WalletName);
         }
+
+        if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+        }
+
+        if (result is Error error)
+        {
+            return error.ToViewModel(RpcService, NavigationService);
+        }
+
+        return null;
     }
 
     public override Job CreateJob()

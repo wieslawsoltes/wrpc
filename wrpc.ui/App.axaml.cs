@@ -147,6 +147,7 @@ public partial class App : Application
 
         var batch = new BatchViewModel(rpcService, navigationService)
         {
+            Name = "Batch",
             Jobs = new ObservableCollection<IJob>()
         };
 

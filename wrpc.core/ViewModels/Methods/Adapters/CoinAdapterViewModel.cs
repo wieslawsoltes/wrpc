@@ -1,22 +1,20 @@
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using WasabiRpc.Models.App;
 using WasabiRpc.Models.BatchMode;
-using WasabiRpc.Models.Results;
 using WasabiRpc.Models.Services;
-using WasabiRpc.ViewModels.Factories;
+using WasabiRpc.ViewModels.App;
 using WasabiRpc.ViewModels.Info;
 
-namespace WasabiRpc.ViewModels.Methods;
+namespace WasabiRpc.ViewModels.Methods.Adapters;
 
-public partial class CoinViewModel : RoutableViewModel
+public partial class CoinAdapterViewModel : RoutableViewModel
 {
     private readonly IBatchManager _batchManager;
     [ObservableProperty] private string _walletName;
     [ObservableProperty] private bool _isSelected;
 
-    public CoinViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName, CoinInfoViewModel coinInfo)
+    public CoinAdapterViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName, CoinInfoViewModel coinInfo)
         : base(rpcService, navigationService)
     {
         _batchManager = batchManager;
@@ -48,21 +46,18 @@ public partial class CoinViewModel : RoutableViewModel
             Exclude = exclude
         };
         var job = excludeFromCoinJoinViewModel.CreateJob();
-        var result = await RpcService.Send<RpcExcludeFromCoinJoinResult>(job, NavigationService);
-        if (result is RpcExcludeFromCoinJoinResult)
+        var routable = await excludeFromCoinJoinViewModel.Execute(job);
+        if (routable is SuccessViewModel successViewModel)
         {
-            NavigationService.NavigateTo(new Success
-            {
-                Message = $"{(excludeFromCoinJoinViewModel.Exclude ? "Excluded" : "Removed the exclusion")} from coinjoin"
-            }.ToViewModel(RpcService, NavigationService));
+            NavigationService.NavigateTo(successViewModel);
         }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        else if (routable is ErrorInfoViewModel errorInfoViewModel)
         {
-            NavigationService.NavigateTo(rpcErrorResult.Error.ToViewModel(RpcService, NavigationService));
+            NavigationService.NavigateTo(errorInfoViewModel);
         }
-        else if (result is Error error)
+        else if (routable is ErrorViewModel errorViewModel)
         {
-            NavigationService.NavigateTo(error.ToViewModel(RpcService, NavigationService));
+            NavigationService.NavigateTo(errorViewModel);
         }
     }
 }

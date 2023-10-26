@@ -23,35 +23,28 @@ public partial class ListCoinsViewModel : RoutableMethodViewModel
     [RelayCommand]
     private async Task ListCoins()
     {
-        var job = CreateJob();
-
-        if (RpcService.BatchMode)
-        {
-            OnBatch(job);
-            return;
-        }
-
-        var result = await RpcService.Send<RpcListCoinsResult>(job, NavigationService);
-        if (result is RpcListCoinsResult { Result: not null } rpcListCoinsResult)
-        {
-            OnRpcSuccess(rpcListCoinsResult);
-        }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            OnRpcError(rpcErrorResult);
-        }
-        else if (result is Error error)
-        {
-            OnError(error);
-        }
+        await RunCommand();
     }
 
-    protected override void OnRpcSuccess(Rpc rpcResult)
+    public override async Task<IRoutable?> Execute(Job job)
     {
-        if (rpcResult is RpcListCoinsResult rpcListCoinsResult)
+        var result = await RpcService.Send<RpcListCoinsResult>(job.RpcMethod, job.RpcServerUri);
+        if (result is RpcListCoinsResult { Result: not null } rpcListCoinsResult)
         {
-            NavigationService.NavigateTo(new ListCoinsInfo { Coins = rpcListCoinsResult.Result }.ToViewModel(RpcService, NavigationService));
+            return new ListCoinsInfo { Coins = rpcListCoinsResult.Result }.ToViewModel(RpcService, NavigationService);
         }
+
+        if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+        }
+
+        if (result is Error error)
+        {
+            return error.ToViewModel(RpcService, NavigationService);
+        }
+
+        return null;
     }
 
     public override Job CreateJob()

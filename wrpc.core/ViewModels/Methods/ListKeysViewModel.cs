@@ -23,35 +23,28 @@ public partial class ListKeysViewModel : RoutableMethodViewModel
     [RelayCommand]
     private async Task ListKeys()
     {
-        var job = CreateJob();
-
-        if (RpcService.BatchMode)
-        {
-            OnBatch(job);
-            return;
-        }
-
-        var result = await RpcService.Send<RpcListKeysResult>(job, NavigationService);
-        if (result is RpcListKeysResult { Result: not null } rpcListKeysResult)
-        {
-            OnRpcSuccess(rpcListKeysResult);
-        }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            OnRpcError(rpcErrorResult);
-        }
-        else if (result is Error error)
-        {
-            OnError(error);
-        }
+        await RunCommand();
     }
 
-    protected override void OnRpcSuccess(Rpc rpcResult)
+    public override async Task<IRoutable?> Execute(Job job)
     {
-        if (rpcResult is RpcListKeysResult rpcListKeysResult)
+        var result = await RpcService.Send<RpcListKeysResult>(job.RpcMethod, job.RpcServerUri);
+        if (result is RpcListKeysResult { Result: not null } rpcListKeysResult)
         {
-            NavigationService.NavigateTo(new ListKeysInfo { Keys = rpcListKeysResult.Result }.ToViewModel(RpcService, NavigationService));
+            return new ListKeysInfo { Keys = rpcListKeysResult.Result }.ToViewModel(RpcService, NavigationService);
         }
+
+        if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+        }
+
+        if (result is Error error)
+        {
+            return error.ToViewModel(RpcService, NavigationService);
+        }
+
+        return null;
     }
 
     public override Job CreateJob()

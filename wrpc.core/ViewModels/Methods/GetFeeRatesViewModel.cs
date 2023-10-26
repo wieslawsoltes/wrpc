@@ -19,35 +19,28 @@ public partial class GetFeeRatesViewModel : RoutableMethodViewModel
     [RelayCommand]
     private async Task GetFeeRates()
     {
-        var job = CreateJob();
-
-        if (RpcService.BatchMode)
-        {
-            OnBatch(job);
-            return;
-        }
-
-        var result = await RpcService.Send<RpcGetFeeRatesResult>(job, NavigationService);
-        if (result is RpcGetFeeRatesResult { Result: not null } rpcGetFeeRatesResult)
-        {
-            OnRpcSuccess(rpcGetFeeRatesResult);
-        }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            OnRpcError(rpcErrorResult);
-        }
-        else if (result is Error error)
-        {
-            OnError(error);
-        }
+        await RunCommand();
     }
 
-    protected override void OnRpcSuccess(Rpc rpcResult)
+    public override async Task<IRoutable?> Execute(Job job)
     {
-        if (rpcResult is RpcGetFeeRatesResult rpcGetFeeRatesResult)
+        var result = await RpcService.Send<RpcGetFeeRatesResult>(job.RpcMethod, job.RpcServerUri);
+        if (result is RpcGetFeeRatesResult { Result: not null } rpcGetFeeRatesResult)
         {
-            NavigationService.NavigateTo(new GetFeeRatesInfo { FeeRates = rpcGetFeeRatesResult.Result }.ToViewModel(RpcService, NavigationService));
+            return new GetFeeRatesInfo { FeeRates = rpcGetFeeRatesResult.Result }.ToViewModel(RpcService, NavigationService);
         }
+
+        if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+        }
+
+        if (result is Error error)
+        {
+            return error.ToViewModel(RpcService, NavigationService);
+        }
+
+        return null;
     }
 
     public override Job CreateJob()

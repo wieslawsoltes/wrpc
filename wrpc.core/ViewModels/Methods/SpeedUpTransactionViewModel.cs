@@ -45,35 +45,28 @@ public partial class SpeedUpTransactionViewModel : RoutableMethodViewModel
     [RelayCommand(CanExecute = nameof(CanSpeedUpTransaction))]
     private async Task SpeedUpTransaction()
     {
-        var job = CreateJob();
-
-        if (RpcService.BatchMode)
-        {
-            OnBatch(job);
-            return;
-        }
-
-        var result = await RpcService.Send<RpcSpeedUpTransactionResult>(job, NavigationService);
-        if (result is RpcSpeedUpTransactionResult { Result: not null } rpcSpeedUpTransactionResult)
-        {
-            OnRpcSuccess(rpcSpeedUpTransactionResult);
-        }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            OnRpcError(rpcErrorResult);
-        }
-        else if (result is Error error)
-        {
-            OnError(error);
-        }
+        await RunCommand();
     }
 
-    protected override void OnRpcSuccess(Rpc rpcResult)
+    public override async Task<IRoutable?> Execute(Job job)
     {
-        if (rpcResult is RpcSpeedUpTransactionResult rpcSpeedUpTransactionResult)
+        var result = await RpcService.Send<RpcSpeedUpTransactionResult>(job.RpcMethod, job.RpcServerUri);
+        if (result is RpcSpeedUpTransactionResult { Result: not null } rpcSpeedUpTransactionResult)
         {
-            NavigationService.ClearAndNavigateTo(new BuildInfo { Tx = rpcSpeedUpTransactionResult.Result }.ToViewModel(RpcService, NavigationService));
+            return new BuildInfo { Tx = rpcSpeedUpTransactionResult.Result }.ToViewModel(RpcService, NavigationService);
         }
+
+        if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+        }
+
+        if (result is Error error)
+        {
+            return error.ToViewModel(RpcService, NavigationService);
+        }
+
+        return null;
     }
 
     public override Job CreateJob()

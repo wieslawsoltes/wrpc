@@ -29,35 +29,28 @@ public partial class BroadcastViewModel : RoutableMethodViewModel
     [RelayCommand(CanExecute = nameof(CanBroadcast))]
     private async Task Broadcast()
     {
-        var job = CreateJob();
-
-        if (RpcService.BatchMode)
-        {
-            OnBatch(job);
-            return;
-        }
-
-        var result = await RpcService.Send<RpcBroadcastResult>(job, NavigationService);
-        if (result is RpcBroadcastResult { Result: not null } rpcBroadcastResult)
-        {
-            OnRpcSuccess(rpcBroadcastResult);
-        }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            OnRpcError(rpcErrorResult);
-        }
-        else if (result is Error error)
-        {
-            OnError(error);
-        }
+        await RunCommand();
     }
 
-    protected override void OnRpcSuccess(Rpc rpcResult)
+    public override async Task<IRoutable?> Execute(Job job)
     {
-        if (rpcResult is RpcBroadcastResult rpcBroadcastResult)
+        var result = await RpcService.Send<RpcBroadcastResult>(job.RpcMethod, job.RpcServerUri);
+        if (result is RpcBroadcastResult { Result: not null } rpcBroadcastResult)
         {
-            NavigationService.ClearAndNavigateTo(rpcBroadcastResult.Result?.ToViewModel(RpcService, NavigationService));
+            return rpcBroadcastResult.Result?.ToViewModel(RpcService, NavigationService);
         }
+
+        if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+        }
+
+        if (result is Error error)
+        {
+            return error.ToViewModel(RpcService, NavigationService);
+        }
+
+        return null;
     }
 
     public override Job CreateJob()

@@ -31,9 +31,6 @@
                Target="RpcServerTextBox" />
         <TextBox Name="RpcServerTextBox"
                  Text="{Binding RpcService.ServerPrefix, Mode=TwoWay}" />
-        <!-- BatchMode -->
-        <CheckBox IsChecked="{Binding RpcService.BatchMode}"
-                  Content="Batch Mode" />
         <DockPanel>
           <!-- AddWallet -->
           <Button Content="+"
@@ -81,6 +78,21 @@
                Target="WalletNameTextBox" />
         <TextBox Name="WalletNameTextBox"
                  Text="{Binding SelectedWallet.WalletName, Mode=TwoWay, FallbackValue=''}" />
+        <!-- BatchMode -->
+        <DockPanel LastChildFill="False">
+          <CheckBox IsChecked="{Binding RpcService.BatchMode}"
+                    Content="Batch Mode"
+                    DockPanel.Dock="Left"/>
+          <Button Content="*"
+                  Command="{Binding ShowBatchManagerCommand}"
+                  CommandParameter="{x:Null}"
+                  HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Center"
+                  VerticalAlignment="Stretch"
+                  VerticalContentAlignment="Center"
+                  Margin="4,0,0,0"
+                  DockPanel.Dock="Right"/>
+        </DockPanel>
       </StackPanel>
       <!-- RpcMethods -->
       <views:RpcMethodsView Margin="0,4,0,0" />

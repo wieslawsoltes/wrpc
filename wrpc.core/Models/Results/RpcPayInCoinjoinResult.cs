@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using WasabiRpc.Models.Info;
 
 namespace WasabiRpc.Models.Results;
 

@@ -23,35 +23,28 @@ public partial class GetHistoryViewModel : RoutableMethodViewModel
     [RelayCommand]
     private async Task GetHistory()
     {
-        var job = CreateJob();
-
-        if (RpcService.BatchMode)
-        {
-            OnBatch(job);
-            return;
-        }
-
-        var result = await RpcService.Send<RpcGetHistoryResult>(job, NavigationService);
-        if (result is RpcGetHistoryResult { Result: not null } rpcGetHistoryResult)
-        {
-            OnRpcSuccess(rpcGetHistoryResult);
-        }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            OnRpcError(rpcErrorResult);
-        }
-        else if (result is Error error)
-        {
-            OnError(error);
-        }
+        await RunCommand();
     }
 
-    protected override void OnRpcSuccess(Rpc rpcResult)
+    public override async Task<IRoutable?> Execute(Job job)
     {
-        if (rpcResult is RpcGetHistoryResult rpcGetHistoryResult && WalletName is not null)
+        var result = await RpcService.Send<RpcGetHistoryResult>(job.RpcMethod, job.RpcServerUri);
+        if (result is RpcGetHistoryResult { Result: not null } rpcGetHistoryResult && WalletName is not null)
         {
-            NavigationService.NavigateTo(new GetHistoryInfo { Transactions = rpcGetHistoryResult.Result }.ToViewModel(RpcService, NavigationService, BatchManager, WalletName));
+            return new GetHistoryInfo { Transactions = rpcGetHistoryResult.Result }.ToViewModelAdapter(RpcService, NavigationService, BatchManager, WalletName);
         }
+
+        if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+        }
+
+        if (result is Error error)
+        {
+            return error.ToViewModel(RpcService, NavigationService);
+        }
+
+        return null;
     }
 
     public override Job CreateJob()

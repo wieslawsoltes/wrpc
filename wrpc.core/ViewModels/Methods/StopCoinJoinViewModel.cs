@@ -22,32 +22,28 @@ public partial class StopCoinJoinViewModel : RoutableMethodViewModel
     [RelayCommand]
     private async Task StopCoinJoin()
     {
-        var job = CreateJob();
-
-        if (RpcService.BatchMode)
-        {
-            OnBatch(job);
-            return;
-        }
-
-        var result = await RpcService.Send<RpcStopCoinJoinResult>(job, NavigationService);
-        if (result is RpcStopCoinJoinResult rpcStopCoinJoinResult)
-        {
-            OnRpcSuccess(rpcStopCoinJoinResult);
-        }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            OnRpcError(rpcErrorResult);
-        }
-        else if (result is Error error)
-        {
-            OnError(error);
-        }
+        await RunCommand();
     }
 
-    protected override void OnRpcSuccess(Rpc rpcResult)
+    public override async Task<IRoutable?> Execute(Job job)
     {
-        NavigationService.NavigateTo(new Success { Message = $"Stopped coinjoin for wallet {WalletName}" }.ToViewModel(RpcService, NavigationService));
+        var result = await RpcService.Send<RpcStopCoinJoinResult>(job.RpcMethod, job.RpcServerUri);
+        if (result is RpcStopCoinJoinResult)
+        {
+            return new Success { Message = $"Stopped coinjoin for wallet {WalletName}" }.ToViewModel(RpcService, NavigationService);
+        }
+
+        if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+        }
+
+        if (result is Error error)
+        {
+            return error.ToViewModel(RpcService, NavigationService);
+        }
+
+        return null;
     }
 
     public override Job CreateJob()

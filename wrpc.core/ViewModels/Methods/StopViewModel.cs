@@ -18,32 +18,28 @@ public partial class StopViewModel : RoutableMethodViewModel
     [RelayCommand]
     private async Task Stop()
     {
-        var job = CreateJob();
-
-        if (RpcService.BatchMode)
-        {
-            OnBatch(job);
-            return;
-        }
-
-        var result = await RpcService.Send<string>(job, NavigationService);
-        if (result is string)
-        {
-            OnRpcSuccess(new RpcResult());
-        }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            OnRpcError(rpcErrorResult);
-        }
-        else if (result is Error error)
-        {
-            OnError(error);
-        }
+        await RunCommand();
     }
 
-    protected override void OnRpcSuccess(Rpc rpcResult)
+    public override async Task<IRoutable?> Execute(Job job)
     {
-        NavigationService.NavigateTo(new Success { Message = "Stopped daemon." }.ToViewModel(RpcService, NavigationService));
+        var result = await RpcService.Send<string>(job.RpcMethod, job.RpcServerUri);
+        if (result is string)
+        {
+            return new Success { Message = "Stopped daemon." }.ToViewModel(RpcService, NavigationService);
+        }
+
+        if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+        }
+
+        if (result is Error error)
+        {
+            return error.ToViewModel(RpcService, NavigationService);
+        }
+
+        return null;
     }
 
     public override Job CreateJob()

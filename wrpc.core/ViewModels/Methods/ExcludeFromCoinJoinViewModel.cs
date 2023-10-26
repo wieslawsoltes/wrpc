@@ -49,32 +49,28 @@ public partial class ExcludeFromCoinJoinViewModel : RoutableMethodViewModel
     [RelayCommand(CanExecute = nameof(CanExcludeFromCoinJoin))]
     private async Task ExcludeFromCoinJoin()
     {
-        var job = CreateJob();
-
-        if (RpcService.BatchMode)
-        {
-            OnBatch(job);
-            return;
-        }
-
-        var result = await RpcService.Send<RpcExcludeFromCoinJoinResult>(job, NavigationService);
-        if (result is RpcExcludeFromCoinJoinResult rpcExcludeFromCoinJoinResult)
-        {
-            OnRpcSuccess(rpcExcludeFromCoinJoinResult);
-        }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            OnRpcError(rpcErrorResult);
-        }
-        else if (result is Error error)
-        {
-            OnError(error);
-        }
+        await RunCommand();
     }
 
-    protected override void OnRpcSuccess(Rpc rpcResult)
+    public override async Task<IRoutable?> Execute(Job job)
     {
-        NavigationService.ClearAndNavigateTo(new Success { Message = $"{(Exclude ? "Excluded" : "Removed the exclusion")} from coinjoin" }.ToViewModel(RpcService, NavigationService));
+        var result = await RpcService.Send<RpcExcludeFromCoinJoinResult>(job.RpcMethod, job.RpcServerUri);
+        if (result is RpcExcludeFromCoinJoinResult)
+        {
+            return new Success { Message = $"{(Exclude ? "Excluded" : "Removed the exclusion")} from coinjoin" }.ToViewModel(RpcService, NavigationService);
+        }
+
+        if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+        }
+
+        if (result is Error error)
+        {
+            return error.ToViewModel(RpcService, NavigationService);
+        }
+
+        return null;
     }
 
     public override Job CreateJob()

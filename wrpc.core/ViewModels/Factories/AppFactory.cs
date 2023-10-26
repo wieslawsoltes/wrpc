@@ -14,15 +14,6 @@ public static class AppFactory
         };
     }
 
-    public static JsonViewModel ToViewModel(this Json json, IRpcServiceViewModel rpcService, INavigationService navigationService)
-    {
-        return new JsonViewModel(rpcService, navigationService)
-        {
-            Content = json.Content,
-        };
-    }
-
-
     public static SuccessViewModel ToViewModel(this Success success, IRpcServiceViewModel rpcService, INavigationService navigationService)
     {
         return new SuccessViewModel(rpcService, navigationService)

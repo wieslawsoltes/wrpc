@@ -12,6 +12,9 @@ using WasabiRpc.Models.Params.Build;
 using WasabiRpc.Models.Params.Send;
 using WasabiRpc.Models.Results;
 using WasabiRpc.Models.Services;
+using WasabiRpc.ViewModels.App;
+using WasabiRpc.ViewModels.Info;
+using WasabiRpc.ViewModels.Methods.Adapters;
 
 namespace WasabiRpc.ViewModels.Methods;
 
@@ -50,7 +53,7 @@ public partial class BuildViewModel : RoutableMethodViewModel
     private decimal? _feeRate;
 
     [ObservableProperty]
-    private ObservableCollection<CoinViewModel> _coins;
+    private ObservableCollection<CoinAdapterViewModel> _coins;
 
     public BuildViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
         : base(rpcService, navigationService, batchManager)
@@ -63,7 +66,7 @@ public partial class BuildViewModel : RoutableMethodViewModel
         SubtractFee = false;
         FeeTarget = 2;
         FeeTarget = null;
-        Coins = new ObservableCollection<CoinViewModel>();
+        Coins = new ObservableCollection<CoinAdapterViewModel>();
     }
 
     private bool CanBuild()
@@ -82,35 +85,28 @@ public partial class BuildViewModel : RoutableMethodViewModel
     [RelayCommand(CanExecute = nameof(CanBuild))]
     private async Task Build()
     {
-        var job = CreateJob();
-
-        if (RpcService.BatchMode)
-        {
-            OnBatch(job);
-            return;
-        }
-
-        var result = await RpcService.Send<RpcBuildResult>(job, NavigationService);
-        if (result is RpcBuildResult { Result: not null } rpcBuildResult)
-        {
-            OnRpcSuccess(rpcBuildResult);
-        }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            OnRpcError(rpcErrorResult);
-        }
-        else if (result is Error error)
-        {
-            OnError(error);
-        }
+        await RunCommand();
     }
 
-    protected override void OnRpcSuccess(Rpc rpcResult)
+    public override async Task<IRoutable?> Execute(Job job)
     {
-        if (rpcResult is RpcBuildResult rpcBuildResult)
+        var result = await RpcService.Send<RpcBuildResult>(job.RpcMethod, job.RpcServerUri);
+        if (result is RpcBuildResult { Result: not null } rpcBuildResult)
         {
-            NavigationService.ClearAndNavigateTo(new BuildInfo { Tx = rpcBuildResult.Result }.ToViewModel(RpcService, NavigationService));
+            return new BuildInfo { Tx = rpcBuildResult.Result }.ToViewModel(RpcService, NavigationService);
         }
+
+        if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+        }
+
+        if (result is Error error)
+        {
+            return error.ToViewModel(RpcService, NavigationService);
+        }
+
+        return null;
     }
 
     public override Job CreateJob()
@@ -155,22 +151,21 @@ public partial class BuildViewModel : RoutableMethodViewModel
 
         var listUnspentCoinsViewModel = new ListUnspentCoinsViewModel(RpcService, NavigationService, BatchManager, WalletName);
         var job = listUnspentCoinsViewModel.CreateJob();
-        var result = await RpcService.Send<RpcListUnspentCoinsResult>(job, NavigationService);
-        if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
+        var routable = await listUnspentCoinsViewModel.Execute(job);
+        if (routable is ListUnspentCoinsInfoViewModel listUnspentCoinsInfoViewModel)
         {
-            var coins = rpcListUnspentCoinsResult
-                .Result
-                .Select(x => new CoinViewModel(RpcService, NavigationService, BatchManager, WalletName, x.ToViewModel(RpcService, NavigationService)));
-
-            Coins = new ObservableCollection<CoinViewModel>(coins);
+            if (listUnspentCoinsInfoViewModel.Coins is not null)
+            {
+                Coins = new ObservableCollection<CoinAdapterViewModel>(listUnspentCoinsInfoViewModel.Coins);
+            }
         }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        else if (routable is ErrorInfoViewModel errorInfoViewModel)
         {
-            NavigationService.NavigateTo(rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService));
+            NavigationService.NavigateTo(errorInfoViewModel);
         }
-        else if (result is Error error)
+        else if (routable is ErrorViewModel errorViewModel)
         {
-            NavigationService.NavigateTo(error.ToViewModel(RpcService, NavigationService));
+            NavigationService.NavigateTo(errorViewModel);
         }
     }
 }
