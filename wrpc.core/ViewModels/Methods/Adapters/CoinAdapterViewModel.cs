@@ -1,11 +1,9 @@
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using WasabiRpc.Models.App;
 using WasabiRpc.Models.BatchMode;
-using WasabiRpc.Models.Results;
 using WasabiRpc.Models.Services;
-using WasabiRpc.ViewModels.Factories;
+using WasabiRpc.ViewModels.App;
 using WasabiRpc.ViewModels.Info;
 
 namespace WasabiRpc.ViewModels.Methods.Adapters;
@@ -47,31 +45,18 @@ public partial class CoinAdapterViewModel : RoutableViewModel
             N = 0,
             Exclude = exclude
         };
-
         var job = excludeFromCoinJoinViewModel.CreateJob();
-
-        await Execute(job, exclude);
-    }
-
-    public async Task Execute(Job job, bool exclude)
-    {
-        var result = await RpcService.Send<RpcExcludeFromCoinJoinResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
-        if (result is RpcExcludeFromCoinJoinResult)
+        var routable = await excludeFromCoinJoinViewModel.Execute(job);
+        if (routable is SuccessViewModel successViewModel)
         {
-            var successViewModel = new Success
-            {
-                Message = $"{(exclude ? "Excluded" : "Removed the exclusion")} from coinjoin"
-            }.ToViewModel(RpcService, NavigationService);
             NavigationService.NavigateTo(successViewModel);
         }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        else if (routable is ErrorInfoViewModel errorInfoViewModel)
         {
-            var errorInfoViewModel = rpcErrorResult.Error.ToViewModel(RpcService, NavigationService);
             NavigationService.NavigateTo(errorInfoViewModel);
         }
-        else if (result is Error error)
+        else if (routable is ErrorViewModel errorViewModel)
         {
-            var errorViewModel = error.ToViewModel(RpcService, NavigationService);
             NavigationService.NavigateTo(errorViewModel);
         }
     }

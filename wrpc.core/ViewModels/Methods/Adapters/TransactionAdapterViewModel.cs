@@ -1,12 +1,9 @@
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using WasabiRpc.Models.App;
 using WasabiRpc.Models.BatchMode;
-using WasabiRpc.Models.Info;
-using WasabiRpc.Models.Results;
 using WasabiRpc.Models.Services;
-using WasabiRpc.ViewModels.Factories;
+using WasabiRpc.ViewModels.App;
 using WasabiRpc.ViewModels.Info;
 
 namespace WasabiRpc.ViewModels.Methods.Adapters;
@@ -39,28 +36,18 @@ public partial class TransactionAdapterViewModel : RoutableViewModel
             TxId = TransactionInfo.Tx,
             WalletPassword = WalletPassword,
         };
-
         var job = speedUpTransactionViewModel.CreateJob();
-
-        await Execute(job);
-    }
-
-    public async Task Execute(Job job)
-    {
-        var result = await RpcService.Send<RpcSpeedUpTransactionResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
-        if (result is RpcSpeedUpTransactionResult rpcSpeedUpTransactionResult)
+        var routable = await speedUpTransactionViewModel.Execute(job);
+        if (routable is BuildInfoViewModel buildInfoViewModel)
         {
-            var buildInfoViewModel = new BuildInfo { Tx = rpcSpeedUpTransactionResult.Result }.ToViewModel(RpcService, NavigationService);
             NavigationService.NavigateTo(buildInfoViewModel);
         }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        else if (routable is ErrorInfoViewModel errorInfoViewModel)
         {
-            var errorInfoViewModel = rpcErrorResult.Error.ToViewModel(RpcService, NavigationService);
             NavigationService.NavigateTo(errorInfoViewModel);
         }
-        else if (result is Error error)
+        else if (routable is ErrorViewModel errorViewModel)
         {
-            var errorViewModel = error.ToViewModel(RpcService, NavigationService);
             NavigationService.NavigateTo(errorViewModel);
         }
     }
@@ -73,28 +60,18 @@ public partial class TransactionAdapterViewModel : RoutableViewModel
             TxId = TransactionInfo.Tx,
             WalletPassword = WalletPassword,
         };
-
         var job = cancelTransactionViewModel.CreateJob();
-
-        await ExecuteCancel(job);
-    }
-
-    private async Task ExecuteCancel(Job job)
-    {
-        var result = await RpcService.Send<RpcCancelTransactionResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
-        if (result is RpcCancelTransactionResult rpcCancelTransactionResult)
+        var routable = await cancelTransactionViewModel.Execute(job);
+        if (routable is BuildInfoViewModel buildInfoViewModel)
         {
-            var buildInfoViewModel = new BuildInfo { Tx = rpcCancelTransactionResult.Result }.ToViewModel(RpcService, NavigationService);
             NavigationService.NavigateTo(buildInfoViewModel);
         }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        else if (routable is ErrorInfoViewModel errorInfoViewModel)
         {
-            var errorInfoViewModel = rpcErrorResult.Error.ToViewModel(RpcService, NavigationService);
             NavigationService.NavigateTo(errorInfoViewModel);
         }
-        else if (result is Error error)
+        else if (routable is ErrorViewModel errorViewModel)
         {
-            var errorViewModel = error.ToViewModel(RpcService, NavigationService);
             NavigationService.NavigateTo(errorViewModel);
         }
     }

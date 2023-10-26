@@ -5,9 +5,10 @@ using WasabiRpc.ViewModels.Factories;
 using WasabiRpc.Models;
 using WasabiRpc.Models.App;
 using WasabiRpc.Models.BatchMode;
-using WasabiRpc.Models.Results;
 using WasabiRpc.Models.Services;
+using WasabiRpc.ViewModels.App;
 using WasabiRpc.ViewModels.BatchMode;
+using WasabiRpc.ViewModels.Info;
 
 namespace WasabiRpc.ViewModels;
 
@@ -21,25 +22,56 @@ public abstract partial class RoutableMethodViewModel : RoutableViewModel
 
     protected IBatchManager BatchManager { get; }
 
-    protected abstract void OnRpcSuccess(Rpc rpcResult);
-
-    protected virtual void OnRpcError(RpcErrorResult rpcErrorResult)
+    protected async Task RunCommand()
     {
-        var errorInfoViewModel = rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
-        NavigationService.NavigateTo(errorInfoViewModel);
+        var job = CreateJob();
+
+        if (RpcService.BatchMode)
+        {
+            OnBatch(job);
+            return;
+        }
+
+        var routable = await Execute(job);
+        if (routable is not null)
+        {
+            if (routable is ErrorInfoViewModel errorInfoViewModel)
+            {
+                OnRpcError(errorInfoViewModel);
+            }
+            else if (routable is ErrorViewModel errorViewModel)
+            {
+                OnError(errorViewModel);
+            }
+            else
+            {
+                OnRpcSuccess(routable);
+            }
+        }
     }
 
-    protected virtual void OnError(Error error)
+    protected virtual void OnRpcSuccess(IRoutable routable)
     {
-        var errorViewModel = error.ToViewModel(RpcService, NavigationService);
-        NavigationService.NavigateTo(errorViewModel);
+        NavigationService.ClearAndNavigateTo(routable);
+    }
+
+    protected virtual void OnRpcError(IRoutable routable)
+    {
+        NavigationService.NavigateTo(routable);
+    }
+
+    protected virtual void OnError(IRoutable routable)
+    {
+        NavigationService.NavigateTo(routable);
     }
 
     protected virtual void OnBatch(Job job)
     {
         try
         {
-            var addJobViewModel = ToJobViewModel(job);
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            var json = JsonSerializer.Serialize(job, typeof(Job), new ModelsJsonContext(options));
+            var addJobViewModel = new AddJobViewModel(RpcService, NavigationService, BatchManager, job, json);
             NavigationService.ClearAndNavigateTo(addJobViewModel);
         }
         catch (Exception e)
@@ -49,14 +81,7 @@ public abstract partial class RoutableMethodViewModel : RoutableViewModel
         }
     }
 
-    private AddJobViewModel ToJobViewModel(Job job)
-    {
-        var options = new JsonSerializerOptions { WriteIndented = true };
-        var json = JsonSerializer.Serialize(job, typeof(Job), new ModelsJsonContext(options));
-        return new AddJobViewModel(RpcService, NavigationService, BatchManager, job, json);
-    }
-
     public abstract Job CreateJob();
 
-    public abstract Task Execute(Job job);
+    public abstract Task<IRoutable?> Execute(Job job);
 }

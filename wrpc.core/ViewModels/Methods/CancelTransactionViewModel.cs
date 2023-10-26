@@ -45,41 +45,28 @@ public partial class CancelTransactionViewModel : RoutableMethodViewModel
     [RelayCommand(CanExecute = nameof(CanCancelTransaction))]
     private async Task CancelTransaction()
     {
-        var job = CreateJob();
-
-        if (RpcService.BatchMode)
-        {
-            OnBatch(job);
-            return;
-        }
-
-        await Execute(job);
+        await RunCommand();
     }
 
-    public override async Task Execute(Job job)
+    public override async Task<IRoutable?> Execute(Job job)
     {
         var result = await RpcService.Send<RpcCancelTransactionResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcCancelTransactionResult { Result: not null } rpcCancelTransactionResult)
         {
-            OnRpcSuccess(rpcCancelTransactionResult);
+            return new BuildInfo { Tx = rpcCancelTransactionResult.Result }.ToViewModel(RpcService, NavigationService);
         }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            OnRpcError(rpcErrorResult);
-        }
-        else if (result is Error error)
-        {
-            OnError(error);
-        }
-    }
 
-    protected override void OnRpcSuccess(Rpc rpcResult)
-    {
-        if (rpcResult is RpcCancelTransactionResult rpcCancelTransactionResult)
+        if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            var buildInfoViewModel = new BuildInfo { Tx = rpcCancelTransactionResult.Result }.ToViewModel(RpcService, NavigationService);
-            NavigationService.ClearAndNavigateTo(buildInfoViewModel);
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
         }
+
+        if (result is Error error)
+        {
+            return error.ToViewModel(RpcService, NavigationService);
+        }
+
+        return null;
     }
 
     public override Job CreateJob()

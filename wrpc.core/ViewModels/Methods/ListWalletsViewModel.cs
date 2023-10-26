@@ -19,41 +19,28 @@ public partial class ListWalletsViewModel : RoutableMethodViewModel
     [RelayCommand]
     private async Task ListWallets()
     {
-        var job = CreateJob();
-
-        if (RpcService.BatchMode)
-        {
-            OnBatch(job);
-            return;
-        }
-
-        await Execute(job);
+        await RunCommand();
     }
 
-    public override async Task Execute(Job job)
+    public override async Task<IRoutable?> Execute(Job job)
     {
         var result = await RpcService.Send<RpcListWalletsResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcListWalletsResult { Result: not null } rpcListWalletsResult)
         {
-            OnRpcSuccess(rpcListWalletsResult);
+            return new ListWalletsInfo { Wallets = rpcListWalletsResult.Result }.ToViewModel(RpcService, NavigationService);
         }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            OnRpcError(rpcErrorResult);
-        }
-        else if (result is Error error)
-        {
-            OnError(error);
-        }
-    }
 
-    protected override void OnRpcSuccess(Rpc rpcResult)
-    {
-        if (rpcResult is RpcListWalletsResult rpcListWalletsResult)
+        if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            var listWalletsInfoViewModel = new ListWalletsInfo { Wallets = rpcListWalletsResult.Result }.ToViewModel(RpcService, NavigationService);
-            NavigationService.NavigateTo(listWalletsInfoViewModel);
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
         }
+
+        if (result is Error error)
+        {
+            return error.ToViewModel(RpcService, NavigationService);
+        }
+
+        return null;
     }
 
     public override Job CreateJob()

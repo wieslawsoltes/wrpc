@@ -12,6 +12,8 @@ using WasabiRpc.Models.Params.Build;
 using WasabiRpc.Models.Params.Send;
 using WasabiRpc.Models.Results;
 using WasabiRpc.Models.Services;
+using WasabiRpc.ViewModels.App;
+using WasabiRpc.ViewModels.Info;
 using WasabiRpc.ViewModels.Methods.Adapters;
 
 namespace WasabiRpc.ViewModels.Methods;
@@ -83,41 +85,28 @@ public partial class BuildViewModel : RoutableMethodViewModel
     [RelayCommand(CanExecute = nameof(CanBuild))]
     private async Task Build()
     {
-        var job = CreateJob();
-
-        if (RpcService.BatchMode)
-        {
-            OnBatch(job);
-            return;
-        }
-
-        await Execute(job);
+        await RunCommand();
     }
 
-    public override async Task Execute(Job job)
+    public override async Task<IRoutable?> Execute(Job job)
     {
         var result = await RpcService.Send<RpcBuildResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcBuildResult { Result: not null } rpcBuildResult)
         {
-            OnRpcSuccess(rpcBuildResult);
+            return new BuildInfo { Tx = rpcBuildResult.Result }.ToViewModel(RpcService, NavigationService);
         }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            OnRpcError(rpcErrorResult);
-        }
-        else if (result is Error error)
-        {
-            OnError(error);
-        }
-    }
 
-    protected override void OnRpcSuccess(Rpc rpcResult)
-    {
-        if (rpcResult is RpcBuildResult rpcBuildResult)
+        if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            var buildInfoViewModel = new BuildInfo { Tx = rpcBuildResult.Result }.ToViewModel(RpcService, NavigationService);
-            NavigationService.ClearAndNavigateTo(buildInfoViewModel);
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
         }
+
+        if (result is Error error)
+        {
+            return error.ToViewModel(RpcService, NavigationService);
+        }
+
+        return null;
     }
 
     public override Job CreateJob()
@@ -161,36 +150,21 @@ public partial class BuildViewModel : RoutableMethodViewModel
         }
 
         var listUnspentCoinsViewModel = new ListUnspentCoinsViewModel(RpcService, NavigationService, BatchManager, WalletName);
-
         var job = listUnspentCoinsViewModel.CreateJob();
-
-        await ExecuteListUnspentCoins(job);
-    }
-
-    private async Task ExecuteListUnspentCoins(Job job)
-    {
-        if (WalletName is null)
+        var routable = await listUnspentCoinsViewModel.Execute(job);
+        if (routable is ListUnspentCoinsInfoViewModel listUnspentCoinsInfoViewModel)
         {
-            return;
+            if (listUnspentCoinsInfoViewModel.Coins is not null)
+            {
+                Coins = new ObservableCollection<CoinAdapterViewModel>(listUnspentCoinsInfoViewModel.Coins);
+            }
         }
-
-        var result = await RpcService.Send<RpcListUnspentCoinsResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
-        if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
+        else if (routable is ErrorInfoViewModel errorInfoViewModel)
         {
-            var coins = rpcListUnspentCoinsResult
-                .Result
-                .Select(x => new CoinAdapterViewModel(RpcService, NavigationService, BatchManager, WalletName, x.ToViewModel(RpcService, NavigationService)));
-
-            Coins = new ObservableCollection<CoinAdapterViewModel>(coins);
-        }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            var errorInfoViewModel = rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
             NavigationService.NavigateTo(errorInfoViewModel);
         }
-        else if (result is Error error)
+        else if (routable is ErrorViewModel errorViewModel)
         {
-            var errorViewModel = error.ToViewModel(RpcService, NavigationService);
             NavigationService.NavigateTo(errorViewModel);
         }
     }

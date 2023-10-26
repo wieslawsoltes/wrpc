@@ -40,38 +40,28 @@ public partial class RecoverWalletViewModel : RoutableMethodViewModel
     [RelayCommand(CanExecute = nameof(CanRecoverWallet))]
     private async Task RecoverWallet()
     {
-        var job = CreateJob();
-
-        if (RpcService.BatchMode)
-        {
-            OnBatch(job);
-            return;
-        }
-
-        await Execute(job);
+        await RunCommand();
     }
 
-    public override async Task Execute(Job job)
+    public override async Task<IRoutable?> Execute(Job job)
     {
         var result = await RpcService.Send<RpcRecoverWalletResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
-        if (result is RpcRecoverWalletResult rpcRecoverWalletResult)
+        if (result is RpcRecoverWalletResult)
         {
-            OnRpcSuccess(rpcRecoverWalletResult);
+            return new Success { Message = $"Recovered wallet {WalletName}" }.ToViewModel(RpcService, NavigationService);
         }
-        else if (result is RpcErrorResult { Error: not null } rpcErrorResult)
-        {
-            OnRpcError(rpcErrorResult);
-        }
-        else if (result is Error error)
-        {
-            OnError(error);
-        }
-    }
 
-    protected override void OnRpcSuccess(Rpc rpcResult)
-    {
-        var successViewModel = new Success { Message = $"Recovered wallet {WalletName}" }.ToViewModel(RpcService, NavigationService);
-        NavigationService.ClearAndNavigateTo(successViewModel);
+        if (result is RpcErrorResult { Error: not null } rpcErrorResult)
+        {
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+        }
+
+        if (result is Error error)
+        {
+            return error.ToViewModel(RpcService, NavigationService);
+        }
+
+        return null;
     }
 
     public override Job CreateJob()
