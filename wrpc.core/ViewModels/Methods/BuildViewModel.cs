@@ -168,6 +168,11 @@ public partial class BuildViewModel : RoutableMethodViewModel
 
     private async Task ExecuteListUnspentCoins(Job job)
     {
+        if (WalletName is null)
+        {
+            return;
+        }
+
         var result = await RpcService.Send<RpcListUnspentCoinsResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
         if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
         {
