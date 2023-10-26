@@ -55,6 +55,6 @@ public partial class GetWalletInfoViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
-        return new Job("getwalletinfo", requestBody, rpcServerUri, typeof(RpcGetWalletInfoResult));
+        return new Job("getwalletinfo", requestBody, rpcServerUri);
     }
 }

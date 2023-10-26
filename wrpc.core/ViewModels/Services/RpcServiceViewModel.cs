@@ -8,6 +8,7 @@ using WasabiRpc.Models;
 using WasabiRpc.Models.App;
 using WasabiRpc.Models.Results;
 using WasabiRpc.Models.Services;
+using WasabiRpc.ViewModels.BatchMode;
 
 namespace WasabiRpc.ViewModels.Services;
 
@@ -77,7 +78,7 @@ public partial class RpcServiceViewModel : ViewModelBase, IRpcServiceViewModel
         return default;
     }
 
-    public async Task<object?> Send(RpcMethod[] rpcMethods, string rpcServerUri, string[] resultTypes, INavigationService navigationService)
+    public async Task<object?> Send(RpcMethod[] rpcMethods, string rpcServerUri, INavigationService navigationService)
     {
         string? responseBodyJson;
 
@@ -104,7 +105,7 @@ public partial class RpcServiceViewModel : ViewModelBase, IRpcServiceViewModel
         }
 
         var length = jsonDocument.RootElement.GetArrayLength();
-        if (length != resultTypes.Length)
+        if (length != rpcMethods.Length)
         {
             return default;
         }
@@ -114,7 +115,14 @@ public partial class RpcServiceViewModel : ViewModelBase, IRpcServiceViewModel
         for (var i = 0; i < length; i++)
         {
             var jsonElement = jsonDocument.RootElement[i];
-            var resultType = Type.GetType(resultTypes[i]);
+
+            if (rpcMethods[i].Method is null)
+            {
+                results.Add(default);
+                continue;
+            }
+    
+            RpcMethodResultTypeRegistry.Results.TryGetValue(rpcMethods[i].Method!, out var resultType);
             if (resultType is null)
             {
                 results.Add(default);

@@ -51,6 +51,6 @@ public partial class StopViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}";
 
-        return new Job("stop", requestBody, rpcServerUri, typeof(string));
+        return new Job("stop", requestBody, rpcServerUri);
     }
 }

@@ -51,6 +51,6 @@ public partial class GetStatusViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}";
 
-        return new Job("getstatus", requestBody, rpcServerUri, typeof(RpcGetStatusResult));
+        return new Job("getstatus", requestBody, rpcServerUri);
     }
 }

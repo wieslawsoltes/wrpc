@@ -56,6 +56,6 @@ public partial class GetHistoryViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
-        return new Job("gethistory", requestBody, rpcServerUri, typeof(RpcGetHistoryResult));
+        return new Job("gethistory", requestBody, rpcServerUri);
     }
 }

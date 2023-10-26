@@ -52,6 +52,6 @@ public partial class GetFeeRatesViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}";
 
-        return new Job("getfeerates", requestBody, rpcServerUri, typeof(RpcGetFeeRatesResult));
+        return new Job("getfeerates", requestBody, rpcServerUri);
     }
 }

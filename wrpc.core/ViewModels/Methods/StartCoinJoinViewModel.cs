@@ -34,7 +34,7 @@ public partial class StartCoinJoinViewModel : RoutableMethodViewModel
     public override async Task<IRoutable?> Execute(Job job)
     {
         var result = await RpcService.Send<RpcStartCoinJoinResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
-        if (result is RpcStartCoinJoinResult rpcStartCoinJoinResult)
+        if (result is RpcStartCoinJoinResult)
         {
             return new Success { Message = $"Started coinjoin for wallet {WalletName}" }.ToViewModel(RpcService, NavigationService);
         }
@@ -67,6 +67,6 @@ public partial class StartCoinJoinViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
-        return new Job("startcoinjoin", requestBody, rpcServerUri, typeof(RpcStartCoinJoinResult));
+        return new Job("startcoinjoin", requestBody, rpcServerUri);
     }
 }

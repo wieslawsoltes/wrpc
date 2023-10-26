@@ -83,6 +83,6 @@ public partial class CancelTransactionViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
-        return new Job("canceltransaction", requestBody, rpcServerUri, typeof(RpcCancelTransactionResult));
+        return new Job("canceltransaction", requestBody, rpcServerUri);
     }
 }

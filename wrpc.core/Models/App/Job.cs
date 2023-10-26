@@ -15,15 +15,11 @@ public class Job
     [JsonPropertyName("rpcServerUri")]
     public string RpcServerUri { get; set; }
 
-    [JsonPropertyName("resultType")]
-    public string ResultType { get; set; }
-
     [JsonConstructor]
-    public Job(string name, RpcMethod rpcMethod, string rpcServerUri, Type resultType)
+    public Job(string name, RpcMethod rpcMethod, string rpcServerUri)
     {
         Name = name;
         RpcMethod = rpcMethod;
         RpcServerUri = rpcServerUri;
-        ResultType = resultType.ToString();
     }
 }

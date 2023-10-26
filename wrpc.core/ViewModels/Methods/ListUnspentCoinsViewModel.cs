@@ -34,7 +34,7 @@ public partial class ListUnspentCoinsViewModel : RoutableMethodViewModel
     public override async Task<IRoutable?> Execute(Job job)
     {
         var result = await RpcService.Send<RpcListUnspentCoinsResult>(job.RpcMethod, job.RpcServerUri, NavigationService);
-        if (result is RpcListUnspentCoinsResult  { Result: not null } rpcListUnspentCoinsResult && WalletName is not null)
+        if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult && WalletName is not null)
         {
             return new ListUnspentCoinsInfo { Coins = rpcListUnspentCoinsResult.Result }.ToViewModelAdapter(RpcService, NavigationService, BatchManager, WalletName);
         }
@@ -61,6 +61,6 @@ public partial class ListUnspentCoinsViewModel : RoutableMethodViewModel
 
         var rpcServerUri = $"{RpcService.ServerPrefix}/{WalletName}";
 
-        return new Job("listunspentcoins", requestBody, rpcServerUri, typeof(RpcListUnspentCoinsResult));
+        return new Job("listunspentcoins", requestBody, rpcServerUri);
     }
 }
