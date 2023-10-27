@@ -58,11 +58,11 @@ public partial class BatchViewModel : RoutableViewModel, IBatch
     }
 
     [RelayCommand(CanExecute = nameof(CanRemoveJob))]
-    private void RemoveJob()
+    private void RemoveJob(IJob job)
     {
-        if (Jobs is not null && SelectedJob is not null)
+        if (Jobs is not null )
         {
-            Jobs.Remove(SelectedJob);
+            Jobs.Remove(job);
             SelectedJob = Jobs.FirstOrDefault();
         }
     }

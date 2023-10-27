@@ -6,30 +6,69 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="WasabiRpc.Views.BatchMode.BatchView"
              x:CompileBindings="True" x:DataType="vmbm:BatchViewModel">
-  <!-- Jobs -->
-  <Expander HorizontalAlignment="Stretch"
-            VerticalAlignment="Top"
-            Padding="0"
+  <DockPanel>
+    <StackPanel DockPanel.Dock="Top">
+      <!-- Name -->
+      <Label Content="Name:"
+             Target="NameTextBox" />
+      <TextBox Name="NameTextBox"
+               Text="{Binding Name, Mode=TwoWay, FallbackValue=''}" />
+    </StackPanel>
+    <!-- RunJob -->
+    <Button Content="Run Job"
+            Command="{Binding RunJobCommand}"
+            CommandParameter="{Binding SelectedJob}"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Center"
+            Padding="6,4,6,4"
             Margin="0,4,0,0"
-            IsExpanded="True">
-    <Expander.Header>
-      <Label Content="{Binding Jobs.Count, StringFormat={}Jobs: {0}, FallbackValue=0}" />
-    </Expander.Header>
-    <ListBox ItemsSource="{Binding Jobs}"
-             SelectedItem="{Binding SelectedJob}">
-      <ListBox.ItemTemplate>
-        <DataTemplate>
-          <DockPanel>
-            <Button Content="Details >"
-                    Command="{Binding NavigationService.NavigateToCommand}"
-                    CommandParameter="{Binding .}"
-                    Margin="4,4,8,4"
-                    DockPanel.Dock="Right"/>
-            <TextBlock VerticalAlignment="Center"
-                       Text="{Binding Name}" />
-          </DockPanel>
-        </DataTemplate>
-      </ListBox.ItemTemplate>
-    </ListBox>
-  </Expander>
+            DockPanel.Dock="Bottom" />
+    <!-- AddJob -->
+    <Button Content="Add Job"
+            Command="{Binding AddJobCommand}"
+            CommandParameter="{x:Null}"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Center"
+            Padding="6,4,6,4"
+            Margin="0,4,0,4"
+            IsEnabled="False"
+            DockPanel.Dock="Bottom" />
+    <!-- RemoveJob -->
+    <Button Content="Remove Job"
+            Command="{Binding RemoveJobCommand}"
+            CommandParameter="{Binding SelectedJob}"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Center"
+            Padding="6,4,6,4"
+            Margin="0,4,0,4"
+            DockPanel.Dock="Bottom" />
+    <!-- Jobs -->
+    <Expander HorizontalAlignment="Stretch"
+              VerticalAlignment="Top"
+              Padding="0"
+              Margin="0,4,0,0"
+              IsExpanded="True">
+      <Expander.Header>
+        <Label Content="{Binding Jobs.Count, StringFormat={}Jobs: {0}, FallbackValue=0}" />
+      </Expander.Header>
+      <ListBox ItemsSource="{Binding Jobs}"
+               SelectedItem="{Binding SelectedJob}">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <DockPanel>
+              <Button Content="Details >"
+                      Command="{Binding NavigationService.NavigateToCommand}"
+                      CommandParameter="{Binding .}"
+                      Margin="4,4,8,4"
+                      DockPanel.Dock="Right"/>
+              <TextBlock VerticalAlignment="Center">
+                <Run>Name: </Run>
+                <Run Text="{Binding Name}" />
+              </TextBlock>
+            </DockPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </Expander>
+  </DockPanel>
 </UserControl>

@@ -15,7 +15,7 @@ public interface IBatch : IRoutable
 
     bool IsRunning { get; set; }
 
-    IRelayCommand RemoveJobCommand { get; }
+    IRelayCommand<IJob> RemoveJobCommand { get; }
 
     IRelayCommand<Job> AddJobCommand { get; }
 
