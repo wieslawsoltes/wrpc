@@ -7,7 +7,9 @@ using CommunityToolkit.Mvvm.Input;
 using WasabiRpc.Models.App;
 using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Models.Services;
+using WasabiRpc.ViewModels.App;
 using WasabiRpc.ViewModels.Factories;
+using WasabiRpc.ViewModels.Info;
 
 namespace WasabiRpc.ViewModels.BatchMode;
 
@@ -113,10 +115,16 @@ public partial class BatchManagerViewModel : RoutableViewModel, IBatchManager
             {
                 Results = jobs.Zip(
                     resultsList, 
-                    (job, result) => new JobResultViewModel(RpcService, NavigationService)
+                    (job, result) =>
                     {
-                        Job = job,
-                        Result = result
+                        var routableMethod = RoutableMethodFactory.CreateRoutableMethod(job.Job.Name, RpcService, NavigationService, this);
+                        var resultViewModel = routableMethod?.ToJobResult(result);
+                        return new JobResultViewModel(RpcService, NavigationService)
+                        {
+                            Job = job,
+                            Result = resultViewModel,
+                            IsSuccess = resultViewModel is not null && resultViewModel is not ErrorInfoViewModel
+                        };
                     }).ToList()
             });
         }

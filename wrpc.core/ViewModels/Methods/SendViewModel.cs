@@ -53,7 +53,7 @@ public partial class SendViewModel : RoutableMethodViewModel
     [ObservableProperty]
     private ObservableCollection<CoinAdapterViewModel> _coins;
 
-    public SendViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
+    public SendViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName)
         : base(rpcService, navigationService, batchManager)
     {
         WalletName = walletName;
@@ -89,6 +89,11 @@ public partial class SendViewModel : RoutableMethodViewModel
     public override async Task<IRoutable?> Execute(Job job)
     {
         var result = await RpcService.Send<RpcSendResult>(job.RpcMethod, job.RpcServerUri);
+        return ToJobResult(result);
+    }
+
+    public override IRoutable? ToJobResult(object? result)
+    {
         if (result is RpcSendResult { Result: not null } rpcSendResult)
         {
             return rpcSendResult.Result?.ToViewModel(RpcService, NavigationService);

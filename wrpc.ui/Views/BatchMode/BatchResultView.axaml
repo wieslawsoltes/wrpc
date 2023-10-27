@@ -15,18 +15,41 @@
       <Label Content="{Binding Results.Count, StringFormat={}Results: {0}, FallbackValue=0}" />
     </Expander.Header>
     <ListBox ItemsSource="{Binding Results}">
+      <ListBox.Styles>
+        <Style Selector="ListBoxItem">
+          <Setter Property="Padding" Value="0" />
+        </Style>
+      </ListBox.Styles>
       <ListBox.ItemTemplate>
         <DataTemplate>
           <DockPanel>
-            <Button Content="Details >"
-                    Command="{Binding NavigationService.NavigateToCommand}"
-                    CommandParameter="{Binding .}"
-                    Margin="4,4,8,4"
-                    DockPanel.Dock="Right"/>
-            <TextBlock VerticalAlignment="Center">
-              <Run>Name: </Run>
-              <Run Text="{Binding Job.Name, FallbackValue=''}" />
-            </TextBlock>
+            <Border Classes.success="{Binding IsSuccess}"
+                    Classes.error="{Binding !IsSuccess}"
+                    IsHitTestVisible="False"
+                    DockPanel.Dock="Left"
+                    Width="8">
+              <Border.Styles>
+                <Style Selector="Border.success">
+                  <Setter Property="Background" Value="Green" />
+                </Style>
+                <Style Selector="Border.error">
+                  <Setter Property="Background" Value="Red" />
+                </Style>
+              </Border.Styles>
+            </Border>
+            <Border Padding="{DynamicResource ListBoxItemPadding}">
+              <DockPanel>
+                <Button Content="Details >"
+                        Command="{Binding NavigationService.NavigateToCommand}"
+                        CommandParameter="{Binding Result}"
+                        Margin="4,4,8,4"
+                        DockPanel.Dock="Right"/>
+                <TextBlock VerticalAlignment="Center">
+                  <Run>Name: </Run>
+                  <Run Text="{Binding Job.Name, FallbackValue=''}" />
+                </TextBlock>
+              </DockPanel>
+            </Border>
           </DockPanel>
         </DataTemplate>
       </ListBox.ItemTemplate>

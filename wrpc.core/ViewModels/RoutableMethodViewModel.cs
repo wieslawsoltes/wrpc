@@ -81,6 +81,8 @@ public abstract partial class RoutableMethodViewModel : RoutableViewModel
         }
     }
 
+    public abstract IRoutable? ToJobResult(object? result);
+
     public abstract Job CreateJob();
 
     public abstract Task<IRoutable?> Execute(Job job);

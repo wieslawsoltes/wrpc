@@ -13,7 +13,7 @@ public partial class GetWalletInfoViewModel : RoutableMethodViewModel
 {
     [ObservableProperty] private string? _walletName;
 
-    public GetWalletInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
+    public GetWalletInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName)
         : base(rpcService, navigationService, batchManager)
     {
         WalletName = walletName;
@@ -28,6 +28,11 @@ public partial class GetWalletInfoViewModel : RoutableMethodViewModel
     public override async Task<IRoutable?> Execute(Job job)
     {
         var result = await RpcService.Send<RpcGetWalletInfoResult>(job.RpcMethod, job.RpcServerUri);
+        return ToJobResult(result);
+    }
+
+    public override IRoutable? ToJobResult(object? result)
+    {
         if (result is RpcGetWalletInfoResult { Result: not null } rpcGetWalletInfoResult)
         {
             return rpcGetWalletInfoResult.Result?.ToViewModel(RpcService, NavigationService);

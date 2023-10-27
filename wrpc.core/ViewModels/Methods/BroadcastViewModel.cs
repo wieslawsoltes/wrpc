@@ -35,6 +35,11 @@ public partial class BroadcastViewModel : RoutableMethodViewModel
     public override async Task<IRoutable?> Execute(Job job)
     {
         var result = await RpcService.Send<RpcBroadcastResult>(job.RpcMethod, job.RpcServerUri);
+        return ToJobResult(result);
+    }
+
+    public override IRoutable? ToJobResult(object? result)
+    {
         if (result is RpcBroadcastResult { Result: not null } rpcBroadcastResult)
         {
             return rpcBroadcastResult.Result?.ToViewModel(RpcService, NavigationService);
