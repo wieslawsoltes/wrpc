@@ -14,25 +14,6 @@
       <TextBox Name="NameTextBox"
                Text="{Binding Name, Mode=TwoWay, FallbackValue=''}" />
     </StackPanel>
-    <!-- RunJob -->
-    <Button Content="Run Job"
-            Command="{Binding RunJobCommand}"
-            CommandParameter="{Binding SelectedJob}"
-            HorizontalAlignment="Stretch"
-            HorizontalContentAlignment="Center"
-            Padding="6,4,6,4"
-            Margin="0,4,0,0"
-            DockPanel.Dock="Bottom" />
-    <!-- AddJob -->
-    <Button Content="Add Job"
-            Command="{Binding AddJobCommand}"
-            CommandParameter="{x:Null}"
-            HorizontalAlignment="Stretch"
-            HorizontalContentAlignment="Center"
-            Padding="6,4,6,4"
-            Margin="0,4,0,4"
-            IsEnabled="False"
-            DockPanel.Dock="Bottom" />
     <!-- RemoveJob -->
     <Button Content="Remove Job"
             Command="{Binding RemoveJobCommand}"

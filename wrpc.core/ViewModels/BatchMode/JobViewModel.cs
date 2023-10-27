@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using WasabiRpc.Models.App;
 using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Models.Services;
@@ -19,22 +17,4 @@ public partial class JobViewModel : RoutableViewModel, IJob
     }
 
     public Job Job { get; }
-
-    private bool CanRunJob()
-    {
-        return !IsRunning;
-    }
-
-    [RelayCommand(CanExecute = nameof(CanRunJob))]
-    private async Task RunJob()
-    {
-        IsRunning = true;
-
-        await Task.Run(() =>
-        {
-            // TODO:
-        });
-
-        IsRunning = false;
-    }
 }

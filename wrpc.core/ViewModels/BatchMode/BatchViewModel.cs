@@ -1,6 +1,5 @@
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WasabiRpc.Models.App;
@@ -65,25 +64,5 @@ public partial class BatchViewModel : RoutableViewModel, IBatch
             Jobs.Remove(job);
             SelectedJob = Jobs.FirstOrDefault();
         }
-    }
-
-    private bool CanRunJob()
-    {
-        return Jobs is not null 
-               && SelectedJob is not null
-               && !IsRunning;
-    }
-
-    [RelayCommand(CanExecute = nameof(CanRunJob))]
-    private async Task RunJob(IJob job)
-    {
-        IsRunning = true;
-
-        await Task.Run(() =>
-        {
-            // TODO:
-        });
-
-        IsRunning = false;
     }
 }
