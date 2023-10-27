@@ -1,10 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using WasabiRpc.Models.App;
 using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Models.Services;
+using WasabiRpc.ViewModels.Factories;
 
 namespace WasabiRpc.ViewModels.BatchMode;
 
@@ -86,15 +89,41 @@ public partial class BatchManagerViewModel : RoutableViewModel, IBatchManager
 
     private async Task Run(IBatch batch)
     {
-        var serverPrefix = batch.Jobs?.FirstOrDefault()?.Job.RpcServerUri;
-        var rpcMethods = batch.Jobs?.Select(x => x.Job.RpcMethod).ToArray();
-        if (serverPrefix is not null && rpcMethods is not null)
+        var jobs = batch.Jobs;
+        if (jobs is null)
         {
-            var results = await RpcService.Send(rpcMethods, serverPrefix);
-            if (results is not null)
+            var errorViewModel = new Error { Message = "No jobs to run." }.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(errorViewModel);
+            return;
+        }
+
+        var serverPrefix = jobs.FirstOrDefault()?.Job.RpcServerUri;
+        if (serverPrefix is null)
+        {
+            var errorViewModel = new Error { Message = "No valid server prefix." }.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(errorViewModel);
+            return;
+        }
+
+        var rpcMethods = jobs.Select(x => x.Job.RpcMethod).ToArray();
+        var results = await RpcService.Send(rpcMethods, serverPrefix);
+        if (results is List<object?> resultsList)
+        {
+            NavigationService.NavigateTo(new BatchResultViewModel(RpcService, NavigationService)
             {
-                // TODO:
-            }
+                Results = jobs.Zip(
+                    resultsList, 
+                    (job, result) => new JobResultViewModel(RpcService, NavigationService)
+                    {
+                        Job = job,
+                        Result = result
+                    }).ToList()
+            });
+        }
+        else
+        {
+            var errorViewModel = new Error { Message = "Invalid send result." }.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(errorViewModel);
         }
     }
 }

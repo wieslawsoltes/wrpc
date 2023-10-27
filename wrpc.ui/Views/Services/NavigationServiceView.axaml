@@ -249,6 +249,18 @@
           <viewsBatchMode:JobView />
         </controls:NavigateBackControl>
       </DataTemplate>
+      <DataTemplate DataType="vmbm:BatchResultViewModel">
+        <controls:NavigateBackControl Header="Batch Result"
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+          <viewsBatchMode:BatchResultView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmbm:JobResultViewModel">
+        <controls:NavigateBackControl Header="Job Result"
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+          <viewsBatchMode:JobResultView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
     </ContentControl.DataTemplates>
   </ContentControl>
 </UserControl>
