@@ -58,11 +58,11 @@ public partial class BatchManagerViewModel : RoutableViewModel, IBatchManager
     }
 
     [RelayCommand(CanExecute = nameof(CanRemoveBatch))]
-    private void RemoveBatch()
+    private void RemoveBatch(IBatch batch)
     {
-        if (Batches is not null && SelectedBatch is not null)
+        if (Batches is not null)
         {
-            Batches.Remove(SelectedBatch);
+            Batches.Remove(batch);
             SelectedBatch = Batches.FirstOrDefault();
         }
     }
