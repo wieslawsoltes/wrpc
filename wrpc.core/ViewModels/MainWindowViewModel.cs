@@ -94,7 +94,7 @@ public partial class MainWindowViewModel : RoutableViewModel
         };
     }
 
-    private IBatchManager BatchManager { get; }
+    public IBatchManager BatchManager { get; }
 
     [RelayCommand]
     private void ShowBatchManager()

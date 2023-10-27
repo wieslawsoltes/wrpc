@@ -39,7 +39,7 @@ public partial class ListUnspentCoinsViewModel : RoutableMethodViewModel
 
     public override IRoutable? ToJobResult(object? result)
     {
-        if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult && WalletName is not null)
+        if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
         {
             return new ListUnspentCoinsInfo { Coins = rpcListUnspentCoinsResult.Result }.ToViewModelAdapter(RpcService, NavigationService, BatchManager, WalletName);
         }

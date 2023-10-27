@@ -34,7 +34,7 @@ public partial class GetHistoryViewModel : RoutableMethodViewModel
 
     public override IRoutable? ToJobResult(object? result)
     {
-        if (result is RpcGetHistoryResult { Result: not null } rpcGetHistoryResult && WalletName is not null)
+        if (result is RpcGetHistoryResult { Result: not null } rpcGetHistoryResult)
         {
             return new GetHistoryInfo { Transactions = rpcGetHistoryResult.Result }.ToViewModelAdapter(RpcService, NavigationService, BatchManager, WalletName);
         }

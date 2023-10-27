@@ -11,11 +11,11 @@ namespace WasabiRpc.ViewModels.Methods.Adapters;
 public partial class TransactionAdapterViewModel : RoutableViewModel
 {
     private readonly IBatchManager _batchManager;
-    [ObservableProperty] private string _walletName;
+    [ObservableProperty] private string? _walletName;
     [ObservableProperty] private string? _walletPassword;
     [ObservableProperty] private bool _isSelected;
 
-    public TransactionAdapterViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName, TransactionInfoViewModel transactionInfo)
+    public TransactionAdapterViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName, TransactionInfoViewModel transactionInfo)
         : base(rpcService, navigationService)
     {
         _batchManager = batchManager;
