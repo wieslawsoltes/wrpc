@@ -41,7 +41,11 @@ public partial class BatchManagerViewModel : RoutableViewModel, IBatchManager
     {
         if (Batches is not null)
         {
-            Batches.Add(new BatchViewModel(RpcService, NavigationService) { Name = "Batch" });
+            Batches.Add(new BatchViewModel(RpcService, NavigationService)
+            {
+                Name = "Batch",
+                Jobs = new ObservableCollection<IJob>()
+            });
             SelectedBatch = Batches.LastOrDefault();
         }
     }
