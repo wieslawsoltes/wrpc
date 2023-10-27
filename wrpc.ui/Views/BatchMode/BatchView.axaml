@@ -63,7 +63,7 @@
                       DockPanel.Dock="Right"/>
               <TextBlock VerticalAlignment="Center">
                 <Run>Name: </Run>
-                <Run Text="{Binding Name}" />
+                <Run Text="{Binding Job.Name}" />
               </TextBlock>
             </DockPanel>
           </DataTemplate>

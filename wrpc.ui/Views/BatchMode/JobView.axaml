@@ -7,7 +7,7 @@
              x:Class="WasabiRpc.Views.BatchMode.JobView"
              x:CompileBindings="True" x:DataType="vmbm:JobViewModel">
   <StackPanel VerticalAlignment="Stretch">
-    <TextBox Text="{Binding Name}"
+    <TextBox Text="{Binding Job.Name}"
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch"
              AcceptsReturn="True"
@@ -15,3 +15,4 @@
              Classes="readonly" />
   </StackPanel>
 </UserControl>
+

@@ -7,7 +7,6 @@ using CommunityToolkit.Mvvm.Input;
 using WasabiRpc.Models.App;
 using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Models.Services;
-using WasabiRpc.ViewModels.App;
 using WasabiRpc.ViewModels.Factories;
 using WasabiRpc.ViewModels.Info;
 
