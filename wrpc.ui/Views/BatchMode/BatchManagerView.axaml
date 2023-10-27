@@ -14,6 +14,25 @@
             HorizontalAlignment="Stretch"
             HorizontalContentAlignment="Center"
             Padding="6,4,6,4"
+            Margin="0,4,0,0"
+            DockPanel.Dock="Bottom" />
+    <!-- AddBatch -->
+    <Button Content="Add Batch"
+            Command="{Binding AddBatchCommand}"
+            CommandParameter="{x:Null}"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Center"
+            Padding="6,4,6,4"
+            Margin="0,4,0,4"
+            DockPanel.Dock="Bottom" />
+    <!-- RemoveBatch -->
+    <Button Content="Remove Batch"
+            Command="{Binding RemoveBatchCommand}"
+            CommandParameter="{Binding SelectedBatch}"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Center"
+            Padding="6,4,6,4"
+            Margin="0,4,0,4"
             DockPanel.Dock="Bottom" />
     <!-- Batches -->
     <Expander HorizontalAlignment="Stretch"
@@ -34,8 +53,13 @@
                       CommandParameter="{Binding .}"
                       Margin="4,4,8,4"
                       DockPanel.Dock="Right"/>
-              <TextBlock VerticalAlignment="Center"
-                         Text="{Binding Name}" />
+              <TextBlock VerticalAlignment="Center">
+                <Run>Name: </Run>
+                <Run Text="{Binding Name}" />
+                <LineBreak />
+                <Run>Jobs: </Run>
+                <Run Text="{Binding Jobs.Count, FallbackValue=0}" />
+              </TextBlock>
             </DockPanel>
           </DataTemplate>
         </ListBox.ItemTemplate>

@@ -40,6 +40,11 @@ public partial class CreateWalletViewModel : RoutableMethodViewModel
     public override async Task<IRoutable?> Execute(Job job)
     {
         var result = await RpcService.Send<RpcCreateWalletResult>(job.RpcMethod, job.RpcServerUri);
+        return ToJobResult(result);
+    }
+
+    public override IRoutable? ToJobResult(object? result)
+    {
         if (result is RpcCreateWalletResult { Result: not null } rpcCreateWalletResult)
         {
             return new CreateWalletInfo { Mnemonic = rpcCreateWalletResult.Result }.ToViewModel(RpcService, NavigationService);

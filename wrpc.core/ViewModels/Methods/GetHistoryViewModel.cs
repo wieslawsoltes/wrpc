@@ -14,7 +14,7 @@ public partial class GetHistoryViewModel : RoutableMethodViewModel
 {
     [ObservableProperty] private string? _walletName;
 
-    public GetHistoryViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
+    public GetHistoryViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName)
         : base(rpcService, navigationService, batchManager)
     {
         WalletName = walletName;
@@ -29,7 +29,12 @@ public partial class GetHistoryViewModel : RoutableMethodViewModel
     public override async Task<IRoutable?> Execute(Job job)
     {
         var result = await RpcService.Send<RpcGetHistoryResult>(job.RpcMethod, job.RpcServerUri);
-        if (result is RpcGetHistoryResult { Result: not null } rpcGetHistoryResult && WalletName is not null)
+        return ToJobResult(result);
+    }
+
+    public override IRoutable? ToJobResult(object? result)
+    {
+        if (result is RpcGetHistoryResult { Result: not null } rpcGetHistoryResult)
         {
             return new GetHistoryInfo { Transactions = rpcGetHistoryResult.Result }.ToViewModelAdapter(RpcService, NavigationService, BatchManager, WalletName);
         }

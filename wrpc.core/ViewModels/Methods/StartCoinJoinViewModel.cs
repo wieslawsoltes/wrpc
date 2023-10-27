@@ -16,7 +16,7 @@ public partial class StartCoinJoinViewModel : RoutableMethodViewModel
     [ObservableProperty] private bool _stopWhenAllMixed;
     [ObservableProperty] private bool _overridePlebStop;
 
-    public StartCoinJoinViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
+    public StartCoinJoinViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName)
         : base(rpcService, navigationService, batchManager)
     {
         WalletName = walletName;
@@ -34,6 +34,11 @@ public partial class StartCoinJoinViewModel : RoutableMethodViewModel
     public override async Task<IRoutable?> Execute(Job job)
     {
         var result = await RpcService.Send<RpcStartCoinJoinResult>(job.RpcMethod, job.RpcServerUri);
+        return ToJobResult(result);
+    }
+
+    public override IRoutable? ToJobResult(object? result)
+    {
         if (result is RpcStartCoinJoinResult)
         {
             return new Success { Message = $"Started coinjoin for wallet {WalletName}" }.ToViewModel(RpcService, NavigationService);

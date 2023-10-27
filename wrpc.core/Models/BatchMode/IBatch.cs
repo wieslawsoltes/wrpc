@@ -13,11 +13,7 @@ public interface IBatch : IRoutable
 
     IJob? SelectedJob { get; set; }
 
-    bool IsRunning { get; set; }
-
-    IRelayCommand RemoveJobCommand { get; }
+    IRelayCommand<IJob> RemoveJobCommand { get; }
 
     IRelayCommand<Job> AddJobCommand { get; }
-
-    IAsyncRelayCommand<IJob> RunJobCommand { get; }
 }

@@ -107,7 +107,7 @@ public static class InfoFactory
         };
     }
 
-    public static GetHistoryInfoViewModel ToViewModelAdapter(this GetHistoryInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
+    public static GetHistoryInfoViewModel ToViewModelAdapter(this GetHistoryInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName)
     {
         return new GetHistoryInfoViewModel(rpcService, navigationService)
         {
@@ -157,7 +157,7 @@ public static class InfoFactory
         };
     }
 
-    public static ListUnspentCoinsInfoViewModel ToViewModelAdapter(this ListUnspentCoinsInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
+    public static ListUnspentCoinsInfoViewModel ToViewModelAdapter(this ListUnspentCoinsInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName)
     {
         return new ListUnspentCoinsInfoViewModel(rpcService, navigationService)
         {

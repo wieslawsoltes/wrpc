@@ -10,4 +10,7 @@ public class Batch
 
     [JsonPropertyName("jobs")]
     public List<Job>? Jobs { get; set; }
+
+    [JsonPropertyName("selectedJobIndex")]
+    public int SelectedJobIndex { get; set; }
 }

@@ -19,4 +19,7 @@ public class State
 
     [JsonPropertyName("batches")]
     public List<Batch>? Batches { get; set; }
+
+    [JsonPropertyName("selectedBatchIndex")]
+    public int SelectedBatchIndex { get; set; }
 }

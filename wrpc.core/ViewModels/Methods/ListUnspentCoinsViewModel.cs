@@ -14,7 +14,7 @@ public partial class ListUnspentCoinsViewModel : RoutableMethodViewModel
 {
     [ObservableProperty] private string? _walletName;
 
-    public ListUnspentCoinsViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
+    public ListUnspentCoinsViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName)
         : base(rpcService, navigationService, batchManager)
     {
         WalletName = walletName;
@@ -34,7 +34,12 @@ public partial class ListUnspentCoinsViewModel : RoutableMethodViewModel
     public override async Task<IRoutable?> Execute(Job job)
     {
         var result = await RpcService.Send<RpcListUnspentCoinsResult>(job.RpcMethod, job.RpcServerUri);
-        if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult && WalletName is not null)
+        return ToJobResult(result);
+    }
+
+    public override IRoutable? ToJobResult(object? result)
+    {
+        if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
         {
             return new ListUnspentCoinsInfo { Coins = rpcListUnspentCoinsResult.Result }.ToViewModelAdapter(RpcService, NavigationService, BatchManager, WalletName);
         }

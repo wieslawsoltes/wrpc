@@ -28,7 +28,7 @@ public partial class ExcludeFromCoinJoinViewModel : RoutableMethodViewModel
     [ObservableProperty]
     private bool _exclude;
 
-    public ExcludeFromCoinJoinViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
+    public ExcludeFromCoinJoinViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName)
         : base(rpcService, navigationService, batchManager)
     {
         WalletName = walletName;
@@ -55,6 +55,11 @@ public partial class ExcludeFromCoinJoinViewModel : RoutableMethodViewModel
     public override async Task<IRoutable?> Execute(Job job)
     {
         var result = await RpcService.Send<RpcExcludeFromCoinJoinResult>(job.RpcMethod, job.RpcServerUri);
+        return ToJobResult(result);
+    }
+
+    public override IRoutable? ToJobResult(object? result)
+    {
         if (result is RpcExcludeFromCoinJoinResult)
         {
             return new Success { Message = $"{(Exclude ? "Excluded" : "Removed the exclusion")} from coinjoin" }.ToViewModel(RpcService, NavigationService);

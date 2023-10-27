@@ -25,7 +25,7 @@ public partial class PayInCoinjoinViewModel : RoutableMethodViewModel
     [ObservableProperty] 
     private long _amount;
 
-    public PayInCoinjoinViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
+    public PayInCoinjoinViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName)
         : base(rpcService, navigationService, batchManager)
     {
         WalletName = walletName;
@@ -51,6 +51,11 @@ public partial class PayInCoinjoinViewModel : RoutableMethodViewModel
     public override async Task<IRoutable?> Execute(Job job)
     {
         var result = await RpcService.Send<RpcPayInCoinjoinResult>(job.RpcMethod, job.RpcServerUri);
+        return ToJobResult(result);
+    }
+
+    public override IRoutable? ToJobResult(object? result)
+    {
         if (result is RpcPayInCoinjoinResult { Result: not null } rpcPayInCoinjoinResult)
         {
             return new PayInCoinjoinInfo { PaymentId = rpcPayInCoinjoinResult.Result }.ToViewModel(RpcService, NavigationService);

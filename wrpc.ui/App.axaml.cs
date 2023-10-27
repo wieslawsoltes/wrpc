@@ -17,6 +17,7 @@ using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Services;
 using WasabiRpc.ViewModels;
 using WasabiRpc.ViewModels.BatchMode;
+using WasabiRpc.ViewModels.Factories;
 using WasabiRpc.ViewModels.Services;
 using WasabiRpc.Views;
 
@@ -73,9 +74,10 @@ public partial class App : Application
                 "Wallet"
             },
             SelectedWallet = "Wallet",
-            Batches = new List<Batch>(),
             ServerPrefix = DefaultServerPrefix,
-            BatchMode = false
+            BatchMode = false,
+            Batches = new List<Batch>(),
+            SelectedBatchIndex = -1
         };
 
         try
@@ -90,9 +92,9 @@ public partial class App : Application
                 }
             }
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            // ignored
+            Console.WriteLine(e);
         }
 
         return defaultState;
@@ -110,16 +112,18 @@ public partial class App : Application
                 BatchMode = mainViewModel.RpcService.BatchMode,
                 Wallets = wallets?.ToList(),
                 SelectedWallet = mainViewModel.SelectedWallet?.WalletName ?? "",
-                // TODO:
-                // Batches = mainViewModel.RpcService.Batches?.ToList()
+                Batches = mainViewModel.BatchManager.Batches?.ToBatches(),
+                SelectedBatchIndex = mainViewModel.BatchManager.Batches is not null && mainViewModel.BatchManager.SelectedBatch is not null
+                    ? mainViewModel.BatchManager.Batches.IndexOf(mainViewModel.BatchManager.SelectedBatch)
+                    : -1
             };
 
             var json = JsonSerializer.Serialize(state, ModelsJsonContext.Default.State);
             File.WriteAllText(StateFileName, json);
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            // ignored
+            Console.WriteLine(e);
         }
     }
 
@@ -128,17 +132,11 @@ public partial class App : Application
         var defaultState = LoadState();
         var httpService = new HttpService();
         var navigationService = new NavigationServiceViewModel();
-        var rpcService = new RpcServiceViewModel(httpService, defaultState.ServerPrefix ?? DefaultServerPrefix, defaultState.BatchMode)
-        {
-            // TODO:
-            // Batches = new ObservableCollection<Batch>(defaultState.Batches ?? new List<Batch>())
-        };
-
-        var batchManager = CreateBatchManager(rpcService, navigationService);
-
-        var mainViewModel = new MainWindowViewModel(rpcService, navigationService, batchManager, defaultState);
-
-        return mainViewModel;
+        var rpcService = new RpcServiceViewModel(httpService, defaultState.ServerPrefix ?? DefaultServerPrefix, defaultState.BatchMode);
+        var batchManager = defaultState.Batches is null 
+            ? CreateBatchManager(rpcService, navigationService)
+            : defaultState.Batches.ToViewModel(defaultState.SelectedBatchIndex, rpcService, navigationService);
+        return new MainWindowViewModel(rpcService, navigationService, batchManager, defaultState);
     }
 
     private IBatchManager CreateBatchManager(RpcServiceViewModel rpcService, NavigationServiceViewModel navigationService)

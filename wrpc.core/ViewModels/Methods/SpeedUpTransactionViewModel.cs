@@ -25,7 +25,7 @@ public partial class SpeedUpTransactionViewModel : RoutableMethodViewModel
     [ObservableProperty]
     private string? _txId;
 
-    public SpeedUpTransactionViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
+    public SpeedUpTransactionViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName)
         : base(rpcService, navigationService, batchManager)
     {
         WalletName = walletName;
@@ -51,6 +51,11 @@ public partial class SpeedUpTransactionViewModel : RoutableMethodViewModel
     public override async Task<IRoutable?> Execute(Job job)
     {
         var result = await RpcService.Send<RpcSpeedUpTransactionResult>(job.RpcMethod, job.RpcServerUri);
+        return ToJobResult(result);
+    }
+
+    public override IRoutable? ToJobResult(object? result)
+    {
         if (result is RpcSpeedUpTransactionResult { Result: not null } rpcSpeedUpTransactionResult)
         {
             return new BuildInfo { Tx = rpcSpeedUpTransactionResult.Result }.ToViewModel(RpcService, NavigationService);

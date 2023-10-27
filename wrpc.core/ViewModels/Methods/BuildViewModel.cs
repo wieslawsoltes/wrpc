@@ -55,7 +55,7 @@ public partial class BuildViewModel : RoutableMethodViewModel
     [ObservableProperty]
     private ObservableCollection<CoinAdapterViewModel> _coins;
 
-    public BuildViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string walletName)
+    public BuildViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName)
         : base(rpcService, navigationService, batchManager)
     {
         WalletName = walletName;
@@ -91,6 +91,11 @@ public partial class BuildViewModel : RoutableMethodViewModel
     public override async Task<IRoutable?> Execute(Job job)
     {
         var result = await RpcService.Send<RpcBuildResult>(job.RpcMethod, job.RpcServerUri);
+        return ToJobResult(result);
+    }
+
+    public override IRoutable? ToJobResult(object? result)
+    {
         if (result is RpcBuildResult { Result: not null } rpcBuildResult)
         {
             return new BuildInfo { Tx = rpcBuildResult.Result }.ToViewModel(RpcService, NavigationService);

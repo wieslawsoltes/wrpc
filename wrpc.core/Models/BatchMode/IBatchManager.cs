@@ -12,7 +12,7 @@ public interface IBatchManager : IRoutable
 
     bool IsRunning { get; set; }
 
-    IRelayCommand RemoveBatchCommand { get; }
+    IRelayCommand<IBatch> RemoveBatchCommand { get; }
 
     IRelayCommand AddBatchCommand { get; } 
 
