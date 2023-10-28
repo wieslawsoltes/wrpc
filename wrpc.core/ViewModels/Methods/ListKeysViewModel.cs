@@ -54,7 +54,7 @@ public partial class ListKeysViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new ListKeysRpcMethod
         {
             Method = "listkeys"
         };

@@ -49,7 +49,7 @@ public partial class GetStatusViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new GetStatusRpcMethod
         {
             Method = "getstatus"
         };

@@ -54,7 +54,7 @@ public partial class GetHistoryViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new GetHistoryRpcMethod
         {
             Method = "gethistory"
         };

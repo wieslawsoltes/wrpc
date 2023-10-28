@@ -54,7 +54,7 @@ public partial class ListCoinsViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new ListCoinsRpcMethod
         {
             Method = "listcoins"
         };

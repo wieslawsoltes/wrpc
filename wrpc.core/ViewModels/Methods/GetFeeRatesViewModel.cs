@@ -50,7 +50,7 @@ public partial class GetFeeRatesViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new GetFeeRatesRpcMethod
         {
             Method = "getfeerates"
         };

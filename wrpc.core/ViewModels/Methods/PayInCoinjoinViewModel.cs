@@ -76,7 +76,7 @@ public partial class PayInCoinjoinViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new PayInCoinjoinRpcMethod
         {
             Method = "payincoinjoin",
             Params = new []

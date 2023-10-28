@@ -116,7 +116,7 @@ public partial class BuildViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new BuildRpcMethod
         {
             Method = "build",
             Params = new Build

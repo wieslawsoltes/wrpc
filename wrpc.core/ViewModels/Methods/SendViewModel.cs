@@ -114,7 +114,7 @@ public partial class SendViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new SendRpcMethod
         {
             Method = "send",
             Params = new Send

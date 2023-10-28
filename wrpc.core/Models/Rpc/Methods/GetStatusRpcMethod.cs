@@ -2,12 +2,8 @@ using System.Text.Json.Serialization;
 
 namespace WasabiRpc.Models.Results;
 
-public class RpcMethod : Rpc
+public class GetStatusRpcMethod : RpcMethod
 {
-    [JsonPropertyName("method")]
-    [JsonRequired]
-    public string? Method { get; set; }
-
     [JsonPropertyName("params")]
     public object? Params { get; set; }
 }

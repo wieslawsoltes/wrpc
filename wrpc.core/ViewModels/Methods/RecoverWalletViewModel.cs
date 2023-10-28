@@ -71,7 +71,7 @@ public partial class RecoverWalletViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new RecoverWalletRpcMethod
         {
             Method = "recoverwallet",
             Params = new []

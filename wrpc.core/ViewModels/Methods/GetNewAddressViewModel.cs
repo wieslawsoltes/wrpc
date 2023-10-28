@@ -64,7 +64,7 @@ public partial class GetNewAddressViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new GetNewAddressRpcMethod
         {
             Method = "getnewaddress",
             Params = new []

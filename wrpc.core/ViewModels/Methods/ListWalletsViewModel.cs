@@ -50,7 +50,7 @@ public partial class ListWalletsViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new ListWalletsRpcMethod
         {
             Method = "listwallets"
         };

@@ -59,7 +59,7 @@ public partial class StartCoinJoinViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new StartCoinJoinRpcMethod
         {
             Method = "startcoinjoin",
             Params = new []

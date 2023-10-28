@@ -76,7 +76,7 @@ public partial class CancelTransactionViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new CancelTransactionRpcMethod
         {
             Method = "canceltransaction",
             Params = new CancelTransaction

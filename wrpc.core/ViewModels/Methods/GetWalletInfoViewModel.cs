@@ -53,7 +53,7 @@ public partial class GetWalletInfoViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new GetWalletInfoRpcMethod
         {
             Method = "getwalletinfo"
         };

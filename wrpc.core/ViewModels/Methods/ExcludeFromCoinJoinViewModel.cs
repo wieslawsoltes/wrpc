@@ -80,7 +80,7 @@ public partial class ExcludeFromCoinJoinViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new ExcludeFromCoinJoinRpcMethod
         {
             Method = "excludefromcoinjoin",
             Params = new ExcludeFromCoinJoin

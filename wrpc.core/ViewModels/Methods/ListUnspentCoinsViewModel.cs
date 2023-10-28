@@ -59,7 +59,7 @@ public partial class ListUnspentCoinsViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new ListUnspentCoinsRpcMethod
         {
             Method = "listunspentcoins"
         };

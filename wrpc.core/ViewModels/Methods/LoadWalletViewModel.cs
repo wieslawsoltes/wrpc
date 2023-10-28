@@ -53,7 +53,7 @@ public partial class LoadWalletViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new LoadWalletRpcMethod
         {
             Method = "loadwallet",
             Params = new []
@@ -63,7 +63,7 @@ public partial class LoadWalletViewModel : RoutableMethodViewModel
         };
 
         var rpcServerUri = $"{RpcService.ServerPrefix}";
-
+// requestBody -> json !!!
         return new Job("loadwallet", requestBody, rpcServerUri);
     }
 }

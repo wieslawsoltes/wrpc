@@ -49,7 +49,7 @@ public partial class StopViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new StopRpcMethod
         {
             Method = "stop"
         };

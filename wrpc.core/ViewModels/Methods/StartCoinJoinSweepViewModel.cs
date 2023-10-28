@@ -57,7 +57,7 @@ public partial class StartCoinJoinSweepViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new StartCoinJoinSweepRpcMethod
         {
             Method = "startcoinjoinsweep",
             Params = new []

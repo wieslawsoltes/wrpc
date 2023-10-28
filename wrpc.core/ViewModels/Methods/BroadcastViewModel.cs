@@ -60,7 +60,7 @@ public partial class BroadcastViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new BroadcastRpcMethod
         {
             Method = "broadcast",
             Params = new []

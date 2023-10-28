@@ -53,7 +53,7 @@ public partial class StopCoinJoinViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new StopCoinJoinRpcMethod
         {
             Method = "stopcoinjoin"
         };

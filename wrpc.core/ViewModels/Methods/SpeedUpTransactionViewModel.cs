@@ -76,7 +76,7 @@ public partial class SpeedUpTransactionViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new SpeedUpTransactionRpcMethod
         {
             Method = "speeduptransaction",
             Params = new SpeedUpTransaction

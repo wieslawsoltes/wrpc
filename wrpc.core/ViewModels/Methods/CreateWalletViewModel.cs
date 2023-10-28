@@ -65,7 +65,7 @@ public partial class CreateWalletViewModel : RoutableMethodViewModel
 
     public override Job CreateJob()
     {
-        var requestBody = new RpcMethod
+        var requestBody = new CreateWalletRpcMethod
         {
             Method = "createwallet",
             Params = new []
