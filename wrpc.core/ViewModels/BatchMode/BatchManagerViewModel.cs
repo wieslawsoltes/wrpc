@@ -128,6 +128,11 @@ public partial class BatchManagerViewModel : RoutableViewModel, IBatchManager
                     }).ToList()
             });
         }
+        else if (results is Error error)
+        {
+            var errorViewModel = error.ToViewModel(RpcService, NavigationService);
+            NavigationService.NavigateTo(errorViewModel);
+        }
         else
         {
             var errorViewModel = new Error { Message = "Invalid send result." }.ToViewModel(RpcService, NavigationService);
