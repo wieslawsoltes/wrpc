@@ -90,53 +90,63 @@ public partial class BatchManagerViewModel : RoutableViewModel, IBatchManager
 
     private async Task Run(IBatch batch)
     {
-        var jobs = batch.Jobs;
-        if (jobs is null)
+        if (batch.Jobs is null)
         {
             var errorViewModel = new Error { Message = "No jobs to run." }.ToViewModel(RpcService, NavigationService);
             NavigationService.NavigateTo(errorViewModel);
             return;
         }
 
-        // TODO: Group jobs by RpcServerUri and runs in separate batches each group.
-        var serverPrefix = jobs.FirstOrDefault()?.Job.RpcServerUri;
-        if (serverPrefix is null)
-        {
-            var errorViewModel = new Error { Message = "No valid server prefix." }.ToViewModel(RpcService, NavigationService);
-            NavigationService.NavigateTo(errorViewModel);
-            return;
-        }
+        var groupedJobs = batch.Jobs.GroupBy(x => x.Job.RpcServerUri);
+        var jobResults = new List<JobResultViewModel>();
 
-        var rpcMethods = jobs.Select(x => x.Job.RpcMethod).ToArray();
-        var results = await RpcService.Send(rpcMethods, serverPrefix);
-        if (results is List<object?> resultsList)
+        foreach (var groupedJob in groupedJobs)
         {
-            NavigationService.NavigateTo(new BatchResultViewModel(RpcService, NavigationService)
+            var serverPrefix = groupedJob.Key;
+            var jobs = groupedJob.ToList();
+            var rpcMethods = jobs.Select(x => x.Job.RpcMethod).ToArray();
+            var results = await RpcService.Send(rpcMethods, serverPrefix);
+            if (results is List<object?> resultsList)
             {
-                Results = jobs.Zip(
-                    resultsList, 
+                var jobPartialResults = jobs.Zip(
+                    resultsList,
                     (job, result) =>
                     {
-                        var routableMethod = RoutableMethodFactory.CreateRoutableMethod(job.Job.Name, RpcService, NavigationService, this);
+                        var routableMethod = RoutableMethodFactory.CreateRoutableMethod(
+                            job.Job.Name, 
+                            RpcService, 
+                            NavigationService, 
+                            this);
+
                         var resultViewModel = routableMethod?.ToJobResult(result);
+
                         return new JobResultViewModel(RpcService, NavigationService)
                         {
                             Job = job,
                             Result = resultViewModel,
                             IsSuccess = resultViewModel is not null && resultViewModel is not ErrorInfoViewModel
                         };
-                    }).ToList()
-            });
+                    });
+
+                jobResults.AddRange(jobPartialResults);
+            }
+            else if (results is Error error)
+            {
+                var errorViewModel = error.ToViewModel(RpcService, NavigationService);
+                NavigationService.NavigateTo(errorViewModel);
+                return;
+            }
+            else
+            {
+                var errorViewModel = new Error { Message = "Invalid send result." }.ToViewModel(RpcService, NavigationService);
+                NavigationService.NavigateTo(errorViewModel);
+                return;
+            }
         }
-        else if (results is Error error)
+
+        NavigationService.NavigateTo(new BatchResultViewModel(RpcService, NavigationService)
         {
-            var errorViewModel = error.ToViewModel(RpcService, NavigationService);
-            NavigationService.NavigateTo(errorViewModel);
-        }
-        else
-        {
-            var errorViewModel = new Error { Message = "Invalid send result." }.ToViewModel(RpcService, NavigationService);
-            NavigationService.NavigateTo(errorViewModel);
-        }
+            Results = jobResults
+        });
     }
 }
