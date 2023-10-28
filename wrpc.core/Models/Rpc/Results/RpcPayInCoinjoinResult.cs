@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WasabiRpc.Models.Results;
+namespace WasabiRpc.Models.Rpc.Results;
 
 public class RpcPayInCoinjoinResult : Rpc
 {

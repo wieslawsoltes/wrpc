@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using WasabiRpc.Models.Results;
+using WasabiRpc.Models.Rpc.Results;
 
 namespace WasabiRpc.ViewModels.BatchMode;
 

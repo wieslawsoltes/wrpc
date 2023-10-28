@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace WasabiRpc.Models.Results;
+namespace WasabiRpc.Models.Rpc.Results;
 
 public class RpcGetFeeRatesResult : Rpc
 {

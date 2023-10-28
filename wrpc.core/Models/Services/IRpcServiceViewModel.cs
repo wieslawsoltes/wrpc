@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using WasabiRpc.Models.Results;
+using WasabiRpc.Models.Rpc;
 
 namespace WasabiRpc.Models.Services;
 

@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
+using WasabiRpc.Models.Rpc.Methods;
 
-namespace WasabiRpc.Models.Results;
+namespace WasabiRpc.Models.Rpc;
 
 [JsonDerivedType(typeof(BroadcastRpcMethod), "broadcast")]
 [JsonDerivedType(typeof(BuildRpcMethod), "build")]

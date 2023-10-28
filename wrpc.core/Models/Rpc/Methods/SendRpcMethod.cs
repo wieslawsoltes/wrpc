@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using WasabiRpc.Models.Params.Send;
 
-namespace WasabiRpc.Models.Results;
+namespace WasabiRpc.Models.Rpc.Methods;
 
 public class SendRpcMethod : RpcMethod
 {

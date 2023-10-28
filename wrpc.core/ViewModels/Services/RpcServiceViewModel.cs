@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using WasabiRpc.Models;
 using WasabiRpc.Models.App;
-using WasabiRpc.Models.Results;
+using WasabiRpc.Models.Rpc;
 using WasabiRpc.Models.Services;
 using WasabiRpc.ViewModels.BatchMode;
 

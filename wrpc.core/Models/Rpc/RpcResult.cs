@@ -1,4 +1,4 @@
-namespace WasabiRpc.Models.Results;
+namespace WasabiRpc.Models.Rpc;
 
 public class RpcResult : Rpc
 {

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WasabiRpc.Models.Results;
+namespace WasabiRpc.Models.Rpc.Methods;
 
 public class CreateWalletRpcMethod : RpcMethod
 {

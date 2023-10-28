@@ -5,7 +5,9 @@ using WasabiRpc.Models.Info;
 using WasabiRpc.Models.Params.Build;
 using WasabiRpc.Models.Params.Send;
 using WasabiRpc.Models.Params.Transactions;
-using WasabiRpc.Models.Results;
+using WasabiRpc.Models.Rpc;
+using WasabiRpc.Models.Rpc.Methods;
+using WasabiRpc.Models.Rpc.Results;
 
 namespace WasabiRpc.Models;
 
@@ -45,7 +47,7 @@ namespace WasabiRpc.Models;
 [JsonSerializable(typeof(StopCoinJoinRpcMethod))]
 [JsonSerializable(typeof(StopRpcMethod))]
 // rpc
-[JsonSerializable(typeof(Rpc))]
+[JsonSerializable(typeof(Rpc.Rpc))]
 [JsonSerializable(typeof(RpcResult))]
 // error
 [JsonSerializable(typeof(ErrorInfo))]

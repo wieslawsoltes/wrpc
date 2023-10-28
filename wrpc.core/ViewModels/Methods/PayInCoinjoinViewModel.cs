@@ -6,7 +6,9 @@ using WasabiRpc.ViewModels.Factories;
 using WasabiRpc.Models.App;
 using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Models.Info;
-using WasabiRpc.Models.Results;
+using WasabiRpc.Models.Rpc;
+using WasabiRpc.Models.Rpc.Methods;
+using WasabiRpc.Models.Rpc.Results;
 using WasabiRpc.Models.Services;
 
 namespace WasabiRpc.ViewModels.Methods;

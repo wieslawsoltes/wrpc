@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using WasabiRpc.Models.Info;
 
-namespace WasabiRpc.Models.Results;
+namespace WasabiRpc.Models.Rpc.Results;
 
 public class RpcListCoinsResult : Rpc
 {
