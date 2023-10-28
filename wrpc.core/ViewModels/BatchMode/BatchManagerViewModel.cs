@@ -98,6 +98,7 @@ public partial class BatchManagerViewModel : RoutableViewModel, IBatchManager
             return;
         }
 
+        // TODO: Group jobs by RpcServerUri and runs in separate batches each group.
         var serverPrefix = jobs.FirstOrDefault()?.Job.RpcServerUri;
         if (serverPrefix is null)
         {
