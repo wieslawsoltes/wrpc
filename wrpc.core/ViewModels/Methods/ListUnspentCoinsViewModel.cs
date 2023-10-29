@@ -43,7 +43,7 @@ public partial class ListUnspentCoinsViewModel : RoutableMethodViewModel
     {
         if (result is RpcListUnspentCoinsResult { Result: not null } rpcListUnspentCoinsResult)
         {
-            return new ListUnspentCoinsInfo { Coins = rpcListUnspentCoinsResult.Result }.ToViewModelAdapter(RpcService, NavigationService, BatchManager, WalletName);
+            return new ListUnspentCoinsInfo { Coins = rpcListUnspentCoinsResult.Result }.ToViewModelAdapter(RpcService, NavigationService, BatchManager, WalletName, ListUnspentCoinsCommand);
         }
 
         if (result is RpcErrorResult { Error: not null } rpcErrorResult)

@@ -38,7 +38,7 @@ public partial class ListKeysViewModel : RoutableMethodViewModel
     {
         if (result is RpcListKeysResult { Result: not null } rpcListKeysResult)
         {
-            return new ListKeysInfo { Keys = rpcListKeysResult.Result }.ToViewModel(RpcService, NavigationService);
+            return new ListKeysInfo { Keys = rpcListKeysResult.Result }.ToViewModel(RpcService, NavigationService, ListKeysCommand);
         }
 
         if (result is RpcErrorResult { Error: not null } rpcErrorResult)

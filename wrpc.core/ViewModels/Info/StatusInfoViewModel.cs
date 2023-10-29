@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using WasabiRpc.Models.Services;
 
@@ -36,8 +37,11 @@ public partial class StatusInfoViewModel : RoutableViewModel
     [ObservableProperty] 
     private List<PeerInfoViewModel>? _peers;
 
-    public StatusInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
+    public StatusInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, ICommand refreshCommand)
         : base(rpcService, navigationService)
     {
+        RefreshCommand = refreshCommand;
     }
+
+    public ICommand RefreshCommand { get; }
 }

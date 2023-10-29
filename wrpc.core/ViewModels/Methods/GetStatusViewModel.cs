@@ -33,7 +33,7 @@ public partial class GetStatusViewModel : RoutableMethodViewModel
     {
         if (result is RpcGetStatusResult { Result: not null } rpcGetStatusResult)
         {
-            return rpcGetStatusResult.Result?.ToViewModel(RpcService, NavigationService);
+            return rpcGetStatusResult.Result?.ToViewModel(RpcService, NavigationService, GetStatusCommand);
         }
 
         if (result is RpcErrorResult { Error: not null } rpcErrorResult)

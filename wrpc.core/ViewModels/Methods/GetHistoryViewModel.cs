@@ -38,7 +38,7 @@ public partial class GetHistoryViewModel : RoutableMethodViewModel
     {
         if (result is RpcGetHistoryResult { Result: not null } rpcGetHistoryResult)
         {
-            return new GetHistoryInfo { Transactions = rpcGetHistoryResult.Result }.ToViewModelAdapter(RpcService, NavigationService, BatchManager, WalletName);
+            return new GetHistoryInfo { Transactions = rpcGetHistoryResult.Result }.ToViewModelAdapter(RpcService, NavigationService, BatchManager, WalletName, GetHistoryCommand);
         }
 
         if (result is RpcErrorResult { Error: not null } rpcErrorResult)

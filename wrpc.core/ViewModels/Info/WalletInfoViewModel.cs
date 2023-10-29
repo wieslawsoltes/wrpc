@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using WasabiRpc.Models.Services;
 
@@ -42,8 +43,11 @@ public partial class WalletInfoViewModel : RoutableViewModel
     [ObservableProperty] 
     private string? _coinjoinStatus;
 
-    public WalletInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
+    public WalletInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, ICommand refreshCommand)
         : base(rpcService, navigationService)
     {
+        RefreshCommand = refreshCommand;
     }
+
+    public ICommand RefreshCommand { get; }
 }

@@ -34,7 +34,7 @@ public partial class GetFeeRatesViewModel : RoutableMethodViewModel
     {
         if (result is RpcGetFeeRatesResult { Result: not null } rpcGetFeeRatesResult)
         {
-            return new GetFeeRatesInfo { FeeRates = rpcGetFeeRatesResult.Result }.ToViewModel(RpcService, NavigationService);
+            return new GetFeeRatesInfo { FeeRates = rpcGetFeeRatesResult.Result }.ToViewModel(RpcService, NavigationService, GetFeeRatesCommand);
         }
 
         if (result is RpcErrorResult { Error: not null } rpcErrorResult)

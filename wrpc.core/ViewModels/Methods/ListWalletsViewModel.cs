@@ -34,7 +34,7 @@ public partial class ListWalletsViewModel : RoutableMethodViewModel
     {
         if (result is RpcListWalletsResult { Result: not null } rpcListWalletsResult)
         {
-            return new ListWalletsInfo { Wallets = rpcListWalletsResult.Result }.ToViewModel(RpcService, NavigationService);
+            return new ListWalletsInfo { Wallets = rpcListWalletsResult.Result }.ToViewModel(RpcService, NavigationService, ListWalletsCommand);
         }
 
         if (result is RpcErrorResult { Error: not null } rpcErrorResult)

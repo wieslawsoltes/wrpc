@@ -12,6 +12,9 @@ public class NavigateBackControl : HeaderedContentControl
     public static readonly StyledProperty<bool> EnableBackProperty = 
         AvaloniaProperty.Register<NavigateBackControl, bool>(nameof(EnableBack), true);
 
+    public static readonly StyledProperty<ICommand?> RefreshCommandProperty = 
+        AvaloniaProperty.Register<NavigateBackControl, ICommand?>(nameof(RefreshCommand));
+
     public ICommand? BackCommand
     {
         get => GetValue(BackCommandProperty);
@@ -23,4 +26,11 @@ public class NavigateBackControl : HeaderedContentControl
         get => GetValue(EnableBackProperty);
         set => SetValue(EnableBackProperty, value);
     }
+
+    public ICommand? RefreshCommand
+    {
+        get => GetValue(RefreshCommandProperty);
+        set => SetValue(RefreshCommandProperty, value);
+    }
+
 }

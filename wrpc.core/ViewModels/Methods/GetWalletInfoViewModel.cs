@@ -37,7 +37,7 @@ public partial class GetWalletInfoViewModel : RoutableMethodViewModel
     {
         if (result is RpcGetWalletInfoResult { Result: not null } rpcGetWalletInfoResult)
         {
-            return rpcGetWalletInfoResult.Result?.ToViewModel(RpcService, NavigationService);
+            return rpcGetWalletInfoResult.Result?.ToViewModel(RpcService, NavigationService, GetWalletInfoCommand);
         }
 
         if (result is RpcErrorResult { Error: not null } rpcErrorResult)

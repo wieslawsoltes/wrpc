@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Windows.Input;
 using WasabiRpc.Models.BatchMode;
 using WasabiRpc.Models.Info;
 using WasabiRpc.Models.Services;
@@ -96,9 +97,9 @@ public static class InfoFactory
         };
     }
 
-    public static GetFeeRatesInfoViewModel ToViewModel(this GetFeeRatesInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService)
+    public static GetFeeRatesInfoViewModel ToViewModel(this GetFeeRatesInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService, ICommand refreshCommand)
     {
-        return new GetFeeRatesInfoViewModel(rpcService, navigationService)
+        return new GetFeeRatesInfoViewModel(rpcService, navigationService, refreshCommand)
         {
             FeeRates = info.FeeRates?
                 .ToDictionary(
@@ -107,9 +108,9 @@ public static class InfoFactory
         };
     }
 
-    public static GetHistoryInfoViewModel ToViewModelAdapter(this GetHistoryInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName)
+    public static GetHistoryInfoViewModel ToViewModelAdapter(this GetHistoryInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName, ICommand refreshCommand)
     {
-        return new GetHistoryInfoViewModel(rpcService, navigationService)
+        return new GetHistoryInfoViewModel(rpcService, navigationService, refreshCommand)
         {
             //Transactions = info.Transactions?
             //    .Select(x => x.ToViewModel(rpcService, navigationService))
@@ -136,9 +137,9 @@ public static class InfoFactory
         };
     }
 
-    public static ListCoinsInfoViewModel ToViewModel(this ListCoinsInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService)
+    public static ListCoinsInfoViewModel ToViewModel(this ListCoinsInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService, ICommand refreshCommand)
     {
-        return new ListCoinsInfoViewModel(rpcService, navigationService)
+        return new ListCoinsInfoViewModel(rpcService, navigationService, refreshCommand)
         {
             Coins = info.Coins?
                 .Select(x => x.ToViewModel(rpcService, navigationService))
@@ -147,9 +148,9 @@ public static class InfoFactory
         };
     }
 
-    public static ListKeysInfoViewModel ToViewModel(this ListKeysInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService)
+    public static ListKeysInfoViewModel ToViewModel(this ListKeysInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService, ICommand refreshCommand)
     {
-        return new ListKeysInfoViewModel(rpcService, navigationService)
+        return new ListKeysInfoViewModel(rpcService, navigationService, refreshCommand)
         {
             Keys = info.Keys?
                 .Select(x => x.ToViewModel(rpcService, navigationService))
@@ -157,9 +158,9 @@ public static class InfoFactory
         };
     }
 
-    public static ListUnspentCoinsInfoViewModel ToViewModelAdapter(this ListUnspentCoinsInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName)
+    public static ListUnspentCoinsInfoViewModel ToViewModelAdapter(this ListUnspentCoinsInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName, ICommand refreshCommand)
     {
-        return new ListUnspentCoinsInfoViewModel(rpcService, navigationService)
+        return new ListUnspentCoinsInfoViewModel(rpcService, navigationService, refreshCommand)
         {
             // Coins = info.Coins?
             //     .Select(x => x.ToViewModel(rpcService, navigationService))
@@ -171,12 +172,12 @@ public static class InfoFactory
         };
     }
 
-    public static ListWalletsInfoViewModel ToViewModel(this ListWalletsInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService)
+    public static ListWalletsInfoViewModel ToViewModel(this ListWalletsInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService, ICommand refreshCommand)
     {
-        return new ListWalletsInfoViewModel(rpcService, navigationService)
+        return new ListWalletsInfoViewModel(rpcService, navigationService, refreshCommand)
         {
             Wallets = info.Wallets?
-                .Select(x => x.ToViewModel(rpcService, navigationService))
+                .Select(x => x.ToViewModel(rpcService, navigationService, refreshCommand))
                 .OrderBy(x => x.WalletName)
                 .ToList(),
         };
@@ -210,9 +211,9 @@ public static class InfoFactory
         };
     }
 
-    public static StatusInfoViewModel ToViewModel(this StatusInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService)
+    public static StatusInfoViewModel ToViewModel(this StatusInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService, ICommand refreshCommand)
     {
-        return new StatusInfoViewModel(rpcService, navigationService)
+        return new StatusInfoViewModel(rpcService, navigationService, refreshCommand)
         {
             TorStatus = info.TorStatus,
             OnionService = info.OnionService,
@@ -242,9 +243,9 @@ public static class InfoFactory
         };
     }
 
-    public static WalletInfoViewModel ToViewModel(this WalletInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService)
+    public static WalletInfoViewModel ToViewModel(this WalletInfo info, IRpcServiceViewModel rpcService, INavigationService navigationService, ICommand refreshCommand)
     {
-        return new WalletInfoViewModel(rpcService, navigationService)
+        return new WalletInfoViewModel(rpcService, navigationService, refreshCommand)
         {
             WalletName = info.WalletName,
             WalletFile = info.WalletFile,

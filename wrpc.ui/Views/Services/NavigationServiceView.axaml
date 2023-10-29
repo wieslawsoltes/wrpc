@@ -118,7 +118,8 @@
       </DataTemplate>
       <DataTemplate DataType="vmi:StatusInfoViewModel">
         <controls:NavigateBackControl Header="Status"
-                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}"
+                                      RefreshCommand="{Binding RefreshCommand}">
           <viewsInfo:StatusInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
@@ -136,13 +137,15 @@
       </DataTemplate>
       <DataTemplate DataType="vmi:ListCoinsInfoViewModel">
         <controls:NavigateBackControl Header="Coins"
-                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}"
+                                      RefreshCommand="{Binding RefreshCommand}">
           <viewsInfo:ListCoinsInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:ListUnspentCoinsInfoViewModel">
         <controls:NavigateBackControl Header="Unspent Coins"
-                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}"
+                                      RefreshCommand="{Binding RefreshCommand}">
           <viewsInfo:ListUnspentCoinsInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
@@ -154,7 +157,8 @@
       </DataTemplate>
       <DataTemplate DataType="vmi:WalletInfoViewModel">
         <controls:NavigateBackControl Header="Wallet"
-                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}"
+                                      RefreshCommand="{Binding RefreshCommand}">
           <viewsInfo:WalletInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
@@ -196,7 +200,8 @@
       </DataTemplate>
       <DataTemplate DataType="vmi:GetHistoryInfoViewModel">
         <controls:NavigateBackControl Header="History"
-                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}"
+                                      RefreshCommand="{Binding RefreshCommand}">
           <viewsInfo:GetHistoryInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
@@ -208,19 +213,22 @@
       </DataTemplate>
       <DataTemplate DataType="vmi:ListKeysInfoViewModel">
         <controls:NavigateBackControl Header="Keys"
-                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}"
+                                      RefreshCommand="{Binding RefreshCommand}">
           <viewsInfo:ListKeysInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:GetFeeRatesInfoViewModel">
         <controls:NavigateBackControl Header="FeeRates"
-                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}"
+                                      RefreshCommand="{Binding RefreshCommand}">
           <viewsInfo:GetFeeRatesInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmi:ListWalletsInfoViewModel">
         <controls:NavigateBackControl Header="Wallets"
-                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}"
+                                      RefreshCommand="{Binding RefreshCommand}">
           <viewsInfo:ListWalletsInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
