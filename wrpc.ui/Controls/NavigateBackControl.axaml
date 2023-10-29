@@ -15,49 +15,53 @@
 
   <ControlTheme x:Key="{x:Type controls:NavigateBackControl}" TargetType="controls:NavigateBackControl">
 
+    <!-- <Setter Property="Background" Value="#FF353535" /> -->
     <Setter Property="Padding" Value="12" />
+    <Setter Property="CornerRadius" Value="0" />
 
     <Setter Property="Template">
       <ControlTemplate>
-        <DockPanel>
-          <Grid ColumnDefinitions="Auto,*,Auto"
-                DockPanel.Dock="Top">
-            <Button Name="PART_BackButton"
-                    Content="&lt; Back"
-                    Command="{TemplateBinding BackCommand}"
-                    CommandParameter="{x:Null}"
-                    IsVisible="{TemplateBinding EnableBack}"
-                    Grid.Column="0" />
-            <ContentPresenter Name="PART_HeaderPresenter"
-                              Content="{TemplateBinding Header}"
-                              ContentTemplate="{TemplateBinding HeaderTemplate}"
-                              FontWeight="Bold"
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center"
-                              Padding="{TemplateBinding Padding}"
-                              Grid.Column="1" />
-            <Panel Grid.Column="2">
-              <Panel Width="{Binding #PART_BackButton.Bounds.Width}"
-                     IsVisible="{TemplateBinding RefreshCommand, Converter={x:Static ObjectConverters.IsNull}}" />
-              <Button Name="PART_RefreshButton"
-                      Content="Refresh"
-                      Command="{TemplateBinding RefreshCommand}"
+        <Border CornerRadius="{TemplateBinding CornerRadius}"
+                Background="{TemplateBinding Background}">
+          <DockPanel>
+            <Grid ColumnDefinitions="Auto,*,Auto"
+                  DockPanel.Dock="Top">
+              <Button Name="PART_BackButton"
+                      Content="&lt; Back"
+                      Command="{TemplateBinding BackCommand}"
                       CommandParameter="{x:Null}"
-                      IsVisible="{TemplateBinding RefreshCommand, Converter={x:Static ObjectConverters.IsNotNull}}"
-                      Width="{Binding #PART_BackButton.Bounds.Width}" />
-            </Panel>
-          </Grid>
-          <ContentPresenter Name="PART_ContentPresenter"
-                            Padding="{TemplateBinding Padding}"
-                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Content="{TemplateBinding Content}"
-                            ContentTemplate="{TemplateBinding ContentTemplate}"
-                            CornerRadius="{TemplateBinding CornerRadius}" />
-        </DockPanel>
+                      IsVisible="{TemplateBinding EnableBack}"
+                      Grid.Column="0" />
+              <ContentPresenter Name="PART_HeaderPresenter"
+                                Content="{TemplateBinding Header}"
+                                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                FontWeight="Bold"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Padding="{TemplateBinding Padding}"
+                                Grid.Column="1" />
+              <Panel Grid.Column="2">
+                <Panel Width="{Binding #PART_BackButton.Bounds.Width}"
+                       IsVisible="{TemplateBinding RefreshCommand, Converter={x:Static ObjectConverters.IsNull}}" />
+                <Button Name="PART_RefreshButton"
+                        Content="Refresh"
+                        Command="{TemplateBinding RefreshCommand}"
+                        CommandParameter="{x:Null}"
+                        IsVisible="{TemplateBinding RefreshCommand, Converter={x:Static ObjectConverters.IsNotNull}}"
+                        Width="{Binding #PART_BackButton.Bounds.Width}" />
+              </Panel>
+            </Grid>
+            <ContentPresenter Name="PART_ContentPresenter"
+                              Padding="{TemplateBinding Padding}"
+                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                              BorderBrush="{TemplateBinding BorderBrush}"
+                              BorderThickness="{TemplateBinding BorderThickness}"
+                              Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              CornerRadius="{TemplateBinding CornerRadius}" />
+          </DockPanel>
+        </Border>
       </ControlTemplate>
     </Setter>
 

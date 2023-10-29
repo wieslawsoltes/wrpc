@@ -11,7 +11,7 @@
              xmlns:viewsServices="using:WasabiRpc.Views.Services"
              xmlns:services="using:WasabiRpc.Services"
              xmlns:converters="using:WasabiRpc.Converters"
-             mc:Ignorable="d" d:DesignWidth="420" d:DesignHeight="695"
+             mc:Ignorable="d" d:DesignWidth="420" d:DesignHeight="720"
              x:Class="WasabiRpc.Views.MainView"
              x:CompileBindings="True" x:DataType="vm:MainWindowViewModel"
              Background="#FF353535"
@@ -41,7 +41,8 @@
   </UserControl.Resources>
   <SplitView UseLightDismissOverlayMode="True"
              PanePlacement="Left"
-             OpenPaneLength="350">
+             OpenPaneLength="350"
+             PaneBackground="{DynamicResource SystemControlPageBackgroundChromeLowBrush}">
     <SplitView.DisplayMode>
       <MultiBinding Converter="{x:Static converters:SplitViewDisplayModeConverter.Instance}">
         <Binding Path="NavigationService.CurrentRoutable" 
@@ -65,7 +66,8 @@
     <SplitView.Pane>
       <controls:NavigateBackControl Header="Wasabi.Wallet RPC"
                                     BackCommand="{Binding NavigationService.NavigateBackCommand}"
-                                    EnableBack="False">
+                                    EnableBack="False"
+                                    Margin="0">
         <controls:NavigateBackControl.IsVisible>
           <MultiBinding Converter="{x:Static BoolConverters.Or}">
             <Binding Path="NavigationService.CurrentRoutable" 
@@ -79,6 +81,7 @@
         <views:HomeView />
       </controls:NavigateBackControl>
     </SplitView.Pane>
-    <viewsServices:NavigationServiceView DataContext="{Binding NavigationService}" />
+    <viewsServices:NavigationServiceView DataContext="{Binding NavigationService}"
+                                         Margin="0"/>
   </SplitView>
 </UserControl>
