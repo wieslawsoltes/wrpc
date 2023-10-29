@@ -6,17 +6,25 @@ namespace WasabiRpc.ViewModels.Factories;
 
 public static class AppFactory
 {
-    public static ErrorViewModel ToViewModel(this Error error, IRpcServiceViewModel rpcService, INavigationService navigationService)
+    public static ErrorViewModel ToViewModel(
+        this Error error, 
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
     {
-        return new ErrorViewModel(rpcService, navigationService)
+        return new ErrorViewModel(rpcService, navigationService, detailsNavigationService)
         {
             Message = error.Message,
         };
     }
 
-    public static SuccessViewModel ToViewModel(this Success success, IRpcServiceViewModel rpcService, INavigationService navigationService)
+    public static SuccessViewModel ToViewModel(
+        this Success success, 
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
     {
-        return new SuccessViewModel(rpcService, navigationService)
+        return new SuccessViewModel(rpcService, navigationService, detailsNavigationService)
         {
             Message = success.Message,
         };

@@ -8,8 +8,11 @@ public partial class SuccessViewModel : RoutableViewModel
     [ObservableProperty] 
     private string? _message;
 
-    public SuccessViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
-        : base(rpcService, navigationService)
+    public SuccessViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
     }
 }

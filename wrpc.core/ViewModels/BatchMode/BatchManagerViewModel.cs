@@ -29,8 +29,11 @@ public partial class BatchManagerViewModel : RoutableViewModel, IBatchManager
     [ObservableProperty] 
     private bool _isRunning;
 
-    public BatchManagerViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
-        : base(rpcService, navigationService)
+    public BatchManagerViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
     }
 
@@ -45,7 +48,7 @@ public partial class BatchManagerViewModel : RoutableViewModel, IBatchManager
     {
         if (Batches is not null)
         {
-            Batches.Add(new BatchViewModel(RpcService, NavigationService)
+            Batches.Add(new BatchViewModel(RpcService, NavigationService, DetailsNavigationService)
             {
                 Name = "Batch",
                 Jobs = new ObservableCollection<IJob>()
@@ -92,7 +95,7 @@ public partial class BatchManagerViewModel : RoutableViewModel, IBatchManager
     {
         if (batch.Jobs is null)
         {
-            var errorViewModel = new Error { Message = "No jobs to run." }.ToViewModel(RpcService, NavigationService);
+            var errorViewModel = new Error { Message = "No jobs to run." }.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
             NavigationService.NavigateTo(errorViewModel);
             return;
         }
@@ -115,12 +118,13 @@ public partial class BatchManagerViewModel : RoutableViewModel, IBatchManager
                         var routableMethod = RoutableMethodFactory.CreateRoutableMethod(
                             job.Job.Name, 
                             RpcService, 
-                            NavigationService, 
+                            NavigationService,
+                            DetailsNavigationService, 
                             this);
 
                         var resultViewModel = routableMethod?.ToJobResult(result);
 
-                        return new JobResultViewModel(RpcService, NavigationService)
+                        return new JobResultViewModel(RpcService, NavigationService, DetailsNavigationService)
                         {
                             Job = job,
                             Result = resultViewModel,
@@ -132,19 +136,19 @@ public partial class BatchManagerViewModel : RoutableViewModel, IBatchManager
             }
             else if (results is Error error)
             {
-                var errorViewModel = error.ToViewModel(RpcService, NavigationService);
+                var errorViewModel = error.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
                 NavigationService.NavigateTo(errorViewModel);
                 return;
             }
             else
             {
-                var errorViewModel = new Error { Message = "Invalid send result." }.ToViewModel(RpcService, NavigationService);
+                var errorViewModel = new Error { Message = "Invalid send result." }.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
                 NavigationService.NavigateTo(errorViewModel);
                 return;
             }
         }
 
-        NavigationService.NavigateTo(new BatchResultViewModel(RpcService, NavigationService)
+        NavigationService.NavigateTo(new BatchResultViewModel(RpcService, NavigationService, DetailsNavigationService)
         {
             Results = jobResults
         });

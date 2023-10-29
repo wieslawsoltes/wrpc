@@ -38,10 +38,12 @@
   </Design.DataContext>
   <UserControl.Resources>
     <x:Double x:Key="WideContentThreshold">700</x:Double>
+    <x:Double x:Key="UltraWideContentThreshold">1050</x:Double>
   </UserControl.Resources>
   <SplitView UseLightDismissOverlayMode="True"
              PanePlacement="Left"
              OpenPaneLength="350"
+             CompactPaneLength="350"
              PaneBackground="{DynamicResource SystemControlPageBackgroundChromeLowBrush}">
     <SplitView.DisplayMode>
       <MultiBinding Converter="{x:Static converters:SplitViewDisplayModeConverter.Instance}">
@@ -81,7 +83,62 @@
         <views:HomeView />
       </controls:NavigateBackControl>
     </SplitView.Pane>
-    <viewsServices:NavigationServiceView DataContext="{Binding NavigationService}"
-                                         Margin="0"/>
+    <Grid Name="NavigationGrid">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="50*" />
+        <ColumnDefinition Width="50*" />
+      </Grid.ColumnDefinitions>
+      <Grid.Styles>
+        <Style Selector="viewsServices|NavigationServiceView.normalMainNavigation">
+          <Setter Property="(Grid.Column)" Value="0" />
+          <Setter Property="(Grid.ColumnSpan)" Value="2" />
+        </Style>
+        <Style Selector="viewsServices|NavigationServiceView.wideMainNavigation">
+          <Setter Property="(Grid.Column)" Value="0" />
+          <Setter Property="(Grid.ColumnSpan)" Value="1" />
+        </Style>
+        <Style Selector="viewsServices|NavigationServiceView.normalDetailsNavigation">
+          <Setter Property="(Grid.Column)" Value="0" />
+          <Setter Property="(Grid.ColumnSpan)" Value="2" />
+        </Style>
+        <Style Selector="viewsServices|NavigationServiceView.wideDetailsNavigation">
+          <Setter Property="(Grid.Column)" Value="1" />
+          <Setter Property="(Grid.ColumnSpan)" Value="1" />
+        </Style>
+      </Grid.Styles>
+      <Grid.Tag>
+        <MultiBinding Converter="{x:Static BoolConverters.Or}">
+          <Binding Path="DetailsNavigationService.CurrentRoutable" 
+                   Converter="{x:Static ObjectConverters.IsNull}" />
+          <Binding Path="Bounds.Width" 
+                   RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" 
+                   Converter="{x:Static converters:BoundsWidthToBoolConverter.Instance}"
+                   ConverterParameter="{StaticResource UltraWideContentThreshold}" />
+        </MultiBinding>
+      </Grid.Tag>
+      <viewsServices:NavigationServiceView Name="MainNavigationService"
+                                           DataContext="{Binding NavigationService}"
+                                           Margin="0"
+                                           IsVisible="{Binding #NavigationGrid.Tag}"
+                                           Classes="normalMainNavigation">
+        <Classes.wideMainNavigation>
+          <Binding Path="Bounds.Width" 
+                   RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" 
+                   Converter="{x:Static converters:BoundsWidthToBoolConverter.Instance}"
+                   ConverterParameter="{StaticResource UltraWideContentThreshold}" />
+        </Classes.wideMainNavigation>
+      </viewsServices:NavigationServiceView>
+      <viewsServices:NavigationServiceView Name="DetailsNavigationService"
+                                           DataContext="{Binding DetailsNavigationService}"
+                                           Margin="0"
+                                           Classes="normalDetailsNavigation">
+        <Classes.wideDetailsNavigation>
+          <Binding Path="Bounds.Width" 
+                   RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" 
+                   Converter="{x:Static converters:BoundsWidthToBoolConverter.Instance}"
+                   ConverterParameter="{StaticResource UltraWideContentThreshold}" />
+        </Classes.wideDetailsNavigation>
+      </viewsServices:NavigationServiceView>
+    </Grid>
   </SplitView>
 </UserControl>

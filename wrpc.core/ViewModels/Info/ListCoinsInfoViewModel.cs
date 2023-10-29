@@ -10,8 +10,12 @@ public partial class ListCoinsInfoViewModel : RoutableViewModel
     [ObservableProperty] 
     private List<CoinInfoViewModel>? _coins;
 
-    public ListCoinsInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, ICommand refreshCommand)
-        : base(rpcService, navigationService)
+    public ListCoinsInfoViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, 
+        ICommand refreshCommand)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
         RefreshCommand = refreshCommand;
     }

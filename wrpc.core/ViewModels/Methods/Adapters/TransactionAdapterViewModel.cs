@@ -15,8 +15,14 @@ public partial class TransactionAdapterViewModel : RoutableViewModel
     [ObservableProperty] private string? _walletPassword;
     [ObservableProperty] private bool _isSelected;
 
-    public TransactionAdapterViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName, TransactionInfoViewModel transactionInfo)
-        : base(rpcService, navigationService)
+    public TransactionAdapterViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, 
+        IBatchManager batchManager, 
+        string? walletName, 
+        TransactionInfoViewModel transactionInfo)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
         _batchManager = batchManager;
         WalletName = walletName;
@@ -31,7 +37,7 @@ public partial class TransactionAdapterViewModel : RoutableViewModel
     [RelayCommand]
     private async Task SpeedUpTransaction()
     {
-        var speedUpTransactionViewModel = new SpeedUpTransactionViewModel(RpcService, NavigationService, _batchManager, WalletName)
+        var speedUpTransactionViewModel = new SpeedUpTransactionViewModel(RpcService, NavigationService, DetailsNavigationService, _batchManager, WalletName)
         {
             TxId = TransactionInfo.Tx,
             WalletPassword = WalletPassword,
@@ -55,7 +61,7 @@ public partial class TransactionAdapterViewModel : RoutableViewModel
     [RelayCommand]
     private async Task CancelTransaction()
     {
-        var cancelTransactionViewModel = new CancelTransactionViewModel(RpcService, NavigationService, _batchManager, WalletName)
+        var cancelTransactionViewModel = new CancelTransactionViewModel(RpcService, NavigationService, DetailsNavigationService, _batchManager, WalletName)
         {
             TxId = TransactionInfo.Tx,
             WalletPassword = WalletPassword,

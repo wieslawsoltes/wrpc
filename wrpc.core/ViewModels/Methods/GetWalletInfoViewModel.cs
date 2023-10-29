@@ -15,8 +15,13 @@ public partial class GetWalletInfoViewModel : RoutableMethodViewModel
 {
     [ObservableProperty] private string? _walletName;
 
-    public GetWalletInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName)
-        : base(rpcService, navigationService, batchManager)
+    public GetWalletInfoViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, 
+        IBatchManager batchManager, 
+        string? walletName)
+        : base(rpcService, navigationService, detailsNavigationService, batchManager)
     {
         WalletName = walletName;
     }
@@ -37,17 +42,17 @@ public partial class GetWalletInfoViewModel : RoutableMethodViewModel
     {
         if (result is RpcGetWalletInfoResult { Result: not null } rpcGetWalletInfoResult)
         {
-            return rpcGetWalletInfoResult.Result?.ToViewModel(RpcService, NavigationService, GetWalletInfoCommand);
+            return rpcGetWalletInfoResult.Result?.ToViewModel(RpcService, NavigationService, DetailsNavigationService, GetWalletInfoCommand);
         }
 
         if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is Error error)
         {
-            return error.ToViewModel(RpcService, NavigationService);
+            return error.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         return null;

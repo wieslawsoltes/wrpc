@@ -8,8 +8,11 @@ public partial class PayInCoinjoinInfoViewModel : RoutableViewModel
     [ObservableProperty] 
     private string? _paymentId;
 
-    public PayInCoinjoinInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
-        : base(rpcService, navigationService)
+    public PayInCoinjoinInfoViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
     }
 }

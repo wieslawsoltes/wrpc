@@ -15,8 +15,14 @@ public partial class AddJobViewModel : RoutableViewModel
     [ObservableProperty] 
     private string? _content;
 
-    public AddJobViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, Job job, string json)
-        : base(rpcService, navigationService)
+    public AddJobViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService,
+        IBatchManager batchManager, 
+        Job job, 
+        string json)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
         _batchManager = batchManager;
         _job = job;
@@ -37,12 +43,12 @@ public partial class AddJobViewModel : RoutableViewModel
         if (_batchManager.Batches is not null && _batchManager.SelectedBatch is not null)
         {
             _batchManager.SelectedBatch.AddJobCommand.Execute(_job);
-            var successViewModel = new Success { Message = $"Added job '{_job.Name}'" }.ToViewModel(RpcService, NavigationService);
+            var successViewModel = new Success { Message = $"Added job '{_job.Name}'" }.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
             NavigationService.ClearAndNavigateTo(successViewModel);
         }
         else
         {
-            var errorViewModel = new Error { Message = $"Could not add job '{_job.Name}'" }.ToViewModel(RpcService, NavigationService);
+            var errorViewModel = new Error { Message = $"Could not add job '{_job.Name}'" }.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
             NavigationService.ClearAndNavigateTo(errorViewModel);
         }
     }

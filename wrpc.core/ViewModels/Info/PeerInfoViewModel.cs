@@ -18,8 +18,11 @@ public partial class PeerInfoViewModel : RoutableViewModel
     [ObservableProperty] 
     private string? _userAgent;
 
-    public PeerInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
-        : base(rpcService, navigationService)
+    public PeerInfoViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
     }
 }

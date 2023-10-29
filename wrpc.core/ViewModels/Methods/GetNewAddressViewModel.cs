@@ -19,8 +19,13 @@ public partial class GetNewAddressViewModel : RoutableMethodViewModel
     [ObservableProperty] 
     private string? _label;
 
-    public GetNewAddressViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName)
-        : base(rpcService, navigationService, batchManager)
+    public GetNewAddressViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, 
+        IBatchManager batchManager, 
+        string? walletName)
+        : base(rpcService, navigationService, detailsNavigationService, batchManager)
     {
         WalletName = walletName;
         Label = "Label";
@@ -48,17 +53,17 @@ public partial class GetNewAddressViewModel : RoutableMethodViewModel
     {
         if (result is RpcGetNewAddressResult { Result: not null } rpcGetNewAddressResult)
         {
-            return rpcGetNewAddressResult.Result?.ToViewModel(RpcService, NavigationService);
+            return rpcGetNewAddressResult.Result?.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is Error error)
         {
-            return error.ToViewModel(RpcService, NavigationService);
+            return error.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         return null;

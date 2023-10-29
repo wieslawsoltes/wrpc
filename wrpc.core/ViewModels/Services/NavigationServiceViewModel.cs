@@ -20,6 +20,7 @@ public partial class NavigationServiceViewModel : ViewModelBase, INavigationServ
     public void Clear()
     {
         RoutableStack?.Clear();
+        CurrentRoutable = null;
     }
 
     [RelayCommand]

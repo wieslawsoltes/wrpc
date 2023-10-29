@@ -17,8 +17,12 @@ public partial class BroadcastViewModel : RoutableMethodViewModel
     [ObservableProperty] 
     private string? _tx;
 
-    public BroadcastViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager)
-        : base(rpcService, navigationService, batchManager)
+    public BroadcastViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, 
+        IBatchManager batchManager)
+        : base(rpcService, navigationService, detailsNavigationService, batchManager)
     {
     }
 
@@ -44,17 +48,17 @@ public partial class BroadcastViewModel : RoutableMethodViewModel
     {
         if (result is RpcBroadcastResult { Result: not null } rpcBroadcastResult)
         {
-            return rpcBroadcastResult.Result?.ToViewModel(RpcService, NavigationService);
+            return rpcBroadcastResult.Result?.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is Error error)
         {
-            return error.ToViewModel(RpcService, NavigationService);
+            return error.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         return null;

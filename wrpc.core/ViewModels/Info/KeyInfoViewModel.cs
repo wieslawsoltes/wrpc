@@ -29,8 +29,11 @@ public partial class KeyInfoViewModel : RoutableViewModel
     [ObservableProperty] 
     private string? _address;
 
-    public KeyInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
-        : base(rpcService, navigationService)
+    public KeyInfoViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
     }
 }

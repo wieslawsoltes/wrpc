@@ -57,8 +57,13 @@ public partial class BuildViewModel : RoutableMethodViewModel
     [ObservableProperty]
     private ObservableCollection<CoinAdapterViewModel> _coins;
 
-    public BuildViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName)
-        : base(rpcService, navigationService, batchManager)
+    public BuildViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, 
+        IBatchManager batchManager, 
+        string? walletName)
+        : base(rpcService, navigationService, detailsNavigationService, batchManager)
     {
         WalletName = walletName;
         WalletPassword = "";
@@ -100,17 +105,17 @@ public partial class BuildViewModel : RoutableMethodViewModel
     {
         if (result is RpcBuildResult { Result: not null } rpcBuildResult)
         {
-            return new BuildInfo { Tx = rpcBuildResult.Result }.ToViewModel(RpcService, NavigationService);
+            return new BuildInfo { Tx = rpcBuildResult.Result }.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is Error error)
         {
-            return error.ToViewModel(RpcService, NavigationService);
+            return error.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         return null;
@@ -156,7 +161,7 @@ public partial class BuildViewModel : RoutableMethodViewModel
             return;
         }
 
-        var listUnspentCoinsViewModel = new ListUnspentCoinsViewModel(RpcService, NavigationService, BatchManager, WalletName);
+        var listUnspentCoinsViewModel = new ListUnspentCoinsViewModel(RpcService, NavigationService, DetailsNavigationService, BatchManager, WalletName);
         var job = listUnspentCoinsViewModel.CreateJob();
         var routable = await listUnspentCoinsViewModel.Execute(job);
         if (routable is ListUnspentCoinsInfoViewModel listUnspentCoinsInfoViewModel)

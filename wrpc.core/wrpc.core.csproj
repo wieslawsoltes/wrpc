@@ -12,7 +12,4 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="$(CommunityToolkitMvvmVersion)"/>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Results\" />
-  </ItemGroup>
 </Project>

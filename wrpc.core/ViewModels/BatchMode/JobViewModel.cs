@@ -10,8 +10,12 @@ public partial class JobViewModel : RoutableViewModel, IJob
     [ObservableProperty] 
     private bool _isRunning;
 
-    public JobViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, Job job)
-        : base(rpcService, navigationService)
+    public JobViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService,
+        Job job)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
         Job = job;
     }

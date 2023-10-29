@@ -8,8 +8,11 @@ public partial class CreateWalletInfoViewModel : RoutableViewModel
     [ObservableProperty] 
     private string? _mnemonic;
 
-    public CreateWalletInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
-        : base(rpcService, navigationService)
+    public CreateWalletInfoViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
     }
 }

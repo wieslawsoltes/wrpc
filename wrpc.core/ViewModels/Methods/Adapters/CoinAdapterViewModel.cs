@@ -14,8 +14,14 @@ public partial class CoinAdapterViewModel : RoutableViewModel
     [ObservableProperty] private string? _walletName;
     [ObservableProperty] private bool _isSelected;
 
-    public CoinAdapterViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName, CoinInfoViewModel coinInfo)
-        : base(rpcService, navigationService)
+    public CoinAdapterViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, 
+        IBatchManager batchManager, 
+        string? walletName, 
+        CoinInfoViewModel coinInfo)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
         _batchManager = batchManager;
         WalletName = walletName;
@@ -39,7 +45,7 @@ public partial class CoinAdapterViewModel : RoutableViewModel
 
     private async Task Exclude(bool exclude)
     {
-        var excludeFromCoinJoinViewModel = new ExcludeFromCoinJoinViewModel(RpcService, NavigationService, _batchManager, WalletName)
+        var excludeFromCoinJoinViewModel = new ExcludeFromCoinJoinViewModel(RpcService, NavigationService, DetailsNavigationService, _batchManager, WalletName)
         {
             TransactionId = CoinInfo.TxId,
             N = 0,

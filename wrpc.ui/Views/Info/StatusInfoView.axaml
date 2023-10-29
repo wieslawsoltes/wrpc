@@ -53,7 +53,7 @@
             <DataTemplate>
               <DockPanel>
                 <Button Content="Details >"
-                        Command="{Binding NavigationService.NavigateToCommand}"
+                        Command="{Binding DetailsNavigationService.ClearAndNavigateToCommand}"
                         CommandParameter="{Binding .}"
                         Margin="4,4,8,4"
                         DockPanel.Dock="Right"/>

@@ -32,8 +32,11 @@ public partial class CoinInfoViewModel : RoutableViewModel
     [ObservableProperty] 
     private string? _spentBy;
 
-    public CoinInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
-        : base(rpcService, navigationService)
+    public CoinInfoViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
     }
 }

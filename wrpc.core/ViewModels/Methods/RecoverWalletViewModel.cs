@@ -23,8 +23,12 @@ public partial class RecoverWalletViewModel : RoutableMethodViewModel
 
     [ObservableProperty] private string? _walletPassword;
 
-    public RecoverWalletViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager)
-        : base(rpcService, navigationService, batchManager)
+    public RecoverWalletViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, 
+        IBatchManager batchManager)
+        : base(rpcService, navigationService, detailsNavigationService, batchManager)
     {
         WalletName = "Wallet";
         WalletMnemonic = "";
@@ -55,17 +59,17 @@ public partial class RecoverWalletViewModel : RoutableMethodViewModel
     {
         if (result is RpcRecoverWalletResult)
         {
-            return new Success { Message = $"Recovered wallet {WalletName}" }.ToViewModel(RpcService, NavigationService);
+            return new Success { Message = $"Recovered wallet {WalletName}" }.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is Error error)
         {
-            return error.ToViewModel(RpcService, NavigationService);
+            return error.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         return null;
