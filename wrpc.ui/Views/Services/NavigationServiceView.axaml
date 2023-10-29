@@ -15,8 +15,11 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="WasabiRpc.Views.Services.NavigationServiceView"
              x:CompileBindings="True" x:DataType="vms:NavigationServiceViewModel">
- <ContentControl Content="{Binding CurrentRoutable}">
-    <ContentControl.DataTemplates>
+ <TransitioningContentControl Content="{Binding CurrentRoutable}">
+   <TransitioningContentControl.PageTransition>
+     <PageSlide Duration="0:0:0.150" />
+   </TransitioningContentControl.PageTransition>
+   <ContentControl.DataTemplates>
       <!-- ViewModels: App -->
       <DataTemplate DataType="vma:ErrorViewModel">
         <controls:NavigateBackControl Header="Error"
@@ -270,5 +273,5 @@
         </controls:NavigateBackControl>
       </DataTemplate>
     </ContentControl.DataTemplates>
-  </ContentControl>
+  </TransitioningContentControl>
 </UserControl>
