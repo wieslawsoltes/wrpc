@@ -50,45 +50,13 @@
       <TextBox Name="FeeRateTextBox"
                Text="{Binding FeeRate, Mode=TwoWay}" />
       <!-- Coins -->
-      <Button Content="ListUnspentCoins"
-              Command="{Binding ListUnspentCoinsCommand}"
+      <Label Content="Coins:" />
+      <Button Content="Coins Selector"
+              Command="{Binding CoinsSelectorCommand}"
               CommandParameter="{x:Null}"
               HorizontalAlignment="Stretch"
               HorizontalContentAlignment="Center"
               Padding="6,4,6,4" />
-      <Expander HorizontalAlignment="Stretch"
-                VerticalAlignment="Top"
-                Padding="0"
-                IsExpanded="True">
-        <Expander.Header>
-          <Label Content="{Binding Coins.Count, StringFormat={}UnspentCoins: {0}, FallbackValue=0}" />
-        </Expander.Header>
-        <ListBox Name="CoinsListBox"
-                 ItemsSource="{Binding Coins}">
-          <ListBox.ItemTemplate>
-            <DataTemplate>
-              <DockPanel>
-                <Button Content="Details >"
-                        Command="{Binding DetailsNavigationService.ClearAndNavigateToCommand}"
-                        CommandParameter="{Binding CoinInfo}"
-                        Margin="4,4,8,4"
-                        DockPanel.Dock="Right"/>
-                <StackPanel Orientation="Horizontal"
-                            Spacing="4">
-                  <CheckBox IsChecked="{Binding IsSelected}" />
-                  <TextBlock VerticalAlignment="Center">
-                    <Run>Amount: </Run>
-                    <Run Text="{Binding CoinInfo.Amount}" />
-                    <LineBreak />
-                    <Run>AnonymityScore: </Run>
-                    <Run Text="{Binding CoinInfo.AnonymityScore}" />
-                  </TextBlock>
-                </StackPanel>
-              </DockPanel>
-            </DataTemplate>
-          </ListBox.ItemTemplate>
-        </ListBox>
-      </Expander>
       <!-- Send -->
       <Button Content="Send"
               Command="{Binding SendCommand}"

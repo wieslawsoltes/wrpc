@@ -61,6 +61,12 @@
           <viewsMethods:SendView />
         </controls:NavigateBackControl>
       </DataTemplate>
+      <DataTemplate DataType="vmm:UnspentCoinsSelectorViewModel">
+        <controls:NavigateBackControl Header="Coins Selector"
+                                      BackCommand="{Binding DetailsNavigationService.NavigateBackCommand}">
+          <viewsMethods:UnspentCoinsSelectorView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
       <DataTemplate DataType="vmm:SpeedUpTransactionViewModel">
         <controls:NavigateBackControl Header="SpeedUp Transaction"
                                       BackCommand="{Binding NavigationService.NavigateBackCommand}">

@@ -12,8 +12,6 @@ using WasabiRpc.Models.Rpc;
 using WasabiRpc.Models.Rpc.Methods;
 using WasabiRpc.Models.Rpc.Results;
 using WasabiRpc.Models.Services;
-using WasabiRpc.ViewModels.App;
-using WasabiRpc.ViewModels.Info;
 using WasabiRpc.ViewModels.Methods.Adapters;
 
 namespace WasabiRpc.ViewModels.Methods;
@@ -21,6 +19,7 @@ namespace WasabiRpc.ViewModels.Methods;
 public partial class SendViewModel : RoutableMethodViewModel
 {
     [NotifyCanExecuteChangedFor(nameof(SendCommand))]
+    [NotifyCanExecuteChangedFor(nameof(CoinsSelectorCommand))]
     [ObservableProperty] 
     private string? _walletName;
 
@@ -52,6 +51,7 @@ public partial class SendViewModel : RoutableMethodViewModel
     [ObservableProperty]
     private int? _feeRate;
 
+    [NotifyCanExecuteChangedFor(nameof(CoinsSelectorCommand))]
     [ObservableProperty]
     private ObservableCollection<CoinAdapterViewModel> _coins;
 
@@ -151,31 +151,28 @@ public partial class SendViewModel : RoutableMethodViewModel
         return new Job("send", requestBody, rpcServerUri);
     }
 
-    [RelayCommand]
-    private async Task ListUnspentCoins()
+    private bool CanCoinsSelector()
+    {
+        return WalletName is not null 
+               && WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanCoinsSelector))]
+    private void CoinsSelector()
     {
         if (WalletName is null)
         {
             return;
         }
 
-        var listUnspentCoinsViewModel = new ListUnspentCoinsViewModel(RpcService, NavigationService, DetailsNavigationService, BatchManager, WalletName);
-        var job = listUnspentCoinsViewModel.CreateJob();
-        var routable = await listUnspentCoinsViewModel.Execute(job);
-        if (routable is ListUnspentCoinsInfoViewModel listUnspentCoinsInfoViewModel)
-        {
-            if (listUnspentCoinsInfoViewModel.Coins is not null)
-            {
-                Coins = new ObservableCollection<CoinAdapterViewModel>(listUnspentCoinsInfoViewModel.Coins);
-            }
-        }
-        else if (routable is ErrorInfoViewModel errorInfoViewModel)
-        {
-            NavigationService.NavigateTo(errorInfoViewModel);
-        }
-        else if (routable is ErrorViewModel errorViewModel)
-        {
-            NavigationService.NavigateTo(errorViewModel);
-        }
+        var coinsSelectorViewModel = new UnspentCoinsSelectorViewModel(
+            RpcService,
+            NavigationService,
+            DetailsNavigationService,
+            BatchManager,
+            WalletName,
+            Coins);
+
+        DetailsNavigationService.NavigateTo(coinsSelectorViewModel);
     }
 }
