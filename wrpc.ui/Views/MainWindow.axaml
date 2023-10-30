@@ -6,7 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="420" d:DesignHeight="720"
         x:Class="WasabiRpc.Views.MainWindow"
         WindowStartupLocation="CenterScreen"
-        Width="420"
+        Width="1060"
         Height="720"
         Icon="/Assets/avalonia-logo.ico"
         Title="Wasabi.Wallet RPC">
