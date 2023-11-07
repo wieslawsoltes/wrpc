@@ -11,8 +11,12 @@ namespace WasabiRpc.ViewModels.Methods;
 
 public partial class StopViewModel : RoutableMethodViewModel
 {
-    public StopViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager)
-        : base(rpcService, navigationService, batchManager)
+    public StopViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, 
+        IBatchManager batchManager)
+        : base(rpcService, navigationService, detailsNavigationService, batchManager)
     {
     }
 
@@ -32,17 +36,17 @@ public partial class StopViewModel : RoutableMethodViewModel
     {
         if (result is string)
         {
-            return new Success { Message = "Stopped daemon." }.ToViewModel(RpcService, NavigationService);
+            return new Success { Message = "Stopped daemon." }.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is Error error)
         {
-            return error.ToViewModel(RpcService, NavigationService);
+            return error.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         return null;

@@ -11,8 +11,11 @@ public partial class ErrorInfoViewModel : RoutableViewModel
     [ObservableProperty] 
     private string? _message;
 
-    public ErrorInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
-        : base(rpcService, navigationService)
+    public ErrorInfoViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
     }
 }

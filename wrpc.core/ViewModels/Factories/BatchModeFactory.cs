@@ -10,20 +10,25 @@ namespace WasabiRpc.ViewModels.Factories;
 
 public static class BatchModeFactory
 {
-    public static IBatchManager ToViewModel(this IList<Batch> batches, int selectedBatchIndex, IRpcServiceViewModel rpcService, INavigationService navigationService)
+    public static IBatchManager ToViewModel(
+        this IList<Batch> batches, 
+        int selectedBatchIndex, 
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
     {
         var batchesList = new ObservableCollection<IBatch>();
 
         foreach (var batch in batches)
         {
-            batchesList.Add(batch.ToViewModel(rpcService, navigationService));
+            batchesList.Add(batch.ToViewModel(rpcService, navigationService, detailsNavigationService));
         }
 
         var selectedBatch = selectedBatchIndex < batchesList.Count && selectedBatchIndex >= 0
             ? batchesList[selectedBatchIndex]
             : null;
 
-        return new BatchManagerViewModel(rpcService, navigationService)
+        return new BatchManagerViewModel(rpcService, navigationService, detailsNavigationService)
         {
             Batches = batchesList,
             SelectedBatch = selectedBatch
@@ -48,27 +53,35 @@ public static class BatchModeFactory
             .ToList();
     }
 
-    public static ObservableCollection<IJob> ToViewModel(this IList<Job> jobs, IRpcServiceViewModel rpcService, INavigationService navigationService)
+    public static ObservableCollection<IJob> ToViewModel(
+        this IList<Job> jobs, 
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
     {
         var jobsList = new ObservableCollection<IJob>();
 
         foreach (var job in jobs)
         {
-            jobsList.Add(job.ToViewModel(rpcService, navigationService));
+            jobsList.Add(job.ToViewModel(rpcService, navigationService, detailsNavigationService));
         }
 
         return jobsList;
     }
 
-    public static IBatch ToViewModel(this Batch batch, IRpcServiceViewModel rpcService, INavigationService navigationService)
+    public static IBatch ToViewModel(
+        this Batch batch, 
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
     {
-        var jobs = batch.Jobs?.ToViewModel(rpcService, navigationService);
+        var jobs = batch.Jobs?.ToViewModel(rpcService, navigationService, detailsNavigationService);
 
         var selectedJob = batch.SelectedJobIndex < jobs?.Count && batch.SelectedJobIndex >= 0
             ? jobs[batch.SelectedJobIndex]
             : null;
 
-        return new BatchViewModel(rpcService, navigationService)
+        return new BatchViewModel(rpcService, navigationService, detailsNavigationService)
         {
             Name = batch.Name,
             Jobs = jobs,
@@ -76,8 +89,12 @@ public static class BatchModeFactory
         };
     }
 
-    public static IJob ToViewModel(this Job job, IRpcServiceViewModel rpcService, INavigationService navigationService)
+    public static IJob ToViewModel(
+        this Job job, 
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
     {
-        return new JobViewModel(rpcService, navigationService, job);
+        return new JobViewModel(rpcService, navigationService, detailsNavigationService, job);
     }
 }

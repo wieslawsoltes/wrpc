@@ -28,8 +28,11 @@ public partial class BatchViewModel : RoutableViewModel, IBatch
     [ObservableProperty] 
     private bool _isRunning;
 
-    public BatchViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
-        : base(rpcService, navigationService)
+    public BatchViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
     }
 
@@ -44,7 +47,7 @@ public partial class BatchViewModel : RoutableViewModel, IBatch
     {
         if (Jobs is not null)
         {
-            Jobs.Add(new JobViewModel(RpcService, NavigationService, job));
+            Jobs.Add(new JobViewModel(RpcService, NavigationService, DetailsNavigationService, job));
             SelectedJob = Jobs.LastOrDefault();
         }
     }

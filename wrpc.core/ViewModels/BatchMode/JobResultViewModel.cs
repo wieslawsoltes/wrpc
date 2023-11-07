@@ -15,8 +15,11 @@ public partial class JobResultViewModel : RoutableViewModel
     [ObservableProperty] 
     private bool _isSuccess;
 
-    public JobResultViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
-        : base(rpcService, navigationService)
+    public JobResultViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
     }   
 }

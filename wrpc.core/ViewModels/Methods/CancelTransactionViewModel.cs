@@ -27,8 +27,12 @@ public partial class CancelTransactionViewModel : RoutableMethodViewModel
     [ObservableProperty]
     private string? _txId;
 
-    public CancelTransactionViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName)
-        : base(rpcService, navigationService, batchManager)
+    public CancelTransactionViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, 
+        IBatchManager batchManager, string? walletName)
+        : base(rpcService, navigationService, detailsNavigationService, batchManager)
     {
         WalletName = walletName;
         WalletPassword = "";
@@ -60,17 +64,17 @@ public partial class CancelTransactionViewModel : RoutableMethodViewModel
     {
         if (result is RpcCancelTransactionResult { Result: not null } rpcCancelTransactionResult)
         {
-            return new BuildInfo { Tx = rpcCancelTransactionResult.Result }.ToViewModel(RpcService, NavigationService);
+            return new BuildInfo { Tx = rpcCancelTransactionResult.Result }.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is Error error)
         {
-            return error.ToViewModel(RpcService, NavigationService);
+            return error.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         return null;

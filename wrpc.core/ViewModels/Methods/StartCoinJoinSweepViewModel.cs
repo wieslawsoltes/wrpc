@@ -17,8 +17,13 @@ public partial class StartCoinJoinSweepViewModel : RoutableMethodViewModel
     [ObservableProperty] private string? _walletPassword;
     [ObservableProperty] private string? _outputWalletName;
 
-    public StartCoinJoinSweepViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName)
-        : base(rpcService, navigationService, batchManager)
+    public StartCoinJoinSweepViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, 
+        IBatchManager batchManager, 
+        string? walletName)
+        : base(rpcService, navigationService, detailsNavigationService, batchManager)
     {
         WalletName = walletName;
         WalletPassword = "";
@@ -41,17 +46,17 @@ public partial class StartCoinJoinSweepViewModel : RoutableMethodViewModel
     {
         if (result is RpcStartCoinJoinSweepResult)
         {
-            return new Success { Message = $"Started coinjoin for wallet {WalletName}" }.ToViewModel(RpcService, NavigationService);
+            return new Success { Message = $"Started coinjoin for wallet {WalletName}" }.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is Error error)
         {
-            return error.ToViewModel(RpcService, NavigationService);
+            return error.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         return null;

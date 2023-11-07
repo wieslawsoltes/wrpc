@@ -8,8 +8,11 @@ public partial class BuildInfoViewModel : RoutableViewModel
     [ObservableProperty] 
     private string? _tx;
 
-    public BuildInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
-        : base(rpcService, navigationService)
+    public BuildInfoViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
     }
 }

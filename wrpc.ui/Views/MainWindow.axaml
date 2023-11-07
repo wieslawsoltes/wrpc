@@ -3,11 +3,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:WasabiRpc.Views"
-        mc:Ignorable="d" d:DesignWidth="420" d:DesignHeight="695"
+        mc:Ignorable="d" d:DesignWidth="420" d:DesignHeight="720"
         x:Class="WasabiRpc.Views.MainWindow"
         WindowStartupLocation="CenterScreen"
-        Width="420"
-        Height="695"
+        Width="1060"
+        Height="720"
         Icon="/Assets/avalonia-logo.ico"
         Title="Wasabi.Wallet RPC">
   <views:MainView />

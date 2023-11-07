@@ -27,7 +27,7 @@
               </ContextMenu>
             </DockPanel.ContextMenu>
             <Button Content="Details >"
-                    Command="{Binding NavigationService.NavigateToCommand}"
+                    Command="{Binding DetailsNavigationService.ClearAndNavigateToCommand}"
                     CommandParameter="{Binding TransactionInfo}"
                     Margin="4,4,8,4"
                     DockPanel.Dock="Right"/>

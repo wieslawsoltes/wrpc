@@ -12,8 +12,12 @@ namespace WasabiRpc.ViewModels.Methods;
 
 public partial class GetStatusViewModel : RoutableMethodViewModel
 {
-    public GetStatusViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager)
-        : base(rpcService, navigationService, batchManager)
+    public GetStatusViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, 
+        IBatchManager batchManager)
+        : base(rpcService, navigationService, detailsNavigationService, batchManager)
     {
     }
 
@@ -33,17 +37,17 @@ public partial class GetStatusViewModel : RoutableMethodViewModel
     {
         if (result is RpcGetStatusResult { Result: not null } rpcGetStatusResult)
         {
-            return rpcGetStatusResult.Result?.ToViewModel(RpcService, NavigationService, GetStatusCommand);
+            return rpcGetStatusResult.Result?.ToViewModel(RpcService, NavigationService, DetailsNavigationService, GetStatusCommand);
         }
 
         if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is Error error)
         {
-            return error.ToViewModel(RpcService, NavigationService);
+            return error.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         return null;

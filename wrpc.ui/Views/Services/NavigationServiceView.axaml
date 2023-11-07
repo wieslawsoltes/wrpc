@@ -15,8 +15,14 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="WasabiRpc.Views.Services.NavigationServiceView"
              x:CompileBindings="True" x:DataType="vms:NavigationServiceViewModel">
- <ContentControl Content="{Binding CurrentRoutable}">
-    <ContentControl.DataTemplates>
+ <TransitioningContentControl Content="{Binding CurrentRoutable}">
+   <TransitioningContentControl.PageTransition>
+     <CompositePageTransition>
+       <PageSlide Duration="0:0:0.150" />
+       <CrossFade Duration="0:0:0.150" />
+     </CompositePageTransition>
+   </TransitioningContentControl.PageTransition>
+   <ContentControl.DataTemplates>
       <!-- ViewModels: App -->
       <DataTemplate DataType="vma:ErrorViewModel">
         <controls:NavigateBackControl Header="Error"
@@ -53,6 +59,12 @@
         <controls:NavigateBackControl Header="Send"
                                       BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsMethods:SendView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:UnspentCoinsSelectorViewModel">
+        <controls:NavigateBackControl Header="Coins Selector"
+                                      BackCommand="{Binding DetailsNavigationService.NavigateBackCommand}">
+          <viewsMethods:UnspentCoinsSelectorView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmm:SpeedUpTransactionViewModel">
@@ -112,7 +124,7 @@
       </DataTemplate>
       <DataTemplate DataType="vmi:PeerInfoViewModel">
         <controls:NavigateBackControl Header="Peer"
-                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+                                      BackCommand="{Binding DetailsNavigationService.NavigateBackCommand}">
           <viewsInfo:PeerInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
@@ -131,7 +143,7 @@
       </DataTemplate>
       <DataTemplate DataType="vmi:CoinInfoViewModel">
         <controls:NavigateBackControl Header="Coin"
-                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+                                      BackCommand="{Binding DetailsNavigationService.NavigateBackCommand}">
           <viewsInfo:CoinInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
@@ -151,7 +163,7 @@
       </DataTemplate>
       <DataTemplate DataType="vmi:AccountInfoViewModel">
         <controls:NavigateBackControl Header="Account"
-                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+                                      BackCommand="{Binding DetailsNavigationService.NavigateBackCommand}">
           <viewsInfo:AccountInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
@@ -164,7 +176,7 @@
       </DataTemplate>
       <DataTemplate DataType="vmi:AddressInfoViewModel">
         <controls:NavigateBackControl Header="Address"
-                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+                                      BackCommand="{Binding DetailsNavigationService.NavigateBackCommand}">
           <viewsInfo:AddressInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
@@ -194,7 +206,7 @@
       </DataTemplate>
       <DataTemplate DataType="vmi:TransactionInfoViewModel">
         <controls:NavigateBackControl Header="Transaction"
-                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+                                      BackCommand="{Binding DetailsNavigationService.NavigateBackCommand}">
           <viewsInfo:TransactionInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
@@ -207,7 +219,7 @@
       </DataTemplate>
       <DataTemplate DataType="vmi:KeyInfoViewModel">
         <controls:NavigateBackControl Header="Key"
-                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+                                      BackCommand="{Binding DetailsNavigationService.NavigateBackCommand}">
           <viewsInfo:KeyInfoView />
         </controls:NavigateBackControl>
       </DataTemplate>
@@ -247,13 +259,13 @@
       </DataTemplate>
       <DataTemplate DataType="vmbm:BatchViewModel">
         <controls:NavigateBackControl Header="Batch"
-                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+                                      BackCommand="{Binding DetailsNavigationService.NavigateBackCommand}">
           <viewsBatchMode:BatchView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmbm:JobViewModel">
         <controls:NavigateBackControl Header="Job"
-                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+                                      BackCommand="{Binding DetailsNavigationService.NavigateBackCommand}">
           <viewsBatchMode:JobView />
         </controls:NavigateBackControl>
       </DataTemplate>
@@ -270,5 +282,5 @@
         </controls:NavigateBackControl>
       </DataTemplate>
     </ContentControl.DataTemplates>
-  </ContentControl>
+  </TransitioningContentControl>
 </UserControl>

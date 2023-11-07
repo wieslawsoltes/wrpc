@@ -20,8 +20,11 @@ public partial class AddressInfoViewModel : RoutableViewModel
     [ObservableProperty] 
     private string? _scriptPubKey;
 
-    public AddressInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
-        : base(rpcService, navigationService)
+    public AddressInfoViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
     }
 }

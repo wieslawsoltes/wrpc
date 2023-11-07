@@ -24,8 +24,11 @@ public partial class TransactionInfoViewModel : RoutableViewModel
     [ObservableProperty] 
     private bool _isLikelyCoinJoin;
 
-    public TransactionInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
-        : base(rpcService, navigationService)
+    public TransactionInfoViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
     }
 }

@@ -14,8 +14,11 @@ public partial class AccountInfoViewModel : RoutableViewModel
     [ObservableProperty] 
     private string? _keyPath;
 
-    public AccountInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
-        : base(rpcService, navigationService)
+    public AccountInfoViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
     }
 }

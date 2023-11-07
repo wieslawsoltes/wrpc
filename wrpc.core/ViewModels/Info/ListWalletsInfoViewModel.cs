@@ -10,8 +10,11 @@ public partial class ListWalletsInfoViewModel : RoutableViewModel
     [ObservableProperty] 
     private List<WalletInfoViewModel>? _wallets;
 
-    public ListWalletsInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, ICommand refreshCommand)
-        : base(rpcService, navigationService)
+    public ListWalletsInfoViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, ICommand refreshCommand)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
         RefreshCommand = refreshCommand;
     }

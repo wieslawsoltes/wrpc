@@ -11,8 +11,12 @@ public partial class GetHistoryInfoViewModel : RoutableViewModel
     [ObservableProperty] 
     private List<TransactionAdapterViewModel>? _transactions;
 
-    public GetHistoryInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, ICommand refreshCommand)
-        : base(rpcService, navigationService)
+    public GetHistoryInfoViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, 
+        ICommand refreshCommand)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
         RefreshCommand = refreshCommand;
     }

@@ -1,0 +1,52 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vmm="using:WasabiRpc.ViewModels.Methods"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="WasabiRpc.Views.Methods.UnspentCoinsSelectorView"
+             x:CompileBindings="True" x:DataType="vmm:UnspentCoinsSelectorViewModel">
+  <DockPanel>
+    <DockPanel LastChildFill="False"
+               Margin="0,0,0,4"
+               DockPanel.Dock="Top">
+      <Label Content="{Binding Coins.Count, StringFormat={}UnspentCoins: {0}, FallbackValue=0}"
+             DockPanel.Dock="Left"/>
+      <Button Content="*"
+              Command="{Binding ListUnspentCoinsCommand}"
+              CommandParameter="{x:Null}"
+              HorizontalAlignment="Stretch"
+              HorizontalContentAlignment="Center"
+              VerticalAlignment="Stretch"
+              VerticalContentAlignment="Center"
+              Margin="4,0,0,0"
+              DockPanel.Dock="Right"/>
+    </DockPanel>
+    <!-- Coins -->
+    <ListBox Name="CoinsListBox"
+             ItemsSource="{Binding Coins}">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <DockPanel>
+            <Button Content="Details >"
+                    Command="{Binding DetailsNavigationService.NavigateToCommand}"
+                    CommandParameter="{Binding CoinInfo}"
+                    Margin="4,4,8,4"
+                    DockPanel.Dock="Right"/>
+            <StackPanel Orientation="Horizontal"
+                        Spacing="4">
+              <CheckBox IsChecked="{Binding IsSelected}" />
+              <TextBlock VerticalAlignment="Center">
+                <Run>Amount: </Run>
+                <Run Text="{Binding CoinInfo.Amount}" />
+                <LineBreak />
+                <Run>AnonymityScore: </Run>
+                <Run Text="{Binding CoinInfo.AnonymityScore, StringFormat={}{0:F02}}" />
+              </TextBlock>
+            </StackPanel>
+          </DockPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </DockPanel>
+</UserControl>

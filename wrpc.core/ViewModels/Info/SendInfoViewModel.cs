@@ -11,8 +11,11 @@ public partial class SendInfoViewModel : RoutableViewModel
     [ObservableProperty] 
     private string? _tx;
 
-    public SendInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
-        : base(rpcService, navigationService)
+    public SendInfoViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
     }
 }

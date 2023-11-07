@@ -18,8 +18,13 @@ public partial class StartCoinJoinViewModel : RoutableMethodViewModel
     [ObservableProperty] private bool _stopWhenAllMixed;
     [ObservableProperty] private bool _overridePlebStop;
 
-    public StartCoinJoinViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager, string? walletName)
-        : base(rpcService, navigationService, batchManager)
+    public StartCoinJoinViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, 
+        IBatchManager batchManager, 
+        string? walletName)
+        : base(rpcService, navigationService, detailsNavigationService, batchManager)
     {
         WalletName = walletName;
         WalletPassword = "";
@@ -43,17 +48,17 @@ public partial class StartCoinJoinViewModel : RoutableMethodViewModel
     {
         if (result is RpcStartCoinJoinResult)
         {
-            return new Success { Message = $"Started coinjoin for wallet {WalletName}" }.ToViewModel(RpcService, NavigationService);
+            return new Success { Message = $"Started coinjoin for wallet {WalletName}" }.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is Error error)
         {
-            return error.ToViewModel(RpcService, NavigationService);
+            return error.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         return null;

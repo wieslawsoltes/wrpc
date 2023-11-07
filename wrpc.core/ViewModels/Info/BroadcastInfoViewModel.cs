@@ -8,8 +8,11 @@ public partial class BroadcastInfoViewModel : RoutableViewModel
     [ObservableProperty] 
     private string? _txId;
 
-    public BroadcastInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
-        : base(rpcService, navigationService)
+    public BroadcastInfoViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
     }
 }

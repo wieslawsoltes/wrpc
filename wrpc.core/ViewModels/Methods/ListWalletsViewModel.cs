@@ -13,8 +13,12 @@ namespace WasabiRpc.ViewModels.Methods;
 
 public partial class ListWalletsViewModel : RoutableMethodViewModel
 {
-    public ListWalletsViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager)
-        : base(rpcService, navigationService, batchManager)
+    public ListWalletsViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, 
+        IBatchManager batchManager)
+        : base(rpcService, navigationService, detailsNavigationService, batchManager)
     {
     }
 
@@ -34,17 +38,17 @@ public partial class ListWalletsViewModel : RoutableMethodViewModel
     {
         if (result is RpcListWalletsResult { Result: not null } rpcListWalletsResult)
         {
-            return new ListWalletsInfo { Wallets = rpcListWalletsResult.Result }.ToViewModel(RpcService, NavigationService, ListWalletsCommand);
+            return new ListWalletsInfo { Wallets = rpcListWalletsResult.Result }.ToViewModel(RpcService, NavigationService, DetailsNavigationService, ListWalletsCommand);
         }
 
         if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is Error error)
         {
-            return error.ToViewModel(RpcService, NavigationService);
+            return error.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         return null;

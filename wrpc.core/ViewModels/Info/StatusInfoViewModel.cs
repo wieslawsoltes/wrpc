@@ -37,8 +37,12 @@ public partial class StatusInfoViewModel : RoutableViewModel
     [ObservableProperty] 
     private List<PeerInfoViewModel>? _peers;
 
-    public StatusInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, ICommand refreshCommand)
-        : base(rpcService, navigationService)
+    public StatusInfoViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, 
+        ICommand refreshCommand)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
         RefreshCommand = refreshCommand;
     }

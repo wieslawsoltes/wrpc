@@ -20,8 +20,12 @@ public partial class CreateWalletViewModel : RoutableMethodViewModel
 
     [ObservableProperty] private string? _walletPassword;
 
-    public CreateWalletViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager)
-        : base(rpcService, navigationService, batchManager)
+    public CreateWalletViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, 
+        IBatchManager batchManager)
+        : base(rpcService, navigationService, detailsNavigationService, batchManager)
     {
         WalletName = "Wallet";
         WalletPassword = "";
@@ -49,17 +53,17 @@ public partial class CreateWalletViewModel : RoutableMethodViewModel
     {
         if (result is RpcCreateWalletResult { Result: not null } rpcCreateWalletResult)
         {
-            return new CreateWalletInfo { Mnemonic = rpcCreateWalletResult.Result }.ToViewModel(RpcService, NavigationService);
+            return new CreateWalletInfo { Mnemonic = rpcCreateWalletResult.Result }.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is RpcErrorResult { Error: not null } rpcErrorResult)
         {
-            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService);
+            return rpcErrorResult.Error?.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         if (result is Error error)
         {
-            return error.ToViewModel(RpcService, NavigationService);
+            return error.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
 
         return null;

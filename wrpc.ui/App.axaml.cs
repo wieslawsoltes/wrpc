@@ -14,6 +14,7 @@ using CommunityToolkit.Mvvm.Input;
 using WasabiRpc.Models;
 using WasabiRpc.Models.App;
 using WasabiRpc.Models.BatchMode;
+using WasabiRpc.Models.Services;
 using WasabiRpc.Services;
 using WasabiRpc.ViewModels;
 using WasabiRpc.ViewModels.BatchMode;
@@ -132,18 +133,22 @@ public partial class App : Application
         var defaultState = LoadState();
         var httpService = new HttpService();
         var navigationService = new NavigationServiceViewModel();
+        var detailsNavigationService = new NavigationServiceViewModel();
         var rpcService = new RpcServiceViewModel(httpService, defaultState.ServerPrefix ?? DefaultServerPrefix, defaultState.BatchMode);
         var batchManager = defaultState.Batches is null 
-            ? CreateBatchManager(rpcService, navigationService)
-            : defaultState.Batches.ToViewModel(defaultState.SelectedBatchIndex, rpcService, navigationService);
-        return new MainWindowViewModel(rpcService, navigationService, batchManager, defaultState);
+            ? CreateBatchManager(rpcService, navigationService, detailsNavigationService)
+            : defaultState.Batches.ToViewModel(defaultState.SelectedBatchIndex, rpcService, navigationService, detailsNavigationService);
+        return new MainWindowViewModel(rpcService, navigationService, detailsNavigationService, batchManager, defaultState);
     }
 
-    private IBatchManager CreateBatchManager(RpcServiceViewModel rpcService, NavigationServiceViewModel navigationService)
+    private IBatchManager CreateBatchManager(
+        RpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
     {
-        var batchManager = new BatchManagerViewModel(rpcService, navigationService);
+        var batchManager = new BatchManagerViewModel(rpcService, navigationService, detailsNavigationService);
 
-        var batch = new BatchViewModel(rpcService, navigationService)
+        var batch = new BatchViewModel(rpcService, navigationService, detailsNavigationService)
         {
             Name = "Batch",
             Jobs = new ObservableCollection<IJob>()

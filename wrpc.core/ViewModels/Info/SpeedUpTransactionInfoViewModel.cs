@@ -8,8 +8,11 @@ public partial class SpeedUpTransactionInfoViewModel : RoutableViewModel
     [ObservableProperty] 
     private string? _tx;
 
-    public SpeedUpTransactionInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
-        : base(rpcService, navigationService)
+    public SpeedUpTransactionInfoViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
     }
 }

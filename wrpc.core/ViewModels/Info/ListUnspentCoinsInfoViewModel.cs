@@ -11,8 +11,12 @@ public partial class ListUnspentCoinsInfoViewModel : RoutableViewModel
     [ObservableProperty] 
     private List<CoinAdapterViewModel>? _coins;
 
-    public ListUnspentCoinsInfoViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, ICommand refreshCommand)
-        : base(rpcService, navigationService)
+    public ListUnspentCoinsInfoViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, 
+        ICommand refreshCommand)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
         RefreshCommand = refreshCommand;
     }

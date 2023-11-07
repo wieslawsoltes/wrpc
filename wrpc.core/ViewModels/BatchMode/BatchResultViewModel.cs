@@ -9,8 +9,11 @@ public partial class BatchResultViewModel : RoutableViewModel
     [ObservableProperty] 
     private List<JobResultViewModel>? _results;
 
-    public BatchResultViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService)
-        : base(rpcService, navigationService)
+    public BatchResultViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
     }   
 }

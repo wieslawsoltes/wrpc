@@ -14,8 +14,12 @@ namespace WasabiRpc.ViewModels;
 
 public abstract partial class RoutableMethodViewModel : RoutableViewModel
 {
-    protected RoutableMethodViewModel(IRpcServiceViewModel rpcService, INavigationService navigationService, IBatchManager batchManager)
-        : base(rpcService, navigationService)
+    protected RoutableMethodViewModel(
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, 
+        IBatchManager batchManager)
+        : base(rpcService, navigationService, detailsNavigationService)
     {
         BatchManager = batchManager;
     }
@@ -52,16 +56,19 @@ public abstract partial class RoutableMethodViewModel : RoutableViewModel
 
     protected virtual void OnRpcSuccess(IRoutable routable)
     {
+        DetailsNavigationService.Clear();
         NavigationService.ClearAndNavigateTo(routable);
     }
 
     protected virtual void OnRpcError(IRoutable routable)
     {
+        DetailsNavigationService.Clear();
         NavigationService.NavigateTo(routable);
     }
 
     protected virtual void OnError(IRoutable routable)
     {
+        DetailsNavigationService.Clear();
         NavigationService.NavigateTo(routable);
     }
 
@@ -71,12 +78,14 @@ public abstract partial class RoutableMethodViewModel : RoutableViewModel
         {
             var options = new JsonSerializerOptions { WriteIndented = true };
             var json = JsonSerializer.Serialize(job, typeof(Job), new ModelsJsonContext(options));
-            var addJobViewModel = new AddJobViewModel(RpcService, NavigationService, BatchManager, job, json);
+            var addJobViewModel = new AddJobViewModel(RpcService, NavigationService, DetailsNavigationService, BatchManager, job, json);
+            DetailsNavigationService.Clear();
             NavigationService.ClearAndNavigateTo(addJobViewModel);
         }
         catch (Exception e)
         {
-            var errorViewModel = new Error { Message = e.Message }.ToViewModel(RpcService, NavigationService);
+            var errorViewModel = new Error { Message = e.Message }.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
+            DetailsNavigationService.Clear();
             NavigationService.NavigateTo(errorViewModel);
         }
     }
