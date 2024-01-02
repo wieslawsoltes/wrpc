@@ -37,22 +37,34 @@
   </Design.DataContext>
 
   <Panel>
+
     <controls:NavigateBackControl Header="Wasabi.Wallet RPC"
                                   BackCommand="{Binding NavigationService.NavigateBackCommand}"
                                   EnableBack="False"
                                   Margin="0">
       <controls:NavigateBackControl.IsVisible>
-        <MultiBinding Converter="{x:Static BoolConverters.Or}">
+        <MultiBinding Converter="{x:Static BoolConverters.And}">
           <Binding Path="NavigationService.CurrentRoutable" 
+                   Converter="{x:Static ObjectConverters.IsNull}" />
+          <Binding Path="DetailsNavigationService.CurrentRoutable" 
                    Converter="{x:Static ObjectConverters.IsNull}" />
         </MultiBinding>
       </controls:NavigateBackControl.IsVisible>
       <views:HomeView />
     </controls:NavigateBackControl>
-    <viewsServices:NavigationServiceView Name="MainNavigationService"
-                                         DataContext="{Binding NavigationService}"
-                                         Margin="0">
-    </viewsServices:NavigationServiceView>
+ 
+    <Panel>
+      <Panel.IsVisible>
+        <MultiBinding Converter="{x:Static BoolConverters.And}">
+          <Binding Path="DetailsNavigationService.CurrentRoutable" 
+                   Converter="{x:Static ObjectConverters.IsNull}" />
+        </MultiBinding>
+      </Panel.IsVisible>
+      <viewsServices:NavigationServiceView Name="MainNavigationService"
+                                           DataContext="{Binding NavigationService}"
+                                           Margin="0">
+      </viewsServices:NavigationServiceView>
+    </Panel>
 
     <viewsServices:NavigationServiceView Name="DetailsNavigationService"
                                          DataContext="{Binding DetailsNavigationService}"
