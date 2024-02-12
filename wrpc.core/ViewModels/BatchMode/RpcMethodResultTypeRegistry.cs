@@ -28,6 +28,8 @@ public static class RpcMethodResultTypeRegistry
             ["listwallets"] = typeof(RpcListWalletsResult),
             ["loadwallet"] = typeof(RpcLoadWalletResult),
             ["payincoinjoin"] = typeof(RpcPayInCoinjoinResult),
+            ["listpaymentsincoinjoin"] = typeof(RpcListPaymentsInCoinjoinResult),
+            ["cancelpaymentincoinjoin"] = typeof(RpcCancelPaymentInCoinjoinResult),
             ["recoverwallet"] = typeof(RpcRecoverWalletResult),
             ["send"] = typeof(RpcSendResult),
             ["speeduptransaction"] = typeof(RpcSpeedUpTransactionResult),
