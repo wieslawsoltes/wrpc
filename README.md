@@ -246,6 +246,28 @@ dotnet publish -r osx-arm64 -c Release
     - amount
   - result
     - paymentId
+- [ ] listpaymentsincoinjoin
+    - params
+      - [null]
+    - error
+      - TODO
+    - result
+      - payments
+        - payment
+          - id
+          - amount
+          - destination
+          - state
+            - status
+            - round
+            - txid
+          - address
+- [ ] cancelpaymentincoinjoin
+    - params
+      - paymentId
+    - error
+      - TODO
+    - [empty]
 - [x] broadcast
   - params
     - tx
