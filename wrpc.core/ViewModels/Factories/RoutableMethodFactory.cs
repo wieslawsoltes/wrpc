@@ -32,6 +32,8 @@ public static class RoutableMethodFactory
             "listwallets" => new ListWalletsViewModel(rpcService, navigationService, detailsNavigationService, batchManager),
             "loadwallet" => new LoadWalletViewModel(rpcService, navigationService, detailsNavigationService, batchManager, walletName),
             "payincoinjoin" => new PayInCoinjoinViewModel(rpcService, navigationService, detailsNavigationService, batchManager, walletName),
+            "listpaymentsincoinjoin" => new ListPaymentsInCoinjoinViewModel(rpcService, navigationService, detailsNavigationService, batchManager, walletName),
+            "cancelpaymentincoinjoin" => new CancelPaymentInCoinjoinViewModel(rpcService, navigationService, detailsNavigationService, batchManager, walletName),
             "recoverwallet" => new RecoverWalletViewModel(rpcService, navigationService, detailsNavigationService, batchManager),
             "send" => new SendViewModel(rpcService, navigationService, detailsNavigationService, batchManager, walletName),
             "speeduptransaction" => new SpeedUpTransactionViewModel(rpcService, navigationService, detailsNavigationService, batchManager, walletName),
