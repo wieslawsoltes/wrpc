@@ -363,4 +363,49 @@ public static class InfoFactory
             CoinjoinStatus = info.CoinjoinStatus,
         };
     }
+
+    public static PaymentInCoinjoinStateInfoViewModel ToViewModel(
+        this PaymentInCoinjoinStateInfo info, 
+        IRpcServiceViewModel rpcService,
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
+    {
+        return new PaymentInCoinjoinStateInfoViewModel(rpcService, navigationService, detailsNavigationService)
+        {
+            Status = info.Status,
+            Round = info.Round,
+            TxId = info.TxId,
+        };
+    }
+
+    public static PaymentInCoinjoinInfoViewModel ToViewModel(
+        this PaymentInCoinjoinInfo info, 
+        IRpcServiceViewModel rpcService,
+        INavigationService navigationService,
+        INavigationService detailsNavigationService)
+    {
+        return new PaymentInCoinjoinInfoViewModel(rpcService, navigationService, detailsNavigationService)
+        {
+            Id = info.Id,
+            Amount = info.Amount,
+            Destination = info.Destination,
+            State = info.State?.ToViewModel(rpcService, navigationService, detailsNavigationService),
+            Address = info.Address,
+        };
+    }
+
+    public static ListPaymentsInCoinjoinInfoViewModel ToViewModel(
+        this ListPaymentsInCoinjoinInfo info, 
+        IRpcServiceViewModel rpcService, 
+        INavigationService navigationService,
+        INavigationService detailsNavigationService, 
+        ICommand refreshCommand)
+    {
+        return new ListPaymentsInCoinjoinInfoViewModel(rpcService, navigationService, detailsNavigationService, refreshCommand)
+        {
+            Payments = info.Payments?
+                .Select(x => x.ToViewModel(rpcService, navigationService, detailsNavigationService))
+                .ToList(),
+        };
+    }
 }
