@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace WasabiRpc.Models.Info;
@@ -14,7 +15,7 @@ public class PaymentInCoinjoinInfo
     public string? Destination { get; set; }
 
     [JsonPropertyName("state")]
-    public PaymentInCoinjoinStateInfo? State { get; set; }
+    public List<PaymentInCoinjoinStateInfo>? State { get; set; }
 
     [JsonPropertyName("address")]
     public string? Address { get; set; }

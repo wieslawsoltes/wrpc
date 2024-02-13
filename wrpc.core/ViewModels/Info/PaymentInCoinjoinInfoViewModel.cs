@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using WasabiRpc.Models.Services;
 
@@ -15,7 +16,7 @@ public partial class PaymentInCoinjoinInfoViewModel : RoutableViewModel
     private string? _destination;
 
     [ObservableProperty] 
-    private PaymentInCoinjoinStateInfoViewModel? _state;
+    private List<PaymentInCoinjoinStateInfoViewModel>? _state;
 
     [ObservableProperty] 
     private string? _address;

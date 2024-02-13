@@ -389,7 +389,9 @@ public static class InfoFactory
             Id = info.Id,
             Amount = info.Amount,
             Destination = info.Destination,
-            State = info.State?.ToViewModel(rpcService, navigationService, detailsNavigationService),
+            State = info.State?
+                .Select(x => x.ToViewModel(rpcService, navigationService, detailsNavigationService))
+                .ToList(),
             Address = info.Address,
         };
     }

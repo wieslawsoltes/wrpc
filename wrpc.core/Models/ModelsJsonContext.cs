@@ -99,6 +99,7 @@ namespace WasabiRpc.Models;
 [JsonSerializable(typeof(RpcPayInCoinjoinResult))]
 // listpaymentsincoinjoin
 [JsonSerializable(typeof(PaymentInCoinjoinStateInfo))]
+[JsonSerializable(typeof(List<PaymentInCoinjoinStateInfo>))]
 [JsonSerializable(typeof(PaymentInCoinjoinInfo))]
 [JsonSerializable(typeof(List<PaymentInCoinjoinInfo>))]
 [JsonSerializable(typeof(ListPaymentsInCoinjoinInfo))]
