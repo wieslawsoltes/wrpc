@@ -31,6 +31,7 @@ public partial class MainWindowViewModel : RoutableViewModel
     [NotifyCanExecuteChangedFor(nameof(SpeedUpTransactionCommand))]
     [NotifyCanExecuteChangedFor(nameof(CancelTransactionCommand))]
     [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
+    [NotifyCanExecuteChangedFor(nameof(PayInCoinjoinCommand))]
     [NotifyCanExecuteChangedFor(nameof(GetHistoryCommand))]
     [NotifyCanExecuteChangedFor(nameof(ExcludeFromCoinjoinCommand))]
     [NotifyCanExecuteChangedFor(nameof(ListKeysCommand))]
