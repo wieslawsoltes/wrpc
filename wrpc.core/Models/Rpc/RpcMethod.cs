@@ -19,6 +19,8 @@ namespace WasabiRpc.Models.Rpc;
 [JsonDerivedType(typeof(ListWalletsRpcMethod), "listwallets")]
 [JsonDerivedType(typeof(LoadWalletRpcMethod), "loadwallet")]
 [JsonDerivedType(typeof(PayInCoinjoinRpcMethod), "payincoinjoin")]
+[JsonDerivedType(typeof(ListPaymentsInCoinjoinRpcMethod), "listpaymentsincoinjoin")]
+[JsonDerivedType(typeof(CancelPaymentInCoinjoinRpcMethod), "cancelpaymentincoinjoin")]
 [JsonDerivedType(typeof(RecoverWalletRpcMethod), "recoverwallet")]
 [JsonDerivedType(typeof(SendRpcMethod), "send")]
 [JsonDerivedType(typeof(SpeedUpTransactionRpcMethod), "speeduptransaction")]

@@ -31,6 +31,9 @@ public partial class MainWindowViewModel : RoutableViewModel
     [NotifyCanExecuteChangedFor(nameof(SpeedUpTransactionCommand))]
     [NotifyCanExecuteChangedFor(nameof(CancelTransactionCommand))]
     [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
+    [NotifyCanExecuteChangedFor(nameof(PayInCoinjoinCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ListPaymentsInCoinjoinCommand))]
+    [NotifyCanExecuteChangedFor(nameof(CancelPaymentInCoinjoinCommand))]
     [NotifyCanExecuteChangedFor(nameof(GetHistoryCommand))]
     [NotifyCanExecuteChangedFor(nameof(ExcludeFromCoinjoinCommand))]
     [NotifyCanExecuteChangedFor(nameof(ListKeysCommand))]
@@ -85,6 +88,8 @@ public partial class MainWindowViewModel : RoutableViewModel
             new ("Build", BuildCommand),
             new ("Broadcast", BroadcastCommand),
             new ("PayInCoinjoin", PayInCoinjoinCommand),
+            new ("ListPaymentsInCoinjoin", ListPaymentsInCoinjoinCommand),
+            new ("CancelPaymentInCoinjoin", CancelPaymentInCoinjoinCommand),
             new ("SpeedUpTransaction", SpeedUpTransactionCommand),
             new ("CancelTransaction", CancelTransactionCommand),
             // Coinjoin
@@ -351,6 +356,39 @@ public partial class MainWindowViewModel : RoutableViewModel
             var payInCoinjoinViewModel = new PayInCoinjoinViewModel(RpcService, NavigationService, DetailsNavigationService, BatchManager, SelectedWallet.WalletName);
             DetailsNavigationService.Clear();
             NavigationService.NavigateTo(payInCoinjoinViewModel);
+        }
+    }
+
+    private bool CanListPaymentsInCoinjoin()
+    {
+        return SelectedWallet?.WalletName is not null 
+               && SelectedWallet?.WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanListPaymentsInCoinjoin))]
+    private async Task ListPaymentsInCoinjoin()
+    {
+        if (SelectedWallet?.WalletName is not null)
+        {
+            var listPaymentsInCoinjoinViewModel = new ListPaymentsInCoinjoinViewModel(RpcService, NavigationService, DetailsNavigationService, BatchManager, SelectedWallet.WalletName);
+            await listPaymentsInCoinjoinViewModel.ListPaymentsInCoinjoinCommand.ExecuteAsync(null);
+        }
+    }
+
+    private bool CanCancelPaymentInCoinjoin()
+    {
+        return SelectedWallet?.WalletName is not null 
+               && SelectedWallet?.WalletName.Length > 0;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanCancelPaymentInCoinjoin))]
+    private void CancelPaymentInCoinjoin()
+    {
+        if (SelectedWallet?.WalletName is not null)
+        {
+            var cancelPaymentInCoinjoinViewModel = new CancelPaymentInCoinjoinViewModel(RpcService, NavigationService, DetailsNavigationService, BatchManager, SelectedWallet.WalletName);
+            DetailsNavigationService.Clear();
+            NavigationService.NavigateTo(cancelPaymentInCoinjoinViewModel);
         }
     }
 
