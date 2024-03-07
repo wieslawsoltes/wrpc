@@ -246,7 +246,7 @@ dotnet publish -r osx-arm64 -c Release
     - amount
   - result
     - paymentId
-- [ ] listpaymentsincoinjoin
+- [x] listpaymentsincoinjoin
     - params
       - [null]
     - error
@@ -262,7 +262,7 @@ dotnet publish -r osx-arm64 -c Release
             - round
             - txid
           - address
-- [ ] cancelpaymentincoinjoin
+- [x] cancelpaymentincoinjoin
     - params
       - paymentId
     - error
