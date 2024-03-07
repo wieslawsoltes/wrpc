@@ -80,9 +80,34 @@
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmm:PayInCoinjoinViewModel">
-        <controls:NavigateBackControl Header="PayInCoinjoin"
+        <controls:NavigateBackControl Header="Pay In Coinjoin"
                                       BackCommand="{Binding NavigationService.NavigateBackCommand}">
           <viewsMethods:PayInCoinjoinView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:ListPaymentsInCoinjoinInfoViewModel">
+        <controls:NavigateBackControl Header="Payments In Coinjoin"
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}"
+                                      RefreshCommand="{Binding RefreshCommand}">
+          <viewsInfo:ListPaymentsInCoinjoinInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:PaymentInCoinjoinInfoViewModel">
+        <controls:NavigateBackControl Header="Payment In Coinjoin"
+                                      BackCommand="{Binding DetailsNavigationService.NavigateBackCommand}">
+          <viewsInfo:PaymentInCoinjoinInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmi:PaymentInCoinjoinStateInfoViewModel">
+        <controls:NavigateBackControl Header="Payment In Coinjoin State"
+                                      BackCommand="{Binding DetailsNavigationService.NavigateBackCommand}">
+          <viewsInfo:PaymentInCoinjoinStateInfoView />
+        </controls:NavigateBackControl>
+      </DataTemplate>
+      <DataTemplate DataType="vmm:CancelPaymentInCoinjoinViewModel">
+        <controls:NavigateBackControl Header="Cancel Payment In Coinjoin"
+                                      BackCommand="{Binding NavigationService.NavigateBackCommand}">
+          <viewsMethods:CancelPaymentInCoinjoinView />
         </controls:NavigateBackControl>
       </DataTemplate>
       <DataTemplate DataType="vmm:BroadcastViewModel">
