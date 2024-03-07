@@ -34,15 +34,15 @@ public partial class ListPaymentsInCoinjoinViewModel : RoutableMethodViewModel
 
     public override async Task<IRoutable?> Execute(Job job)
     {
-        var result = await RpcService.Send<RpcListCoinsResult>(job.RpcMethod, job.RpcServerUri);
+        var result = await RpcService.Send<RpcListPaymentsInCoinjoinResult>(job.RpcMethod, job.RpcServerUri);
         return ToJobResult(result);
     }
 
     public override IRoutable? ToJobResult(object? result)
     {
-        if (result is RpcListPaymentsInCoinjoinResult { Result: not null } rpcListCoinsResult)
+        if (result is RpcListPaymentsInCoinjoinResult { Result: not null } rpcListPaymentsInCoinjoinResult)
         {
-            return new ListPaymentsInCoinjoinInfo { Payments = rpcListCoinsResult.Result }.ToViewModel(RpcService, NavigationService, DetailsNavigationService, ListPaymentsInCoinjoinCommand);
+            return new ListPaymentsInCoinjoinInfo { Payments = rpcListPaymentsInCoinjoinResult.Result }.ToViewModel(RpcService, NavigationService, DetailsNavigationService, ListPaymentsInCoinjoinCommand);
         }
 
         if (result is RpcErrorResult { Error: not null } rpcErrorResult)
