@@ -366,13 +366,12 @@ public partial class MainWindowViewModel : RoutableViewModel
     }
 
     [RelayCommand(CanExecute = nameof(CanListPaymentsInCoinjoin))]
-    private void ListPaymentsInCoinjoin()
+    private async Task ListPaymentsInCoinjoin()
     {
         if (SelectedWallet?.WalletName is not null)
         {
             var listPaymentsInCoinjoinViewModel = new ListPaymentsInCoinjoinViewModel(RpcService, NavigationService, DetailsNavigationService, BatchManager, SelectedWallet.WalletName);
-            DetailsNavigationService.Clear();
-            NavigationService.NavigateTo(listPaymentsInCoinjoinViewModel);
+            await listPaymentsInCoinjoinViewModel.ListPaymentsInCoinjoinCommand.ExecuteAsync(null);
         }
     }
 
