@@ -54,7 +54,7 @@ public partial class CancelPaymentInCoinjoinViewModel : RoutableMethodViewModel
 
     public override IRoutable? ToJobResult(object? result)
     {
-        if (result is RpcCancelPaymentInCoinjoinResult { Result: not null })
+        if (result is RpcCancelPaymentInCoinjoinResult)
         {
             return new Success { Message = "Canceled payment in coinjoin." }.ToViewModel(RpcService, NavigationService, DetailsNavigationService);
         }
