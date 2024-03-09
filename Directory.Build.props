@@ -13,7 +13,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <AvaloniaVersion>11.0.10</AvaloniaVersion>
-    <SkiaSharpVersion>2.88.6</SkiaSharpVersion>
+    <SkiaSharpVersion>2.88.7</SkiaSharpVersion>
     <CommunityToolkitMvvmVersion>8.2.1</CommunityToolkitMvvmVersion>
     <AvaloniaSvgSkia>11.0.0.14</AvaloniaSvgSkia>
   </PropertyGroup>
