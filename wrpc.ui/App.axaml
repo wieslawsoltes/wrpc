@@ -54,6 +54,7 @@
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
+        <MergeResourceInclude Source="/Themes/Theme.axaml" />
         <MergeResourceInclude Source="/Controls/NavigateBackControl.axaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
