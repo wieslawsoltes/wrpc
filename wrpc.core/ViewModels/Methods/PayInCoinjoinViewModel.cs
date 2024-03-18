@@ -25,7 +25,7 @@ public partial class PayInCoinjoinViewModel : RoutableMethodViewModel
 
     [NotifyCanExecuteChangedFor(nameof(PayInCoinjoinCommand))]
     [ObservableProperty] 
-    private long _amount;
+    private decimal _amount;
 
     public PayInCoinjoinViewModel(
         IRpcServiceViewModel rpcService, 
