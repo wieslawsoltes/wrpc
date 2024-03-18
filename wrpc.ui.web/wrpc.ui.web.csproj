@@ -8,6 +8,7 @@
     <MSBuildEnableWorkloadResolver>true</MSBuildEnableWorkloadResolver>
     <IsPackable>False</IsPackable>
     <RootNamespace>wrpc.ui.web</RootNamespace>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <WasmExtraFilesToDeploy Include="AppBundle\app.css" />

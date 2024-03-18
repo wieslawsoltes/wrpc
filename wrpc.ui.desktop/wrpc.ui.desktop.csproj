@@ -9,6 +9,7 @@
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <RootNamespace>WasabiRpc</RootNamespace>
     <AssemblyName>wrpc</AssemblyName>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" >
     <PublishAot>true</PublishAot>

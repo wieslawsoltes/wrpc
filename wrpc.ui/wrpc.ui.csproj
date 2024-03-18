@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <RootNamespace>WasabiRpc</RootNamespace>
     <AssemblyName>wrpc.ui</AssemblyName>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
   <PropertyGroup>
     <IsAotCompatible>true</IsAotCompatible>

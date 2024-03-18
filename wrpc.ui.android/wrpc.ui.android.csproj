@@ -10,6 +10,7 @@
     <AndroidPackageFormat>apk</AndroidPackageFormat>
     <RootNamespace>WasabiRpc</RootNamespace>
     <AssemblyName>wrpc</AssemblyName>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <AndroidResource Include="Icon.png">
