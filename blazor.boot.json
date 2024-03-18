@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "wrpc.ui.web.dll",
   "resources": {
-    "hash": "sha256-ng0vTfV6dcKJhWhkyOgaujYop5s74dfubQ3sitXeslY=",
+    "hash": "sha256-Y/kkeB7sNScduCXv7g+cItREoBtyhZo1/AZcu+Jd7Qo=",
     "jsModuleNative": {
       "dotnet.native.js": "sha256-L7dczsnqI74apANe73eQyB4HqYgBypOYVtoa6Q0xsUA="
     },
@@ -68,9 +68,9 @@
       "System.Text.Encodings.Web.wasm": "sha256-iScFSKtg574w4rFqYDls8Pko3sIIayGfw42QcmGVwtQ=",
       "System.Text.Json.wasm": "sha256-/MjJPAGpmqwra3mrZ8bQt9jZb94AwVS2oVcLrmBErMk=",
       "System.Text.RegularExpressions.wasm": "sha256-sPEV3o+MPk3x5PMlwCED5SDB/+SRnUAQo3s5EDXeb9M=",
-      "wrpc.core.wasm": "sha256-SA7ZObT9Rm0zppoknWZY6vCvB1FelXHNwEV2nqqz/5k=",
-      "wrpc.ui.wasm": "sha256-FjS7NS4STtTD8cAOUZUFTxfkOhOUcFtsqPyqHJxkjak=",
-      "wrpc.ui.web.wasm": "sha256-+AkIU3hSdS5FqsFT/zY+NrEZPEifmcO/mRwaZwq/ZYM="
+      "wrpc.core.wasm": "sha256-7UmeM8LmGx98SmMfvXWN0q8cJ2g9Lgn0hwfO0B890uU=",
+      "wrpc.ui.wasm": "sha256-110gIaPSZToNNAd3sccs4TdhceuMq9UOZvDSwfuSjow=",
+      "wrpc.ui.web.wasm": "sha256-XYdd30fjd1DOTCV1U0dF3TXcFLke7yZWeMCk5tnDS1I="
     },
     "vfs": {
       "runtimeconfig.bin": {
