@@ -1,5 +1,11 @@
 # A Graphical User Interface for using the Wasabi Wallet RPC
 
+[![NuGet](https://img.shields.io/nuget/v/wrpc.core.svg)](https://www.nuget.org/packages/wrpc.core)
+[![NuGet](https://img.shields.io/nuget/dt/wrpc.core.svg)](https://www.nuget.org/packages/wrpc.core)
+
+[![NuGet](https://img.shields.io/nuget/v/wrpc.ui.svg)](https://www.nuget.org/packages/wrpc.ui)
+[![NuGet](https://img.shields.io/nuget/dt/wrpc.ui.svg)](https://www.nuget.org/packages/wrpc.ui)
+
 ### How to run
 
 You need the [same requirements](https://github.com/zkSNACKs/WalletWasabi/blob/master/README.md#get-the-requirements) as Wasabi Wallet.
